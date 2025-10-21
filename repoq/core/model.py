@@ -1,17 +1,60 @@
+"""Core data models for repository analysis.
+
+This module defines the dataclass models used throughout repoq for representing
+repository analysis results, including projects, files, modules, contributors,
+issues, and relationships.
+"""
 from __future__ import annotations
 
 import hashlib
 from dataclasses import asdict, dataclass, field
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 
 def hash_email(email: str) -> str:
+    """Create a truncated SHA256 hash of an email address.
+
+    Used for creating short, anonymized identifiers for contributors
+    without exposing full email addresses.
+
+    Args:
+        email: Email address to hash. Empty string returns empty string.
+
+    Returns:
+        First 16 characters of the SHA256 hash, or empty string if email is empty.
+
+    Example:
+        >>> hash_email("user@example.com")
+        'a7b8c9d0e1f2g3h4'
+    """
     if not email:
         return ""
     return hashlib.sha256(email.encode("utf-8")).hexdigest()[:16]
 
 
 def foaf_sha1(email: str) -> str:
+    """Create FOAF mbox_sha1sum hash for an email address.
+
+    Implements the FOAF (Friend of a Friend) specification for creating
+    SHA1 hashes of mailto: URIs. Used for linked data compatibility.
+
+    Args:
+        email: Email address to hash. Empty string returns empty string.
+
+    Returns:
+        SHA1 hash of "mailto:{email}", or empty string if email is empty.
+
+    Note:
+        Uses SHA1 for FOAF spec compatibility (not for security).
+        Marked with nosec B324 to indicate this is intentional.
+
+    Reference:
+        http://xmlns.com/foaf/spec/#term_mbox_sha1sum
+
+    Example:
+        >>> foaf_sha1("user@example.com")
+        '3c6e0b8a9c15224a8228b9a98ca1531d316b624b'
+    """
     if not email:
         return ""
     return hashlib.sha1(f"mailto:{email}".encode("utf-8")).hexdigest()  # nosec B324
@@ -19,6 +62,22 @@ def foaf_sha1(email: str) -> str:
 
 @dataclass
 class Issue:
+    """Represents a code quality issue, TODO, or defect found in the repository.
+
+    Issues are mapped to OSLC Change Management (CM) ChangeRequests in JSON-LD export,
+    enabling integration with project management and issue tracking systems.
+
+    Attributes:
+        id: Unique identifier (e.g., "repo:issue:file.py:TodoComment")
+        type: Issue type classification (e.g., "repo:TodoComment", "repo:Deprecated")
+        file_id: Reference to the file containing the issue (e.g., "repo:file:src/main.py")
+        description: Detailed description of the issue
+        severity: Severity level - "low", "medium", or "high" (default: "low")
+        priority: Priority level - "low", "medium", "high", or None (default: None)
+        status: Current status - "Open", "InProgress", "Closed", or None (default: None)
+        title: Short title/summary of the issue, or None (default: None)
+    """
+
     id: str
     type: str
     file_id: Optional[str]
@@ -31,6 +90,24 @@ class Issue:
 
 @dataclass
 class Person:
+    """Represents a contributor to the repository.
+
+    Contributors are mapped to FOAF Persons and PROV-O Agents in JSON-LD export,
+    enabling social network analysis and provenance tracking.
+
+    Attributes:
+        id: Unique identifier (e.g., "repo:person:a1b2c3d4")
+        name: Contributor's display name (e.g., "John Doe")
+        email: Email address (default: "")
+        email_hash: Truncated SHA256 hash of email for anonymization (default: "")
+        foaf_mbox_sha1sum: FOAF-compliant SHA1 hash of mailto: URI (default: "")
+        commits: Total number of commits by this contributor (default: 0)
+        lines_added: Total lines of code added across all commits (default: 0)
+        lines_deleted: Total lines of code deleted across all commits (default: 0)
+        owns: List of file IDs owned by this contributor (default: empty list)
+        modules_contributed: List of module IDs contributed to (default: empty list)
+    """
+
     id: str
     name: str
     email: str = ""

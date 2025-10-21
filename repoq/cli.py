@@ -1,7 +1,22 @@
+"""Command-line interface for repoq repository analysis tool.
+
+This module provides the main CLI commands for analyzing git repositories,
+generating reports, and comparing analysis results across versions.
+
+Commands:
+    structure: Analyze repository structure (files, modules, dependencies)
+    history: Analyze git history (commits, contributors, churn)
+    full: Complete analysis (structure + history + hotspots)
+    diff: Compare two analysis results and show changes
+
+The CLI is built with Typer and Rich for a beautiful terminal experience.
+"""
 from __future__ import annotations
 
 import json
+import logging
 import os
+from pathlib import Path
 
 import typer
 from rich import print
@@ -13,27 +28,64 @@ from .core.repo_loader import is_url, prepare_repo
 from .logging import setup_logging
 from .reporting.diff import diff_jsonld
 
+logger = logging.getLogger(__name__)
+
 app = typer.Typer(
     add_completion=False,
     help="""
-[bold]repoq[/bold] 2.0 — анализ качества Git‑репозитория и экспорт в расширенную онтологию.
+[bold]repoq[/bold] 3.0 — Repository quality analysis with semantic ontology export.
+
+Analyze git repositories for code quality metrics, generate reports in multiple formats
+(JSON-LD, Turtle RDF, Markdown), and track quality evolution over time.
 """,
 )
 
 
 def _infer_project_id_name(path_or_url: str) -> tuple[str, str]:
+    """Infer project ID and name from repository path or URL.
+
+    Args:
+        path_or_url: Local file path or git URL (http/https/ssh)
+
+    Returns:
+        Tuple of (project_id, project_name). For URLs, both are derived from URL.
+        For local paths, ID is absolute path and name is directory basename.
+
+    Example:
+        >>> _infer_project_id_name("https://github.com/user/repo.git")
+        ('https://github.com/user/repo.git', 'repo')
+        >>> _infer_project_id_name("./my-project")
+        ('/absolute/path/to/my-project', 'my-project')
+    """
     if is_url(path_or_url):
         name = path_or_url.rstrip("/").split("/")[-1].replace(".git", "")
         pid = path_or_url
     else:
-        name = os.path.basename(os.path.abspath(path_or_url))
-        pid = os.path.abspath(path_or_url)
+        abs_path = os.path.abspath(path_or_url)
+        name = os.path.basename(abs_path)
+        pid = abs_path
     return pid, name
 
 
-def _save_md(md: str, path: str):
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(md)
+def _save_md(md: str, path: str) -> None:
+    """Save markdown content to file.
+
+    Args:
+        md: Markdown content string
+        path: Output file path
+
+    Raises:
+        OSError: If file cannot be written
+    """
+    output_path = Path(path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        with output_path.open("w", encoding="utf-8") as f:
+            f.write(md)
+    except OSError as e:
+        logger.error(f"Failed to write markdown file {path}: {e}")
+        raise
 
 
 def _apply_config(cfg: AnalyzeConfig, cfg_dict: dict) -> AnalyzeConfig:
