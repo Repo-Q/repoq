@@ -1,83 +1,334 @@
-# RepoQ - Revolutionary Semantic Code Analysis
+# RepoQ - Practical Repository Quality Analysis
 
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Tests](https://img.shields.io/badge/tests-57%20passing-orange)](tests/)
+[![Coverage](https://img.shields.io/badge/coverage-<10%25-red)](#roadmap)
 [![Docs](https://img.shields.io/badge/docs-mkdocs-blue)](https://kirill-0440.github.io/repoq/)
-[![Quality](https://img.shields.io/badge/quality-9.3%2F10-brightgreen)](#)
 
-> **The world's first self-understanding software analysis tool** that combines formal ontological intelligence with mathematical rigor to revolutionize code quality assessment.
+> **Modern CLI tool for comprehensive Git repository quality analysis** with semantic web export (JSON-LD, RDF/Turtle) and CI/CD integration.
 
-RepoQ represents a breakthrough in software engineering: the first system capable of **semantic self-reflection** through formal ontologies, enabling unprecedented insights into code architecture, quality patterns, and domain modeling.
+RepoQ provides **practical code quality insights** through structural analysis, complexity metrics, Git history patterns, and semantic web-compatible exports for enterprise integration.
 
-## 🌟 Revolutionary Features
+## 🎯 Core Features
 
-### 🧠 **Ontological Intelligence**
-- **Triple Ontology System**: Code, C4 Model, and Domain-Driven Design ontologies
-- **Cross-Ontology Inference**: Automatic semantic mappings between architectural layers  
-- **Pattern Recognition**: AI-powered detection of 50+ architectural patterns
-- **Domain Modeling**: Automatic extraction of entities, value objects, and bounded contexts
+### ✅ **Currently Available**
+- **📊 Structure Analysis**: Files, modules, languages, LOC, dependencies
+- **📈 Complexity Metrics**: Cyclomatic complexity (Lizard), maintainability index (Radon)  
+- **📚 Git History**: Authorship, code churn, temporal coupling between files
+- **🔥 Hotspots**: Automatic identification of problem areas (churn × complexity)
+- **🐛 Quality Markers**: Detection of TODO/FIXME/HACK/Deprecated comments
+- **✅ Test Integration**: JUnit XML parsing with OSLC QM mapping
+- **🌐 Semantic Export**: JSON-LD and RDF/Turtle with W3C ontologies
+- **📊 Dependency Graphs**: DOT/SVG visualization of coupling and dependencies
+- **🔄 Quality Diff**: Compare analysis results for regression tracking
 
-### 🔬 **Meta-Quality Loop**
-- **Self-Application**: RepoQ analyzes its own codebase safely through stratification
-- **Semantic Understanding**: Goes beyond syntax to comprehend architectural intent
-- **Continuous Evolution**: Self-improving through ontological insights
-- **Formal Guarantees**: Mathematical proofs of soundness and confluence
-
-### ⚡ **Advanced Analysis**
-- **TRS Framework**: Term Rewriting Systems with proven confluence and termination
-- **Complexity Metrics**: Multi-dimensional quality assessment with semantic context
-- **Git History**: Pattern evolution tracking and architectural drift detection  
-- **Quality Synthesis**: Automated improvement recommendations based on domain knowledge
-
-### 🌐 **Semantic Web Integration**
-- **JSON-LD Export**: Semantic web-compatible analysis results
-- **RDF/Turtle**: Knowledge graph representation of code architecture
-- **SPARQL Queries**: Query code structure using semantic web standards
-- **Ontology Reasoning**: OWL/RDFS inference for deep insights
+### 🚧 **In Development** (See [Roadmap](#roadmap))
+- SHACL validation and quality certificates
+- Docker container and GitHub Actions
+- Incremental analysis and caching
+- Statistical coupling significance testing
+- SBOM/SPDX vulnerability integration
 
 ## 🚀 Quick Start
 
 ### Installation
 
 ```bash
-# Standard installation
-pip install repoq
+# Basic installation
+pip install -e .
 
-# Full installation with all features
-pip install repoq[full]
+# Full installation with all analyzers
+pip install -e ".[full]"
 
-# Development installation
-git clone https://github.com/kirill-0440/repoq.git
-cd repoq
+# Development setup
 pip install -e ".[full,dev]"
 ```
+
+**Optional Dependencies:**
+- `pydriller` — Detailed Git history analysis
+- `lizard` — Multi-language cyclomatic complexity
+- `radon` — Python maintainability metrics  
+- `graphviz` — SVG graph generation
+- `rdflib` — RDF/Turtle export
+- `pyshacl` — SHACL validation (planned)
 
 ### Basic Usage
 
 ```bash
-# Analyze project structure with ontological intelligence
-repoq structure /path/to/your/project
+# Full analysis of local repository
+repoq full ./my-project --format json
 
-# Full semantic analysis with all features
-repoq full /path/to/your/project --format json
+# Structure analysis only
+repoq structure ./my-project --md report.md
 
-# Focus on specific ontological aspects
-repoq structure /path/to/project --ontology ddd  # Domain-driven design
-repoq structure /path/to/project --ontology c4   # Architecture patterns  
-repoq structure /path/to/project --ontology code # Code structure
+# History and hotspots analysis
+repoq history ./my-project --since "2024-01-01"
+
+# Complexity analysis with thresholds
+repoq complexity ./my-project --threshold 15
+
+# Export as RDF/Turtle for semantic integration
+repoq full ./my-project --format turtle > quality.ttl
 ```
 
-### Revolutionary Self-Analysis
+### CI/CD Integration
 
-Experience the meta-quality loop - RepoQ analyzing itself:
+```yaml
+# .github/workflows/quality.yml
+name: Code Quality Analysis
+on: [push, pull_request]
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Full history for temporal analysis
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install RepoQ
+        run: pip install repoq[full]
+        
+      - name: Run Quality Analysis
+        run: |
+          repoq full . --format json > quality.json
+          repoq structure . --format markdown > QUALITY_REPORT.md
+          
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: quality-analysis
+          path: |
+            quality.json
+            QUALITY_REPORT.md
+```
+
+## 📊 Output Formats
+
+### JSON-LD (Semantic Web Compatible)
+
+```json
+{
+  "@context": "https://field33.com/ontologies/repoq/",
+  "@type": "QualityAnalysis",
+  "project": {
+    "@type": "Project",
+    "name": "my-project",
+    "languages": ["python", "javascript"],
+    "linesOfCode": 15420,
+    "files": 127
+  },
+  "metrics": {
+    "@type": "QualityMetrics", 
+    "overallScore": 7.8,
+    "complexityScore": 8.2,
+    "maintainabilityScore": 7.5,
+    "testCoverage": 0.65
+  },
+  "hotspots": [
+    {
+      "@type": "Hotspot",
+      "file": "src/core/processor.py",
+      "churnScore": 0.89,
+      "complexityScore": 23,
+      "riskLevel": "high"
+    }
+  ]
+}
+```
+
+### RDF/Turtle (Knowledge Graph)
+
+```turtle
+@prefix repoq: <https://field33.com/ontologies/repoq/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+<project:my-project> a repoq:Project ;
+    repoq:hasLanguage "python", "javascript" ;
+    repoq:linesOfCode 15420 ;
+    repoq:fileCount 127 ;
+    repoq:overallQuality 7.8 .
+
+<hotspot:processor.py> a repoq:Hotspot ;
+    repoq:inFile "src/core/processor.py" ;
+    repoq:churnScore 0.89 ;
+    repoq:complexityScore 23 ;
+    repoq:riskLevel "high" .
+```
+
+## 🔧 Configuration
+
+Create `.repoq.yaml` in your project root:
+
+```yaml
+# RepoQ Configuration
+analysis:
+  include_patterns: ["**/*.py", "**/*.js", "**/*.ts"]
+  exclude_patterns: ["**/test_*", "**/node_modules/**", "**/__pycache__/**"]
+  max_file_size_mb: 10
+
+complexity:
+  cyclomatic_threshold: 15
+  cognitive_threshold: 25
+  
+history:
+  max_commits: 1000
+  since_days: 365
+  
+export:
+  default_format: "json"
+  include_graphs: true
+  semantic_annotations: true
+
+cache:
+  enabled: true
+  directory: ".repoq_cache"
+  ttl_hours: 24
+```
+
+## � Use Cases
+
+### For Development Teams
+- **Code Review Assistance**: Identify complexity hotspots and quality trends
+- **Technical Debt Tracking**: Monitor quality metrics over time
+- **Refactoring Prioritization**: Focus on high-churn, high-complexity areas
+- **Architecture Analysis**: Understand coupling patterns and dependencies
+
+### For CI/CD Pipelines  
+- **Quality Gates**: Automated quality thresholds in PR workflows
+- **Regression Detection**: Compare quality metrics between commits
+- **Report Generation**: Automated quality reports for stakeholders
+- **Semantic Integration**: Export to enterprise knowledge graphs
+
+### For Engineering Organizations
+- **Portfolio Analysis**: Cross-project quality insights and benchmarking
+- **Standards Compliance**: Ensure coding standards across teams
+- **Risk Assessment**: Identify maintenance risks and bus factor issues
+- **Data-Driven Decisions**: Quality metrics for architecture and resource planning
+
+## 🛠️ Supported Analyzers
+
+| Analyzer | Languages | Metrics | Status |
+|----------|-----------|---------|---------|
+| **Built-in** | All | Files, LOC, dependencies | ✅ Stable |
+| **Lizard** | 30+ (C/C++/Java/Python/JS/etc.) | Cyclomatic complexity | ✅ Stable |
+| **Radon** | Python | Maintainability index, Halstead | ✅ Stable |
+| **PyDriller** | Git repos | History, churn, coupling | ✅ Stable |
+| **Graphviz** | All | Dependency visualization | ✅ Stable |
+| **Tree-sitter** | 40+ | AST-based analysis | 🚧 Planned |
+
+### Graceful Degradation
+If optional analyzers are not installed, RepoQ continues with available features:
+- Missing `lizard`: Skips complexity analysis, reports basic metrics only
+- Missing `radon`: No maintainability index for Python files  
+- Missing `pydriller`: Limited to current state analysis (no history)
+- Missing `graphviz`: No graph generation, data still available in JSON
+
+## 🗺️ Roadmap {#roadmap}
+
+### 🎯 **Phase 1: Production Ready** (T+30 days)
+**Goal**: Stable, tested, containerized tool ready for daily use
+
+- [ ] **Test Coverage**: 80%+ coverage with golden snapshots and property-based tests
+- [ ] **SHACL Validation**: Core shapes for Project/Module/File/Contributor validation
+- [ ] **Container & CI**: Dockerfile + GitHub Action for consistent deployment
+- [ ] **Reference Examples**: 2-3 OSS repository analyses as golden standards
+- [ ] **Performance**: Caching, incremental analysis, `--since` filters
+- [ ] **Documentation**: API reference, troubleshooting, configuration guide
+
+**Acceptance Criteria**: Green CI, valid JSON-LD/RDF exports, containerized deployment
+
+### 🔬 **Phase 2: Semantic Certification** (T+60 days)  
+**Goal**: Verifiable quality certificates and enterprise integration
+
+- [ ] **Canonical Context**: Stable JSON-LD `@context` with versioned ontologies
+- [ ] **SHACL Rules**: Derived properties and quality inferences  
+- [ ] **Quality Certificates**: W3C Verifiable Credentials for projects/modules/files
+- [ ] **PR Integration**: Bot comments with quality insights and certificates
+- [ ] **SPARQL Queries**: Standard queries for common quality questions
+- [ ] **Enterprise Export**: OSLC QM/CM compatibility testing
+
+**Acceptance Criteria**: Certificates in artifacts, PR bot works, SPARQL endpoints functional
+
+### 🚀 **Phase 3: Advanced Analytics** (T+90 days)
+**Goal**: Statistical rigor and optimization guidance
+
+- [ ] **ZAG Integration**: PCQ/PCE/Manifest with fairness curves and AHR metrics
+- [ ] **Statistical Coupling**: PMI, φ-coefficient, χ²-p-value for significant relationships
+- [ ] **SBOM Security**: SPDX SBOM generation with CVE/OSV vulnerability mapping
+- [ ] **Optimization Engine**: k-repair suggestions for measurable quality improvements
+- [ ] **Advanced Visualization**: Interactive dashboards and temporal trend analysis
+- [ ] **ML Pattern Recognition**: Automated architectural pattern detection
+
+**Acceptance Criteria**: ZAG manifests validate, k-repair suggestions proven effective
+
+### 🔮 **Future Vision** (T+180+ days)
+- **Self-Improving Analysis**: Feedback loops for accuracy improvement
+- **Cross-Language Intelligence**: Universal architectural concepts
+- **Predictive Analytics**: Quality trend forecasting and early warning systems
+- **Developer Experience**: IDE integrations and real-time quality feedback
+
+## 🤝 Contributing
+
+RepoQ welcomes contributions! Current priority areas:
+
+### **High Priority** (Phase 1)
+- **Test Coverage**: Unit tests for parsers, golden snapshots for exports
+- **Performance**: Caching mechanisms and incremental analysis
+- **Documentation**: Examples, tutorials, API documentation
+- **SHACL Shapes**: Validation schemas for core quality concepts
+
+### **Medium Priority** (Phase 2-3)
+- **Language Support**: Additional complexity analyzers and AST parsers
+- **Integrations**: IDE plugins, dashboard connectors, CI/CD templates
+- **Visualization**: Enhanced graphs and interactive quality dashboards
+- **Security Analysis**: SAST integration and vulnerability correlation
+
+### Development Setup
 
 ```bash
-# Safe self-application with stratification
-repoq structure . --self-analysis --level 2
+# Clone and setup development environment
+git clone https://github.com/kirill-0440/repoq.git
+cd repoq
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -e ".[full,dev]"
 
-# Generate self-understanding report
-repoq full . --ontological-insights --format markdown > self-analysis.md
+# Run tests and quality checks
+python -m pytest tests/ -v
+ruff check repoq/
+ruff format repoq/
+
+# Generate test coverage report
+python -m pytest --cov=repoq --cov-report=html tests/
 ```
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+RepoQ builds upon excellent open source tools:
+- **[Lizard](https://github.com/terryyin/lizard)** for multi-language complexity analysis
+- **[Radon](https://github.com/rubik/radon)** for Python maintainability metrics
+- **[PyDriller](https://github.com/ishepard/pydriller)** for Git history analysis
+- **[rdflib](https://github.com/RDFLib/rdflib)** for semantic web capabilities
+- **[NetworkX](https://github.com/networkx/networkx)** for graph analysis
+
+Special thanks to the semantic web and software engineering research communities for foundational concepts and standards.
+
+---
+
+**Ready to improve your code quality?** 🚀
+
+[⭐ Star us on GitHub](https://github.com/kirill-0440/repoq) | [📖 Documentation](https://kirill-0440.github.io/repoq/) | [🐛 Report Issues](https://github.com/kirill-0440/repoq/issues) | [💬 Discussions](https://github.com/kirill-0440/repoq/discussions)
 
 ## 🎯 Use Cases
 

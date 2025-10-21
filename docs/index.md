@@ -1,83 +1,209 @@
-# RepoQ: Semantic Meta-Quality Loop
+# RepoQ - Practical Repository Quality Analysis
 
-<div class="hero">
-  <h1>🧠 Revolutionary Code Quality Analysis</h1>
-  <p>The world's first semantic meta-quality loop system with ontological intelligence</p>
+!!! info "Current Status: Active Development"
+    RepoQ is in active development with core features stable and ready for use. See our [Roadmap](#roadmap) for planned improvements and current limitations.
+
+**Modern CLI tool for comprehensive Git repository quality analysis** with semantic web export and CI/CD integration.
+
+RepoQ provides **practical code quality insights** through structural analysis, complexity metrics, Git history patterns, and semantic web-compatible exports for enterprise integration.
+
+## ✅ Core Features (Available Now)
+
+<div class="grid cards" markdown>
+
+-   :material-chart-line: __**Structure Analysis**__
+
+    ---
+    
+    Files, modules, languages, LOC, and dependency mapping across your entire codebase with multi-language support.
+
+-   :material-brain: __**Complexity Metrics**__
+
+    ---
+    
+    Cyclomatic complexity (Lizard), maintainability index (Radon), and cognitive complexity assessment.
+
+-   :material-git: __**Git History Intelligence**__
+
+    ---
+    
+    Authorship analysis, code churn tracking, and temporal coupling detection between files.
+
+-   :material-fire: __**Hotspot Detection**__
+
+    ---
+    
+    Automatic identification of high-risk areas using churn × complexity algorithms.
+
+-   :material-web: __**Semantic Web Export**__
+
+    ---
+    
+    JSON-LD and RDF/Turtle exports with W3C ontology mappings for enterprise integration.
+
+-   :material-graph: __**Dependency Visualization**__
+
+    ---
+    
+    DOT/SVG dependency graphs, coupling analysis, and architectural insight visualization.
+
 </div>
 
-!!! abstract "🚀 Revolutionary Achievement"
-    RepoQ represents a breakthrough in software quality analysis - the first system that understands its own architecture through formal ontologies and provides semantic insights into code quality at unprecedented depth.
+## 🚧 Planned Features (In Development)
 
-## ✨ What Makes RepoQ Revolutionary
+<div class="grid cards" markdown>
 
-<div class="feature-grid">
-  <div class="feature-card">
-    <h3>🧠 Ontological Intelligence</h3>
-    <p>Formal domain knowledge integration with Code, C4 Model, and Domain-Driven Design ontologies. Automatic concept extraction and cross-ontology inference.</p>
-  </div>
-  
-  <div class="feature-card">
-    <h3>🔄 Self-Understanding Meta-Loop</h3>
-    <p>RepoQ analyzes its own architecture using formal ontologies, creating a self-improving quality analysis system with unprecedented semantic insight.</p>
-  </div>
-  
-  <div class="feature-card">
-    <h3>🏗️ Multi-Domain Analysis</h3>
-    <p>Seamless integration across code structure, architectural design, and domain concepts with automatic traceability mapping.</p>
-  </div>
-  
-  <div class="feature-card">
-    <h3>⚙️ TRS Verification Framework</h3>
-    <p>Mathematically sound term rewriting systems ensuring confluence, termination, and idempotence for deterministic analysis.</p>
-  </div>
-  
-  <div class="feature-card">
-    <h3>🌐 Semantic Web Integration</h3>
-    <p>JSON-LD, RDF/Turtle export with W3C ontologies (PROV-O, OSLC, SPDX, FOAF) for interoperable quality data.</p>
-  </div>
-  
-  <div class="feature-card">
-    <h3>🛡️ Production-Ready Safety</h3>
-    <p>Stratified self-application architecture with paradox prevention, resource limits, and comprehensive safety guards.</p>
-  </div>
+-   :material-shield-check: __**Quality Certificates**__
+
+    ---
+    
+    W3C Verifiable Credentials for projects, modules, and files with cryptographic signatures.
+
+-   :material-docker: __**Container & CI/CD**__
+
+    ---
+    
+    Docker container and GitHub Actions for seamless CI/CD integration and consistent deployment.
+
+-   :material-database-check: __**SHACL Validation**__
+
+    ---
+    
+    Semantic validation of quality data using SHACL shapes and enterprise-grade compliance.
+
+-   :material-chart-timeline: __**Statistical Analysis**__
+
+    ---
+    
+    PMI, φ-coefficient, and χ²-p-value for statistically significant coupling relationships.
+
 </div>
 
-## 🎯 Core Capabilities
+## 🎯 Use Cases
 
-### Structure Analysis
-- **File & Module Organization**: Complete repository structure mapping
-- **Language Detection**: Multi-language support with LOC counting
-- **Dependency Extraction**: Python imports, JavaScript/TypeScript requires
-- **License Detection**: Automatic SPDX license identification
-- **CI/CD Detection**: GitHub Actions, GitLab CI, Travis CI, Jenkins
+### Development Teams
+- **Code Review Assistance**: Identify complexity hotspots and quality trends
+- **Technical Debt Tracking**: Monitor quality metrics over time  
+- **Refactoring Prioritization**: Focus on high-churn, high-complexity areas
 
-### Ontological Intelligence
-- **Concept Extraction**: Automatic identification of Code, C4, DDD patterns
-- **Semantic Validation**: Constraint checking with formal ontology rules
-- **Cross-Ontology Inference**: `code:Class → c4:Component → ddd:Entity` mappings
-- **Pattern Recognition**: Entity, Repository, Service, ValueObject detection
-- **Quality Insights**: High complexity warnings, architectural consistency checks
+### CI/CD Pipelines
+- **Quality Gates**: Automated quality thresholds in PR workflows
+- **Regression Detection**: Compare quality metrics between commits
+- **Semantic Integration**: Export to enterprise knowledge graphs
 
-### History & Evolution Analysis
-- **Commit Analysis**: Developer contributions, code churn, hotspots
-- **Temporal Metrics**: Quality evolution over time
-- **Contributor Insights**: Ownership patterns, collaboration metrics
-- **Risk Assessment**: Files with high churn + complexity
+### Engineering Organizations  
+- **Portfolio Analysis**: Cross-project quality insights and benchmarking
+- **Standards Compliance**: Ensure coding standards across teams
+- **Risk Assessment**: Identify maintenance risks and bus factor issues
 
-### Advanced Quality Metrics
-- **Complexity Analysis**: Cyclomatic complexity with lizard
-- **Maintainability Index**: Radon-based quality scoring
-- **Technical Debt**: TODO/FIXME/HACK detection
-- **Hotspot Detection**: Files needing attention
-- **Weakness Patterns**: Security anti-patterns, code smells
+## 🚀 Installation
 
-## 🌍 Semantic Web Integration
+=== "Standard"
+    ```bash
+    pip install repoq
+    ```
 
-```mermaid
-graph TD
-    A[RepoQ Analysis] --> B[JSON-LD Export]
-    B --> C[PROV-O Provenance]
-    B --> D[OSLC Quality Management]
+=== "Full Features"
+    ```bash
+    pip install repoq[full]
+    ```
+
+=== "Development"
+    ```bash
+    git clone https://github.com/kirill-0440/repoq.git
+    cd repoq
+    pip install -e ".[full,dev]"
+    ```
+
+## ⚡ Quick Examples
+
+### Basic Analysis
+```bash
+# Full quality analysis
+repoq full ./my-project --format json
+
+# Structure analysis only  
+repoq structure ./my-project --md report.md
+
+# History and hotspots
+repoq history ./my-project --since "2024-01-01"
+```
+
+### CI/CD Integration
+```yaml
+# .github/workflows/quality.yml
+- name: Quality Analysis
+  run: |
+    repoq full . --format json > quality.json
+    repoq structure . --format markdown > QUALITY_REPORT.md
+```
+
+### Semantic Web Export
+```bash
+# Export as RDF/Turtle for knowledge graphs
+repoq full ./my-project --format turtle > quality.ttl
+
+# JSON-LD for semantic integration
+repoq full ./my-project --format jsonld > quality.jsonld
+```
+
+## 📊 Sample Output
+
+```json
+{
+  "@context": "https://field33.com/ontologies/repoq/",
+  "@type": "QualityAnalysis",
+  "project": {
+    "name": "my-project",
+    "languages": ["python", "javascript"],
+    "linesOfCode": 15420,
+    "overallScore": 7.8
+  },
+  "hotspots": [
+    {
+      "file": "src/core/processor.py",
+      "churnScore": 0.89,
+      "complexityScore": 23,
+      "riskLevel": "high"
+    }
+  ]
+}
+```
+
+## 🗺️ Roadmap {#roadmap}
+
+### **Phase 1: Production Ready** (Next 30 days)
+- [ ] 80%+ test coverage with golden snapshots
+- [ ] Docker container and GitHub Actions  
+- [ ] SHACL validation for quality data
+- [ ] Performance optimization and caching
+- [ ] Reference analyses of popular OSS projects
+
+### **Phase 2: Semantic Certification** (60 days)
+- [ ] W3C Verifiable Credentials for quality certificates
+- [ ] Canonical JSON-LD context with stable ontologies
+- [ ] PR bot integration with quality insights
+- [ ] SPARQL endpoint for quality queries
+- [ ] Enterprise OSLC compatibility
+
+### **Phase 3: Advanced Analytics** (90 days)  
+- [ ] Statistical significance testing for coupling
+- [ ] SBOM/SPDX generation with vulnerability mapping
+- [ ] ZAG framework integration (PCQ/PCE/Manifest)
+- [ ] k-repair optimization suggestions
+- [ ] Machine learning pattern recognition
+
+## 📚 Learn More
+
+Ready to dive deeper? Explore our comprehensive documentation:
+
+- **[Installation Guide](getting-started/installation.md)** - Complete setup instructions
+- **[User Guide](user-guide/usage.md)** - Comprehensive usage examples and best practices
+- **[API Reference](api/reference.md)** - Complete Python and REST API documentation
+
+---
+
+**Start improving your code quality today!** 🚀
     B --> E[SPDX License Data]
     B --> F[FOAF Contributor Info]
     B --> G[Schema.org Software]

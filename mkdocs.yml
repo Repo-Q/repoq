@@ -136,12 +136,14 @@ nav:
     - Installation: getting-started/installation.md
   - User Guide:
     - Usage: user-guide/usage.md
-  - Ontological Intelligence:
+  - Advanced Topics:
     - Meta-Quality Loop: ontology/meta-loop.md
     - Ontological Intelligence: ontology/intelligence.md
     - TRS Framework: ontology/trs-framework.md
   - API Reference:
     - Overview: api/reference.md
+  - About:
+    - Current Limitations: about/limitations.md
 
 watch:
   - repoq/
