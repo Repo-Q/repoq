@@ -1,9 +1,12 @@
 # RepoQ - Repository Quality Analysis
 
+> ⚠️ **ACTIVE DEVELOPMENT**: This project is under active development and may contain breaking changes or unstable features. Use at your own risk in production environments.
+
 [![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![Tests](https://img.shields.io/badge/tests-57%20passing-orange)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-<10%25-red)](#roadmap)
+[![Status](https://img.shields.io/badge/status-alpha-red)](https://github.com/kirill-0440/repoq)
 
 Modern CLI tool for comprehensive Git repository quality analysis with semantic web export and CI/CD integration.
 
