@@ -8,6 +8,7 @@ Commands:
     history: Analyze git history (commits, contributors, churn)
     full: Complete analysis (structure + history + hotspots)
     diff: Compare two analysis results and show changes
+    gate: Quality gate comparing BASE vs HEAD metrics
 
 The CLI is built with Typer and Rich for a beautiful terminal experience.
 """
@@ -17,6 +18,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import subprocess
 import sys
 from pathlib import Path
 from typing import Dict, Any
@@ -28,6 +30,7 @@ from rich.progress import Progress
 from .config import AnalyzeConfig, Thresholds, load_config
 from .core.model import Project
 from .core.repo_loader import is_url, prepare_repo
+from .gate import format_gate_report, run_quality_gate
 from .logging import setup_logging
 from .reporting.diff import diff_jsonld
 
@@ -681,6 +684,152 @@ def verify(
     
     if exit_code != 0:
         raise typer.Exit(exit_code)
+
+
+@app.command()
+def gate(
+    repo: str = typer.Argument(
+        ".",
+        help="Path to repository to analyze (default: current directory)"
+    ),
+    base: str = typer.Option(
+        "main",
+        "--base", "-b",
+        help="Baseline Git reference (branch, tag, SHA) for comparison"
+    ),
+    head: str = typer.Option(
+        ".",
+        "--head", "-h",
+        help="Current Git reference (default: . = working tree)"
+    ),
+    strict: bool = typer.Option(
+        True,
+        "--strict/--no-strict",
+        help="Fail on any constraint violation (strict) or warn only (no-strict)"
+    ),
+    output: str = typer.Option(
+        None, "-o", "--output",
+        help="Save gate results to JSON file"
+    ),
+    quiet: bool = typer.Option(
+        False, "--quiet", "-q",
+        help="Suppress output except final status"
+    ),
+):
+    """
+    🚦 Quality Gate: Compare BASE vs HEAD metrics.
+    
+    This command implements the Quality Gate MVP:
+    - Analyzes BASE revision (e.g., main branch)
+    - Analyzes HEAD revision (current working tree)
+    - Computes Q-metrics: Q = 100 - 20×complexity - 30×hotspots - 10×todos
+    - Checks hard constraints:
+        • Tests coverage ≥ 80%
+        • TODOs count ≤ 100
+        • Hotspots count ≤ 20
+        • Score delta ≤ -5.0
+    - Returns exit code 0 (PASS) or 1 (FAIL)
+    
+    Examples:
+        repoq gate --base main --head .
+        repoq gate --base origin/main --no-strict
+        repoq gate . --base v1.0.0 --output gate-results.json
+    """
+    import time
+    
+    repo_path = Path(repo).resolve()
+    
+    if not repo_path.exists():
+        print(f"❌ Repository not found: {repo_path}")
+        raise typer.Exit(code=1)
+    
+    if not (repo_path / ".git").exists():
+        print(f"❌ Not a git repository: {repo_path}")
+        raise typer.Exit(code=1)
+    
+    if not quiet:
+        print("[bold blue]🚦 RepoQ Quality Gate[/bold blue]")
+        print(f"Repository: {repo_path}")
+        print(f"BASE: {base}")
+        print(f"HEAD: {head}")
+        print(f"Mode: {'strict' if strict else 'lenient'}")
+        print()
+    
+    try:
+        start_time = time.time()
+        
+        # Run quality gate
+        result = run_quality_gate(
+            repo_path=repo_path,
+            base_ref=base,
+            head_ref=head,
+            strict=strict,
+        )
+        
+        gate_time = time.time() - start_time
+        
+        # Print report
+        if not quiet:
+            report = format_gate_report(result)
+            print(report)
+            print()
+            print(f"⏱️  Gate execution time: {gate_time:.2f}s")
+        
+        # Save results if requested
+        if output:
+            output_path = Path(output)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            with output_path.open("w", encoding="utf-8") as f:
+                json.dump(
+                    {
+                        "passed": result.passed,
+                        "base_metrics": {
+                            "score": result.base_metrics.score,
+                            "complexity": result.base_metrics.complexity,
+                            "hotspots": result.base_metrics.hotspots,
+                            "todos": result.base_metrics.todos,
+                            "tests_coverage": result.base_metrics.tests_coverage,
+                            "grade": result.base_metrics.grade,
+                        },
+                        "head_metrics": {
+                            "score": result.head_metrics.score,
+                            "complexity": result.head_metrics.complexity,
+                            "hotspots": result.head_metrics.hotspots,
+                            "todos": result.head_metrics.todos,
+                            "tests_coverage": result.head_metrics.tests_coverage,
+                            "grade": result.head_metrics.grade,
+                        },
+                        "deltas": result.deltas,
+                        "violations": result.violations,
+                        "execution_time": gate_time,
+                    },
+                    f,
+                    indent=2,
+                )
+            
+            if not quiet:
+                print(f"💾 Results saved to: {output}")
+        
+        # Exit with appropriate code
+        exit_code = 0 if result.passed else 1
+        
+        if not quiet:
+            status = "✅ Quality Gate PASSED" if result.passed else "❌ Quality Gate FAILED"
+            print()
+            print(f"[bold]{'green' if result.passed else 'red'}]{status}[/bold]")
+        
+        raise typer.Exit(code=exit_code)
+        
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Git command failed: {e.stderr if hasattr(e, 'stderr') else str(e)}")
+        raise typer.Exit(code=2)
+    except Exception as e:
+        print(f"❌ Gate execution failed: {e}")
+        if not quiet:
+            import traceback
+            traceback.print_exc()
+        raise typer.Exit(code=2)
 
 
 def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str, Any]:
