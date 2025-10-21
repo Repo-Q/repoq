@@ -1,0 +1,268 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://ontology.repoq.dev/code/",
+    "@vocab": "http://ontology.repoq.dev/code#",
+    
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    
+    "code": "http://ontology.repoq.dev/code#",
+    "repoq": "http://ontology.repoq.dev/repoq#",
+    
+    "CodeElement": {
+      "@id": "code:CodeElement",
+      "@type": "@id"
+    },
+    "Module": {
+      "@id": "code:Module",
+      "@type": "@id"
+    },
+    "Class": {
+      "@id": "code:Class", 
+      "@type": "@id"
+    },
+    "Method": {
+      "@id": "code:Method",
+      "@type": "@id"
+    },
+    "Function": {
+      "@id": "code:Function",
+      "@type": "@id"
+    },
+    "Variable": {
+      "@id": "code:Variable",
+      "@type": "@id"
+    },
+    "Package": {
+      "@id": "code:Package",
+      "@type": "@id"
+    },
+    
+    "hasComplexity": {
+      "@id": "code:hasComplexity",
+      "@type": "xsd:integer"
+    },
+    "hasLineCount": {
+      "@id": "code:hasLineCount", 
+      "@type": "xsd:integer"
+    },
+    "hasName": {
+      "@id": "code:hasName",
+      "@type": "xsd:string"
+    },
+    "hasPath": {
+      "@id": "code:hasPath",
+      "@type": "xsd:string"
+    },
+    "dependsOn": {
+      "@id": "code:dependsOn",
+      "@type": "@id"
+    },
+    "contains": {
+      "@id": "code:contains",
+      "@type": "@id"
+    },
+    "implements": {
+      "@id": "code:implements",
+      "@type": "@id"
+    },
+    "extends": {
+      "@id": "code:extends", 
+      "@type": "@id"
+    },
+    "calls": {
+      "@id": "code:calls",
+      "@type": "@id"
+    },
+    "accesses": {
+      "@id": "code:accesses",
+      "@type": "@id"
+    },
+    
+    "hasVisibility": {
+      "@id": "code:hasVisibility",
+      "@type": "@vocab"
+    },
+    "public": "code:public",
+    "private": "code:private", 
+    "protected": "code:protected",
+    "internal": "code:internal",
+    
+    "hasLanguage": {
+      "@id": "code:hasLanguage",
+      "@type": "xsd:string"
+    },
+    "hasVersion": {
+      "@id": "code:hasVersion",
+      "@type": "xsd:string"
+    },
+    
+    "hasQualityMetric": {
+      "@id": "code:hasQualityMetric",
+      "@type": "@id"
+    },
+    "QualityMetric": {
+      "@id": "code:QualityMetric",
+      "@type": "@id"
+    },
+    "metricName": {
+      "@id": "code:metricName",
+      "@type": "xsd:string"
+    },
+    "metricValue": {
+      "@id": "code:metricValue",
+      "@type": "xsd:decimal"
+    },
+    "metricThreshold": {
+      "@id": "code:metricThreshold",
+      "@type": "xsd:decimal"
+    },
+    
+    "hasAnnotation": {
+      "@id": "code:hasAnnotation",
+      "@type": "@id"
+    },
+    "Annotation": {
+      "@id": "code:Annotation",
+      "@type": "@id"
+    },
+    "annotationType": {
+      "@id": "code:annotationType",
+      "@type": "xsd:string"
+    },
+    "annotationValue": {
+      "@id": "code:annotationValue",
+      "@type": "xsd:string"
+    },
+    
+    "hasDocumentation": {
+      "@id": "code:hasDocumentation",
+      "@type": "xsd:string"
+    },
+    "hasComment": {
+      "@id": "code:hasComment",
+      "@type": "xsd:string"
+    },
+    
+    "hasGitInfo": {
+      "@id": "code:hasGitInfo",
+      "@type": "@id"
+    },
+    "GitInfo": {
+      "@id": "code:GitInfo",
+      "@type": "@id"
+    },
+    "lastModified": {
+      "@id": "code:lastModified",
+      "@type": "xsd:dateTime"
+    },
+    "lastAuthor": {
+      "@id": "code:lastAuthor",
+      "@type": "xsd:string"
+    },
+    "commitHash": {
+      "@id": "code:commitHash",
+      "@type": "xsd:string"
+    },
+    "changeFrequency": {
+      "@id": "code:changeFrequency",
+      "@type": "xsd:integer"
+    }
+  },
+  
+  "@graph": [
+    {
+      "@id": "code:CodeElement",
+      "@type": "owl:Class",
+      "rdfs:label": "Code Element",
+      "rdfs:comment": "Base class for all code structural elements"
+    },
+    {
+      "@id": "code:Module",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "code:CodeElement",
+      "rdfs:label": "Module",
+      "rdfs:comment": "A module or file containing code"
+    },
+    {
+      "@id": "code:Class",
+      "@type": "owl:Class", 
+      "rdfs:subClassOf": "code:CodeElement",
+      "rdfs:label": "Class",
+      "rdfs:comment": "A class definition"
+    },
+    {
+      "@id": "code:Method",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "code:CodeElement", 
+      "rdfs:label": "Method",
+      "rdfs:comment": "A method within a class"
+    },
+    {
+      "@id": "code:Function",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "code:CodeElement",
+      "rdfs:label": "Function", 
+      "rdfs:comment": "A standalone function"
+    },
+    {
+      "@id": "code:Variable",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "code:CodeElement",
+      "rdfs:label": "Variable",
+      "rdfs:comment": "A variable or field"
+    },
+    {
+      "@id": "code:Package",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "code:CodeElement", 
+      "rdfs:label": "Package",
+      "rdfs:comment": "A package or namespace"
+    },
+    
+    {
+      "@id": "code:dependsOn",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "code:CodeElement",
+      "rdfs:range": "code:CodeElement",
+      "rdfs:label": "depends on",
+      "rdfs:comment": "Indicates a dependency relationship"
+    },
+    {
+      "@id": "code:contains", 
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "code:CodeElement",
+      "rdfs:range": "code:CodeElement",
+      "rdfs:label": "contains",
+      "rdfs:comment": "Indicates containment relationship"
+    },
+    {
+      "@id": "code:calls",
+      "@type": "owl:ObjectProperty", 
+      "rdfs:domain": ["code:Method", "code:Function"],
+      "rdfs:range": ["code:Method", "code:Function"],
+      "rdfs:label": "calls",
+      "rdfs:comment": "Indicates a method/function call"
+    },
+    
+    {
+      "@id": "code:hasComplexity",
+      "@type": "owl:DatatypeProperty",
+      "rdfs:domain": "code:CodeElement",
+      "rdfs:range": "xsd:integer",
+      "rdfs:label": "has complexity",
+      "rdfs:comment": "Cyclomatic complexity measure"
+    },
+    {
+      "@id": "code:hasLineCount",
+      "@type": "owl:DatatypeProperty", 
+      "rdfs:domain": "code:CodeElement",
+      "rdfs:range": "xsd:integer",
+      "rdfs:label": "has line count",
+      "rdfs:comment": "Number of lines of code"
+    }
+  ]
+}

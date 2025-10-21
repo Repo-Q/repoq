@@ -354,6 +354,79 @@ def run_safe_self_analysis(config: Dict[str, Any]) -> Dict[str, Any]:
         # For now, return a mock successful analysis
         # In a real implementation, this would invoke the RepoQ CLI or pipeline
         
+        # Add ontology-enhanced analysis
+        try:
+            from repoq.ontologies.ontology_manager import analyze_with_ontologies
+            
+            # Basic project structure for ontology analysis
+            project_structure = {
+                'project_name': 'RepoQ',
+                'analyzers': {
+                    'structure': {
+                        'files': [
+                            {
+                                'path': 'repoq/__init__.py',
+                                'name': '__init__.py',
+                                'lines': 50,
+                                'language': 'python',
+                                'classes': []
+                            },
+                            {
+                                'path': 'repoq/cli.py',
+                                'name': 'cli.py', 
+                                'lines': 200,
+                                'language': 'python',
+                                'classes': [
+                                    {'name': 'CLI', 'complexity': 8, 'lines': 150, 'methods': [
+                                        {'name': 'analyze', 'complexity': 5, 'visibility': 'public'},
+                                        {'name': 'report', 'complexity': 3, 'visibility': 'public'}
+                                    ]}
+                                ]
+                            },
+                            {
+                                'path': 'repoq/analyzers/structure.py',
+                                'name': 'structure.py',
+                                'lines': 300,
+                                'language': 'python',
+                                'classes': [
+                                    {'name': 'StructureAnalyzer', 'complexity': 12, 'lines': 250, 'methods': [
+                                        {'name': 'analyze', 'complexity': 8, 'visibility': 'public'},
+                                        {'name': 'extract_classes', 'complexity': 6, 'visibility': 'private'}
+                                    ]}
+                                ]
+                            },
+                            {
+                                'path': 'repoq/core/model.py',
+                                'name': 'model.py',
+                                'lines': 400,
+                                'language': 'python', 
+                                'classes': [
+                                    {'name': 'Repository', 'complexity': 6, 'lines': 100, 'methods': []},
+                                    {'name': 'Analyzer', 'complexity': 4, 'lines': 80, 'methods': []},
+                                    {'name': 'Report', 'complexity': 3, 'lines': 60, 'methods': []}
+                                ]
+                            }
+                        ]
+                    }
+                }
+            }
+            
+            # Run ontology analysis
+            ontology_results = analyze_with_ontologies(project_structure)
+            
+        except ImportError:
+            ontology_results = {
+                'concepts': [],
+                'violations': [],
+                'message': 'Ontology analysis unavailable (missing dependencies)'
+            }
+        except Exception as e:
+            ontology_results = {
+                'concepts': [],
+                'violations': [],
+                'error': str(e)
+            }
+        
         # Simulate basic analysis results
         results = {
             "metadata": {
@@ -381,7 +454,8 @@ def run_safe_self_analysis(config: Dict[str, Any]) -> Dict[str, Any]:
                 "errors": 0,
                 "total_time_ms": 250,
                 "trs_systems_used": ["filters", "metrics", "spdx", "semver", "rdf"]
-            }
+            },
+            "ontology_analysis": ontology_results
         }
         
         monitor.log_event("analysis_complete", {"success": True})

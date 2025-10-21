@@ -1,0 +1,277 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://ontology.repoq.dev/c4/",
+    "@vocab": "http://ontology.repoq.dev/c4#",
+    
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    
+    "c4": "http://ontology.repoq.dev/c4#",
+    "code": "http://ontology.repoq.dev/code#",
+    "repoq": "http://ontology.repoq.dev/repoq#",
+    
+    "ArchitecturalElement": {
+      "@id": "c4:ArchitecturalElement",
+      "@type": "@id"
+    },
+    "Person": {
+      "@id": "c4:Person",
+      "@type": "@id"
+    },
+    "SoftwareSystem": {
+      "@id": "c4:SoftwareSystem", 
+      "@type": "@id"
+    },
+    "Container": {
+      "@id": "c4:Container",
+      "@type": "@id"
+    },
+    "Component": {
+      "@id": "c4:Component",
+      "@type": "@id"
+    },
+    "CodeElement": {
+      "@id": "c4:CodeElement",
+      "@type": "@id"
+    },
+    
+    "Relationship": {
+      "@id": "c4:Relationship",
+      "@type": "@id"
+    },
+    "uses": {
+      "@id": "c4:uses",
+      "@type": "@id"
+    },
+    "includes": {
+      "@id": "c4:includes", 
+      "@type": "@id"
+    },
+    "delivers": {
+      "@id": "c4:delivers",
+      "@type": "@id"
+    },
+    "dependsOn": {
+      "@id": "c4:dependsOn",
+      "@type": "@id"
+    },
+    
+    "hasName": {
+      "@id": "c4:hasName",
+      "@type": "xsd:string"
+    },
+    "hasDescription": {
+      "@id": "c4:hasDescription", 
+      "@type": "xsd:string"
+    },
+    "hasTechnology": {
+      "@id": "c4:hasTechnology",
+      "@type": "xsd:string"
+    },
+    "hasResponsibility": {
+      "@id": "c4:hasResponsibility",
+      "@type": "xsd:string"
+    },
+    
+    "isInternal": {
+      "@id": "c4:isInternal",
+      "@type": "xsd:boolean"
+    },
+    "isExternal": {
+      "@id": "c4:isExternal", 
+      "@type": "xsd:boolean"
+    },
+    
+    "hasInterface": {
+      "@id": "c4:hasInterface",
+      "@type": "@id"
+    },
+    "Interface": {
+      "@id": "c4:Interface",
+      "@type": "@id"
+    },
+    "interfaceType": {
+      "@id": "c4:interfaceType",
+      "@type": "@vocab"
+    },
+    "REST_API": "c4:REST_API",
+    "GraphQL": "c4:GraphQL", 
+    "Database": "c4:Database",
+    "MessageQueue": "c4:MessageQueue",
+    "WebUI": "c4:WebUI",
+    
+    "hasDeploymentNode": {
+      "@id": "c4:hasDeploymentNode",
+      "@type": "@id"
+    },
+    "DeploymentNode": {
+      "@id": "c4:DeploymentNode",
+      "@type": "@id"
+    },
+    "nodeType": {
+      "@id": "c4:nodeType",
+      "@type": "xsd:string"
+    },
+    "hasEnvironment": {
+      "@id": "c4:hasEnvironment",
+      "@type": "xsd:string"
+    },
+    
+    "hasQualityAttribute": {
+      "@id": "c4:hasQualityAttribute",
+      "@type": "@id"
+    },
+    "QualityAttribute": {
+      "@id": "c4:QualityAttribute",
+      "@type": "@id"
+    },
+    "attributeName": {
+      "@id": "c4:attributeName",
+      "@type": "@vocab"
+    },
+    "Performance": "c4:Performance",
+    "Security": "c4:Security",
+    "Scalability": "c4:Scalability", 
+    "Maintainability": "c4:Maintainability",
+    "Reliability": "c4:Reliability",
+    "Usability": "c4:Usability",
+    
+    "attributeValue": {
+      "@id": "c4:attributeValue",
+      "@type": "xsd:string"
+    },
+    "attributeMetric": {
+      "@id": "c4:attributeMetric",
+      "@type": "xsd:decimal"
+    },
+    
+    "hasRisk": {
+      "@id": "c4:hasRisk",
+      "@type": "@id"
+    },
+    "Risk": {
+      "@id": "c4:Risk",
+      "@type": "@id"
+    },
+    "riskLevel": {
+      "@id": "c4:riskLevel",
+      "@type": "@vocab"
+    },
+    "High": "c4:High",
+    "Medium": "c4:Medium",
+    "Low": "c4:Low",
+    
+    "riskDescription": {
+      "@id": "c4:riskDescription",
+      "@type": "xsd:string"
+    },
+    "mitigationStrategy": {
+      "@id": "c4:mitigationStrategy",
+      "@type": "xsd:string"
+    },
+    
+    "mappedToCode": {
+      "@id": "c4:mappedToCode",
+      "@type": "@id"
+    }
+  },
+  
+  "@graph": [
+    {
+      "@id": "c4:ArchitecturalElement",
+      "@type": "owl:Class",
+      "rdfs:label": "Architectural Element",
+      "rdfs:comment": "Base class for all C4 Model elements"
+    },
+    {
+      "@id": "c4:Person",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "c4:ArchitecturalElement",
+      "rdfs:label": "Person",
+      "rdfs:comment": "A human user of the system"
+    },
+    {
+      "@id": "c4:SoftwareSystem",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "c4:ArchitecturalElement", 
+      "rdfs:label": "Software System",
+      "rdfs:comment": "The highest level of abstraction - a software system"
+    },
+    {
+      "@id": "c4:Container",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "c4:ArchitecturalElement",
+      "rdfs:label": "Container", 
+      "rdfs:comment": "An application or data store within a software system"
+    },
+    {
+      "@id": "c4:Component", 
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "c4:ArchitecturalElement",
+      "rdfs:label": "Component",
+      "rdfs:comment": "A grouping of related functionality within a container"
+    },
+    {
+      "@id": "c4:CodeElement",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "c4:ArchitecturalElement",
+      "rdfs:label": "Code Element",
+      "rdfs:comment": "Implementation details - classes, interfaces, objects"
+    },
+    
+    {
+      "@id": "c4:uses",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "c4:ArchitecturalElement",
+      "rdfs:range": "c4:ArchitecturalElement",
+      "rdfs:label": "uses",
+      "rdfs:comment": "Indicates usage relationship between elements"
+    },
+    {
+      "@id": "c4:includes",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "c4:ArchitecturalElement", 
+      "rdfs:range": "c4:ArchitecturalElement",
+      "rdfs:label": "includes",
+      "rdfs:comment": "Indicates containment relationship"
+    },
+    {
+      "@id": "c4:delivers",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "c4:ArchitecturalElement",
+      "rdfs:range": "c4:ArchitecturalElement", 
+      "rdfs:label": "delivers",
+      "rdfs:comment": "Indicates delivery of functionality"
+    },
+    
+    {
+      "@id": "c4:mappedToCode",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "c4:ArchitecturalElement",
+      "rdfs:range": "code:CodeElement",
+      "rdfs:label": "mapped to code",
+      "rdfs:comment": "Links architectural elements to their code implementation"
+    },
+    
+    {
+      "@id": "c4:hasQualityAttribute",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "c4:ArchitecturalElement", 
+      "rdfs:range": "c4:QualityAttribute",
+      "rdfs:label": "has quality attribute",
+      "rdfs:comment": "Associates quality attributes with architectural elements"
+    },
+    
+    {
+      "@id": "c4:hasRisk",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "c4:ArchitecturalElement",
+      "rdfs:range": "c4:Risk",
+      "rdfs:label": "has risk", 
+      "rdfs:comment": "Associates risks with architectural elements"
+    }
+  ]
+}

@@ -1,0 +1,324 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "@base": "http://ontology.repoq.dev/ddd/",
+    "@vocab": "http://ontology.repoq.dev/ddd#",
+    
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#", 
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    
+    "ddd": "http://ontology.repoq.dev/ddd#",
+    "code": "http://ontology.repoq.dev/code#",
+    "c4": "http://ontology.repoq.dev/c4#",
+    "repoq": "http://ontology.repoq.dev/repoq#",
+    
+    "DomainConcept": {
+      "@id": "ddd:DomainConcept",
+      "@type": "@id"
+    },
+    "BoundedContext": {
+      "@id": "ddd:BoundedContext",
+      "@type": "@id"
+    },
+    "Aggregate": {
+      "@id": "ddd:Aggregate",
+      "@type": "@id"
+    },
+    "AggregateRoot": {
+      "@id": "ddd:AggregateRoot",
+      "@type": "@id"
+    },
+    "Entity": {
+      "@id": "ddd:Entity",
+      "@type": "@id"
+    },
+    "ValueObject": {
+      "@id": "ddd:ValueObject", 
+      "@type": "@id"
+    },
+    "DomainService": {
+      "@id": "ddd:DomainService",
+      "@type": "@id"
+    },
+    "ApplicationService": {
+      "@id": "ddd:ApplicationService",
+      "@type": "@id"
+    },
+    "Repository": {
+      "@id": "ddd:Repository",
+      "@type": "@id"
+    },
+    "Factory": {
+      "@id": "ddd:Factory",
+      "@type": "@id"
+    },
+    "DomainEvent": {
+      "@id": "ddd:DomainEvent",
+      "@type": "@id"
+    },
+    "Command": {
+      "@id": "ddd:Command",
+      "@type": "@id"
+    },
+    "Query": {
+      "@id": "ddd:Query",
+      "@type": "@id"
+    },
+    
+    "UbiquitousLanguage": {
+      "@id": "ddd:UbiquitousLanguage",
+      "@type": "@id"
+    },
+    "DomainModel": {
+      "@id": "ddd:DomainModel",
+      "@type": "@id"
+    },
+    "Specification": {
+      "@id": "ddd:Specification",
+      "@type": "@id"
+    },
+    
+    "hasName": {
+      "@id": "ddd:hasName",
+      "@type": "xsd:string"
+    },
+    "hasDescription": {
+      "@id": "ddd:hasDescription",
+      "@type": "xsd:string"
+    },
+    "hasResponsibility": {
+      "@id": "ddd:hasResponsibility",
+      "@type": "xsd:string"
+    },
+    "hasDomainRules": {
+      "@id": "ddd:hasDomainRules",
+      "@type": "xsd:string"
+    },
+    
+    "belongsToContext": {
+      "@id": "ddd:belongsToContext",
+      "@type": "@id"
+    },
+    "belongsToAggregate": {
+      "@id": "ddd:belongsToAggregate",
+      "@type": "@id"
+    },
+    "isRootOf": {
+      "@id": "ddd:isRootOf",
+      "@type": "@id"
+    },
+    "collaboratesWith": {
+      "@id": "ddd:collaboratesWith",
+      "@type": "@id"
+    },
+    "publishes": {
+      "@id": "ddd:publishes",
+      "@type": "@id"
+    },
+    "subscribesTo": {
+      "@id": "ddd:subscribesTo",
+      "@type": "@id"
+    },
+    "handles": {
+      "@id": "ddd:handles",
+      "@type": "@id"
+    },
+    "produces": {
+      "@id": "ddd:produces",
+      "@type": "@id"
+    },
+    
+    "hasInvariant": {
+      "@id": "ddd:hasInvariant",
+      "@type": "xsd:string"
+    },
+    "hasBusinessRule": {
+      "@id": "ddd:hasBusinessRule",
+      "@type": "xsd:string"
+    },
+    "hasPolicy": {
+      "@id": "ddd:hasPolicy",
+      "@type": "xsd:string"
+    },
+    
+    "contextType": {
+      "@id": "ddd:contextType",
+      "@type": "@vocab"
+    },
+    "Core": "ddd:Core",
+    "Supporting": "ddd:Supporting", 
+    "Generic": "ddd:Generic",
+    
+    "layerType": {
+      "@id": "ddd:layerType",
+      "@type": "@vocab"
+    },
+    "Domain": "ddd:Domain",
+    "Application": "ddd:Application",
+    "Infrastructure": "ddd:Infrastructure",
+    "Presentation": "ddd:Presentation",
+    
+    "hasComplexity": {
+      "@id": "ddd:hasComplexity",
+      "@type": "@vocab"
+    },
+    "Simple": "ddd:Simple",
+    "Complicated": "ddd:Complicated",
+    "Complex": "ddd:Complex",
+    "Chaotic": "ddd:Chaotic",
+    
+    "hasMaturity": {
+      "@id": "ddd:hasMaturity",
+      "@type": "@vocab"
+    },
+    "Genesis": "ddd:Genesis",
+    "Custom": "ddd:Custom",
+    "Product": "ddd:Product",
+    "Commodity": "ddd:Commodity",
+    
+    "hasCohesion": {
+      "@id": "ddd:hasCohesion",
+      "@type": "xsd:decimal"
+    },
+    "hasCoupling": {
+      "@id": "ddd:hasCoupling", 
+      "@type": "xsd:decimal"
+    },
+    
+    "implementedBy": {
+      "@id": "ddd:implementedBy",
+      "@type": "@id"
+    },
+    "mappedToComponent": {
+      "@id": "ddd:mappedToComponent",
+      "@type": "@id"
+    },
+    
+    "hasAntiPattern": {
+      "@id": "ddd:hasAntiPattern",
+      "@type": "@id"
+    },
+    "AntiPattern": {
+      "@id": "ddd:AntiPattern",
+      "@type": "@id"
+    },
+    "antiPatternType": {
+      "@id": "ddd:antiPatternType",
+      "@type": "@vocab"
+    },
+    "AnemicDomainModel": "ddd:AnemicDomainModel",
+    "BigBallOfMud": "ddd:BigBallOfMud",
+    "GodObject": "ddd:GodObject",
+    "SmartUI": "ddd:SmartUI",
+    "TransactionScript": "ddd:TransactionScript"
+  },
+  
+  "@graph": [
+    {
+      "@id": "ddd:DomainConcept",
+      "@type": "owl:Class",
+      "rdfs:label": "Domain Concept",
+      "rdfs:comment": "Base class for all Domain-Driven Design concepts"
+    },
+    {
+      "@id": "ddd:BoundedContext",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:DomainConcept",
+      "rdfs:label": "Bounded Context", 
+      "rdfs:comment": "A linguistic boundary within which a particular domain model is valid"
+    },
+    {
+      "@id": "ddd:Aggregate",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:DomainConcept",
+      "rdfs:label": "Aggregate",
+      "rdfs:comment": "A cluster of associated objects treated as a unit for data changes"
+    },
+    {
+      "@id": "ddd:AggregateRoot",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:Entity",
+      "rdfs:label": "Aggregate Root",
+      "rdfs:comment": "The single entry point to an aggregate"
+    },
+    {
+      "@id": "ddd:Entity", 
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:DomainConcept",
+      "rdfs:label": "Entity",
+      "rdfs:comment": "An object with identity and lifecycle"
+    },
+    {
+      "@id": "ddd:ValueObject",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:DomainConcept",
+      "rdfs:label": "Value Object",
+      "rdfs:comment": "An object without identity, defined by its attributes"
+    },
+    {
+      "@id": "ddd:DomainService",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:DomainConcept",
+      "rdfs:label": "Domain Service",
+      "rdfs:comment": "A service that encapsulates domain logic"
+    },
+    {
+      "@id": "ddd:Repository",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:DomainConcept", 
+      "rdfs:label": "Repository",
+      "rdfs:comment": "Encapsulates logic for accessing data sources"
+    },
+    {
+      "@id": "ddd:DomainEvent",
+      "@type": "owl:Class",
+      "rdfs:subClassOf": "ddd:DomainConcept",
+      "rdfs:label": "Domain Event", 
+      "rdfs:comment": "Something that happened in the domain that domain experts care about"
+    },
+    
+    {
+      "@id": "ddd:belongsToContext",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "ddd:DomainConcept",
+      "rdfs:range": "ddd:BoundedContext", 
+      "rdfs:label": "belongs to context",
+      "rdfs:comment": "Indicates which bounded context a concept belongs to"
+    },
+    {
+      "@id": "ddd:implementedBy",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "ddd:DomainConcept",
+      "rdfs:range": "code:CodeElement",
+      "rdfs:label": "implemented by",
+      "rdfs:comment": "Links domain concepts to their code implementation"
+    },
+    {
+      "@id": "ddd:mappedToComponent",
+      "@type": "owl:ObjectProperty", 
+      "rdfs:domain": "ddd:BoundedContext",
+      "rdfs:range": "c4:Component",
+      "rdfs:label": "mapped to component",
+      "rdfs:comment": "Links bounded contexts to C4 components"
+    },
+    
+    {
+      "@id": "ddd:publishes",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "ddd:DomainConcept",
+      "rdfs:range": "ddd:DomainEvent",
+      "rdfs:label": "publishes",
+      "rdfs:comment": "Indicates that a concept publishes domain events"
+    },
+    {
+      "@id": "ddd:handles",
+      "@type": "owl:ObjectProperty",
+      "rdfs:domain": "ddd:DomainService",
+      "rdfs:range": ["ddd:Command", "ddd:Query"],
+      "rdfs:label": "handles",
+      "rdfs:comment": "Indicates that a service handles commands or queries"
+    }
+  ]
+}
