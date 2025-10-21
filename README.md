@@ -181,5 +181,35 @@ repoq full . -o artifacts/self.jsonld --validate-shapes
 
 **Contribute**: Pick a task from [PHASE1_CHECKLIST.md](PHASE1_CHECKLIST.md) and open a PR!
 
+## 🔬 Normalization & Determinism
+
+repoq включает подсистему **Term Rewriting Systems (TRS)** для обеспечения детерминированных и воспроизводимых результатов.
+
+### SPDX License Normalization
+
+Канонизация лицензионных выражений к нормальной форме:
+
+```python
+from repoq.normalize import normalize_spdx
+
+# Идемпотентность: A OR A → A
+normalize_spdx("MIT OR MIT")  # → "MIT"
+
+# Коммутативность: лексикографическая сортировка
+normalize_spdx("GPL-2.0 OR MIT OR Apache-2.0")  
+# → "Apache-2.0 OR GPL-2.0 OR MIT"
+
+# Абсорбция: A OR (A AND B) → A
+normalize_spdx("(MIT AND Apache-2.0) OR MIT")  # → "MIT"
+```
+
+**Преимущества:**
+- ✅ Детерминированные отчёты (нет "флапающих" diff'ов)
+- ✅ Content-addressable кэширование по `hash(NF(license))`
+- ✅ Формальные гарантии: confluence, termination, idempotence
+
+См. `repoq/normalize/` для деталей.
+
 ## Лицензия
+
 MIT
