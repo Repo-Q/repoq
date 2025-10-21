@@ -122,6 +122,31 @@ class Person:
 
 @dataclass
 class File:
+    """Represents a source code file in the repository.
+
+    Files are mapped to schema:SoftwareSourceCode, spdx:File, and prov:Entity
+    in JSON-LD export, enabling semantic web integration and provenance tracking.
+
+    Attributes:
+        id: Unique identifier (e.g., "repo:file:src/main.py")
+        path: Relative path from repository root
+        language: Detected programming language (e.g., "Python", "JavaScript")
+        lines_of_code: Total lines excluding blanks and comments (default: 0)
+        complexity: Cyclomatic complexity score (default: None)
+        maintainability: Maintainability index 0-100 (default: None)
+        commits_count: Number of commits modifying this file (default: 0)
+        code_churn: Sum of lines added + deleted over time (default: 0)
+        contributors: Dict mapping person_id to contribution metrics (default: {})
+        issues: List of issue IDs associated with this file (default: [])
+        last_modified: ISO 8601 timestamp of last modification (default: None)
+        deprecated: Whether file is marked as deprecated (default: False)
+        test_file: Whether file is a test file (default: False)
+        module: Module ID containing this file (default: None)
+        hotness: Combined metric of churn and complexity (default: None)
+        checksum_algo: Checksum algorithm used (e.g., "sha256") (default: None)
+        checksum_value: File content checksum value (default: None)
+    """
+
     id: str
     path: str
     language: Optional[str] = None
@@ -143,6 +168,24 @@ class File:
 
 @dataclass
 class Module:
+    """Represents a logical module or package in the repository.
+
+    Modules group related files and can contain sub-modules, forming a tree structure.
+
+    Attributes:
+        id: Unique identifier (e.g., "repo:module:src/utils")
+        name: Module name (e.g., "utils")
+        path: Relative path from repository root
+        contains_files: List of file IDs in this module (default: [])
+        contains_modules: List of sub-module IDs (default: [])
+        total_loc: Sum of lines of code in all contained files (default: 0)
+        total_commits: Sum of commits affecting this module (default: 0)
+        num_authors: Number of unique contributors to this module (default: 0)
+        owner: Person ID of primary owner (default: None)
+        hotspot_score: Combined metric of activity and complexity (default: None)
+        main_language: Predominant programming language (default: None)
+    """
+
     id: str
     name: str
     path: str
@@ -158,6 +201,15 @@ class Module:
 
 @dataclass
 class DependencyEdge:
+    """Represents a dependency relationship between modules or files.
+
+    Attributes:
+        source: ID of dependent module/file
+        target: ID of dependency module/file
+        weight: Dependency strength (default: 1)
+        type: Dependency category: "import", "runtime", or "build" (default: "import")
+    """
+
     source: str  # module/file id
     target: str
     weight: int = 1
@@ -166,6 +218,14 @@ class DependencyEdge:
 
 @dataclass
 class CouplingEdge:
+    """Represents temporal coupling between files (files changed together).
+
+    Attributes:
+        a: ID of first file
+        b: ID of second file
+        weight: Number of commits where both files changed together (default: 1)
+    """
+
     a: str  # file id
     b: str  # file id
     weight: int = 1
@@ -173,6 +233,15 @@ class CouplingEdge:
 
 @dataclass
 class Commit:
+    """Represents a Git commit mapped to PROV-O Activity.
+
+    Attributes:
+        id: Unique commit identifier (e.g., "repo:commit:a1b2c3d4")
+        message: Commit message text
+        author_id: Person ID of commit author (default: None)
+        ended_at: ISO 8601 timestamp of commit (default: None)
+    """
+
     id: str
     message: str
     author_id: Optional[str]
@@ -181,6 +250,16 @@ class Commit:
 
 @dataclass
 class VersionResource:
+    """Represents a versioned resource mapped to OSLC Configuration Management.
+
+    Attributes:
+        id: Unique version resource identifier
+        version_id: Version string (e.g., "v1.2.3", commit SHA)
+        branch: Git branch name (default: None)
+        committer: Person ID of committer (default: None)
+        committed: ISO 8601 timestamp of commit (default: None)
+    """
+
     id: str
     version_id: str
     branch: Optional[str]
@@ -190,6 +269,14 @@ class VersionResource:
 
 @dataclass
 class TestCase:
+    """Represents a test case mapped to OSLC QM TestCase.
+
+    Attributes:
+        id: Unique test case identifier
+        name: Test case name/title
+        classname: Test class or suite name (default: None)
+    """
+
     id: str
     name: str
     classname: Optional[str] = None
@@ -197,6 +284,16 @@ class TestCase:
 
 @dataclass
 class TestResult:
+    """Represents a test execution result mapped to OSLC QM TestResult.
+
+    Attributes:
+        id: Unique test result identifier
+        testcase: TestCase ID this result belongs to
+        status: Execution status: "passed", "failed", "skipped", or "error"
+        time: Execution time in seconds (default: None)
+        message: Error message or additional details (default: None)
+    """
+
     id: str
     testcase: str
     status: str  # passed|failed|skipped|error
@@ -206,6 +303,33 @@ class TestResult:
 
 @dataclass
 class Project:
+    """Main repository analysis model aggregating all metrics and entities.
+
+    The Project class is the root entity mapped to multiple semantic web types:
+    repo:Project, schema:SoftwareSourceCode, codemeta:SoftwareSourceCode,
+    prov:Entity, and okn_sd:Software in JSON-LD export.
+
+    Attributes:
+        id: Unique project identifier (URL or path)
+        name: Project name (e.g., "repoq")
+        description: Project description (default: None)
+        repository_url: Git repository URL (default: None)
+        license: SPDX license identifier (e.g., "MIT") (default: None)
+        programming_languages: Dict mapping language to LOC count (default: {})
+        last_commit_date: ISO 8601 timestamp of most recent commit (default: None)
+        ci_configured: List of detected CI/CD systems (e.g., ["GitHub Actions"]) (default: [])
+        modules: Dict of Module objects keyed by module ID (default: {})
+        files: Dict of File objects keyed by file ID (default: {})
+        contributors: Dict of Person objects keyed by person ID (default: {})
+        issues: Dict of Issue objects keyed by issue ID (default: {})
+        dependencies: List of DependencyEdge objects (default: [])
+        coupling: List of CouplingEdge objects (default: [])
+        commits: List of Commit objects (default: [])
+        versions: List of VersionResource objects (default: [])
+        tests_cases: Dict of TestCase objects keyed by test ID (default: {})
+        tests_results: List of TestResult objects (default: [])
+    """
+
     id: str
     name: str
     description: Optional[str] = None
@@ -226,6 +350,12 @@ class Project:
     tests_results: List[TestResult] = field(default_factory=list)
 
     def to_dict(self) -> dict:
+        """Convert Project to plain dictionary for JSON serialization.
+
+        Returns:
+            Dictionary with all Project attributes, recursively converting
+            nested dataclasses to dicts using dataclasses.asdict().
+        """
         return {
             "id": self.id,
             "name": self.name,

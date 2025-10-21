@@ -89,6 +89,19 @@ def _save_md(md: str, path: str) -> None:
 
 
 def _apply_config(cfg: AnalyzeConfig, cfg_dict: dict) -> AnalyzeConfig:
+    """Merge YAML configuration with AnalyzeConfig instance.
+
+    Args:
+        cfg: Base configuration object to modify
+        cfg_dict: Dictionary loaded from YAML config file
+
+    Returns:
+        Modified cfg with values from cfg_dict applied
+
+    Note:
+        Only non-None values from cfg_dict override cfg attributes.
+        Thresholds are merged separately to preserve unspecified defaults.
+    """
     th = cfg_dict.get("thresholds") or {}
     if th:
         cfg.thresholds = Thresholds(
@@ -128,6 +141,15 @@ def main(
     verbose: int = typer.Option(0, "--verbose", "-v", count=True),
     config: str = typer.Option(None, "--config", help="YAML-конфиг"),
 ):
+    """Global callback for repoq CLI.
+
+    Sets up logging level and stores config path in context for subcommands.
+
+    Args:
+        ctx: Typer context for sharing data between commands
+        verbose: Verbosity level (0=WARNING, 1=INFO, 2+=DEBUG)
+        config: Path to YAML configuration file
+    """
     setup_logging(verbose)
     ctx.obj = {"config_path": config}
 
@@ -156,6 +178,34 @@ def structure(
     ),
     hash_algo: str = typer.Option(None, "--hash", help="sha1|sha256"),
 ):
+    """Analyze repository structure and code quality.
+
+    Performs static analysis of repository structure including:
+    - File and module organization
+    - Language detection and LOC metrics
+    - Complexity and maintainability scores
+    - Dependency and coupling graphs
+    - Code quality issues detection
+
+    Args:
+        repo: Local path or Git URL to analyze
+        output: JSON-LD output file path (default: quality.jsonld)
+        md: Optional markdown report path
+        include_ext: Comma-separated file extensions to include (e.g., "py,js,java")
+        exclude: Comma-separated glob patterns to exclude (e.g., "test_*,*.min.js")
+        max_files: Limit maximum files to analyze
+        graphs: Directory to save DOT/SVG dependency graphs
+        ttl: Export RDF Turtle to file
+        validate_shapes_flag: Validate output against SHACL/ResourceShapes
+        shapes_dir: Custom shapes directory (defaults to built-in)
+        context_file: Additional JSON-LD context file
+        field33_context: Field33-specific context extension
+        hash_algo: File checksum algorithm (sha1 or sha256)
+
+    Example:
+        $ repoq structure ./my-repo --md report.md --graphs ./graphs
+        $ repoq structure https://github.com/user/repo.git -o analysis.jsonld
+    """
     _run_command(
         repo,
         mode="structure",
@@ -192,6 +242,29 @@ def history(
         None, "--field33-context", help="Подключить Field33 контекст"
     ),
 ):
+    """Analyze repository history and evolution.
+
+    Performs temporal analysis of repository including:
+    - Commit history and activity patterns
+    - Code churn and hotspots
+    - Contributor statistics and ownership
+    - Historical trends and evolution
+
+    Args:
+        repo: Local path or Git URL to analyze
+        output: JSON-LD output file path (default: quality.jsonld)
+        md: Optional markdown report path
+        since: Time range for history (e.g., "1 year ago", "2023-01-01")
+        ttl: Export RDF Turtle to file
+        validate_shapes_flag: Validate output against SHACL/ResourceShapes
+        shapes_dir: Custom shapes directory (defaults to built-in)
+        context_file: Additional JSON-LD context file
+        field33_context: Field33-specific context extension
+
+    Example:
+        $ repoq history ./my-repo --since "6 months ago" --md history.md
+        $ repoq history https://github.com/user/repo.git --since "2024-01-01"
+    """
     _run_command(
         repo,
         mode="history",
@@ -234,6 +307,35 @@ def full(
     ),
     hash_algo: str = typer.Option(None, "--hash", help="sha1|sha256"),
 ):
+    """Perform comprehensive repository analysis (structure + history).
+
+    Combines static code analysis with historical evolution analysis for
+    complete repository quality assessment including:
+    - All structure analysis metrics
+    - All history analysis metrics
+    - Combined quality score and recommendations
+
+    Args:
+        repo: Local path or Git URL to analyze
+        output: JSON-LD output file path (default: quality.jsonld)
+        md: Markdown report path (default: quality.md)
+        since: Time range for history (e.g., "1 year ago", "2023-01-01")
+        include_ext: Comma-separated file extensions to include
+        exclude: Comma-separated glob patterns to exclude
+        max_files: Limit maximum files to analyze
+        graphs: Directory to save DOT/SVG dependency graphs
+        ttl: Export RDF Turtle to file
+        validate_shapes_flag: Validate output against SHACL/ResourceShapes
+        shapes_dir: Custom shapes directory (defaults to built-in)
+        context_file: Additional JSON-LD context file
+        field33_context: Field33-specific context extension
+        fail_on_issues: Exit with error if issues found at severity level (low/medium/high)
+        hash_algo: File checksum algorithm (sha1 or sha256)
+
+    Example:
+        $ repoq full ./my-repo --md report.md --fail-on-issues high
+        $ repoq full https://github.com/user/repo.git --since "1 year ago"
+    """
     _run_command(
         repo,
         mode="full",
@@ -261,6 +363,24 @@ def diff(
     report: str = typer.Option(None, "--report"),
     fail_on_regress: str = typer.Option(None, "--fail-on-regress", help="[low|medium|high]"),
 ):
+    """Compare two analysis results to detect regressions.
+
+    Compares JSON-LD files from previous and current analysis to identify:
+    - New issues introduced
+    - Hotspot score changes
+    - Complexity regressions
+    - Quality metric trends
+
+    Args:
+        old: Path to baseline JSON-LD file (previous analysis)
+        new: Path to current JSON-LD file (new analysis)
+        report: Optional path to save diff report as JSON
+        fail_on_regress: Exit with error code 2 if regressions detected (low/medium/high)
+
+    Example:
+        $ repoq diff baseline.jsonld current.jsonld --report changes.json
+        $ repoq diff old.jsonld new.jsonld --fail-on-regress medium
+    """
     d = diff_jsonld(old, new)
     print(d)
     if report:
@@ -290,6 +410,37 @@ def _run_command(
     fail_on_issues: str | None = None,
     hash_algo: str | None = None,
 ):
+    """Orchestrate repository analysis workflow.
+
+    Internal function that coordinates:
+    1. Configuration loading and merging
+    2. Repository preparation (clone if needed)
+    3. Analysis pipeline execution
+    4. Export to JSON-LD, Markdown, RDF Turtle
+    5. Optional SHACL validation
+    6. Cleanup
+
+    Args:
+        repo: Repository path or URL
+        mode: Analysis mode ('structure', 'history', or 'full')
+        output: JSON-LD output path
+        md: Optional markdown report path
+        since: Time range for history analysis
+        include_ext: Comma-separated file extensions filter
+        exclude: Comma-separated glob patterns to exclude
+        max_files: Maximum files to analyze
+        graphs: Directory for dependency graphs
+        ttl: RDF Turtle export path
+        validate_shapes_flag: Enable SHACL validation
+        shapes_dir: Custom shapes directory
+        context_file: Additional JSON-LD context
+        field33_context: Field33 context extension
+        fail_on_issues: Fail on issues at severity level
+        hash_algo: File checksum algorithm
+
+    Raises:
+        typer.Exit: If validation fails or issues exceed threshold
+    """
     try:
         ctx = typer.get_current_context()
         cfg_dict = (
