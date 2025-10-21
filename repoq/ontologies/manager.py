@@ -17,9 +17,12 @@ Soundness gates:
 
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from rdflib import Graph, Literal, Namespace, URIRef
+
+if TYPE_CHECKING:
+    from repoq.core.stratification_guard import StratificationGuard
 
 # Namespace URIs (constants per DRY principle)
 NAMESPACE_CODE = "http://repoq.io/ontology/code#"
@@ -162,6 +165,63 @@ class OntologyManager:
             >>> manager.load("input.ttl", format="turtle")
         """
         return self._impl.load(file_path, format)
+    
+    def count(self) -> int:
+        """Return number of triples in ontology.
+        
+        Returns:
+            Number of RDF triples.
+        
+        Example:
+            >>> manager.count()
+            42
+        """
+        return self._impl.count()
+    
+    def add_triple_with_guard(
+        self,
+        guard: StratificationGuard,
+        subject: URIRef,
+        predicate: URIRef,
+        obj: URIRef | Literal,
+        from_level: int,
+        to_level: int
+    ) -> None:
+        """Add triple with stratification guard validation.
+        
+        Integration method for Phase 5.3: Validates level transition
+        before adding triple to ontology.
+        
+        Args:
+            guard: StratificationGuard instance for validation.
+            subject: Subject URI.
+            predicate: Predicate URI.
+            obj: Object (URI or Literal).
+            from_level: Source stratification level.
+            to_level: Target stratification level.
+        
+        Raises:
+            ValueError: If transition is unsafe (downward or same-level).
+        
+        Example:
+            >>> from repoq.core.stratification_guard import StratificationGuard
+            >>> guard = StratificationGuard()
+            >>> manager.add_triple_with_guard(
+            ...     guard,
+            ...     URIRef("http://example.org/Module1"),
+            ...     URIRef("http://example.org/vocab/meta#level"),
+            ...     Literal(1),
+            ...     from_level=0,
+            ...     to_level=1
+            ... )
+        """
+        # Check transition safety
+        result = guard.check_transition(from_level, to_level)
+        if not result.is_safe:
+            raise ValueError(f"Unsafe transition: {result.reason}")
+        
+        # Add triple if safe
+        self.add_triple(subject, predicate, obj)
 
 
 class RDFLibBackend:
@@ -289,6 +349,14 @@ class RDFLibBackend:
             format: RDF serialization format.
         """
         self.graph.parse(source=file_path, format=format)
+    
+    def count(self) -> int:
+        """Return number of triples in graph.
+        
+        Returns:
+            Number of RDF triples.
+        """
+        return len(self.graph)
 
 
 class OxigraphBackend:
