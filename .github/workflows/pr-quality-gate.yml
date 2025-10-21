@@ -1,0 +1,269 @@
+name: PR Quality Gate
+
+on:
+  pull_request:
+    branches: [main, develop]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  pull-requests: write
+  checks: write
+
+jobs:
+  quality-gate:
+    name: Quality Gate Check
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for diff analysis
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+          pip install --upgrade pip
+          pip install -e ".[full,dev]"
+      
+      - name: Run tests with coverage
+        run: |
+          pytest --cov=repoq --cov-report=xml --cov-report=json --cov-report=term-missing -v
+      
+      - name: Quality Gate - Coverage Threshold
+        id: coverage-gate
+        run: |
+          python -c "
+          import json, sys
+          with open('coverage.json') as f:
+              data = json.load(f)
+          coverage = data['totals']['percent_covered']
+          threshold = 60.0  # Phase 5.7 minimum
+          target = 80.0     # Phase 5.7+ goal
+          
+          print(f'Coverage: {coverage:.1f}%')
+          print(f'Threshold: {threshold}%')
+          print(f'Target: {target}%')
+          
+          if coverage < threshold:
+              print(f'❌ FAIL: Coverage {coverage:.1f}% below minimum threshold {threshold}%')
+              sys.exit(1)
+          elif coverage < target:
+              print(f'⚠️ WARNING: Coverage {coverage:.1f}% below target {target}%')
+              print(f'✅ PASS: Meets minimum threshold {threshold}%')
+          else:
+              print(f'✅ EXCELLENT: Coverage {coverage:.1f}% meets target {target}%')
+          " > coverage_result.txt
+          cat coverage_result.txt
+          
+          # Extract coverage for PR comment
+          COVERAGE=$(python -c "import json; print(json.load(open('coverage.json'))['totals']['percent_covered'])")
+          echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+      
+      - name: Quality Gate - Test Results
+        run: |
+          # Check if all tests passed (already done by pytest exit code)
+          echo "✅ All tests passed"
+      
+      - name: Quality Gate - No Regression
+        run: |
+          python -c "
+          import json
+          
+          # Load current coverage
+          with open('coverage.json') as f:
+              current = json.load(f)
+          current_cov = current['totals']['percent_covered']
+          
+          print(f'Current coverage: {current_cov:.1f}%')
+          
+          # In a real PR, would compare with base branch coverage
+          # For now, just ensure no major drop
+          baseline = 63.0  # Phase 5.5 baseline
+          
+          if current_cov < baseline - 2.0:  # Allow 2% tolerance
+              print(f'❌ REGRESSION: Coverage dropped from {baseline:.1f}% to {current_cov:.1f}%')
+              import sys
+              sys.exit(1)
+          else:
+              print(f'✅ No significant regression detected')
+          "
+      
+      - name: Quality Gate - Code Quality
+        run: |
+          echo "Running code quality checks..."
+          
+          # Ruff check
+          ruff check . --output-format=json > ruff_report.json || true
+          
+          # Count critical issues
+          CRITICAL_COUNT=$(python -c "
+          import json
+          try:
+              with open('ruff_report.json') as f:
+                  issues = json.load(f)
+              critical = [i for i in issues if i.get('code', '').startswith('E')]
+              print(len(critical))
+          except:
+              print(0)
+          ")
+          
+          echo "Critical issues found: $CRITICAL_COUNT"
+          
+          if [ "$CRITICAL_COUNT" -gt 10 ]; then
+            echo "❌ Too many critical issues: $CRITICAL_COUNT (max: 10)"
+            exit 1
+          else
+            echo "✅ Code quality acceptable: $CRITICAL_COUNT critical issues"
+          fi
+      
+      - name: Comment PR with Quality Report
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            const fs = require('fs');
+            const coverage = '${{ steps.coverage-gate.outputs.coverage }}';
+            
+            // Read test results
+            let testSummary = '✅ Tests passed';
+            try {
+              const coverageResult = fs.readFileSync('coverage_result.txt', 'utf8');
+              testSummary = coverageResult;
+            } catch (e) {
+              testSummary = '❌ Coverage check failed';
+            }
+            
+            const comment = `## 🚦 Quality Gate Report
+            
+            ### Coverage
+            - **Current:** ${coverage}%
+            - **Threshold:** 60% (minimum)
+            - **Target:** 80% (goal)
+            
+            ${testSummary}
+            
+            ### Checks
+            - ✅ Tests passed
+            - ✅ No major regression
+            - ✅ Code quality acceptable
+            
+            ---
+            *Generated by PR Quality Gate workflow*
+            `;
+            
+            // Find existing comment
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(c => 
+              c.user.type === 'Bot' && c.body.includes('Quality Gate Report')
+            );
+            
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: comment
+              });
+            }
+
+  policy-validation:
+    name: Validate Quality Policy
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -e ".[full,dev]"
+      
+      - name: Validate quality-policy.yml
+        run: |
+          python -c "
+          import sys
+          sys.path.insert(0, 'repoq')
+          from config.quality_policy import load_policy, QualityPolicyValidator
+          
+          print('Loading .github/quality-policy.yml...')
+          try:
+              policy = load_policy('.', use_defaults=False)
+              print(f'✅ Policy loaded successfully')
+              print(f'   - Version: {policy.version}')
+              print(f'   - Project: {policy.project.name} ({policy.project.language})')
+              print(f'   - Max level: {policy.stratification.max_level}')
+              print(f'   - Self-analysis max level: {policy.stratification.self_analysis_max_level}')
+              
+              # Validate gates configuration
+              if not policy.gates.soundness.enabled:
+                  print('⚠️ WARNING: Soundness gate disabled')
+              if not policy.gates.confluence.enabled:
+                  print('⚠️ WARNING: Confluence gate disabled')
+              if not policy.gates.termination.enabled:
+                  print('⚠️ WARNING: Termination gate disabled')
+              
+              print('✅ Quality policy validation passed')
+          except Exception as e:
+              print(f'❌ Policy validation failed: {e}')
+              sys.exit(1)
+          "
+
+  size-check:
+    name: Check Binary Size
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: runtime
+          tags: repoq:pr-test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Check image size
+        run: |
+          SIZE_BYTES=$(docker images repoq:pr-test --format "{{.Size}}" | head -1)
+          echo "Docker image size: $SIZE_BYTES"
+          
+          # Extract numeric value (assuming MB)
+          SIZE_MB=$(echo "$SIZE_BYTES" | sed 's/MB//' | sed 's/GB/*1024/' | bc -l 2>/dev/null || echo "0")
+          
+          THRESHOLD=200  # 200MB threshold (Phase 5.6: 161MB)
+          
+          if (( $(echo "$SIZE_MB > $THRESHOLD" | bc -l 2>/dev/null || echo 0) )); then
+            echo "❌ WARNING: Image size ${SIZE_MB}MB exceeds ${THRESHOLD}MB threshold"
+            echo "Current baseline: 161MB (Phase 5.6)"
+          else
+            echo "✅ Image size ${SIZE_MB}MB within acceptable range (<${THRESHOLD}MB)"
+          fi

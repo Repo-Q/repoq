@@ -2,11 +2,13 @@
 
 > ⚠️ **ACTIVE DEVELOPMENT**: This project is under active development and may contain breaking changes or unstable features. Use at your own risk in production environments.
 
-[![Python](https://img.shields.io/badge/python-3.11%2B-blue)](https://www.python.org/)
+[![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-[![Tests](https://img.shields.io/badge/tests-57%20passing-orange)](tests/)
-[![Coverage](https://img.shields.io/badge/coverage-<10%25-red)](#roadmap)
-[![Status](https://img.shields.io/badge/status-alpha-red)](https://github.com/kirill-0440/repoq)
+[![CI](https://github.com/kirill-0440/repoq/workflows/CI/badge.svg)](https://github.com/kirill-0440/repoq/actions/workflows/ci.yml)
+[![Tests](https://img.shields.io/badge/tests-229%20passing-brightgreen)](tests/)
+[![Coverage](https://img.shields.io/badge/coverage-63%25-yellow)](#phase-55-coverage)
+[![Docker](https://img.shields.io/badge/docker-161MB-blue)](https://hub.docker.com/r/kirill0440/repoq)
+[![Status](https://img.shields.io/badge/status-beta-orange)](https://github.com/kirill-0440/repoq)
 
 Modern CLI tool for comprehensive Git repository quality analysis with semantic web export and CI/CD integration.
 

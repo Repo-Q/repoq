@@ -2,6 +2,12 @@
 
 Welcome! RepoQ is a technical project requiring mathematical precision in Term Rewriting Systems (TRS) and semantic web technologies.
 
+## Documentation
+
+- **[CI/CD Setup Guide](docs/ci-cd-setup.md)** - GitHub Actions workflows, release process
+- **[Docker Setup](docs/ci-cd-setup.md#docker-build)** - Multi-stage builds, compose configuration
+- **[Quality Gates](docs/phase-5-implementation-plan.md)** - Coverage thresholds, policy validation
+
 ## Quick Start for Contributors
 
 ### 1. Development Setup

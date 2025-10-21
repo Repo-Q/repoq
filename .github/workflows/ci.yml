@@ -60,7 +60,24 @@ jobs:
       
       - name: Run tests with coverage
         run: |
-          pytest --cov=repoq --cov-report=xml --cov-report=term-missing -v
+          pytest --cov=repoq --cov-report=xml --cov-report=term-missing --cov-report=json -v
+      
+      - name: Coverage threshold check (Phase 5.7)
+        if: matrix.python-version == '3.11'
+        run: |
+          python -c "
+          import json, sys
+          with open('coverage.json') as f:
+              data = json.load(f)
+          coverage = data['totals']['percent_covered']
+          threshold = 60.0  # Phase 5.7 target (Phase 5.5 achieved 63%)
+          print(f'Coverage: {coverage:.1f}% (threshold: {threshold}%)')
+          if coverage < threshold:
+              print(f'❌ FAIL: Coverage {coverage:.1f}% below threshold {threshold}%')
+              sys.exit(1)
+          else:
+              print(f'✅ PASS: Coverage {coverage:.1f}% meets threshold {threshold}%')
+          "
       
       - name: Upload coverage to Codecov
         if: matrix.python-version == '3.11'
@@ -69,6 +86,44 @@ jobs:
           file: ./coverage.xml
           flags: unittests
           name: codecov-umbrella
+
+  docker-build:
+    name: Docker Build & Test
+    runs-on: ubuntu-latest
+    needs: [lint, test]
+    
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          target: runtime
+          tags: repoq:test
+          load: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Test Docker image
+        run: |
+          docker run --rm repoq:test --help
+          docker run --rm repoq:test structure --help
+      
+      - name: Check image size
+        run: |
+          SIZE=$(docker images repoq:test --format "{{.Size}}" | head -1)
+          echo "Image size: $SIZE"
+          # Phase 5.6 target: 161MB (acceptable range: 150-200MB)
+          SIZE_MB=$(docker images repoq:test --format "{{.Size}}" | head -1 | sed 's/MB//')
+          if (( $(echo "$SIZE_MB > 200" | bc -l) )); then
+            echo "⚠️ WARNING: Image size $SIZE_MB MB exceeds 200MB target"
+          else
+            echo "✅ Image size $SIZE_MB MB within acceptable range"
+          fi
 
   self-analyze:
     name: Self-Hosting Quality Check
