@@ -5,6 +5,8 @@
 **Статус**: Formal Mathematical Proof (Complete System)  
 **Версия**: 2.0
 
+> 📊 **Визуализация**: См. [formal-diagrams.md](formal-diagrams.md) для 9 ключевых диаграмм (Meta-Loop, TRS Pipeline, Monotonicity, PCQ/PCE, Confluence, Stratification, Liveness, Cross-Ontology, Gate Semantics).
+
 ---
 
 ## Аннотация

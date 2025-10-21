@@ -21,6 +21,7 @@
 - `docs/development/quality-loop-roadmap.md`
 - `docs/development/mathematical-proof-quality-monotonicity.md`
 - `docs/development/formal-foundations-complete.md` (Section 15)
+- `docs/development/formal-diagrams.md` (визуализация концепций)
 
 ---
 
