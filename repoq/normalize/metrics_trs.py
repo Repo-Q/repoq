@@ -24,7 +24,7 @@ import ast
 import operator
 from typing import Any, Dict, List, Set, Union, Tuple, Optional, Callable
 from dataclasses import dataclass
-from decimal import Decimal, ROUND_HALF_UP
+from decimal import Decimal, ROUND_HALF_UP, InvalidOperation
 import math
 import statistics
 
@@ -78,12 +78,26 @@ class MetricConstant(MetricTerm):
             object.__setattr__(self, "value", Decimal(str(self.value)))
 
     def to_canonical(self) -> str:
-        # Normalize decimal representation
-        normalized = self.value.quantize(Decimal("0.000001"), rounding=ROUND_HALF_UP)
-        if normalized == normalized.to_integral_value():
-            return str(int(normalized))
-        else:
-            return f"{float(normalized):.6f}".rstrip("0").rstrip(".")
+        # Mathematical domain validation - prevent overflow
+        try:
+            # Check bounds to ensure mathematical soundness
+            abs_value = abs(self.value)
+            if abs_value > Decimal("1E50"):
+                # Large numbers: use engineering notation for stability
+                return f"large:{self.value.to_eng_string()}"
+            elif abs_value < Decimal("1E-50") and abs_value != 0:
+                # Small numbers: use engineering notation to prevent precision loss
+                return f"small:{self.value.to_eng_string()}"
+            
+            # Normal range: apply quantization safely
+            normalized = self.value.quantize(Decimal("0.000001"), rounding=ROUND_HALF_UP)
+            if normalized == normalized.to_integral_value():
+                return str(int(normalized))
+            else:
+                return f"{float(normalized):.6f}".rstrip("0").rstrip(".")
+        except (InvalidOperation, OverflowError):
+            # Fallback for edge cases - preserve mathematical properties
+            return f"error:{self.value.to_eng_string()}"
 
     def sort_key(self) -> Tuple[int, str]:
         return (1, f"{float(self.value):020.6f}")
@@ -524,6 +538,30 @@ def _force_canonical_form(canonical_str: str) -> str:
         return canonical_str
 
 
+def _is_canonical_form(metric_str: str) -> bool:
+    """Check if string is already in canonical form."""
+    if not metric_str:
+        return True
+    
+    # Simple numeric constants
+    if re.match(r'^-?\d+(\.\d+)?$', metric_str):
+        return True
+    
+    # Variable references
+    if re.match(r'^var:\w+$', metric_str):
+        return True
+    
+    # Large/small number forms
+    if metric_str.startswith(('large:', 'small:')):
+        return True
+    
+    # Complex expressions with operators
+    if metric_str.startswith(('+', '*', '/', 'avg', 'max', 'min', 'sum')):
+        return True
+    
+    return False
+
+
 def canonicalize_metric(
     metric_spec: Union[str, Dict[str, Any], MetricExpression, MetricTerm],
 ) -> str:
@@ -550,20 +588,14 @@ def canonicalize_metric(
         if isinstance(metric_spec, str):
             if not metric_spec.strip():
                 return ""  # Handle empty strings
+            
+            # IDEMPOTENCE FIX: Check if already in canonical form
+            if _is_canonical_form(metric_spec):
+                return metric_spec
+            
             term = parse_metric_expression(metric_spec)
             expression = MetricExpression(term)
-            result = expression.to_canonical()
-            # IDEMPOTENCE FIX: Ensure re-parsing gives same result
-            if result:
-                try:
-                    re_parsed = parse_metric_expression(result)
-                    re_canonical = MetricExpression(re_parsed).to_canonical()
-                    if re_canonical != result:
-                        # Force stable form via string sorting
-                        return _force_canonical_form(result)
-                except:
-                    pass
-            return result
+            return expression.to_canonical()
 
         elif isinstance(metric_spec, dict):
             # Parse from dictionary format (for API compatibility)

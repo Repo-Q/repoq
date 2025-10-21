@@ -358,9 +358,19 @@ def _regex_subsumes(general_regex: str, specific_regex: str) -> bool:
     Check if general regex subsumes specific regex.
     This is a simplified check - full analysis would require formal language theory.
     """
+    # Remove anchors for easier analysis
+    general_clean = general_regex.strip("^$")
+    specific_clean = specific_regex.strip("^$")
+    
+    # Special case: .* (from **) subsumes everything
+    if general_clean == ".*":
+        return True
+    
+    # Pattern prefix matching: src/.* should subsume src/module/[^/]*\.py
+    if general_clean.endswith(".*") and specific_clean.startswith(general_clean[:-2]):
+        return True
+    
     # Simple heuristics for common cases
-
-    # If general is more permissive (shorter or contains more wildcards)
     general_wildcards = general_regex.count(".*") + general_regex.count("[^/]*")
     specific_wildcards = specific_regex.count(".*") + specific_regex.count("[^/]*")
 
@@ -651,7 +661,12 @@ def canonicalize_filter(filter_spec: Union[str, Dict[str, Any], FilterExpression
         if filter_spec.startswith(("and(", "or(", "not(", "glob:", "prop:")):
             return filter_spec
 
-        # Try advanced parsing for complex expressions
+        # CONFLUENCE FIX: Skip advanced parsing for simple glob patterns
+        # Simple glob patterns should go directly to GlobPattern for consistency
+        if re.match(r'^[*?[\].\w/\\-]+$', filter_spec) and ('*' in filter_spec or '?' in filter_spec):
+            return f"glob:{filter_spec}"
+
+        # Try advanced parsing for complex expressions only
         try:
             advanced_term = ADVANCED_PARSER.parse_complex_expression(filter_spec)
             if advanced_term:
@@ -660,8 +675,13 @@ def canonicalize_filter(filter_spec: Union[str, Dict[str, Any], FilterExpression
         except Exception:
             pass
 
-        # Fallback: treat as glob pattern
-        return GlobPattern(filter_spec).to_canonical()
+        # Fallback: treat as glob pattern - ensure confluence
+        # Remove any function wrapper that might have been added  
+        if filter_spec.startswith("glob_pattern('") and filter_spec.endswith("')"):
+            # Extract pattern from function call: glob_pattern('*.py') -> *.py
+            pattern = filter_spec[14:-2]  # Remove glob_pattern('...')
+            return f"glob:{pattern}"
+        return f"glob:{filter_spec}"
 
     elif isinstance(filter_spec, dict):
         return normalize_filter_expression(filter_spec)
