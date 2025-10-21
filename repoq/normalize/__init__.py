@@ -31,7 +31,7 @@ Example:
 
 from .base import Term, Rule, RewriteSystem
 from .spdx_trs import normalize_spdx, SPDXTerm
-from .semver_trs import normalize_semver, SemVerRange
+from .semver_trs import normalize_semver, SemVerTerm
 from .rdf_trs import canonicalize_graph
 from .filters_trs import normalize_filter
 from .metrics_trs import normalize_metric

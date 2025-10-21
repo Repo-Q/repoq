@@ -208,12 +208,16 @@ class DependencyEdge:
         target: ID of dependency module/file
         weight: Dependency strength (default: 1)
         type: Dependency category: "import", "runtime", or "build" (default: "import")
+        version_constraint: Version constraint/range in normalized form (optional)
+        original_constraint: Original version constraint before normalization (optional)
     """
 
     source: str  # module/file id
     target: str
     weight: int = 1
     type: str = "import"  # import|runtime|build
+    version_constraint: Optional[str] = None  # Normalized SemVer range
+    original_constraint: Optional[str] = None  # Original constraint from manifest
 
 
 @dataclass

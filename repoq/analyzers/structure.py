@@ -11,13 +11,16 @@ This module analyzes the static structure of a repository including:
 from __future__ import annotations
 
 import logging
+import logging
 import os
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict
+from typing import Dict, List, Optional
 
 from ..core.deps import js_imports, python_imports
 from ..core.model import DependencyEdge, File, Module, Project
+from ..normalize.spdx_trs import normalize_spdx
+from ..normalize.semver_trs import normalize_semver
 from ..core.utils import checksum_file, guess_language, is_excluded
 from ..normalize import normalize_spdx
 from .base import Analyzer
@@ -73,57 +76,175 @@ def _is_textlike(path: Path) -> bool:
     return path.suffix[1:].lower() in TEXT_LIKE
 
 
-def _detect_spdx_license(repo_path: Path) -> str | None:
-    """Detect SPDX license identifier from LICENSE file.
-
-    Args:
-        repo_path: Repository root directory
-
-    Returns:
-        Normalized SPDX license expression or filename if detected, None otherwise
-
-    Note:
-        Uses simple text pattern matching for common licenses (MIT, Apache 2.0,
-        GPL-3.0, BSD-3-Clause). Returns normalized canonical form.
-        Falls back to filename if patterns don't match.
+def _detect_spdx_license(repo_path: Path) -> Optional[str]:
     """
-    # naive but useful: look into LICENSE* file
-    for name in ["LICENSE", "LICENSE.md", "LICENSE.txt"]:
-        p = repo_path / name
-        if p.exists():
+    Auto-detect SPDX license identifier from common files with normalization.
+    
+    Returns normalized SPDX license expression or None if undetected.
+    """
+    license_files = ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING", "COPYING.md"]
+    
+    for fname in license_files:
+        license_file = repo_path / fname
+        if license_file.exists():
             try:
-                txt = p.read_text(encoding="utf-8", errors="ignore").lower()
+                with open(license_file, "r", encoding="utf-8", errors="ignore") as fh:
+                    content = fh.read()
                 
-                # Detect license type and build SPDX expression
-                detected_licenses = []
-                
-                if "mit license" in txt or "permission is hereby granted" in txt:
-                    detected_licenses.append("MIT")
-                if "apache license" in txt and "version 2.0" in txt:
-                    detected_licenses.append("Apache-2.0")
-                if "gnu general public license" in txt and "version 3" in txt:
-                    detected_licenses.append("GPL-3.0-or-later")
-                if "bsd" in txt and "3-clause" in txt:
-                    detected_licenses.append("BSD-3-Clause")
-                
-                if detected_licenses:
-                    # Build expression (multiple licenses = OR)
-                    if len(detected_licenses) == 1:
-                        expr = detected_licenses[0]
+                # Basic SPDX detection patterns
+                if "MIT License" in content or "MIT license" in content:
+                    return normalize_spdx("MIT")
+                elif "Apache License" in content and "Version 2.0" in content:
+                    return normalize_spdx("Apache-2.0")
+                elif "GNU GENERAL PUBLIC LICENSE" in content and "Version 2" in content:
+                    return normalize_spdx("GPL-2.0")
+                elif "GNU GENERAL PUBLIC LICENSE" in content and "Version 3" in content:
+                    return normalize_spdx("GPL-3.0")
+                elif "BSD" in content:
+                    if "3-Clause" in content:
+                        return normalize_spdx("BSD-3-Clause")
+                    elif "2-Clause" in content:
+                        return normalize_spdx("BSD-2-Clause")
                     else:
-                        expr = " OR ".join(detected_licenses)
-                    
-                    # Normalize to canonical form
-                    normalized = normalize_spdx(expr)
-                    logger.debug(f"License detected and normalized: {expr} → {normalized}")
-                    return normalized
-                
-                # Fallback to filename
-                return name
-            except Exception as e:
-                logger.warning(f"Error reading license file {p}: {e}")
-                return name
+                        return normalize_spdx("BSD-3-Clause")  # Default
+                        
+            except Exception:
+                pass
+    
     return None
+
+
+def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
+    """
+    Parse dependency manifests (package.json, pyproject.toml, etc.) and extract
+    normalized version constraints.
+    
+    Returns list of DependencyEdge objects with version constraints.
+    """
+    dependencies = []
+    
+    # Python: pyproject.toml
+    pyproject_file = repo_path / "pyproject.toml"
+    if pyproject_file.exists():
+        try:
+            import tomllib
+            with open(pyproject_file, "rb") as fh:
+                data = tomllib.load(fh)
+            
+            # Main dependencies
+            for dep in data.get("project", {}).get("dependencies", []):
+                dep_name, version_constraint = _parse_python_dep(dep)
+                if dep_name:
+                    dependencies.append(DependencyEdge(
+                        source="project",
+                        target=f"pypi:{dep_name}",
+                        weight=1,
+                        type="runtime",
+                        version_constraint=normalize_semver(version_constraint) if version_constraint else None,
+                        original_constraint=version_constraint
+                    ))
+            
+            # Optional dependencies
+            for group_deps in data.get("project", {}).get("optional-dependencies", {}).values():
+                for dep in group_deps:
+                    dep_name, version_constraint = _parse_python_dep(dep)
+                    if dep_name:
+                        dependencies.append(DependencyEdge(
+                            source="project",
+                            target=f"pypi:{dep_name}",
+                            weight=1,
+                            type="build",
+                            version_constraint=normalize_semver(version_constraint) if version_constraint else None,
+                            original_constraint=version_constraint
+                        ))
+                        
+        except Exception as e:
+            logger.debug(f"Failed to parse pyproject.toml: {e}")
+    
+    # Python: requirements.txt
+    requirements_file = repo_path / "requirements.txt"
+    if requirements_file.exists():
+        try:
+            with open(requirements_file, "r", encoding="utf-8") as fh:
+                for line in fh:
+                    line = line.strip()
+                    if line and not line.startswith("#"):
+                        dep_name, version_constraint = _parse_python_dep(line)
+                        if dep_name:
+                            dependencies.append(DependencyEdge(
+                                source="project",
+                                target=f"pypi:{dep_name}",
+                                weight=1,
+                                type="runtime",
+                                version_constraint=normalize_semver(version_constraint) if version_constraint else None,
+                                original_constraint=version_constraint
+                            ))
+        except Exception as e:
+            logger.debug(f"Failed to parse requirements.txt: {e}")
+    
+    # JavaScript/TypeScript: package.json
+    package_json = repo_path / "package.json"
+    if package_json.exists():
+        try:
+            import json
+            with open(package_json, "r", encoding="utf-8") as fh:
+                data = json.load(fh)
+            
+            # Dependencies
+            for dep_name, version_constraint in data.get("dependencies", {}).items():
+                dependencies.append(DependencyEdge(
+                    source="project",
+                    target=f"npm:{dep_name}",
+                    weight=1,
+                    type="runtime",
+                    version_constraint=normalize_semver(version_constraint),
+                    original_constraint=version_constraint
+                ))
+            
+            # Dev dependencies
+            for dep_name, version_constraint in data.get("devDependencies", {}).items():
+                dependencies.append(DependencyEdge(
+                    source="project",
+                    target=f"npm:{dep_name}",
+                    weight=1,
+                    type="build",
+                    version_constraint=normalize_semver(version_constraint),
+                    original_constraint=version_constraint
+                ))
+                
+        except Exception as e:
+            logger.debug(f"Failed to parse package.json: {e}")
+    
+    return dependencies
+
+
+def _parse_python_dep(dep_spec: str) -> tuple[Optional[str], Optional[str]]:
+    """
+    Parse Python dependency specification into name and version constraint.
+    
+    Examples:
+        "requests>=2.25.0" -> ("requests", ">=2.25.0")
+        "django~=4.2.0" -> ("django", "~=4.2.0") 
+        "numpy" -> ("numpy", None)
+        
+    Returns:
+        Tuple of (package_name, version_constraint)
+    """
+    import re
+    
+    # Pattern for Python dependency specs
+    pattern = r'^([a-zA-Z0-9_\-\.]+)(?:\s*([><=~!]+\s*[0-9]+(?:\.[0-9]+)*(?:\.[0-9]+)*(?:[a-zA-Z0-9\-]*)?(?:,\s*[><=~!]+\s*[0-9]+(?:\.[0-9]+)*(?:\.[0-9]+)*(?:[a-zA-Z0-9\-]*)?)*))?\s*(?:;.*)?$'
+    
+    match = re.match(pattern, dep_spec.strip())
+    if match:
+        name = match.group(1)
+        constraint = match.group(2)
+        # Convert Python ~= to SemVer ~
+        if constraint and '~=' in constraint:
+            constraint = constraint.replace('~=', '~')
+        return name, constraint
+    
+    return None, None
 
 
 class StructureAnalyzer(Analyzer):
@@ -242,7 +363,7 @@ class StructureAnalyzer(Analyzer):
                                 project.dependencies.append(
                                     DependencyEdge(
                                         source=file_obj.module,
-                                        target=f"pkg:{mod}",
+                                        target=f"pypi:{mod}",
                                         weight=1,
                                         type="import",
                                     )
@@ -262,6 +383,13 @@ class StructureAnalyzer(Analyzer):
                                 )
                 except Exception:
                     pass
+
+        # Extract dependencies from manifest files (with normalized version constraints)
+        try:
+            manifest_deps = _parse_dependency_manifests(repo_path)
+            project.dependencies.extend(manifest_deps)
+        except Exception as e:
+            logger.debug(f"Failed to parse dependency manifests: {e}")
 
         # README/License/CI
         readme = repo_path / "README.md"
