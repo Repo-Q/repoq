@@ -226,7 +226,7 @@ jobs:
         echo "::endgroup::"
     
     - name: Store Self-Analysis Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: self-analysis-results
@@ -324,7 +324,7 @@ jobs:
       uses: actions/checkout@v4
     
     - name: Download self-analysis artifacts
-      uses: actions/download-artifact@v3
+      uses: actions/download-artifact@v4
       with:
         name: self-analysis-results
         path: artifacts/
