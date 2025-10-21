@@ -154,6 +154,11 @@ nav:
       - Phase 1 - Stakeholders: vdad/phase1-stakeholders.md
       - Phase 2 - Value Register: vdad/phase2-value-register.md
       - Phase 3 - Requirements: vdad/phase3-requirements.md
+      - Phase 4 - Architecture Overview: vdad/phase4-architecture-overview.md
+      - Phase 4 - C4 Diagrams: vdad/phase4-c4-diagrams.md
+      - Phase 4 - ADRs: vdad/phase4-adrs.md
+      - Phase 4 - NFR Realization: vdad/phase4-nfr-realization.md
+      - Phase 4 - BAML Agent: vdad/phase4-baml-agent.md
   - API Reference:
     - Overview: api/reference.md
   - About:
