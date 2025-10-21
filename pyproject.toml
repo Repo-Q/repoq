@@ -57,6 +57,26 @@ docs = [
 [project.scripts]
 repoq = "repoq.cli:app"
 
+[dependency-groups]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "pytest-asyncio>=0.21",
+  "pytest-mock>=3.12",
+  "ruff>=0.6",
+  "black>=24.3",
+  "mypy>=1.10",
+  "types-PyYAML"
+]
+docs = [
+  "mkdocs>=1.5",
+  "mkdocs-material>=9.4",
+  "mkdocs-autorefs>=0.5",
+  "mkdocs-mermaid2-plugin>=1.1",
+  "mkdocstrings[python]>=0.24",
+  "pymdown-extensions>=10.4"
+]
+
 [tool.setuptools]
 packages = [
   "repoq",

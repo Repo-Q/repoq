@@ -115,6 +115,7 @@ plugins:
   - mkdocstrings:
       handlers:
         python:
+          paths: ["."]  # Add current directory to Python path
           options:
             docstring_style: google
             docstring_options:
@@ -123,12 +124,13 @@ plugins:
             show_submodules: false
             show_source: true
             show_bases: true
-            show_inheritance_diagram: true
+            show_inheritance_diagram: false  # Disable to avoid graphviz dependency issues
             members_order: source
             group_by_category: true
             show_category_heading: true
             show_signature_annotations: true
             separate_signature: true
+            show_if_no_docstring: false  # Hide members without docstrings
 
 nav:
   - Home: index.md
