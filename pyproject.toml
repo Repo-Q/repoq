@@ -43,6 +43,14 @@ dev = [
   "mypy>=1.10",
   "types-PyYAML"
 ]
+docs = [
+  "mkdocs>=1.5",
+  "mkdocs-material>=9.4",
+  "mkdocs-autorefs>=0.5",
+  "mkdocs-mermaid2-plugin>=1.1",
+  "mkdocstrings[python]>=0.24",
+  "pymdown-extensions>=10.4"
+]
 
 [project.scripts]
 repoq = "repoq.cli:app"
