@@ -1,0 +1,436 @@
+{
+  "verification": {
+    "spdx": {
+      "trs_name": "SPDX",
+      "timestamp": 1761052620.9636827,
+      "test_terms_count": 62,
+      "idempotence": {
+        "passed": true,
+        "time_ms": 0.8032321929931641
+      },
+      "determinism": {
+        "passed": true,
+        "time_ms": 0.09822845458984375
+      },
+      "confluence": {
+        "passed": false,
+        "time_ms": 0.0209808349609375
+      },
+      "termination": {
+        "passed": true,
+        "time_ms": 0.12993812561035156
+      },
+      "soundness": {
+        "passed": true,
+        "time_ms": 0.03814697265625
+      },
+      "verification_details": {
+        "idempotence_violations": [],
+        "determinism_violations": [],
+        "critical_pairs": 3,
+        "non_joinable_pairs": [
+          "CriticalPair(term='mit', left_result='mit', right_result='MIT', rule1='case_normalization', rule2='identifier_lookup', joinable=False, join_steps=None)",
+          "CriticalPair(term='GPL-3.0+', left_result='GPL-3.0+', right_result='GPL-3.0-or-later', rule1='plus_expansion', rule2='identifier_normalization', joinable=False, join_steps=None)"
+        ],
+        "termination_violations": []
+      }
+    },
+    "semver": {
+      "trs_name": "SemVer",
+      "timestamp": 1761052620.9648108,
+      "test_terms_count": 100,
+      "idempotence": {
+        "passed": true,
+        "time_ms": 1.2531280517578125
+      },
+      "determinism": {
+        "passed": true,
+        "time_ms": 0.05412101745605469
+      },
+      "confluence": {
+        "passed": false,
+        "time_ms": 0.06890296936035156
+      },
+      "termination": {
+        "passed": true,
+        "time_ms": 0.15401840209960938
+      },
+      "soundness": {
+        "passed": true,
+        "time_ms": 0.015974044799804688
+      },
+      "verification_details": {
+        "idempotence_violations": [],
+        "determinism_violations": [],
+        "critical_pairs": 3,
+        "non_joinable_pairs": [
+          "CriticalPair(term='1.2.3-alpha', left_result='1.2.3-alpha', right_result='1.2.3-ALPHA', rule1='prerelease_case', rule2='case_normalization', joinable=False, join_steps=None)"
+        ],
+        "termination_violations": []
+      }
+    },
+    "filters": {
+      "trs_name": "Filters",
+      "timestamp": 1761052620.9664366,
+      "test_terms_count": 30,
+      "idempotence": {
+        "passed": true,
+        "time_ms": 2.1364688873291016
+      },
+      "determinism": {
+        "passed": true,
+        "time_ms": 3.9026737213134766
+      },
+      "confluence": {
+        "passed": true,
+        "time_ms": 19.085168838500977
+      },
+      "termination": {
+        "passed": true,
+        "time_ms": 1.462697982788086
+      },
+      "soundness": {
+        "passed": true,
+        "time_ms": 1.4541149139404297
+      },
+      "verification_details": {
+        "idempotence_violations": [],
+        "determinism_violations": [],
+        "critical_pairs": 3,
+        "non_joinable_pairs": [],
+        "termination_violations": []
+      }
+    },
+    "metrics": {
+      "trs_name": "Metrics",
+      "timestamp": 1761052620.994514,
+      "test_terms_count": 42,
+      "idempotence": {
+        "passed": false,
+        "time_ms": 238.90447616577148
+      },
+      "determinism": {
+        "passed": true,
+        "time_ms": 343.8684940338135
+      },
+      "confluence": {
+        "passed": true,
+        "time_ms": 31.913280487060547
+      },
+      "termination": {
+        "passed": true,
+        "time_ms": 117.26856231689453
+      },
+      "soundness": {
+        "passed": false,
+        "time_ms": 116.95027351379395
+      },
+      "verification_details": {
+        "idempotence_violations": [
+          {
+            "term": "lines",
+            "error": "Invalid metric expression: var:lines"
+          },
+          {
+            "term": "complexity",
+            "error": "Invalid metric expression: var:complexity"
+          },
+          {
+            "term": "coverage",
+            "error": "Invalid metric expression: var:coverage"
+          },
+          {
+            "term": "bugs",
+            "error": "Invalid metric expression: var:bugs"
+          },
+          {
+            "term": "debt",
+            "error": "Invalid metric expression: var:debt"
+          },
+          {
+            "term": "2 * lines",
+            "error": "Invalid metric expression: *(2,var:lines)"
+          },
+          {
+            "term": "lines + 1",
+            "error": "Invalid metric expression: +(1,var:lines)"
+          },
+          {
+            "term": "lines / 100",
+            "error": "Invalid metric expression: *(0.01,var:lines)"
+          },
+          {
+            "term": "lines - baseline",
+            "error": "Invalid metric expression: +(var:lines,*(-1,var:baseline))"
+          },
+          {
+            "term": "2 * complexity",
+            "error": "Invalid metric expression: *(2,var:complexity)"
+          },
+          {
+            "term": "complexity + 1",
+            "error": "Invalid metric expression: +(1,var:complexity)"
+          },
+          {
+            "term": "complexity / 100",
+            "error": "Invalid metric expression: *(0.01,var:complexity)"
+          },
+          {
+            "term": "complexity - baseline",
+            "error": "Invalid metric expression: +(var:complexity,*(-1,var:baseline))"
+          },
+          {
+            "term": "2 * coverage",
+            "error": "Invalid metric expression: *(2,var:coverage)"
+          },
+          {
+            "term": "coverage + 1",
+            "error": "Invalid metric expression: +(1,var:coverage)"
+          },
+          {
+            "term": "coverage / 100",
+            "error": "Invalid metric expression: *(0.01,var:coverage)"
+          },
+          {
+            "term": "coverage - baseline",
+            "error": "Invalid metric expression: +(var:coverage,*(-1,var:baseline))"
+          },
+          {
+            "term": "sum(lines)",
+            "error": "Invalid metric expression: sum(var:lines)"
+          },
+          {
+            "term": "sum(lines, complexity)",
+            "error": "Invalid metric expression: sum(var:complexity,var:lines)"
+          },
+          {
+            "term": "sum(coverage, bugs, debt)",
+            "error": "Invalid metric expression: sum(var:bugs,var:coverage,var:debt)"
+          },
+          {
+            "term": "avg(lines)",
+            "error": "Invalid metric expression: avg(var:lines)"
+          },
+          {
+            "term": "avg(lines, complexity)",
+            "error": "Invalid metric expression: avg(var:lines,var:complexity)"
+          },
+          {
+            "term": "avg(coverage, bugs, debt)",
+            "error": "Invalid metric expression: avg(var:coverage,var:bugs,var:debt)"
+          },
+          {
+            "term": "max(lines)",
+            "error": "Invalid metric expression: max(var:lines)"
+          },
+          {
+            "term": "max(lines, complexity)",
+            "error": "Invalid metric expression: max(var:complexity,var:lines)"
+          },
+          {
+            "term": "max(coverage, bugs, debt)",
+            "error": "Invalid metric expression: max(var:bugs,var:coverage,var:debt)"
+          },
+          {
+            "term": "min(lines)",
+            "error": "Invalid metric expression: min(var:lines)"
+          },
+          {
+            "term": "min(lines, complexity)",
+            "error": "Invalid metric expression: min(var:complexity,var:lines)"
+          },
+          {
+            "term": "min(coverage, bugs, debt)",
+            "error": "Invalid metric expression: min(var:bugs,var:coverage,var:debt)"
+          },
+          {
+            "term": "count(lines)",
+            "error": "Invalid metric expression: count(var:lines)"
+          },
+          {
+            "term": "count(lines, complexity)",
+            "error": "Invalid metric expression: count(var:lines,var:complexity)"
+          },
+          {
+            "term": "count(coverage, bugs, debt)",
+            "error": "Invalid metric expression: count(var:coverage,var:bugs,var:debt)"
+          },
+          {
+            "term": "2 * lines + 3 * complexity",
+            "error": "Invalid metric expression: +(*(2,var:lines),*(3,var:complexity))"
+          },
+          {
+            "term": "(lines + complexity) * weight",
+            "error": "Invalid metric expression: +(*(var:complexity,var:weight),*(var:lines,var:weight))"
+          },
+          {
+            "term": "sum(lines) / count(files)",
+            "error": "Invalid metric expression: *(^(count(var:files),-1),sum(var:lines))"
+          },
+          {
+            "term": "avg(complexity) * 0.6 + avg(coverage) * 0.4",
+            "error": "Invalid metric expression: +(*(0.4,avg(var:coverage)),*(0.6,avg(var:complexity)))"
+          },
+          {
+            "term": "max(bugs, 0) + min(debt, 1000)",
+            "error": "Invalid metric expression: +(max(0,var:bugs),min(1000,var:debt))"
+          },
+          {
+            "term": "lines * (1 + complexity / 100)",
+            "error": "Invalid metric expression: +(var:lines,*(0.01,var:complexity,var:lines))"
+          },
+          {
+            "term": "((a + b) * 2 + (a + b) * 3) / (c + d + c)",
+            "error": "Invalid metric expression: *(+(*(5,var:a),*(5,var:b)),^(+(var:d,*(2,var:c)),-1))"
+          },
+          {
+            "term": "complexity:0.6",
+            "error": "Invalid metric expression: *(0.6,var:complexity)"
+          },
+          {
+            "term": "lines:0.3 + complexity:0.7",
+            "error": "Invalid metric expression: +(*(0.3,var:lines),*(0.7,var:complexity))"
+          },
+          {
+            "term": "sum(lines:0.5, complexity:0.5)",
+            "error": "Invalid metric expression: sum(*(0.5,var:lines),*(0.5,var:complexity))"
+          }
+        ],
+        "determinism_violations": [],
+        "critical_pairs": 5,
+        "non_joinable_pairs": [],
+        "termination_violations": []
+      }
+    },
+    "rdf": {
+      "trs_name": "RDF",
+      "timestamp": 1761052621.8435366,
+      "test_terms_count": 27,
+      "idempotence": {
+        "passed": true,
+        "time_ms": 0.04649162292480469
+      },
+      "determinism": {
+        "passed": true,
+        "time_ms": 0.057220458984375
+      },
+      "confluence": {
+        "passed": false,
+        "time_ms": 0.022411346435546875
+      },
+      "termination": {
+        "passed": true,
+        "time_ms": 0.06699562072753906
+      },
+      "soundness": {
+        "passed": true,
+        "time_ms": 0.030517578125
+      },
+      "verification_details": {
+        "idempotence_violations": [],
+        "determinism_violations": [],
+        "critical_pairs": 2,
+        "non_joinable_pairs": [
+          "CriticalPair(term='{\"@context\": \"http://schema.org/\", \"@type\": \"Project\", \"name\": \"test\"}', left_result='{\"@context\": \"http://schema.org/\", \"@type\": \"Project\", \"name\": \"test\"}', right_result='{\\n  \"@context\": \"http://schema.org/\",\\n  \"@type\": \"Project\",\\n  \"name\": \"test\"\\n}', rule1='compact_json', rule2='pretty_json', joinable=False, join_steps=None)"
+        ],
+        "termination_violations": []
+      }
+    },
+    "_summary": {
+      "total_systems": 5,
+      "all_passed": false,
+      "verification_time": 879.8065185546875
+    },
+    "_metadata": {
+      "verification_level": "basic",
+      "total_time_seconds": 0.8801236152648926,
+      "timestamp": 1761052621.8437822,
+      "runner_version": "1.0.0"
+    }
+  },
+  "self_application": {
+    "metadata": {
+      "analysis_type": "self_application",
+      "timestamp": 1761052621.8439429,
+      "configuration": {
+        "analyzers": {
+          "structure": {
+            "enabled": true,
+            "max_depth": 3
+          },
+          "complexity": {
+            "enabled": true,
+            "threshold": 15
+          }
+        },
+        "filters": {
+          "include_patterns": [
+            "repoq/**/*.py"
+          ],
+          "exclude_patterns": [
+            "**/__pycache__/**",
+            "**/.git/**",
+            "**/__pycache__/**",
+            "**/.git/**",
+            "**/results/**",
+            "**/artifacts/**",
+            "**/.pytest_cache/**",
+            "**/node_modules/**"
+          ]
+        },
+        "output": {
+          "format": "json",
+          "include_graphs": false,
+          "path": "results/self_analysis.json"
+        },
+        "normalization": {
+          "enable_advanced": true,
+          "trs_timeout": 30,
+          "verification_level": "standard"
+        },
+        "read_only": true,
+        "modify": false,
+        "auto_fix": false
+      }
+    },
+    "analyzers": {
+      "structure": {
+        "enabled": true,
+        "files": [
+          "repoq/__init__.py",
+          "repoq/cli.py",
+          "repoq/config.py",
+          "repoq/pipeline.py"
+        ]
+      },
+      "complexity": {
+        "enabled": true,
+        "violations": []
+      }
+    },
+    "normalization_stats": {
+      "total_normalized": 15,
+      "errors": 0,
+      "total_time_ms": 250,
+      "trs_systems_used": [
+        "filters",
+        "metrics",
+        "spdx",
+        "semver",
+        "rdf"
+      ]
+    },
+    "safety_report": {
+      "analysis_duration": 1.239776611328125e-05,
+      "total_events": 2,
+      "safety_violations": [],
+      "violation_count": 0,
+      "resource_usage": {
+        "max_memory_mb": 0,
+        "cpu_time_seconds": 0,
+        "file_operations": 0
+      },
+      "safety_status": "safe"
+    }
+  }
+}
