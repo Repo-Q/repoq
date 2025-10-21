@@ -152,6 +152,7 @@ nav:
   - VDAD Process:
       - Phase 1 - Domain Context: vdad/phase1-domain-context.md
       - Phase 1 - Stakeholders: vdad/phase1-stakeholders.md
+      - Phase 2 - Value Register: vdad/phase2-value-register.md
   - API Reference:
     - Overview: api/reference.md
   - About:
