@@ -65,6 +65,9 @@ artifacts/
 quality.md
 .repoq/
 
+# Temporary development artifacts (documented in tmp-artifacts-inventory.md)
+tmp/
+
 # OS
 .DS_Store
 Thumbs.db
