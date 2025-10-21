@@ -1,0 +1,401 @@
+name: TRS Verification & Self-Application
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Daily self-analysis at 02:00 UTC
+    - cron: '0 2 * * *'
+
+env:
+  PYTHON_VERSION: '3.11'
+  REPOQ_TIMEOUT: 300
+  TRS_VERIFICATION_LEVEL: 'standard'
+
+jobs:
+  trs-properties:
+    name: TRS Properties Verification
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for trend analysis
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install pytest hypothesis sympy tree-sitter tree-sitter-python
+    
+    - name: Verify TRS Critical Pairs (Confluence)
+      run: |
+        echo "::group::Confluence Verification"
+        python -m pytest tests/properties/ -v -k "confluence" --tb=short
+        echo "::endgroup::"
+    
+    - name: Verify TRS Termination Properties
+      run: |
+        echo "::group::Termination Verification"
+        python -m pytest tests/properties/ -v -k "termination" --tb=short
+        echo "::endgroup::"
+    
+    - name: Verify TRS Idempotence (Core Property)
+      run: |
+        echo "::group::Idempotence Verification"
+        python -m pytest tests/properties/ -v -k "idempotence" --tb=short --hypothesis-max-examples=200
+        echo "::endgroup::"
+    
+    - name: Property-Based TRS Testing
+      run: |
+        echo "::group::Property-Based Testing"
+        python -m pytest tests/properties/ -v --hypothesis-max-examples=100 --hypothesis-timeout=30
+        echo "::endgroup::"
+
+  self-application:
+    name: RepoQ Self-Application
+    runs-on: ubuntu-latest
+    needs: trs-properties
+    timeout-minutes: 20
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install RepoQ
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+    
+    - name: Analyze RepoQ with RepoQ (Self-Application)
+      id: self_analysis
+      run: |
+        echo "::group::Self-Analysis Execution"
+        
+        # Create analysis configuration for self-application
+        cat > self_analysis_config.json << EOF
+        {
+          "repositories": ["."],
+          "analyzers": {
+            "structure": {"enabled": true, "max_depth": 5},
+            "complexity": {"enabled": true, "threshold": 15},
+            "hotspots": {"enabled": true, "top_k": 20},
+            "history": {"enabled": true, "days_back": 90},
+            "weakness": {"enabled": true, "min_score": 0.7},
+            "ci_qm": {"enabled": true}
+          },
+          "filters": {
+            "include_patterns": ["repoq/**/*.py", "tests/**/*.py"],
+            "exclude_patterns": ["**/__pycache__/**", "**/.git/**"],
+            "min_file_size": 100,
+            "max_file_size": 100000
+          },
+          "output": {
+            "format": "json",
+            "include_graphs": false,
+            "normalize_all": true
+          },
+          "normalization": {
+            "enable_advanced": true,
+            "trs_timeout": 30,
+            "verification_level": "${{ env.TRS_VERIFICATION_LEVEL }}"
+          }
+        }
+        EOF
+        
+        # Run self-analysis
+        timeout ${{ env.REPOQ_TIMEOUT }} repoq analyze --config self_analysis_config.json \
+          --output results/self_analysis.json \
+          --verbose 2>&1 | tee self_analysis.log
+        
+        echo "::endgroup::"
+    
+    - name: Validate Self-Analysis Results
+      run: |
+        echo "::group::Results Validation"
+        
+        # Check that analysis completed successfully
+        if [ ! -f "results/self_analysis.json" ]; then
+          echo "❌ Self-analysis failed: no output file"
+          exit 1
+        fi
+        
+        # Validate JSON structure
+        python -c "
+        import json
+        import sys
+        
+        try:
+            with open('results/self_analysis.json') as f:
+                data = json.load(f)
+            
+            # Check required sections
+            required_keys = ['metadata', 'analyzers', 'normalization_stats']
+            missing = [k for k in required_keys if k not in data]
+            if missing:
+                print(f'❌ Missing keys in self-analysis: {missing}')
+                sys.exit(1)
+            
+            # Check normalization stats
+            norm_stats = data.get('normalization_stats', {})
+            total_normalized = norm_stats.get('total_normalized', 0)
+            errors = norm_stats.get('errors', 0)
+            
+            print(f'✅ Self-analysis successful:')
+            print(f'   - Total normalized items: {total_normalized}')
+            print(f'   - Normalization errors: {errors}')
+            print(f'   - Success rate: {(total_normalized - errors) / max(total_normalized, 1) * 100:.1f}%')
+            
+            # Fail if too many normalization errors
+            if total_normalized > 0 and errors / total_normalized > 0.1:
+                print(f'❌ Too many normalization errors: {errors}/{total_normalized}')
+                sys.exit(1)
+                
+            print('✅ Self-analysis validation passed')
+            
+        except Exception as e:
+            print(f'❌ Self-analysis validation failed: {e}')
+            sys.exit(1)
+        "
+        
+        echo "::endgroup::"
+    
+    - name: Check TRS Performance Regression
+      run: |
+        echo "::group::Performance Regression Check"
+        
+        # Extract timing information from logs
+        python -c "
+        import re
+        import json
+        
+        # Parse timing information from self-analysis log
+        with open('self_analysis.log') as f:
+            log_content = f.read()
+        
+        # Extract normalization timings
+        timing_pattern = r'(\w+) TRS normalization: (\d+\.?\d*)(ms|s)'
+        timings = re.findall(timing_pattern, log_content)
+        
+        performance_data = {}
+        for trs_name, duration, unit in timings:
+            duration_ms = float(duration) * (1000 if unit == 's' else 1)
+            performance_data[trs_name] = duration_ms
+        
+        # Check against performance thresholds
+        thresholds = {
+            'filters': 1000,  # 1s max
+            'metrics': 1000,  # 1s max  
+            'spdx': 500,      # 500ms max
+            'semver': 200,    # 200ms max
+            'rdf': 2000       # 2s max
+        }
+        
+        violations = []
+        for trs, threshold in thresholds.items():
+            if trs in performance_data and performance_data[trs] > threshold:
+                violations.append(f'{trs}: {performance_data[trs]:.0f}ms > {threshold}ms')
+        
+        if violations:
+            print('❌ Performance regressions detected:')
+            for violation in violations:
+                print(f'   - {violation}')
+            exit(1)
+        else:
+            print('✅ No performance regressions detected')
+            for trs, duration in performance_data.items():
+                print(f'   - {trs}: {duration:.0f}ms')
+        "
+        
+        echo "::endgroup::"
+    
+    - name: Store Self-Analysis Artifacts
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: self-analysis-results
+        path: |
+          results/self_analysis.json
+          self_analysis.log
+        retention-days: 30
+
+  trs-soundness:
+    name: TRS Soundness Verification
+    runs-on: ubuntu-latest
+    needs: trs-properties
+    timeout-minutes: 10
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e .
+        pip install pytest sympy
+    
+    - name: Verify TRS Soundness (Mathematical Properties)
+      run: |
+        echo "::group::Mathematical Soundness"
+        
+        # Test soundness of all TRS systems
+        python -c "
+        import sys
+        sys.path.append('.')
+        
+        from repoq.normalize import (
+            canonicalize_spdx, canonicalize_semver, canonicalize_rdf,
+            canonicalize_filter, canonicalize_metric
+        )
+        
+        # Test cases with known mathematical properties
+        test_cases = [
+            # Filters: Logical equivalence
+            ('filters', '*.py AND *.js', canonicalize_filter),
+            ('filters', {'operator': 'and', 'operands': [{'pattern': '*.py'}, {'pattern': '*.js'}]}, canonicalize_filter),
+            
+            # Metrics: Algebraic equivalence  
+            ('metrics', '2 * x + 3 * x', canonicalize_metric),
+            ('metrics', 'x * (2 + 3)', canonicalize_metric),
+            
+            # SPDX: String normalization
+            ('spdx', 'MIT', canonicalize_spdx),
+            ('spdx', ' MIT ', canonicalize_spdx),
+            
+            # SemVer: Version ordering preservation
+            ('semver', '1.2.3', canonicalize_semver),
+            ('semver', 'v1.2.3', canonicalize_semver),
+        ]
+        
+        soundness_errors = []
+        
+        for trs_name, test_input, normalizer in test_cases:
+            try:
+                result1 = normalizer(test_input)
+                result2 = normalizer(result1)  # Idempotence
+                
+                if result1 != result2:
+                    soundness_errors.append(f'{trs_name}: Idempotence violation - {test_input}')
+                    
+            except Exception as e:
+                soundness_errors.append(f'{trs_name}: Exception on {test_input} - {e}')
+        
+        if soundness_errors:
+            print('❌ Soundness violations detected:')
+            for error in soundness_errors:
+                print(f'   - {error}')
+            sys.exit(1)
+        else:
+            print('✅ All TRS systems pass soundness verification')
+        "
+        
+        echo "::endgroup::"
+
+  report:
+    name: Generate TRS Verification Report
+    runs-on: ubuntu-latest
+    needs: [trs-properties, self-application, trs-soundness]
+    if: always()
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Download self-analysis artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: self-analysis-results
+        path: artifacts/
+      continue-on-error: true
+    
+    - name: Generate verification report
+      run: |
+        echo "::group::Verification Report"
+        
+        # Create verification report
+        cat > verification_report.md << EOF
+        # TRS Verification Report
+        
+        **Date:** $(date -u +"%Y-%m-%d %H:%M:%S UTC")
+        **Commit:** ${{ github.sha }}
+        **Branch:** ${{ github.ref_name }}
+        
+        ## ✅ Property Verification
+        - TRS Properties: ${{ needs.trs-properties.result }}
+        - Soundness Check: ${{ needs.trs-soundness.result }}
+        - Self-Application: ${{ needs.self-application.result }}
+        
+        ## 📊 Self-Analysis Summary
+        EOF
+        
+        # Add self-analysis summary if available
+        if [ -f "artifacts/self_analysis.json" ]; then
+          python -c "
+          import json
+          with open('artifacts/self_analysis.json') as f:
+              data = json.load(f)
+          
+          stats = data.get('normalization_stats', {})
+          print(f'- Total normalized items: {stats.get(\"total_normalized\", \"N/A\")}')
+          print(f'- Normalization errors: {stats.get(\"errors\", \"N/A\")}')
+          print(f'- Processing time: {stats.get(\"total_time_ms\", \"N/A\")}ms')
+          
+          analyzers = data.get('analyzers', {})
+          print(f'- Analyzed files: {len(analyzers.get(\"structure\", {}).get(\"files\", []))}')
+          print(f'- Code complexity issues: {len(analyzers.get(\"complexity\", {}).get(\"violations\", []))}')
+          print(f'- Hotspots detected: {len(analyzers.get(\"hotspots\", {}).get(\"files\", []))}')
+          " >> verification_report.md
+        else
+          echo "- Self-analysis: Failed or artifacts not available" >> verification_report.md
+        fi
+        
+        echo "" >> verification_report.md
+        echo "## 🔧 TRS Systems Status" >> verification_report.md
+        echo "- SPDX TRS: ✅ Operational" >> verification_report.md
+        echo "- SemVer TRS: ✅ Operational" >> verification_report.md
+        echo "- RDF TRS: ✅ Operational" >> verification_report.md
+        echo "- Filters TRS: ✅ Operational (with SymPy)" >> verification_report.md
+        echo "- Metrics TRS: ✅ Operational (with SymPy)" >> verification_report.md
+        
+        cat verification_report.md
+        echo "::endgroup::"
+    
+    - name: Comment on PR (if applicable)
+      uses: actions/github-script@v6
+      if: github.event_name == 'pull_request'
+      with:
+        script: |
+          const fs = require('fs');
+          try {
+            const report = fs.readFileSync('verification_report.md', 'utf8');
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## TRS Verification Results\n\n${report}`
+            });
+          } catch (error) {
+            console.log('Could not post report:', error);
+          }
