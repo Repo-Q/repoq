@@ -1,0 +1,209 @@
+from __future__ import annotations
+
+import os
+from collections import defaultdict
+from pathlib import Path
+from typing import Dict
+
+from ..core.deps import js_imports, python_imports
+from ..core.model import DependencyEdge, File, Module, Project
+from ..core.utils import checksum_file, guess_language, is_excluded
+from .base import Analyzer
+
+TEXT_LIKE = set(
+    [
+        "py",
+        "js",
+        "ts",
+        "java",
+        "c",
+        "cc",
+        "cpp",
+        "cxx",
+        "h",
+        "hpp",
+        "hh",
+        "go",
+        "rb",
+        "rs",
+        "kt",
+        "swift",
+        "php",
+        "cs",
+        "m",
+        "mm",
+        "scala",
+        "sh",
+        "ps1",
+        "yaml",
+        "yml",
+        "toml",
+        "json",
+        "md",
+        "rst",
+        "txt",
+        "xml",
+    ]
+)
+
+
+def _is_textlike(path: Path) -> bool:
+    return path.suffix[1:].lower() in TEXT_LIKE
+
+
+def _detect_spdx_license(repo_path: Path) -> str | None:
+    # naive but useful: look into LICENSE* file
+    for name in ["LICENSE", "LICENSE.md", "LICENSE.txt"]:
+        p = repo_path / name
+        if p.exists():
+            try:
+                txt = p.read_text(encoding="utf-8", errors="ignore").lower()
+                if "mit license" in txt or "permission is hereby granted" in txt:
+                    return "https://spdx.org/licenses/MIT"
+                if "apache license" in txt and "version 2.0" in txt:
+                    return "https://spdx.org/licenses/Apache-2.0"
+                if "gnu general public license" in txt and "version 3" in txt:
+                    return "https://spdx.org/licenses/GPL-3.0-or-later"
+                if "bsd" in txt:
+                    return "https://spdx.org/licenses/BSD-3-Clause"
+                return name
+            except Exception:
+                return name
+    return None
+
+
+class StructureAnalyzer(Analyzer):
+    name = "structure"
+
+    def run(self, project: Project, repo_dir: str, cfg) -> None:
+        repo_path = Path(repo_dir)
+        language_loc: Dict[str, int] = defaultdict(int)
+
+        # top-level modules
+        for entry in sorted(repo_path.iterdir()):
+            if (
+                entry.is_dir()
+                and not entry.name.startswith(".")
+                and not is_excluded(entry.name, cfg.exclude_globs)
+            ):
+                mid = f"repo:module:{entry.name}"
+                project.modules[mid] = Module(id=mid, name=entry.name, path=entry.as_posix())
+
+        count = 0
+        for root, dirs, files in os.walk(repo_path.as_posix()):
+            relroot = Path(root).relative_to(repo_path).as_posix()
+            dirs[:] = [
+                d
+                for d in dirs
+                if not d.startswith(".")
+                and not is_excluded(f"{relroot}/{d}" if relroot != "." else d, cfg.exclude_globs)
+            ]
+            for fname in files:
+                fpath = Path(root) / fname
+                rel = fpath.relative_to(repo_path).as_posix()
+                if is_excluded(rel, cfg.exclude_globs):
+                    continue
+                if rel.startswith(".git/"):
+                    continue
+                if cfg.max_files and count >= cfg.max_files:
+                    break
+
+                ext = fpath.suffix[1:].lower()
+                if cfg.include_extensions and ext not in cfg.include_extensions:
+                    continue
+
+                language = guess_language(rel)
+                loc = 0
+                if _is_textlike(fpath):
+                    try:
+                        with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
+                            loc = sum(1 for _ in fh)
+                    except Exception:
+                        loc = 0
+
+                fid = f"repo:file:{rel}"
+                file_obj = File(id=fid, path=rel, language=language, lines_of_code=loc)
+                if "/tests/" in f"/{rel}/" or rel.endswith("_test.py") or rel.endswith("Test.java"):
+                    file_obj.test_file = True
+
+                # checksum
+                if cfg.hash_algo:
+                    try:
+                        file_obj.checksum_algo = cfg.hash_algo.lower()
+                        file_obj.checksum_value = checksum_file(str(fpath), cfg.hash_algo)
+                    except Exception:
+                        file_obj.checksum_algo = None
+                        file_obj.checksum_value = None
+
+                # attach to module (top-level dir)
+                parts = rel.split("/")
+                if len(parts) > 1:
+                    top = parts[0]
+                    mid = f"repo:module:{top}"
+                    if mid in project.modules:
+                        file_obj.module = mid
+                        m = project.modules[mid]
+                        m.contains_files.append(fid)
+                        m.total_loc += loc
+
+                project.files[fid] = file_obj
+                if language:
+                    language_loc[language] += loc
+                count += 1
+
+                # dependencies (Python/JS)
+                try:
+                    if language == "Python" and _is_textlike(fpath):
+                        with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
+                            imps = python_imports(fh.read())
+                        for mod in imps:
+                            if file_obj.module:
+                                project.dependencies.append(
+                                    DependencyEdge(
+                                        source=file_obj.module,
+                                        target=f"pkg:{mod}",
+                                        weight=1,
+                                        type="import",
+                                    )
+                                )
+                    elif language in ("JavaScript", "TypeScript") and _is_textlike(fpath):
+                        with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
+                            imps = js_imports(fh.read())
+                        for pkg in imps:
+                            if file_obj.module:
+                                project.dependencies.append(
+                                    DependencyEdge(
+                                        source=file_obj.module,
+                                        target=f"npm:{pkg}",
+                                        weight=1,
+                                        type="import",
+                                    )
+                                )
+                except Exception:
+                    pass
+
+        # README/License/CI
+        readme = repo_path / "README.md"
+        if readme.exists() and (project.description is None or not project.description):
+            try:
+                with open(readme, "r", encoding="utf-8", errors="ignore") as fh:
+                    project.description = fh.readline().strip() or project.description
+            except Exception:
+                pass
+
+        project.license = project.license or _detect_spdx_license(repo_path)
+
+        ci = []
+        if (repo_path / ".github" / "workflows").exists():
+            ci.append("GitHub Actions")
+        if (repo_path / ".gitlab-ci.yml").exists():
+            ci.append("GitLab CI")
+        if (repo_path / ".travis.yml").exists():
+            ci.append("Travis CI")
+        if (repo_path / "Jenkinsfile").exists():
+            ci.append("Jenkins")
+        project.ci_configured = ci
+
+        project.programming_languages = dict(
+            sorted(language_loc.items(), key=lambda kv: kv[1], reverse=True)
+        )

@@ -1,0 +1,8 @@
+{
+  "@context": {
+    "f33": "https://w3id.org/field33#",
+    "f33:usesMethodology": "https://w3id.org/field33#usesMethodology",
+    "f33:Process": "https://w3id.org/field33#Process",
+    "f33:Activity": "https://w3id.org/field33#Activity"
+  }
+}

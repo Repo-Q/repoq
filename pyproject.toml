@@ -1,0 +1,77 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "repoq"
+version = "2.0.0"
+description = "CLI for repository quality with PROV-O/OSLC/SPDX/FOAF/SDO ontology output + reports/graphs/TTL/validation."
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [{name = "Your Name"}]
+license = "MIT"
+keywords = ["git", "quality", "analytics", "json-ld", "ontology", "prov", "oslc", "spdx", "shacl"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Version Control :: Git"
+]
+dependencies = [
+  "typer>=0.12",
+  "rich>=13.7",
+  "jinja2>=3.1",
+  "pyyaml>=6.0.2",
+]
+
+[project.optional-dependencies]
+full = [
+  "pydriller>=2.7",
+  "lizard>=1.17",
+  "radon>=6.0",
+  "graphviz>=0.20",
+  "rdflib>=7.0",
+  "orjson>=3.10",
+  "pyshacl>=0.23.0"
+]
+dev = [
+  "pytest>=8.0",
+  "pytest-cov>=5.0",
+  "ruff>=0.6",
+  "black>=24.3",
+  "mypy>=1.10",
+  "types-PyYAML"
+]
+
+[project.scripts]
+repoq = "repoq.cli:app"
+
+[tool.setuptools]
+packages = ["repoq"]
+
+[tool.setuptools.package-data]
+repoq = ["ontologies/*.jsonld", "shapes/*.ttl"]
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+ignore = ["E501", "E701"]  # Line too long (formatter), compact if (idiomatic Python)
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E501", "E701", "E702", "F841"]  # Allow long lines, compact statements, and unused vars in tests
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = false
+warn_unused_configs = true
+ignore_missing_imports = true  # Allow missing stubs for pydriller, radon, graphviz
+check_untyped_defs = false
+disable_error_code = ["assignment", "arg-type", "attr-defined", "var-annotated", "union-attr", "no-redef"]

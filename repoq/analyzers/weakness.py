@@ -1,0 +1,51 @@
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+from ..core.model import Issue, Project
+from .base import Analyzer
+
+PATTERNS = [
+    ("repo:TodoComment", re.compile(r"\b(TODO|FIXME|@todo|HACK)\b", re.IGNORECASE)),
+    ("repo:Deprecated", re.compile(r"\bdeprecated\b", re.IGNORECASE)),
+    ("repo:Bugfix", re.compile(r"\bfix(e[ds])?|bug|error\b", re.IGNORECASE)),
+]
+
+
+def _severity_for(match_type: str) -> str:
+    if "Deprecated" in match_type:
+        return "medium"
+    if "Bugfix" in match_type:
+        return "medium"
+    return "low"
+
+
+class WeaknessAnalyzer(Analyzer):
+    name = "weakness"
+
+    def run(self, project: Project, repo_dir: str, cfg) -> None:
+        for fid, f in project.files.items():
+            try:
+                path = Path(repo_dir) / f.path
+                with open(path, "r", encoding="utf-8", errors="ignore") as fh:
+                    content = fh.read()
+            except Exception:
+                continue
+            for typ, rx in PATTERNS:
+                if rx.search(content):
+                    iid = f"repo:issue:{f.path.replace('/', '_')}:{typ.split(':')[-1]}"
+                    issue = project.issues.get(iid)
+                    if not issue:
+                        issue = Issue(
+                            id=iid,
+                            type=typ,
+                            file_id=fid,
+                            description=f"Found {typ} markers in {f.path}",
+                            severity=_severity_for(typ),
+                            status="Open",
+                            title=f"{typ} in {f.path}",
+                        )
+                        project.issues[iid] = issue
+                    if iid not in f.issues:
+                        f.issues.append(iid)

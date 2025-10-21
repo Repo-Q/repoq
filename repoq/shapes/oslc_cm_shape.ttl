@@ -1,0 +1,26 @@
+@prefix oslc: <http://open-services.net/ns/core#> .
+@prefix oslc_cm: <http://open-services.net/ns/cm#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<#ChangeRequestShape> a oslc:ResourceShape ;
+  oslc:describes oslc_cm:ChangeRequest ;
+  oslc:property [
+    oslc:name "title" ;
+    oslc:propertyDefinition dcterms:title ;
+    oslc:occurs oslc:Exactly-one ;
+    oslc:valueType xsd:string
+  ] , [
+    oslc:name "status" ;
+    oslc:propertyDefinition oslc_cm:status ;
+    oslc:occurs oslc:Zero-or-one ;
+    oslc:valueType xsd:string
+  ] , [
+    oslc:name "severity" ;
+    oslc:propertyDefinition oslc_cm:severity ;
+    oslc:occurs oslc:Zero-or-one
+  ] , [
+    oslc:name "priority" ;
+    oslc:propertyDefinition oslc_cm:priority ;
+    oslc:occurs oslc:Zero-or-one
+  ] .
