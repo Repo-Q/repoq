@@ -19,6 +19,7 @@ from typing import Dict
 from ..core.deps import js_imports, python_imports
 from ..core.model import DependencyEdge, File, Module, Project
 from ..core.utils import checksum_file, guess_language, is_excluded
+from ..normalize import normalize_spdx
 from .base import Analyzer
 
 logger = logging.getLogger(__name__)
@@ -79,11 +80,12 @@ def _detect_spdx_license(repo_path: Path) -> str | None:
         repo_path: Repository root directory
 
     Returns:
-        SPDX license URI or filename if detected, None otherwise
+        Normalized SPDX license expression or filename if detected, None otherwise
 
     Note:
         Uses simple text pattern matching for common licenses (MIT, Apache 2.0,
-        GPL-3.0, BSD-3-Clause). Falls back to filename if patterns don't match.
+        GPL-3.0, BSD-3-Clause). Returns normalized canonical form.
+        Falls back to filename if patterns don't match.
     """
     # naive but useful: look into LICENSE* file
     for name in ["LICENSE", "LICENSE.md", "LICENSE.txt"]:
@@ -91,16 +93,35 @@ def _detect_spdx_license(repo_path: Path) -> str | None:
         if p.exists():
             try:
                 txt = p.read_text(encoding="utf-8", errors="ignore").lower()
+                
+                # Detect license type and build SPDX expression
+                detected_licenses = []
+                
                 if "mit license" in txt or "permission is hereby granted" in txt:
-                    return "https://spdx.org/licenses/MIT"
+                    detected_licenses.append("MIT")
                 if "apache license" in txt and "version 2.0" in txt:
-                    return "https://spdx.org/licenses/Apache-2.0"
+                    detected_licenses.append("Apache-2.0")
                 if "gnu general public license" in txt and "version 3" in txt:
-                    return "https://spdx.org/licenses/GPL-3.0-or-later"
-                if "bsd" in txt:
-                    return "https://spdx.org/licenses/BSD-3-Clause"
+                    detected_licenses.append("GPL-3.0-or-later")
+                if "bsd" in txt and "3-clause" in txt:
+                    detected_licenses.append("BSD-3-Clause")
+                
+                if detected_licenses:
+                    # Build expression (multiple licenses = OR)
+                    if len(detected_licenses) == 1:
+                        expr = detected_licenses[0]
+                    else:
+                        expr = " OR ".join(detected_licenses)
+                    
+                    # Normalize to canonical form
+                    normalized = normalize_spdx(expr)
+                    logger.debug(f"License detected and normalized: {expr} → {normalized}")
+                    return normalized
+                
+                # Fallback to filename
                 return name
-            except Exception:
+            except Exception as e:
+                logger.warning(f"Error reading license file {p}: {e}")
                 return name
     return None
 
