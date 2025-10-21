@@ -1,18 +1,24 @@
 """
-Ontology Plugin System for RepoQ
+Ontology Plugin Manager for RepoQ
 
-Provides pluggable ontology support for domain-specific analysis:
-- Code Ontology: basic code structure concepts
-- C4 Model: architectural elements and relationships  
-- Domain-Driven Design: DDD concepts and patterns
-- Custom ontologies: extensible plugin architecture
-
-Features:
-- Dynamic ontology loading based on project detection
-- Semantic reasoning with OWL/RDFS inference
-- Cross-ontology mapping and alignment
-- Performance optimized with lazy loading
+Manages loading, configuration, and execution of ontology-based analysis plugins.
+Provides a framework for extending RepoQ with domain-specific knowledge systems.
 """
+
+import importlib.util
+import json
+import logging
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Set, Union
+from abc import ABC, abstractmethod
+from enum import Enum
+
+# Type imports for forward references
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from ..core.model import Project, File, Module, DependencyEdge
+
+logger = logging.getLogger(__name__)
 
 from abc import ABC, abstractmethod
 from typing import Dict, List, Set, Optional, Any, Union, Type
@@ -498,6 +504,143 @@ class OntologyManager:
                     pass
     
     def analyze_project(self, project_data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Analyze project data using all applicable ontologies.
+        
+        Args:
+            project_data: Dictionary containing project information
+            
+        Returns:
+            Dictionary with analysis results from all ontologies
+        """
+        analysis_results = {
+            'concepts': [],
+            'relationships': [],
+            'violations': [],
+            'plugin_results': {},
+            'summary': {}
+        }
+        
+        # Load ontologies on first use
+        if not self.plugins:
+            self.load_plugins()
+        
+        # Apply each plugin to project data
+        concept_map = {}
+        for plugin_name, plugin in self.plugins.items():
+            if not plugin.metadata.enabled:
+                continue
+                
+            try:
+                # Check if plugin is applicable
+                applicability = plugin.check_applicability(project_data)
+                if applicability < 0.1:  # Skip if not applicable
+                    continue
+                
+                self.active_plugins.add(plugin_name)
+                plugin.applicability_score = applicability
+                
+                # Extract concepts
+                concepts = plugin.extract_concepts(project_data)
+                concept_map[plugin_name] = concepts
+                analysis_results['concepts'].extend(concepts)
+                
+                # Validate concepts
+                violations = plugin.validate_constraints(concepts)
+                analysis_results['violations'].extend(violations)
+                
+                # Store plugin-specific results
+                analysis_results['plugin_results'][plugin_name] = {
+                    'applicability': applicability,
+                    'concepts': concepts,
+                    'violations': violations
+                }
+                
+                logger.info(f"Applied {plugin_name}: {len(concepts)} concepts, {len(violations)} violations")
+                
+            except Exception as e:
+                logger.error(f"Plugin {plugin_name} failed: {e}")
+                continue
+        
+        # Generate cross-ontology relationships
+        if len(concept_map) > 1:
+            relationships = self._generate_cross_ontology_relationships(concept_map)
+            analysis_results['relationships'] = relationships
+        
+        # Generate summary
+        analysis_results['summary'] = {
+            'total_concepts': len(analysis_results['concepts']),
+            'total_violations': len(analysis_results['violations']),
+            'active_plugins': list(self.active_plugins),
+            'ontology_coverage': len(self.active_plugins) / len(self.plugins) if self.plugins else 0
+        }
+        
+        return analysis_results
+
+    def analyze_project_structure(self, project: 'Project') -> Dict[str, Any]:
+        """
+        Analyze project structure using loaded ontologies.
+        
+        Args:
+            project: Project object to analyze
+            
+        Returns:
+            Dictionary with ontological analysis results
+        """
+        # Convert Project object to dictionary for analysis
+        project_data = self._project_to_dict(project)
+        
+        # Use standard project analysis
+        return self.analyze_project(project_data)
+
+    def _project_to_dict(self, project: 'Project') -> Dict[str, Any]:
+        """Convert Project object to dictionary for ontology analysis."""
+        # Handle case where files/modules are dicts (keyed by ID) vs lists
+        files = project.files if isinstance(project.files, list) else list(project.files.values())
+        modules = project.modules if isinstance(project.modules, list) else list(project.modules.values())
+        
+        return {
+            'name': project.name,
+            'description': project.description,
+            'programming_languages': getattr(project, 'programming_languages', {}),
+            'files': [self._file_to_dict(f) for f in files],
+            'modules': [self._module_to_dict(m) for m in modules],
+            'dependencies': [self._dependency_to_dict(d) for d in project.dependencies],
+            'license': project.license,
+            'ci_configured': getattr(project, 'ci_configured', [])
+        }
+
+    def _file_to_dict(self, file: 'File') -> Dict[str, Any]:
+        """Convert File object to dictionary."""
+        return {
+            'path': file.path,
+            'size': file.lines_of_code,  # Use lines_of_code as size
+            'language': file.language,
+            'checksum': file.checksum_value,
+            'type': 'file',
+            'complexity': file.complexity,
+            'maintainability': file.maintainability
+        }
+
+    def _module_to_dict(self, module: 'Module') -> Dict[str, Any]:
+        """Convert Module object to dictionary."""
+        return {
+            'name': module.name,
+            'path': module.path,
+            'language': getattr(module, 'language', 'unknown'),  # Module might not have language
+            'type': 'module',
+            'contains_files': getattr(module, 'contains_files', []),
+            'contains_modules': getattr(module, 'contains_modules', [])
+        }
+
+    def _dependency_to_dict(self, dependency: 'DependencyEdge') -> Dict[str, Any]:
+        """Convert DependencyEdge object to dictionary."""
+        return {
+            'source': dependency.source,
+            'target': dependency.target,
+            'type': dependency.type,
+            'relationship': 'dependency'
+        }
         """Analyze project using applicable ontologies."""
         if not self._loaded:
             self.load_plugins()

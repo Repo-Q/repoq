@@ -7,22 +7,21 @@ This module analyzes the static structure of a repository including:
 - License and README detection
 - CI/CD system detection
 - File checksums for integrity verification
+- Ontological concept extraction and validation
 """
 from __future__ import annotations
 
 import logging
-import logging
 import os
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 
 from ..core.deps import js_imports, python_imports
 from ..core.model import DependencyEdge, File, Module, Project
 from ..normalize.spdx_trs import normalize_spdx
 from ..normalize.semver_trs import normalize_semver
 from ..core.utils import checksum_file, guess_language, is_excluded
-from ..normalize import normalize_spdx
 from .base import Analyzer
 
 logger = logging.getLogger(__name__)
@@ -416,3 +415,34 @@ class StructureAnalyzer(Analyzer):
         project.programming_languages = dict(
             sorted(language_loc.items(), key=lambda kv: kv[1], reverse=True)
         )
+
+        # ONTOLOGICAL INTEGRATION: Extract domain concepts
+        project = self._enrich_with_ontological_analysis(project, repo_path)
+
+        return project
+
+    def _enrich_with_ontological_analysis(self, project: Project, repo_path: Path) -> Project:
+        """Enrich project with ontological concept extraction."""
+        try:
+            # Import ontology manager (optional dependency)
+            from ..ontologies.ontology_manager import OntologyManager
+            
+            manager = OntologyManager()
+            
+            # Perform ontological analysis on project structure
+            analysis_result = manager.analyze_project_structure(project)
+            
+            # Add ontological insights to project metadata
+            if not hasattr(project, 'ontological_analysis'):
+                project.ontological_analysis = {}
+            
+            project.ontological_analysis.update(analysis_result)
+            
+            logger.info(f"Ontological analysis completed: {len(analysis_result.get('concepts', []))} concepts extracted")
+            
+        except ImportError:
+            logger.debug("Ontology manager not available - skipping ontological analysis")
+        except Exception as e:
+            logger.warning(f"Ontological analysis failed: {e}")
+        
+        return project

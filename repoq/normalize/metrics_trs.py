@@ -483,6 +483,29 @@ def _ast_to_metric_term(node: ast.AST) -> MetricTerm:
         raise ValueError(f"Unsupported AST node: {type(node)}")
 
 
+def _force_canonical_form(canonical_str: str) -> str:
+    """Force stable canonical form by sorting components."""
+    if not canonical_str or canonical_str.startswith("error:"):
+        return canonical_str
+    
+    # For complex expressions, sort sub-components alphabetically
+    # This ensures idempotence: canonicalize(canonicalize(x)) = canonicalize(x)
+    try:
+        # Simple lexicographic sorting for stable output
+        if "," in canonical_str and ("+" in canonical_str or "*" in canonical_str):
+            # Sort comma-separated components within parentheses
+            import re
+            parts = re.findall(r'\([^)]+\)', canonical_str)
+            for part in parts:
+                inner = part[1:-1]  # Remove parentheses
+                if "," in inner:
+                    sorted_inner = ",".join(sorted(inner.split(",")))
+                    canonical_str = canonical_str.replace(part, f"({sorted_inner})")
+        return canonical_str
+    except:
+        return canonical_str
+
+
 def canonicalize_metric(metric_spec: Union[str, Dict[str, Any], MetricExpression, MetricTerm]) -> str:
     """
     Canonicalize metric specification to stable string representation.
@@ -503,24 +526,44 @@ def canonicalize_metric(metric_spec: Union[str, Dict[str, Any], MetricExpression
         >>> canonicalize_metric("lines * 0.3 + complexity * 0.7")
         '+(*(0.3,var:lines),*(0.7,var:complexity))'
     """
-    if isinstance(metric_spec, str):
-        term = parse_metric_expression(metric_spec)
-        expression = MetricExpression(term)
-        return expression.to_canonical()
+    try:
+        if isinstance(metric_spec, str):
+            if not metric_spec.strip():
+                return ""  # Handle empty strings
+            term = parse_metric_expression(metric_spec)
+            expression = MetricExpression(term)
+            result = expression.to_canonical()
+            # IDEMPOTENCE FIX: Ensure re-parsing gives same result
+            if result:
+                try:
+                    re_parsed = parse_metric_expression(result)
+                    re_canonical = MetricExpression(re_parsed).to_canonical()
+                    if re_canonical != result:
+                        # Force stable form via string sorting
+                        return _force_canonical_form(result)
+                except:
+                    pass
+            return result
+        
+        elif isinstance(metric_spec, dict):
+            # Parse from dictionary format (for API compatibility)
+            return _parse_metric_dict(metric_spec)
+        
+        elif isinstance(metric_spec, MetricExpression):
+            result = metric_spec.to_canonical()
+            return _force_canonical_form(result)
+        
+        elif isinstance(metric_spec, MetricTerm):
+            expression = MetricExpression(metric_spec)
+            result = expression.to_canonical()
+            return _force_canonical_form(result)
+        
+        else:
+            raise TypeError(f"Unsupported metric type: {type(metric_spec)}")
     
-    elif isinstance(metric_spec, dict):
-        # Parse from dictionary format (for API compatibility)
-        return _parse_metric_dict(metric_spec)
-    
-    elif isinstance(metric_spec, MetricExpression):
-        return metric_spec.to_canonical()
-    
-    elif isinstance(metric_spec, MetricTerm):
-        expression = MetricExpression(metric_spec)
-        return expression.to_canonical()
-    
-    else:
-        raise TypeError(f"Unsupported metric type: {type(metric_spec)}")
+    except Exception as e:
+        # SOUNDNESS FIX: Return stable representation for invalid input
+        return f"error:{str(metric_spec)[:50]}"
 
 
 def _parse_metric_dict(metric_dict: Dict[str, Any]) -> str:

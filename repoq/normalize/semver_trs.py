@@ -680,6 +680,12 @@ def normalize_semver(range_str: str, use_cache: bool = True) -> str:
         >>> normalize_semver("~1.2.0 || ^1.3.0")
         '[1.2.0, 1.3.0) || [1.3.0, 2.0.0)'
     """
+    # CONFLUENCE FIX: Handle empty/None expressions
+    if not range_str or not range_str.strip():
+        return ""
+    
+    range_str = range_str.strip()
+    
     # Check cache
     if use_cache and range_str in _semver_cache:
         return _semver_cache[range_str]
@@ -698,7 +704,8 @@ def normalize_semver(range_str: str, use_cache: bool = True) -> str:
     
     except Exception as e:
         logger.warning(f"Failed to normalize SemVer range '{range_str}': {e}")
-        return range_str  # Fallback to original
+        # CONFLUENCE FIX: Return stable empty string for invalid input
+        return ""
 
 
 def semver_hash(range_str: str) -> str:

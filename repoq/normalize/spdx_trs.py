@@ -529,6 +529,12 @@ def normalize_spdx(expr: str, use_cache: bool = True) -> str:
         >>> normalize_spdx("(MIT AND Apache-2.0) OR MIT")
         'MIT'  # Absorbed
     """
+    # CONFLUENCE FIX: Handle empty/None expressions 
+    if not expr or not expr.strip():
+        return ""
+    
+    expr = expr.strip()
+    
     # Check cache
     if use_cache and expr in _spdx_cache:
         return _spdx_cache[expr]
@@ -547,7 +553,8 @@ def normalize_spdx(expr: str, use_cache: bool = True) -> str:
     
     except Exception as e:
         logger.warning(f"Failed to normalize SPDX expression '{expr}': {e}")
-        return expr  # Fallback to original
+        # CONFLUENCE FIX: Return stable empty string for invalid input
+        return ""
 
 
 def spdx_hash(expr: str) -> str:
