@@ -142,10 +142,16 @@ nav:
     - Configuration: user-guide/configuration.md
     - CLI Commands: user-guide/commands.md
     - Workflows: user-guide/workflows.md
+  - Architecture:
+    - Overview: architecture/overview.md
+    - TRS Framework: architecture/trs-framework.md
+    - RDF Export: architecture/rdf-export.md
+    - BAML AI Agent: architecture/baml-agent.md
+    - Analyzer Pipeline: architecture/analyzer-pipeline.md
+    - Stratification Guard: architecture/stratification-guard.md
   - Advanced Topics:
     - Meta-Quality Loop: ontology/meta-loop.md
     - Ontological Intelligence: ontology/intelligence.md
-    - TRS Framework: ontology/trs-framework.md
   - Development:
       - Development Overview: development/index.md
       - uv Setup Guide: development/uv-setup.md
