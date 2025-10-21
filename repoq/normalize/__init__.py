@@ -43,7 +43,17 @@ from .filters_trs import (
     FileProperty,
     LogicalFilter
 )
-from .metrics_trs import normalize_metric
+from .metrics_trs import (
+    canonicalize_metric,
+    optimize_metric_expression,
+    normalize_weights,
+    MetricExpression,
+    MetricConstant,
+    MetricVariable,
+    ArithmeticOperation,
+    AggregationFunction,
+    parse_metric_expression
+)
 
 __all__ = [
     # Base classes
