@@ -136,8 +136,12 @@ nav:
   - Home: index.md
   - Getting Started:
     - Installation: getting-started/installation.md
+    - Quick Start: getting-started/quickstart.md
   - User Guide:
-    - Usage: user-guide/usage.md
+    - Overview: user-guide/usage.md
+    - Configuration: user-guide/configuration.md
+    - CLI Commands: user-guide/commands.md
+    - Workflows: user-guide/workflows.md
   - Advanced Topics:
     - Meta-Quality Loop: ontology/meta-loop.md
     - Ontological Intelligence: ontology/intelligence.md
