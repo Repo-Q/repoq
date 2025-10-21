@@ -1,5 +1,17 @@
+"""History analyzer for Git commit analysis and contributor statistics.
+
+This module analyzes repository history to extract:
+- Commit timeline and authorship
+- Contributor statistics (commits, lines added/deleted)
+- Code churn per file
+- Temporal coupling between files (files changed together)
+- File ownership based on commit activity
+
+Uses PyDriller when available, falls back to raw Git commands.
+"""
 from __future__ import annotations
 
+import logging
 import subprocess
 from collections import defaultdict
 from typing import Dict, Tuple
@@ -16,8 +28,19 @@ from ..core.model import (
 from ..core.utils import is_excluded
 from .base import Analyzer
 
+logger = logging.getLogger(__name__)
+
 
 def _run(cmd: list[str], cwd: str) -> str:
+    """Execute Git command and return stdout.
+
+    Args:
+        cmd: Command and arguments as list
+        cwd: Working directory for command execution
+
+    Returns:
+        Command stdout as string, empty string if command fails
+    """
     out = subprocess.run(cmd, cwd=cwd, check=False, capture_output=True, text=True)
     if out.returncode != 0:
         return ""
@@ -25,16 +48,55 @@ def _run(cmd: list[str], cwd: str) -> str:
 
 
 class HistoryAnalyzer(Analyzer):
+    """Analyzer for repository history and contributor metrics.
+
+    Extracts:
+    - Commits with authorship and timestamps
+    - Contributors (Person entities with FOAF mapping)
+    - Code churn (lines added/deleted per file)
+    - Temporal coupling (files frequently changed together)
+    - File ownership (primary contributor per file)
+
+    Prefers PyDriller for detailed analysis, falls back to Git CLI if unavailable.
+    """
+
     name = "history"
 
     def run(self, project: Project, repo_dir: str, cfg) -> None:
+        """Execute history analysis using PyDriller or Git fallback.
+
+        Args:
+            project: Project model to populate with history data
+            repo_dir: Absolute path to repository root
+            cfg: Configuration with time range filters (cfg.since)
+
+        Note:
+            Populates project.commits, project.contributors, project.coupling,
+            project.versions, and mutates File.commits_count, File.code_churn,
+            File.contributors.
+        """
         try:
             self._run_pydriller(project, repo_dir, cfg)
             return
-        except Exception:
+        except ImportError:
+            logger.info("PyDriller not available, falling back to Git CLI")
+            self._run_git(project, repo_dir, cfg)
+        except Exception as e:
+            logger.warning(f"PyDriller analysis failed: {e}, falling back to Git CLI")
             self._run_git(project, repo_dir, cfg)
 
     def _run_pydriller(self, project: Project, repo_dir: str, cfg) -> None:
+        """Analyze history using PyDriller library for detailed metrics.
+
+        Args:
+            project: Project model to populate
+            repo_dir: Repository directory
+            cfg: Configuration
+
+        Raises:
+            ImportError: If pydriller is not installed
+            Exception: On analysis errors
+        """
         from pydriller import Repository
 
         file_author_lines: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))

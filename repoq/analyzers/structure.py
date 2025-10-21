@@ -1,5 +1,16 @@
+"""Structure analyzer for repository organization and static metrics.
+
+This module analyzes the static structure of a repository including:
+- File and module organization
+- Programming language detection and LOC counting
+- Dependency extraction (Python, JavaScript/TypeScript)
+- License and README detection
+- CI/CD system detection
+- File checksums for integrity verification
+"""
 from __future__ import annotations
 
+import logging
 import os
 from collections import defaultdict
 from pathlib import Path
@@ -9,6 +20,8 @@ from ..core.deps import js_imports, python_imports
 from ..core.model import DependencyEdge, File, Module, Project
 from ..core.utils import checksum_file, guess_language, is_excluded
 from .base import Analyzer
+
+logger = logging.getLogger(__name__)
 
 TEXT_LIKE = set(
     [
@@ -48,10 +61,30 @@ TEXT_LIKE = set(
 
 
 def _is_textlike(path: Path) -> bool:
+    """Check if file is likely a text file based on extension.
+
+    Args:
+        path: File path to check
+
+    Returns:
+        True if extension is in TEXT_LIKE set, False otherwise
+    """
     return path.suffix[1:].lower() in TEXT_LIKE
 
 
 def _detect_spdx_license(repo_path: Path) -> str | None:
+    """Detect SPDX license identifier from LICENSE file.
+
+    Args:
+        repo_path: Repository root directory
+
+    Returns:
+        SPDX license URI or filename if detected, None otherwise
+
+    Note:
+        Uses simple text pattern matching for common licenses (MIT, Apache 2.0,
+        GPL-3.0, BSD-3-Clause). Falls back to filename if patterns don't match.
+    """
     # naive but useful: look into LICENSE* file
     for name in ["LICENSE", "LICENSE.md", "LICENSE.txt"]:
         p = repo_path / name
@@ -73,9 +106,36 @@ def _detect_spdx_license(repo_path: Path) -> str | None:
 
 
 class StructureAnalyzer(Analyzer):
+    """Analyzer for repository structure and static code metrics.
+
+    Analyzes:
+    - File tree and module hierarchy
+    - Programming languages and LOC distribution
+    - Dependencies (Python imports, JavaScript/TypeScript requires)
+    - License detection (SPDX)
+    - README description extraction
+    - CI/CD system detection (GitHub Actions, GitLab CI, etc.)
+    - File checksums (SHA1/SHA256)
+
+    The analyzer respects cfg.include_extensions, cfg.exclude_globs, and
+    cfg.max_files for filtering.
+    """
+
     name = "structure"
 
     def run(self, project: Project, repo_dir: str, cfg) -> None:
+        """Execute structure analysis and populate project model.
+
+        Args:
+            project: Project model to populate with structure data
+            repo_dir: Absolute path to repository root
+            cfg: Configuration with filters and options
+
+        Note:
+            Mutates project.files, project.modules, project.dependencies,
+            project.license, project.ci_configured, and
+            project.programming_languages in-place.
+        """
         repo_path = Path(repo_dir)
         language_loc: Dict[str, int] = defaultdict(int)
 
