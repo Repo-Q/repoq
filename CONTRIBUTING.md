@@ -5,6 +5,8 @@ Welcome! RepoQ is a technical project requiring mathematical precision in Term R
 ## Quick Start for Contributors
 
 ### 1. Development Setup
+
+#### Local Python Environment
 ```bash
 # Clone and setup
 git clone https://github.com/kirill-0440/repoq.git
@@ -16,6 +18,33 @@ pip install -e ".[full,dev]"
 # Run tests
 pytest --cov=repoq --cov-report=html
 ```
+
+#### Docker Environment (Recommended)
+```bash
+# Clone repository
+git clone https://github.com/kirill-0440/repoq.git
+cd repoq
+
+# Build and run development container
+docker-compose up repoq-dev
+
+# Run tests in container
+docker-compose up repoq-test
+
+# Serve documentation locally
+docker-compose up repoq-docs
+# Open http://localhost:8000 in browser
+
+# Run analysis on current directory
+docker-compose run --rm repoq-prod analyze /repo --format json
+```
+
+**Docker Benefits**:
+- ✅ Reproducible builds across platforms
+- ✅ Isolated dependencies (no system pollution)
+- ✅ Same environment as CI/CD
+- ✅ Multi-stage builds (optimized images)
+- ✅ Hot-reload for development
 
 ### 2. Project Architecture
 ```
@@ -79,13 +108,35 @@ repoq/
 
 ### Testing Requirements
 ```bash
-# Before submitting PR
+# Local testing
 pytest --cov=repoq --cov-report=term-missing
 ruff check repoq/ tests/
 mypy repoq/
 
+# Docker testing (recommended for CI parity)
+docker-compose up repoq-test
+
 # Golden snapshot updates (when needed)
 pytest --snapshot-update tests/
+```
+
+### Docker Development Workflow
+```bash
+# Start development container with hot-reload
+docker-compose up repoq-dev
+
+# Attach to running container for interactive work
+docker-compose exec repoq-dev bash
+
+# Run specific tests inside container
+docker-compose exec repoq-dev pytest tests/test_ontology_manager.py -v
+
+# Rebuild after dependency changes
+docker-compose build repoq-dev
+
+# Clean up containers and images
+docker-compose down
+docker system prune -f
 ```
 
 ## Technical Deep Dives

@@ -1,0 +1,161 @@
+# Docker Compose configuration for RepoQ development
+# Provides development environment with hot-reload and testing
+
+version: '3.9'
+
+services:
+  # ============================================================================
+  # Development service: hot-reload with volume mounts
+  # ============================================================================
+  repoq-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: repoq:dev
+    container_name: repoq-dev
+    
+    # Mount source code for hot-reload
+    volumes:
+      - ./repoq:/app/repoq:ro
+      - ./tests:/app/tests:ro
+      - ./pyproject.toml:/app/pyproject.toml:ro
+      - ./README.md:/app/README.md:ro
+      # Mount repo to analyze (example: current directory)
+      - .:/repo:ro
+    
+    # Override entrypoint for development
+    entrypoint: ["/bin/bash"]
+    command: ["-c", "pip install -e .[full,dev] && pytest --cov=repoq tests/ && /bin/bash"]
+    
+    # Keep container running for interactive use
+    stdin_open: true
+    tty: true
+    
+    # Environment variables for development
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTEST_ADDOPTS=--color=yes --verbose
+    
+    # Override user for development (root for pip install -e)
+    user: root
+    
+    # Health check disabled for dev (interactive mode)
+    healthcheck:
+      disable: true
+
+  # ============================================================================
+  # Test service: run tests in isolated environment
+  # ============================================================================
+  repoq-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    image: repoq:test
+    container_name: repoq-test
+    
+    volumes:
+      - ./tests:/build/tests:ro
+      - ./coverage.xml:/build/coverage.xml
+    
+    command: >
+      sh -c "
+        pip install --no-cache-dir pytest pytest-cov pytest-xdist hypothesis &&
+        pytest --cov=repoq --cov-report=term-missing --cov-report=xml:coverage.xml tests/ -n auto
+      "
+    
+    environment:
+      - PYTHONUNBUFFERED=1
+      - PYTEST_ADDOPTS=--color=yes --verbose
+
+  # ============================================================================
+  # Documentation service: serve MkDocs with hot-reload
+  # ============================================================================
+  repoq-docs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    image: repoq:docs
+    container_name: repoq-docs
+    
+    volumes:
+      - ./docs:/build/docs:ro
+      - ./mkdocs.yml:/build/mkdocs.yml:ro
+      - ./README.md:/build/README.md:ro
+    
+    ports:
+      - "8000:8000"
+    
+    command: >
+      sh -c "
+        pip install --no-cache-dir mkdocs mkdocs-material mkdocstrings[python] &&
+        mkdocs serve --dev-addr 0.0.0.0:8000
+      "
+    
+    environment:
+      - PYTHONUNBUFFERED=1
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # ============================================================================
+  # Production service: run analysis on mounted repository
+  # ============================================================================
+  repoq-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: repoq:latest
+    container_name: repoq-prod
+    
+    volumes:
+      # Mount repository to analyze (override with -v flag)
+      - .:/repo:ro
+    
+    # Example: analyze /repo and output JSON
+    command: ["analyze", "/repo", "--format", "json", "--output", "/repo/repoq-analysis.json"]
+    
+    environment:
+      - PYTHONUNBUFFERED=1
+    
+    # Security: run as non-root user
+    user: repoq
+
+# ============================================================================
+# Usage Examples:
+# ============================================================================
+# Development (hot-reload):
+#   docker-compose up repoq-dev
+#   docker-compose exec repoq-dev repoq analyze /repo
+#
+# Run tests:
+#   docker-compose up repoq-test
+#
+# Serve documentation:
+#   docker-compose up repoq-docs
+#   # Open http://localhost:8000 in browser
+#
+# Production analysis:
+#   docker-compose run --rm repoq-prod analyze /repo --format json
+#
+# Custom repository:
+#   docker-compose run --rm -v /path/to/repo:/repo:ro repoq-prod analyze /repo
+#
+# Quality gate check:
+#   docker-compose run --rm repoq-prod gate --base main --head .
+# ============================================================================
+
+# ============================================================================
+# Networks (default bridge network is sufficient for single-host setup)
+# ============================================================================
+networks:
+  default:
+    name: repoq-network
+    driver: bridge

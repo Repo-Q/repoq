@@ -56,7 +56,16 @@ docs = [
 repoq = "repoq.cli:app"
 
 [tool.setuptools]
-packages = ["repoq"]
+packages = [
+  "repoq",
+  "repoq.analyzers",
+  "repoq.core",
+  "repoq.config",
+  "repoq.normalize",
+  "repoq.ontologies",
+  "repoq.reporting",
+  "repoq.shapes"
+]
 
 [tool.setuptools.package-data]
 repoq = ["ontologies/*.jsonld", "shapes/*.ttl"]
