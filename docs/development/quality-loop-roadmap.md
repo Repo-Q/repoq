@@ -4,9 +4,12 @@
 
 This document outlines the implementation strategy for a **monotonic quality guarantee system** - a self-reinforcing quality loop where every commit either improves code quality or is blocked by CI gates.
 
-**Current Status**: Technical foundation ready (64% test coverage, TRS systems validated, VC certificates implemented)  
-**Recommended Approach**: MVP-first (Variant 2) for rapid validation, then iterative expansion  
-**Timeline**: 2-3 weeks to working prototype, 2-3 months to production-ready
+**Current Status**: Technical foundation ready (64% test coverage, TRS systems validated, VC certificates implemented, 77 artifacts in tmp/ ready for integration)  
+**Methodology**: Value-Driven Analysis and Design (VDAD) integrated with agile architectural practices  
+**Recommended Approach**: MVP-first for rapid validation, then iterative expansion following VDAD 7-step process  
+**Timeline**: Structured as iterative phases without fixed dates (see VDAD Integration section)
+
+> 📋 **New**: This roadmap now integrates the VDAD (Value-Driven Analysis and Design) methodology for systematic stakeholder-centric development. See [VDAD Integration](#vdad-integration-roadmap) section below for the comprehensive 6-month strategic plan.
 
 ---
 
@@ -522,6 +525,454 @@ Academic validation before committing to implementation
 
 The meta-optimizing quality loop is **architecturally sound** and **technically feasible** with RepoQ's existing infrastructure. The **MVP approach (Variant 2)** provides the fastest path to validation while minimizing risk.
 
-**Recommendation**: Begin MVP implementation immediately with 2-3 week timeline. Success here validates the concept and provides foundation for advanced features in subsequent phases.
+**Recommendation**: Begin implementation following the integrated VDAD roadmap (see next section). Start with Phase 1 (Domain Immersion) while executing MVP deliverables, ensuring value-driven decisions at every step.
 
-**Key Success Factor**: Maintain focus on core monotonicity guarantee in MVP, defer advanced features (ZAG gaming protection, weight adaptation) to Phase 2.
+**Key Success Factor**: Maintain focus on core monotonicity guarantee in MVP, while systematically building stakeholder value alignment through VDAD process. Advanced features (ZAG gaming protection, weight adaptation, AI agents) emerge naturally from stakeholder value prioritization in Phases 2-3.
+
+---
+
+## VDAD Integration Roadmap
+
+**Methodology**: Value-Driven Analysis and Design (VDAD) — a 7-step process for integrating human/ethical values into the development lifecycle ([ethical-se.github.io](https://ethical-se.github.io)).
+
+**Key Principles**:
+- **Stakeholder-centric**: All decisions traced back to stakeholder values
+- **Iterative**: Each 6-month cycle refines domain understanding
+- **AI-assisted**: LLM copilot supports analysis, design, and documentation
+- **Formal foundations**: VDAD complements (not replaces) mathematical rigor from `formal-foundations-complete.md`
+
+**Integration with RepoQ**: This VDAD roadmap runs in parallel with the tactical MVP/Production phases above, providing strategic direction and value validation.
+
+---
+
+### Phase 1: Domain Immersion & Stakeholder Mapping
+
+**VDAD Steps**: Step 1 (Domain Analysis), Step 2 (Stakeholder Identification)
+
+**Objective**: Gain deep understanding of RepoQ's domain and identify all stakeholders.
+
+#### Tasks
+
+**1.1 Domain Analysis**
+- [ ] Study formal documentation (`formal-foundations-complete.md`, 14 theorems, 6 guarantees)
+- [ ] Review tmp/ artifacts (77 files: meta-loop, ZAG, Any2Math integrations)
+- [ ] Analyze existing codebase (64% coverage, TRS systems, VC certificates)
+- [ ] Map domain concepts using Domain-Driven Design:
+  - Core domain: Quality metrics (Q, PCQ, complexity, hotspots)
+  - Supporting domains: TRS normalization, ontologies, VC certificates
+  - Generic domains: Git integration, CLI, reporting
+- **AI Copilot Role**: Summarize large documents, generate domain glossary, propose initial bounded contexts
+
+**1.2 Context Modeling**
+- [ ] Build Context Map showing system boundaries and relationships
+- [ ] Create domain entity diagram (Project, File, Metric, Certificate, etc.)
+- [ ] Define ubiquitous language for RepoQ (terms like "admission policy", "PCQ", "stratification")
+- [ ] Document bounded contexts:
+  - Analysis Context: Code parsing, metric calculation
+  - Quality Context: Q scoring, gate decisions, PCQ/PCE
+  - Ontology Context: Code/C4/DDD ontologies, semantic inference
+  - Integration Context: CI/CD, GitHub Actions, CLI
+- **AI Copilot Role**: Generate draft Context Map, suggest entity relationships, validate terminology consistency
+
+**1.3 Stakeholder Mapping**
+- [ ] Identify stakeholder groups:
+  - **Developers**: Primary users of quality gates
+  - **Team Leads/Managers**: Track quality trends, allocate improvement effort
+  - **DevOps Engineers**: Integrate into CI/CD pipelines
+  - **Open Source Community**: Contributors, adopters
+  - **Researchers**: Formal methods, software engineering academics
+  - **Ourselves**: Project maintainers
+- [ ] Create stakeholder map with roles, responsibilities, and touchpoints
+- [ ] For each group, document:
+  - Goals (e.g., developers: fast feedback, managers: quality visibility)
+  - Pain points (e.g., developers: cryptic error messages, managers: gaming metrics)
+  - Expectations (e.g., DevOps: <2min CI overhead)
+- **AI Copilot Role**: Generate stakeholder personas, cross-check stakeholder list with similar projects, suggest missing groups
+
+**Deliverables**:
+- Domain model document (bounded contexts, entities, ubiquitous language)
+- Context Map diagram (Mermaid or C4 model)
+- Stakeholder map with personas/roles (table or visual map)
+
+---
+
+### Phase 2: Value Elicitation & Prioritization
+
+**VDAD Steps**: Step 3 (Value Identification), Step 4 (Value Prioritization)
+
+**Objective**: Identify what each stakeholder group values and prioritize these values.
+
+#### Tasks
+
+**2.1 Value Identification**
+- [ ] For each stakeholder group, elicit core values:
+  - **Developers**: Fast feedback, actionable insights, transparency, fairness (no arbitrary blocks)
+  - **Managers**: Quality visibility, gaming protection, team accountability
+  - **DevOps**: Reliability, low maintenance, integration simplicity
+  - **Community**: Openness, reproducibility, scientific rigor
+  - **Researchers**: Formal correctness, innovation (proof-carrying certificates, TRS)
+- [ ] Conduct value mapping workshop (with AI copilot as facilitator):
+  - Use Stakeholder Value Map template ([ethical-se.github.io](https://ethical-se.github.io))
+  - For each value, document:
+    - **Value name**: e.g., "Transparency"
+    - **Description**: "System explains why PR was blocked"
+    - **Stakeholders**: Developers (high), Managers (medium)
+    - **Examples**: Gate output shows ΔQ breakdown, PCE witness for improvement
+- [ ] Create Value Register (spreadsheet or database) tracking all values
+- **AI Copilot Role**: Extract values from existing documentation/issues, propose typical values for QA tools, structure Value Register
+
+**2.2 Value Impact Mapping**
+- [ ] Map each system feature/function to values it supports:
+  - `repoq gate` → Values: Monotonicity, Transparency, Fast feedback
+  - PCQ/PCE (ZAG) → Values: Gaming protection, Fairness, Accountability
+  - Any2Math normalization → Values: Reproducibility, Correctness, Scientific rigor
+  - Ontological intelligence → Values: Actionability, Insight depth
+  - VC certificates → Values: Auditability, Trust, Traceability
+- [ ] Identify value gaps: areas where stakeholder values are not addressed
+- [ ] Create Value Impact Map diagram showing feature↔value connections
+- **AI Copilot Role**: Auto-generate impact map from Value Register + feature list, highlight gaps, suggest new features for unmet values
+
+**2.3 Value Prioritization**
+- [ ] Define prioritization criteria:
+  - **Stakeholder count**: How many groups care?
+  - **Strategic alignment**: Does it support RepoQ's mission (formal quality assurance)?
+  - **Impact**: High/medium/low effect on project success?
+  - **Risk**: Does neglecting this value create ethical/legal issues?
+- [ ] Score each value on criteria (e.g., 1-5 scale)
+- [ ] Produce prioritized value list (Tier 1: critical, Tier 2: important, Tier 3: nice-to-have)
+- [ ] Document rationale for each priority decision
+- **AI Copilot Role**: Apply scoring rubric automatically, generate priority matrix, validate consistency of rankings
+
+**Deliverables**:
+- Value Register (comprehensive list with descriptions, stakeholders, priority)
+- Value Impact Map (feature ↔ value connections)
+- Prioritized value list with justifications
+
+---
+
+### Phase 3: Strategic Decisions & Requirements
+
+**VDAD Steps**: Step 5 (Digitalization Decision), Step 6 (Requirements Elaboration)
+
+**Objective**: Translate prioritized values into strategic decisions and concrete requirements.
+
+#### Tasks
+
+**3.1 Strategic Decisions (Digitalization Decision)**
+- [ ] For each Tier 1 value, decide how to address it:
+  - **Transparency** → Add detailed gate output with ΔQ breakdown, PCE witness
+  - **Gaming protection** → Integrate ZAG PCQ (already in tmp/zag_repoq-finished/)
+  - **Correctness** → Use Any2Math for deterministic normalization (tmp/repoq-any2math-integration/)
+  - **Scientific rigor** → Publish formal proofs (formal-foundations-complete.md)
+  - **Fast feedback** → Optimize analysis time, incremental processing
+- [ ] Document strategic rationale for each decision:
+  - **Context**: Why is this value important now?
+  - **Decision**: What specific action/feature addresses it?
+  - **Alternatives considered**: What other options were rejected and why?
+- [ ] Record decisions in Strategic Decision Log (similar to ADR format)
+- **AI Copilot Role**: Propose decision options, analyze trade-offs, draft decision records
+
+**3.2 Ethical Requirements (IEEE 7000 EVR)**
+- [ ] Formulate Ethical Value Requirements (EVR) for key values:
+  - **Transparency EVR**: "System SHALL provide human-readable explanation for every gate rejection, including specific metrics that failed and recommended fixes"
+  - **Fairness EVR**: "System SHALL NOT penalize developers for legitimate code complexity (e.g., implementing algorithms); complex code allowed if justified and well-tested"
+  - **Gaming protection EVR**: "System SHALL detect and block attempts to artificially inflate Q score (e.g., via PCQ min-aggregator: all modules must meet threshold, not just average)"
+  - **Privacy EVR**: "System SHALL NOT transmit repository contents to external services without explicit consent (all analysis local or self-hosted)"
+- [ ] Link each EVR to one or more values in Value Register
+- [ ] Ensure EVRs are verifiable (with acceptance criteria)
+- **AI Copilot Role**: Generate EVR templates, check IEEE 7000 compliance, suggest verification methods
+
+**3.3 Functional & Non-Functional Requirements**
+- [ ] Update functional requirements based on strategic decisions:
+  - FR1: `repoq gate` command with exit codes (0=pass, 1=fail)
+  - FR2: Q metric calculation with configurable weights (.github/quality-policy.yml)
+  - FR3: Hard constraints validation (tests, TODO, hotspots)
+  - FR4: PCQ min-aggregator integration (ZAG)
+  - FR5: PCE k-repair witness generation
+  - FR6: Ontological intelligence (Code/C4/DDD pattern detection)
+  - FR7: Self-application safety (stratification levels 0-2)
+  - FR8: Any2Math normalization for deterministic metrics
+  - ...
+- [ ] Define NFRs (SMART criteria):
+  - **Performance**: Analysis time ≤2 minutes for repos <1000 files, ≤5 minutes for <10000 files
+  - **Reliability**: Gate false positive rate <5%, false negative rate <1%
+  - **Usability**: Developer can understand gate failure in <30 seconds
+  - **Security**: No credentials leaked in logs, no external data transmission
+  - **Maintainability**: Code coverage ≥80%, documentation coverage 100%
+  - **Compatibility**: Works with GitHub Actions, GitLab CI, local git hooks
+- [ ] Validate requirements against Value Register (each requirement supports ≥1 value)
+- **AI Copilot Role**: Generate SMART-formatted NFRs, cross-check requirements vs values, identify missing requirements
+
+**Deliverables**:
+- Strategic Decision Log (why we're building what)
+- Ethical Value Requirements (EVR) document
+- Updated Requirements Specification (FR + NFR)
+
+---
+
+### Phase 4: Architecture Design & Decision Recording
+
+**VDAD Steps**: Step 7 (Architecture Design)
+
+**Objective**: Design system architecture satisfying all requirements, with full traceability to values.
+
+#### Tasks
+
+**4.1 High-Level Architecture Design**
+- [ ] Design component architecture using existing formal foundations:
+  - **Core Engine**: Metric calculation, TRS normalization, Q scoring
+  - **Gate Logic**: Admission policy evaluation, hard constraints
+  - **Ontology Intelligence**: Code/C4/DDD analyzers, semantic inference (tmp/repoq-meta-loop-addons/)
+  - **ZAG Integration**: PCQ/PCE module (tmp/zag_repoq-finished/)
+  - **Any2Math Bridge**: Lean normalization adapter (tmp/repoq-any2math-integration/)
+  - **Certificate Generator**: VC credential creation with proof-carrying evidence
+  - **CLI**: Command-line interface (`gate`, `meta-self`, `any2math-normalize`)
+  - **CI Integration**: GitHub Actions, GitLab CI runners
+  - **Knowledge Base**: RDF store for ontologies, SPARQL endpoint
+- [ ] Apply DDD tactical patterns:
+  - Bounded contexts: Analysis, Quality, Ontology, Integration
+  - Aggregates: Project (root), File, Metric, Certificate
+  - Services: AnalysisService, GateService, OntologyService
+  - Repositories: ProjectRepository (git abstraction)
+- [ ] Create architecture diagram (C4 model recommended):
+  - Context diagram: RepoQ system + external systems (Git, CI, LLM)
+  - Container diagram: Major components and data flows
+  - Component diagram (for complex containers): Internal modules
+- **AI Copilot Role**: Generate draft C4 diagrams from component list, suggest DDD patterns, validate architectural consistency
+
+**4.2 NFR Realization**
+- [ ] For each NFR, design architectural mechanism:
+  - **Performance NFR** → Caching layer (metrics, normalized artifacts), incremental analysis
+  - **Reliability NFR** → Statistical noise filtering (ε-guard), test suite (80%+ coverage)
+  - **Usability NFR** → Structured error messages, PCE witness in output
+  - **Security NFR** → Read-only file access, no network calls (except opt-in LLM)
+  - **Maintainability NFR** → Modular architecture, ADR log, comprehensive docs
+- [ ] Document architectural tactics in architecture document (arc42 template)
+- **AI Copilot Role**: Propose architectural tactics from patterns catalog, validate NFR coverage
+
+**4.3 Architecture Decision Records (ADR)**
+- [ ] Establish ADR log in `docs/architecture/decisions/`
+- [ ] Create ADR for every significant decision:
+  - **ADR-001**: Use BAML for AI agent (type-safe LLM outputs)
+  - **ADR-002**: Choose RDFLib + Oxigraph for RDF storage (Python-native, standards-compliant)
+  - **ADR-003**: Integrate Any2Math via subprocess (isolate Lean runtime)
+  - **ADR-004**: Adopt arc42 for architecture documentation (comprehensive, proven)
+  - **ADR-005**: Use Mermaid for diagrams (text-based, git-friendly, MkDocs-compatible)
+  - **ADR-006**: Stratification levels 0-2 for self-analysis (prevents paradoxes per Theorem F)
+  - **ADR-007**: PCQ min-aggregator for gaming protection (ZAG framework, Theorem C)
+  - ...
+- [ ] Use lightweight ADR format (MADR or Y-statements):
+  ```markdown
+  # ADR-001: Use BAML for AI Agent
+  
+  **Context**: Need type-safe, reliable AI agent for semantic analysis.
+  
+  **Decision**: Adopt BoundaryML BAML framework.
+  
+  **Rationale**: BAML provides DSL for LLM functions with compile-time type checking,
+  reducing hallucination risk and improving testability.
+  
+  **Consequences**: +Type safety, +Testability, -Learning curve, -Vendor lock-in (mitigated by open-source)
+  ```
+- **AI Copilot Role**: Generate ADR drafts from verbal explanations, auto-fill ADR template, maintain ADR index
+
+**4.4 AI Agent Design (BAML Integration)**
+- [ ] Define AI agent responsibilities:
+  - **Semantic Code Analysis**: Understand PR context beyond syntax (intent, patterns)
+  - **Explanation Generation**: Translate gate failures into human-readable advice
+  - **Improvement Suggestions**: Propose specific code changes (PCE witness augmentation)
+  - **Anomaly Detection**: Flag unusual patterns (potential gaming, security issues)
+- [ ] Design BAML functions for each responsibility:
+  ```baml
+  function AnalyzePRContext(diff: string, metrics: Metrics) -> PRContext {
+    client GPT4
+    prompt #"
+      Analyze this git diff and metrics:
+      
+      Diff: {{ diff }}
+      Metrics: {{ metrics }}
+      
+      Extract:
+      - Intent: What is the developer trying to accomplish?
+      - Patterns: What design patterns are used?
+      - Risks: What could go wrong?
+    "#
+  }
+  ```
+- [ ] Specify agent boundaries (security, resource limits):
+  - Read-only access to repository
+  - Max 10 LLM calls per analysis (cost control)
+  - Timeout: 30 seconds per function
+  - No external network except LLM API
+- [ ] Plan phased rollout:
+  - **Phase 1**: Experimental mode (agent provides suggestions, no gate impact)
+  - **Phase 2**: Advisory mode (agent suggestions shown in PR comments)
+  - **Phase 3**: Active mode (agent detects gaming, can influence gate decision)
+- **AI Copilot Role**: Generate BAML function stubs, validate function signatures, suggest safety constraints
+
+**Deliverables**:
+- Architecture document (arc42 format recommended)
+- C4 diagrams (context, container, component)
+- ADR log (comprehensive decision record)
+- BAML agent specification (functions, boundaries, rollout plan)
+
+---
+
+### Phase 5: Implementation, Integration & Validation
+
+**VDAD Step**: Implementation + Continuous Value Validation
+
+**Objective**: Build system, integrate AI agent (when ready), validate against values.
+
+#### Tasks
+
+**5.1 Core Implementation**
+- [ ] Implement priority 0 components (from tmp-artifacts-inventory.md):
+  - Safety Guards: SelfApplicationGuard, ResourceLimiter (tmp/repoq-meta-loop-addons/trs/engine.py)
+  - SHACL shapes: meta_loop.ttl → repoq/shapes/
+  - Basic gate logic: repoq/gate.py (already exists, enhance with tmp/ components)
+- [ ] Integrate ZAG PCQ/PCE (Priority 1):
+  - Copy tmp/zag_repoq-finished/integrations/zag.py → repoq/integrations/
+  - Add PCQ min-aggregator to repoq/quality.py
+  - Implement witness generation in gate output
+- [ ] Integrate Any2Math normalization (Priority 1):
+  - Copy tmp/repoq-any2math-integration/ → repoq/integrations/any2math/
+  - Add `--normalize any2math` flag to `repoq gate`
+  - Enrich VC certificates with NormalizationEvidence
+- [ ] Implement ontological intelligence (Priority 2):
+  - Copy tmp/repoq-meta-loop-addons/ontologies/ → repoq/ontologies/
+  - Implement SemanticInferenceEngine with SPARQL
+  - Add pattern detection (5-7 patterns: MVC, Layered, Plugin, etc.)
+- **AI Copilot Role**: Review PRs for adherence to architecture, suggest refactorings, generate unit test stubs
+
+**5.2 AI Agent Deployment**
+- [ ] Implement BAML functions from Phase 4 design
+- [ ] Create agent wrapper service (HTTP API or CLI command)
+- [ ] Test agent on historical PRs:
+  - Verify semantic accuracy (manual review of 20+ PR analyses)
+  - Measure false positive rate for gaming detection
+  - Validate explanation quality (developer survey)
+- [ ] Deploy in experimental mode:
+  - Agent runs on all PRs but outputs to separate log
+  - No impact on gate decisions
+  - Collect feedback from developers
+- [ ] Gradual rollout to advisory/active modes (if experimental succeeds)
+- **AI Copilot Role**: Generate BAML test cases, validate LLM outputs, monitor agent performance metrics
+
+**5.3 Comprehensive Testing**
+- [ ] Unit tests (target: 80%+ coverage):
+  - TRS engine: Termination, confluence, idempotence
+  - Q metric: Correctness of formula, edge cases (empty repo, single file)
+  - Gate logic: All combinations of hard constraints + Q threshold
+  - PCQ/PCE: Min-aggregator, witness generation
+  - Any2Math bridge: Normalization correctness, fallback mode
+- [ ] Integration tests:
+  - End-to-end PR simulation: git diff → analysis → gate decision → VC certificate
+  - CI workflows: GitHub Actions, GitLab CI
+  - Multi-repository scenarios
+- [ ] NFR validation:
+  - Performance benchmarks (measure analysis time on repos of varying sizes)
+  - Stress tests (1000-file repo, 100-file PR diff)
+  - Usability tests (developer survey on error message clarity)
+- [ ] Value validation:
+  - For each Tier 1 value, verify ≥1 test validates it:
+    - Transparency: Test that gate output includes ΔQ breakdown
+    - Gaming protection: Test that PCQ detects metric compensation
+    - Correctness: Test that Any2Math produces deterministic results
+- **AI Copilot Role**: Generate test cases from requirements, perform mutation testing, analyze coverage gaps
+
+**5.4 Documentation & Review**
+- [ ] Update all documentation:
+  - Architecture document (reflect as-built architecture)
+  - User guide (how to install, configure, use `repoq gate`)
+  - Developer guide (how to extend analyzers, add patterns)
+  - ADR log (record any implementation decisions)
+- [ ] Conduct architecture review:
+  - Check alignment with requirements (traceability matrix)
+  - Validate NFR achievement (review test results)
+  - Verify value satisfaction (for each value, show evidence it's addressed)
+- [ ] AI self-audit:
+  - Run `repoq meta-self` (stratified self-analysis, level 2)
+  - Review findings: architectural patterns detected, quality score, improvement recommendations
+  - Address any critical issues before release
+- **AI Copilot Role**: Review documentation for completeness, generate traceability matrix, summarize audit findings
+
+**5.5 Iteration Planning**
+- [ ] Retrospective: What worked, what didn't?
+  - Review against initial stakeholder values
+  - Collect feedback from early adopters (if any)
+  - Identify new values/requirements that emerged
+- [ ] Plan next iteration (6-month cycle):
+  - Re-run VDAD Step 1: Has domain understanding changed?
+  - Update stakeholder map: New groups? Changed priorities?
+  - Refresh Value Register: New values? Deprecated values?
+  - Adjust architecture for new requirements
+- [ ] Archive iteration artifacts:
+  - Save Value Register, ADR log, architecture docs to version-tagged folder
+  - Maintain historical record for future reference
+- **AI Copilot Role**: Analyze usage metrics, survey feedback, propose next iteration themes
+
+**Deliverables**:
+- Working RepoQ system (MVP or production-ready depending on scope)
+- Comprehensive test suite (80%+ coverage)
+- Complete documentation (architecture, user guide, developer guide)
+- Iteration retrospective report
+- Next iteration plan
+
+---
+
+## VDAD-Aligned Success Metrics
+
+### Phase 1 (Domain Immersion)
+- ✅ Domain model document complete (bounded contexts, entities)
+- ✅ Stakeholder map identifies ≥5 groups
+- ✅ Context Map approved by all team members
+
+### Phase 2 (Value Elicitation)
+- ✅ Value Register contains ≥20 distinct values
+- ✅ Each stakeholder group has ≥3 values identified
+- ✅ Value Impact Map covers ≥80% of planned features
+
+### Phase 3 (Requirements)
+- ✅ All Tier 1 values translated into ≥1 requirement
+- ✅ All EVRs have verifiable acceptance criteria
+- ✅ NFRs meet SMART criteria (Specific, Measurable, Agreed, Realistic, Time-bound)
+
+### Phase 4 (Architecture)
+- ✅ Architecture satisfies all NFRs (validation documented)
+- ✅ ADR log records ≥10 significant decisions
+- ✅ C4 diagrams pass peer review
+
+### Phase 5 (Implementation)
+- ✅ Test coverage ≥80%
+- ✅ All Tier 1 values validated by tests
+- ✅ Self-audit (repoq meta-self) shows no critical issues
+- ✅ Developer satisfaction ≥4/5 (if external users exist)
+
+---
+
+## Integration of VDAD with Existing Roadmap
+
+**How VDAD phases align with MVP/Production timeline**:
+
+| MVP/Production Phase | VDAD Phases | Key Integration Points |
+|---------------------|-------------|------------------------|
+| **Pre-MVP: Planning** | Phase 1-2 | Domain analysis informs feature prioritization; stakeholder values drive MVP scope |
+| **MVP: Week 1-3** | Phase 3 | Requirements from Value Register → gate logic implementation |
+| **Production: Week 4-8** | Phase 4 | Architecture design → ZAG/Any2Math integration decisions recorded in ADR |
+| **Advanced: Week 8-12** | Phase 5 | AI agent deployment, ontological intelligence, comprehensive testing against values |
+| **Post-Launch** | Iteration Planning | Retrospective feeds into next VDAD cycle (re-run Steps 1-7 with updated context) |
+
+**Key Principle**: VDAD provides **strategic direction** (what to build and why), while MVP/Production phases provide **tactical execution** (how to build and when). Both run in parallel, informing each other.
+
+---
+
+## References & Methodology Sources
+
+1. **Stefan Kapferer et al.** (2024). *Value-Driven Analysis and Design (VDAD) Process*. [ethical-se.github.io](https://ethical-se.github.io) — 7-step process for integrating human/ethical values into software development
+2. **Olaf Zimmermann, Mirko Stocker** (2021-2024). *Design Practice Repository (DPR)*. [GitHub](https://github.com/socadk/design-practice-repository) — Agile architectural practices, ADR templates, SMART requirements
+3. **RepoQ Project** (2025). *Formal Foundations Complete*. [GitHub](https://github.com/kirill-0440/repoq) — 14 theorems, 6 formal guarantees, 77 tmp/ artifacts
+4. **BoundaryML** (2023). *BAML Framework*. [GitHub](https://github.com/BoundaryML/baml) — Type-safe AI agent DSL for reliable LLM workflows
+5. **IEEE 7000-2021**. *Standard for Addressing Ethical Concerns during System Design*. — Framework for Ethical Value Requirements (EVR)
+
+---
