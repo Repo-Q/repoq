@@ -1,0 +1,109 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: ["enhancement", "needs-discussion"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a feature! Please provide details about your use case and proposed solution.
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Feature Category
+      description: What type of feature is this?
+      options:
+        - New Analyzer (code metrics, git analysis)
+        - Export Format (JSON-LD, RDF, new format)
+        - CLI Enhancement (new commands, options)
+        - TRS System (normalization, reasoning)
+        - Performance Improvement
+        - Integration (CI/CD, tools)
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use Case
+      description: Describe the problem this feature would solve
+      placeholder: |
+        As a [DevOps engineer/Quality engineer/Researcher], 
+        I want to [specific need]
+        So that I can [business value]
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: How should this feature work?
+      placeholder: |
+        Add a new `repoq security` command that:
+        1. Scans for known vulnerabilities
+        2. Outputs SARIF format
+        3. Integrates with GitHub Security tab
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: What other solutions did you consider?
+      placeholder: |
+        - Using external tool X, but it doesn't integrate with our semantic exports
+        - Manual process Y, but it's time-consuming and error-prone
+
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example Usage
+      description: Show how this feature would be used
+      placeholder: |
+        ```bash
+        # Basic usage
+        repoq security ./my-repo --format sarif
+
+        # With semantic export
+        repoq security ./my-repo --format jsonld --context security
+        ```
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature?
+      options:
+        - Critical (blocking major use case)
+        - High (significant improvement)
+        - Medium (nice to have)
+        - Low (minor enhancement)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: implementation
+    attributes:
+      label: Implementation Willingness
+      options:
+        - label: I'm willing to implement this feature
+        - label: I can provide technical guidance
+        - label: I can help with testing
+        - label: I can provide use case validation
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Pre-submission Checklist
+      options:
+        - label: I searched existing issues for similar requests
+          required: true
+        - label: This aligns with RepoQ's core mission (repository quality analysis)
+          required: true
+        - label: I provided concrete use cases and examples
+          required: true
