@@ -18,7 +18,10 @@ Soundness gates:
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any
+from typing import Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from repoq.config.quality_policy import QualityPolicy
 
 
 @dataclass
@@ -315,3 +318,58 @@ class StratificationGuard:
             raise ValueError("Cannot pop below base level (L0)")
         
         self._level_stack.pop()
+    
+    @classmethod
+    def from_policy(cls, policy: QualityPolicy) -> StratificationGuard:
+        """Create StratificationGuard from QualityPolicy.
+        
+        Args:
+            policy: QualityPolicy instance.
+        
+        Returns:
+            StratificationGuard configured from policy.
+        
+        Example:
+            >>> from repoq.config.quality_policy import QualityPolicy
+            >>> policy = QualityPolicy(version="1.0", project={"name": "test", "language": "python"})
+            >>> guard = StratificationGuard.from_policy(policy)
+        """
+        # Use max_depth from policy if available (default to 10)
+        max_depth = getattr(policy.stratification, "max_level", 10)
+        return cls(max_depth=max_depth)
+    
+    def check_transition_with_policy(
+        self,
+        from_level: int,
+        to_level: int,
+        policy: QualityPolicy
+    ) -> TransitionResult:
+        """Check transition with policy constraints.
+        
+        Adds policy-level checks on top of basic transition checks.
+        
+        Args:
+            from_level: Source level.
+            to_level: Target level.
+            policy: QualityPolicy with stratification config.
+        
+        Returns:
+            TransitionResult with policy-aware validation.
+        
+        Example:
+            >>> guard.check_transition_with_policy(0, 4, policy)
+            TransitionResult(is_safe=False, reason="Exceeds max level: 4 > 3")
+        """
+        # First check basic transition rules
+        result = self.check_transition(from_level, to_level)
+        if not result.is_safe:
+            return result
+        
+        # Check policy max_level constraint
+        if to_level > policy.stratification.max_level:
+            return TransitionResult(
+                is_safe=False,
+                reason=f"Exceeds max level: {to_level} > {policy.stratification.max_level}"
+            )
+        
+        return TransitionResult(is_safe=True)

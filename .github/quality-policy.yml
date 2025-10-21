@@ -1,0 +1,49 @@
+# Quality Policy Configuration for RepoQ
+# This file defines quality gates, stratification rules, and thresholds
+
+version: "1.0"
+
+project:
+  name: "repoq"
+  language: "python"
+
+# Quality Gates Configuration
+gates:
+  # Soundness Gate: Ensures type safety and logical correctness
+  soundness:
+    enabled: true
+    fail_on_error: true
+  
+  # Confluence Gate: Ensures term rewriting system is confluent
+  confluence:
+    enabled: true
+    check_critical_pairs: true
+    completion_strategy: "knuth-bendix"
+  
+  # Termination Gate: Ensures analysis terminates
+  termination:
+    enabled: true
+    max_iterations: 1000
+    timeout_seconds: 30
+
+# Stratification Policy (Theorem F: Safe Self-Application)
+stratification:
+  # Maximum stratification level (L0, L1, ..., L10)
+  max_level: 10
+  
+  # Allow self-analysis (meta-quality analysis)
+  allow_self_analysis: true
+  
+  # Self-analysis limited to L0-L2 (prevents paradoxes)
+  self_analysis_max_level: 2
+
+# Quality Thresholds
+quality_thresholds:
+  # Minimum test coverage (80%)
+  test_coverage_min: 0.80
+  
+  # Maximum cyclomatic complexity per function
+  complexity_max: 15
+  
+  # Maximum code duplication (10%)
+  duplication_max: 0.10
