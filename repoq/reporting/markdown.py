@@ -1,8 +1,25 @@
+"""Markdown report generation module.
+
+This module generates human-readable Markdown reports from Project analysis
+results, including:
+- Repository metadata and statistics
+- Programming language distribution
+- Top contributors by commit count
+- Hotspot files with risk scores
+- Code quality issues (TODO/FIXME/Deprecated)
+- Test execution results
+
+Uses Jinja2 templating for flexible report customization.
+"""
 from __future__ import annotations
+
+import logging
 
 from jinja2 import Template
 
 from ..core.model import Project
+
+logger = logging.getLogger(__name__)
 
 TEMPLATE = Template(
     """
@@ -56,4 +73,30 @@ TEMPLATE = Template(
 
 
 def render_markdown(project: Project) -> str:
-    return TEMPLATE.render(p=project)
+    """Generate Markdown report from Project analysis results.
+
+    Creates a formatted Markdown document with sections for:
+    - Repository overview (name, URL, license, CI)
+    - Language statistics (LOC per language)
+    - Top 10 contributors by commit count
+    - Top 15 hotspot files with risk metrics
+    - Code quality markers (TODO/FIXME/Deprecated)
+    - Test results (up to 20 most recent)
+
+    Args:
+        project: Project model with analysis results
+
+    Returns:
+        Formatted Markdown string ready for file output
+
+    Example:
+        >>> project = Project(id="repo:test", name="Test Project")
+        >>> md = render_markdown(project)
+        >>> print(md[:50])
+        '\\n# Репозиторий: **Test Project**\\n...'
+    """
+    try:
+        return TEMPLATE.render(p=project)
+    except Exception as e:
+        logger.error(f"Failed to render Markdown template: {e}")
+        raise
