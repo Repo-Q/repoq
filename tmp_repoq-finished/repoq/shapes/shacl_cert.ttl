@@ -1,0 +1,11 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix vc: <https://www.w3.org/2018/credentials#> .
+@prefix cert: <http://example.org/vocab/cert#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+cert:QualityCertificateShape a sh:NodeShape ;
+  sh:targetClass cert:QualityCertificate ;
+  sh:property [ sh:path vc:credentialSubject ; sh:minCount 1 ] ;
+  sh:property [ sh:path cert:score ; sh:minCount 1 ; sh:datatype xsd:decimal ] ;
+  sh:property [ sh:path cert:grade ; sh:minCount 1 ] ;
+  sh:property [ sh:path cert:qualityGates ; sh:minCount 1 ] .

@@ -751,3 +751,4 @@ if __name__ == "__main__":
         canonicalize_metric("lines * 0.3 + complexity * 0.7")
     end = time.time()
     print(f"Performance: 100 normalizations in {end - start:.3f}s")
+# Test comment

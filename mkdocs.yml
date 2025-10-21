@@ -140,6 +140,10 @@ nav:
     - Meta-Quality Loop: ontology/meta-loop.md
     - Ontological Intelligence: ontology/intelligence.md
     - TRS Framework: ontology/trs-framework.md
+  - Development:
+    - Quality Loop Roadmap: development/quality-loop-roadmap.md
+    - Open Source Strategy: development/opensource-strategy.md
+    - Critical TRS Fixes: development/critical-trs-fixes.md
   - API Reference:
     - Overview: api/reference.md
   - About:

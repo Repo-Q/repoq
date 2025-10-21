@@ -1,0 +1,26 @@
+name: repoq-analysis
+on: { push: { branches: [ main ] }, pull_request: {} }
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - name: Install system deps
+        run: sudo apt-get update && sudo apt-get install -y graphviz
+      - name: Install repoq
+        run: pip install .[full]
+      - name: Run analysis + ZAG + certs
+        run: |
+          mkdir -p out graphs certs zag
+          repoq full . -o out/quality.jsonld --md out/quality.md --graphs graphs/             --ttl out/quality.ttl --validate-shapes --hash sha256             --certs certs/ --cert-valid-days 180 --cert-profile STANDARD             --zag-out zag/ --zag-level module --zag-U "[0,1]" --zag-aggregator min --zag-tau 0.82             --zag-budget 1.2 --zag-kmax 8
+      - uses: actions/upload-artifact@v4
+        with:
+          name: repoq-artifacts
+          path: |
+            out/**
+            graphs/**
+            certs/**
+            zag/**

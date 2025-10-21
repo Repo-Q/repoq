@@ -1,0 +1,11 @@
+thresholds:
+  complexity_high: 15
+  hotspot_top_n: 50
+  ownership_owner_threshold: 0.5
+  fail_on_issues: high
+include_extensions: [py, js, ts, java, go, rs, cpp]
+exclude_globs: ["**/.git/**","**/node_modules/**","**/.venv/**","**/dist/**","**/build/**","**/target/**"]
+validate_shapes: true
+shapes_dir: repoq/shapes
+context_file: repoq/ontologies/context_ext.jsonld
+hash_algo: sha256
