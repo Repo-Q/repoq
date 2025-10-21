@@ -475,7 +475,7 @@ class TestAdvancedFeatures:
         
         # Basic patterns
         assert _glob_to_regex("*.py") == "^[^/]*\\.py$"
-        assert _glob_to_regex("**/*.py") == "^.*[^/]*\\.py$"
+        assert _glob_to_regex("**/*.py") == "^.*/[^/]*\\.py$"  # ** keeps the / separator
         assert _glob_to_regex("test_?.py") == "^test_[^/]\\.py$"
         
         # Character classes

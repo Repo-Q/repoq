@@ -306,8 +306,22 @@ def simplify_glob_patterns(patterns: List[str]) -> List[str]:
 
     # Further optimization: merge adjacent patterns
     simplified = _merge_adjacent_patterns(simplified)
+    
+    # Re-normalize after merging (ensures **/** -> ** and similar)
+    simplified = [GlobPattern(p).pattern for p in simplified]
+    
+    # Final redundancy removal (after merging may create new subsumptions)
+    final = []
+    for i, pattern1 in enumerate(simplified):
+        is_redundant = False
+        for j, pattern2 in enumerate(simplified):
+            if i != j and _advanced_pattern_subsumes(pattern2, pattern1):
+                is_redundant = True
+                break
+        if not is_redundant:
+            final.append(pattern1)
 
-    return sorted(simplified)
+    return sorted(final)
 
 
 def _advanced_pattern_subsumes(general: str, specific: str) -> bool:
@@ -339,16 +353,31 @@ def _advanced_pattern_subsumes(general: str, specific: str) -> bool:
 
 def _glob_to_regex(pattern: str) -> str:
     """Convert glob pattern to regex for precise matching analysis."""
+    # First handle character classes [abc] before escaping
+    # Replace [...] with a placeholder to protect them
+    import uuid
+    placeholders = {}
+    
+    def replace_char_class(match):
+        placeholder = f"__PLACEHOLDER_{uuid.uuid4().hex}__"
+        char_class = match.group(0)
+        placeholders[placeholder] = char_class
+        return placeholder
+    
+    # Protect character classes
+    pattern_protected = re.sub(r'\[([^\]]+)\]', replace_char_class, pattern)
+    
     # Escape special regex characters except glob wildcards
-    escaped = re.escape(pattern)
+    escaped = re.escape(pattern_protected)
 
     # Convert glob wildcards to regex - handle ** before *
     regex = escaped.replace(r"\*\*", ".*")  # ** -> .* (any chars including /)
     regex = regex.replace(r"\*", "[^/]*")  # * -> [^/]* (any chars except /)
     regex = regex.replace(r"\?", "[^/]")  # ? -> [^/] (single char except /)
 
-    # Handle character classes [abc] -> [abc]
-    regex = re.sub(r"\\?\[([^\]]+)\\?\]", r"[\1]", regex)
+    # Restore character classes
+    for placeholder, char_class in placeholders.items():
+        regex = regex.replace(placeholder, char_class)
 
     return f"^{regex}$"
 
