@@ -14,6 +14,7 @@ from typing import Optional
 
 from .jsonld import to_jsonld
 from .model import Project
+from ..normalize.rdf_trs import canonicalize_rdf
 
 logger = logging.getLogger(__name__)
 
@@ -53,9 +54,13 @@ def export_ttl(
     try:
         g = Graph()
         data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
-        g.parse(data=json.dumps(data), format="json-ld")
+        
+        # Canonicalize JSON-LD for deterministic output
+        canonical_data = canonicalize_rdf(data)
+        
+        g.parse(data=json.dumps(canonical_data), format="json-ld")
         g.serialize(destination=ttl_path, format="turtle")
-        logger.info(f"Successfully exported RDF Turtle to {ttl_path}")
+        logger.info(f"Successfully exported canonical RDF Turtle to {ttl_path}")
     except OSError as e:
         logger.error(f"Failed to write Turtle file {ttl_path}: {e}")
         raise
@@ -108,7 +113,11 @@ def validate_shapes(
     try:
         data_graph = Graph()
         data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
-        data_graph.parse(data=json.dumps(data), format="json-ld")
+        
+        # Canonicalize JSON-LD for consistent validation
+        canonical_data = canonicalize_rdf(data)
+        
+        data_graph.parse(data=json.dumps(canonical_data), format="json-ld")
 
         shapes_graph = Graph()
         import os
@@ -138,4 +147,38 @@ def validate_shapes(
         raise
     except Exception as e:
         logger.error(f"SHACL validation failed: {e}")
+        raise
+
+
+def canonicalize_jsonld(
+    project: Project,
+    context_file: Optional[str] = None,
+    field33_context: Optional[str] = None,
+) -> dict:
+    """Export Project to canonical JSON-LD format.
+
+    Converts project to JSON-LD with deterministic property ordering,
+    stable blank node numbering, and consistent serialization.
+
+    Args:
+        project: Project model to export
+        context_file: Optional JSON-LD context file
+        field33_context: Optional Field33 context file
+
+    Returns:
+        Canonicalized JSON-LD dictionary with stable structure
+
+    Example:
+        >>> project = Project(id="repo:test", name="Test")
+        >>> canonical_data = canonicalize_jsonld(project)
+        >>> # Properties are sorted, blank nodes stable
+    """
+    try:
+        data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
+        canonical_data = canonicalize_rdf(data)
+        
+        logger.info("Successfully canonicalized JSON-LD data")
+        return canonical_data
+    except Exception as e:
+        logger.error(f"JSON-LD canonicalization failed: {e}")
         raise

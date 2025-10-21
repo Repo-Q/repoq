@@ -32,7 +32,7 @@ Example:
 from .base import Term, Rule, RewriteSystem
 from .spdx_trs import normalize_spdx, SPDXTerm
 from .semver_trs import normalize_semver, SemVerTerm
-from .rdf_trs import canonicalize_graph
+from .rdf_trs import canonicalize_rdf, RDFTerm
 from .filters_trs import normalize_filter
 from .metrics_trs import normalize_metric
 
@@ -46,9 +46,10 @@ __all__ = [
     "SPDXTerm",
     # SemVer
     "normalize_semver",
-    "SemVerRange",
+    "SemVerTerm",
     # RDF
-    "canonicalize_graph",
+    "canonicalize_rdf",
+    "RDFTerm",
     # Filters
     "normalize_filter",
     # Metrics
