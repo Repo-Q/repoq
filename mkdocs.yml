@@ -141,11 +141,17 @@ nav:
     - Ontological Intelligence: ontology/intelligence.md
     - TRS Framework: ontology/trs-framework.md
   - Development:
-    - Quality Loop Roadmap: development/quality-loop-roadmap.md
-    - Formal Foundations: development/formal-foundations-complete.md
-    - Formal Diagrams: development/formal-diagrams.md
-    - Open Source Strategy: development/opensource-strategy.md
-    - Critical TRS Fixes: development/critical-trs-fixes.md
+      - Development Overview: development/index.md
+      - Contributing Guide: development/CONTRIBUTING.md
+      - Testing Strategy: development/testing.md
+      - Mathematical Proof (Quality Monotonicity): development/mathematical-proof-quality-monotonicity.md
+      - Formal Foundations: development/formal-foundations-complete.md
+      - Formal Diagrams: development/formal-diagrams.md
+      - Quality Loop Roadmap: development/quality-loop-roadmap.md
+      - tmp/ Artifacts Inventory: development/tmp-artifacts-inventory.md
+  - VDAD Process:
+      - Phase 1 - Domain Context: vdad/phase1-domain-context.md
+      - Phase 1 - Stakeholders: vdad/phase1-stakeholders.md
   - API Reference:
     - Overview: api/reference.md
   - About:
