@@ -1,0 +1,64 @@
+{
+  "rules": [
+    [
+      "(A AND B) AND C",
+      "A AND (B AND C)"
+    ],
+    [
+      "(A OR B) OR C",
+      "A OR (B OR C)"
+    ],
+    [
+      "A AND B",
+      "B AND A"
+    ],
+    [
+      "A OR B",
+      "B OR A"
+    ],
+    [
+      "A AND A",
+      "A"
+    ],
+    [
+      "A OR A",
+      "A"
+    ],
+    [
+      "A AND (A OR B)",
+      "A"
+    ],
+    [
+      "A OR (A AND B)",
+      "A"
+    ],
+    [
+      "NOT (A AND B)",
+      "(NOT A) OR (NOT B)"
+    ],
+    [
+      "NOT (A OR B)",
+      "(NOT A) AND (NOT B)"
+    ],
+    [
+      "NOT (NOT A)",
+      "A"
+    ],
+    [
+      "'' AND A",
+      "A"
+    ],
+    [
+      "A AND ''",
+      "A"
+    ],
+    [
+      "'' OR A",
+      "A"
+    ],
+    [
+      "A OR ''",
+      "A"
+    ]
+  ]
+}

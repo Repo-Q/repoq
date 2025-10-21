@@ -1,0 +1,11 @@
+# Derive C4 components from code modules (toy example)
+PREFIX code: <https://field33.com/ontologies/code/>
+PREFIX c4:   <https://field33.com/ontologies/c4/>
+
+CONSTRUCT {
+  ?mod a c4:Component .
+}
+WHERE {
+  ?mod a code:Module .
+  # real-world: add cohesion/coupling thresholds as filters
+}

@@ -1,0 +1,10 @@
+@prefix c4: <https://field33.com/ontologies/c4/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+
+c4:System    a owl:Class ; rdfs:label "System" .
+c4:Container a owl:Class ; rdfs:label "Container" .
+c4:Component a owl:Class ; rdfs:label "Component" .
+
+c4:realizes  a owl:ObjectProperty ;
+  rdfs:domain c4:Component ; rdfs:range c4:Container .

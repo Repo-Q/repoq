@@ -1,0 +1,28 @@
+{
+  "rules": [
+    [
+      "{\"@context\": [A, B]}",
+      "{\"@context\": merge(A, B)}"
+    ],
+    [
+      "{\"@context\": {\"x\": \"A\", \"x\": \"A\"}}",
+      "{\"@context\": {\"x\": \"A\"}}"
+    ],
+    [
+      "{\"@base\": \"http://example.com/\"}",
+      "{\"@base\": \"http://example.com\"}"
+    ],
+    [
+      "{\"@type\": \"@id\", \"@type\": \"@id\"}",
+      "{\"@type\": \"@id\"}"
+    ],
+    [
+      "{\"@context\": {}, \"data\": X}",
+      "{\"data\": X}"
+    ],
+    [
+      "{\"@context\": \"\", \"data\": X}",
+      "{\"data\": X}"
+    ]
+  ]
+}

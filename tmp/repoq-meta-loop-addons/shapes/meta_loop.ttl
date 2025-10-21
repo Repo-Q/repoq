@@ -1,0 +1,24 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix mq: <http://example.org/vocab/meta#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix vc: <https://www.w3.org/2018/credentials#> .
+@prefix cert: <http://example.org/vocab/cert#> .
+
+mq:SelfApplicationPolicy a sh:NodeShape ;
+  sh:targetClass mq:SelfAnalysisRequest ;
+  sh:property [
+    sh:path mq:analyzeTarget ;
+    sh:hasValue mq:Self
+  ] ;
+  sh:property [
+    sh:path mq:level ;
+    sh:maxInclusive 2 ;
+    sh:message "Self-analysis must use levels 0..2 only"
+  ] .
+
+mq:QualityCertShape a sh:NodeShape ;
+  sh:targetClass cert:QualityCertificate ;
+  sh:property [ sh:path vc:credentialSubject ; sh:minCount 1 ] ;
+  sh:property [ sh:path cert:grade ; sh:minCount 1 ] ;
+  sh:property [ sh:path cert:qualityGates ; sh:minCount 1 ] ;
+  sh:property [ sh:path cert:assuranceLevel ; sh:minCount 0 ] .

@@ -1,0 +1,19 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "repo": "http://example.org/vocab/repo#",
+    "prov": "http://www.w3.org/ns/prov#",
+    "vc": "https://www.w3.org/2018/credentials#",
+    "sec": "https://w3id.org/security#",
+    "mq": "http://example.org/vocab/meta#",
+    "code": "https://field33.com/ontologies/code/",
+    "c4": "https://field33.com/ontologies/c4/",
+    "ddd": "https://field33.com/ontologies/ddd/",
+    "level": "mq:level",
+    "analyzeTarget": "mq:analyzeTarget",
+    "Self": "mq:Self",
+    "Component": "c4:Component",
+    "Module": "code:Module",
+    "BoundedContext": "ddd:BoundedContext"
+  }
+}
