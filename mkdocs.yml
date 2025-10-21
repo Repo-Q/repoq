@@ -144,6 +144,7 @@ nav:
     - TRS Framework: ontology/trs-framework.md
   - Development:
       - Development Overview: development/index.md
+      - uv Setup Guide: development/uv-setup.md
       - Contributing Guide: development/CONTRIBUTING.md
       - Testing Strategy: development/testing.md
       - Mathematical Proof (Quality Monotonicity): development/mathematical-proof-quality-monotonicity.md
