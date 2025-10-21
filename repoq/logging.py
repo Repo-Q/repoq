@@ -5,6 +5,7 @@ This module configures Python's logging system with Rich handlers for:
 - Pretty tracebacks
 - Verbosity level control (WARNING/INFO/DEBUG)
 """
+
 from __future__ import annotations
 
 import logging

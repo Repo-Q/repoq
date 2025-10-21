@@ -4,6 +4,7 @@ This module provides functionality to serialize repository analysis results
 into JSON-LD format, following W3C standards and supporting multiple ontologies
 including PROV-O, OSLC, SPDX, FOAF, and Schema.org.
 """
+
 from __future__ import annotations
 
 import json

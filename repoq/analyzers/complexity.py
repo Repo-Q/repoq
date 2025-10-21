@@ -6,6 +6,7 @@ This module analyzes code complexity using:
 
 Metrics help identify complex, hard-to-maintain code sections.
 """
+
 from __future__ import annotations
 
 import logging

@@ -11,6 +11,7 @@ results, including:
 
 Uses Jinja2 templating for flexible report customization.
 """
+
 from __future__ import annotations
 
 import logging

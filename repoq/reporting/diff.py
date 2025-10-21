@@ -8,6 +8,7 @@ This module provides functions to:
 
 Used by the 'repoq diff' command for trend analysis.
 """
+
 from __future__ import annotations
 
 import json

@@ -3,6 +3,7 @@
 This module provides the abstract base class that all concrete analyzers must
 implement, ensuring consistent interface and orchestration across the pipeline.
 """
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

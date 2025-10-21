@@ -9,6 +9,7 @@ This module analyzes the static structure of a repository including:
 - File checksums for integrity verification
 - Ontological concept extraction and validation
 """
+
 from __future__ import annotations
 
 import logging
@@ -78,18 +79,18 @@ def _is_textlike(path: Path) -> bool:
 def _detect_spdx_license(repo_path: Path) -> Optional[str]:
     """
     Auto-detect SPDX license identifier from common files with normalization.
-    
+
     Returns normalized SPDX license expression or None if undetected.
     """
     license_files = ["LICENSE", "LICENSE.txt", "LICENSE.md", "COPYING", "COPYING.md"]
-    
+
     for fname in license_files:
         license_file = repo_path / fname
         if license_file.exists():
             try:
                 with open(license_file, "r", encoding="utf-8", errors="ignore") as fh:
                     content = fh.read()
-                
+
                 # Basic SPDX detection patterns
                 if "MIT License" in content or "MIT license" in content:
                     return normalize_spdx("MIT")
@@ -106,10 +107,10 @@ def _detect_spdx_license(repo_path: Path) -> Optional[str]:
                         return normalize_spdx("BSD-2-Clause")
                     else:
                         return normalize_spdx("BSD-3-Clause")  # Default
-                        
+
             except Exception:
                 pass
-    
+
     return None
 
 
@@ -117,49 +118,58 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
     """
     Parse dependency manifests (package.json, pyproject.toml, etc.) and extract
     normalized version constraints.
-    
+
     Returns list of DependencyEdge objects with version constraints.
     """
     dependencies = []
-    
+
     # Python: pyproject.toml
     pyproject_file = repo_path / "pyproject.toml"
     if pyproject_file.exists():
         try:
             import tomllib
+
             with open(pyproject_file, "rb") as fh:
                 data = tomllib.load(fh)
-            
+
             # Main dependencies
             for dep in data.get("project", {}).get("dependencies", []):
                 dep_name, version_constraint = _parse_python_dep(dep)
                 if dep_name:
-                    dependencies.append(DependencyEdge(
-                        source="project",
-                        target=f"pypi:{dep_name}",
-                        weight=1,
-                        type="runtime",
-                        version_constraint=normalize_semver(version_constraint) if version_constraint else None,
-                        original_constraint=version_constraint
-                    ))
-            
+                    dependencies.append(
+                        DependencyEdge(
+                            source="project",
+                            target=f"pypi:{dep_name}",
+                            weight=1,
+                            type="runtime",
+                            version_constraint=normalize_semver(version_constraint)
+                            if version_constraint
+                            else None,
+                            original_constraint=version_constraint,
+                        )
+                    )
+
             # Optional dependencies
             for group_deps in data.get("project", {}).get("optional-dependencies", {}).values():
                 for dep in group_deps:
                     dep_name, version_constraint = _parse_python_dep(dep)
                     if dep_name:
-                        dependencies.append(DependencyEdge(
-                            source="project",
-                            target=f"pypi:{dep_name}",
-                            weight=1,
-                            type="build",
-                            version_constraint=normalize_semver(version_constraint) if version_constraint else None,
-                            original_constraint=version_constraint
-                        ))
-                        
+                        dependencies.append(
+                            DependencyEdge(
+                                source="project",
+                                target=f"pypi:{dep_name}",
+                                weight=1,
+                                type="build",
+                                version_constraint=normalize_semver(version_constraint)
+                                if version_constraint
+                                else None,
+                                original_constraint=version_constraint,
+                            )
+                        )
+
         except Exception as e:
             logger.debug(f"Failed to parse pyproject.toml: {e}")
-    
+
     # Python: requirements.txt
     requirements_file = repo_path / "requirements.txt"
     if requirements_file.exists():
@@ -170,79 +180,88 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
                     if line and not line.startswith("#"):
                         dep_name, version_constraint = _parse_python_dep(line)
                         if dep_name:
-                            dependencies.append(DependencyEdge(
-                                source="project",
-                                target=f"pypi:{dep_name}",
-                                weight=1,
-                                type="runtime",
-                                version_constraint=normalize_semver(version_constraint) if version_constraint else None,
-                                original_constraint=version_constraint
-                            ))
+                            dependencies.append(
+                                DependencyEdge(
+                                    source="project",
+                                    target=f"pypi:{dep_name}",
+                                    weight=1,
+                                    type="runtime",
+                                    version_constraint=normalize_semver(version_constraint)
+                                    if version_constraint
+                                    else None,
+                                    original_constraint=version_constraint,
+                                )
+                            )
         except Exception as e:
             logger.debug(f"Failed to parse requirements.txt: {e}")
-    
+
     # JavaScript/TypeScript: package.json
     package_json = repo_path / "package.json"
     if package_json.exists():
         try:
             import json
+
             with open(package_json, "r", encoding="utf-8") as fh:
                 data = json.load(fh)
-            
+
             # Dependencies
             for dep_name, version_constraint in data.get("dependencies", {}).items():
-                dependencies.append(DependencyEdge(
-                    source="project",
-                    target=f"npm:{dep_name}",
-                    weight=1,
-                    type="runtime",
-                    version_constraint=normalize_semver(version_constraint),
-                    original_constraint=version_constraint
-                ))
-            
+                dependencies.append(
+                    DependencyEdge(
+                        source="project",
+                        target=f"npm:{dep_name}",
+                        weight=1,
+                        type="runtime",
+                        version_constraint=normalize_semver(version_constraint),
+                        original_constraint=version_constraint,
+                    )
+                )
+
             # Dev dependencies
             for dep_name, version_constraint in data.get("devDependencies", {}).items():
-                dependencies.append(DependencyEdge(
-                    source="project",
-                    target=f"npm:{dep_name}",
-                    weight=1,
-                    type="build",
-                    version_constraint=normalize_semver(version_constraint),
-                    original_constraint=version_constraint
-                ))
-                
+                dependencies.append(
+                    DependencyEdge(
+                        source="project",
+                        target=f"npm:{dep_name}",
+                        weight=1,
+                        type="build",
+                        version_constraint=normalize_semver(version_constraint),
+                        original_constraint=version_constraint,
+                    )
+                )
+
         except Exception as e:
             logger.debug(f"Failed to parse package.json: {e}")
-    
+
     return dependencies
 
 
 def _parse_python_dep(dep_spec: str) -> tuple[Optional[str], Optional[str]]:
     """
     Parse Python dependency specification into name and version constraint.
-    
+
     Examples:
         "requests>=2.25.0" -> ("requests", ">=2.25.0")
-        "django~=4.2.0" -> ("django", "~=4.2.0") 
+        "django~=4.2.0" -> ("django", "~=4.2.0")
         "numpy" -> ("numpy", None)
-        
+
     Returns:
         Tuple of (package_name, version_constraint)
     """
     import re
-    
+
     # Pattern for Python dependency specs
-    pattern = r'^([a-zA-Z0-9_\-\.]+)(?:\s*([><=~!]+\s*[0-9]+(?:\.[0-9]+)*(?:\.[0-9]+)*(?:[a-zA-Z0-9\-]*)?(?:,\s*[><=~!]+\s*[0-9]+(?:\.[0-9]+)*(?:\.[0-9]+)*(?:[a-zA-Z0-9\-]*)?)*))?\s*(?:;.*)?$'
-    
+    pattern = r"^([a-zA-Z0-9_\-\.]+)(?:\s*([><=~!]+\s*[0-9]+(?:\.[0-9]+)*(?:\.[0-9]+)*(?:[a-zA-Z0-9\-]*)?(?:,\s*[><=~!]+\s*[0-9]+(?:\.[0-9]+)*(?:\.[0-9]+)*(?:[a-zA-Z0-9\-]*)?)*))?\s*(?:;.*)?$"
+
     match = re.match(pattern, dep_spec.strip())
     if match:
         name = match.group(1)
         constraint = match.group(2)
         # Convert Python ~= to SemVer ~
-        if constraint and '~=' in constraint:
-            constraint = constraint.replace('~=', '~')
+        if constraint and "~=" in constraint:
+            constraint = constraint.replace("~=", "~")
         return name, constraint
-    
+
     return None, None
 
 
@@ -426,23 +445,25 @@ class StructureAnalyzer(Analyzer):
         try:
             # Import ontology manager (optional dependency)
             from ..ontologies.ontology_manager import OntologyManager
-            
+
             manager = OntologyManager()
-            
+
             # Perform ontological analysis on project structure
             analysis_result = manager.analyze_project_structure(project)
-            
+
             # Add ontological insights to project metadata
-            if not hasattr(project, 'ontological_analysis'):
+            if not hasattr(project, "ontological_analysis"):
                 project.ontological_analysis = {}
-            
+
             project.ontological_analysis.update(analysis_result)
-            
-            logger.info(f"Ontological analysis completed: {len(analysis_result.get('concepts', []))} concepts extracted")
-            
+
+            logger.info(
+                f"Ontological analysis completed: {len(analysis_result.get('concepts', []))} concepts extracted"
+            )
+
         except ImportError:
             logger.debug("Ontology manager not available - skipping ontological analysis")
         except Exception as e:
             logger.warning(f"Ontological analysis failed: {e}")
-        
+
         return project

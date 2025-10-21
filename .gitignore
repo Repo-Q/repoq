@@ -29,6 +29,25 @@ env/
 # Testing
 .pytest_cache/
 .coverage
+htmlcov/
+.tox/
+.cache/
+
+# Code analysis
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+.coverage
 .coverage.*
 htmlcov/
 .hypothesis/

@@ -34,14 +34,14 @@ from .spdx_trs import normalize_spdx, SPDXTerm
 from .semver_trs import normalize_semver, SemVerTerm
 from .rdf_trs import canonicalize_rdf, RDFTerm
 from .filters_trs import (
-    canonicalize_filter, 
+    canonicalize_filter,
     canonicalize_filter_advanced,
     check_filter_equivalence,
     simplify_glob_patterns,
     FilterExpression,
     GlobPattern,
     FileProperty,
-    LogicalFilter
+    LogicalFilter,
 )
 from .metrics_trs import (
     canonicalize_metric,
@@ -52,7 +52,7 @@ from .metrics_trs import (
     MetricVariable,
     ArithmeticOperation,
     AggregationFunction,
-    parse_metric_expression
+    parse_metric_expression,
 )
 
 __all__ = [

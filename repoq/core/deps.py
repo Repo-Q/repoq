@@ -6,6 +6,7 @@ This module provides functions to extract import statements from source code:
 
 Extracts top-level package names for dependency graph construction.
 """
+
 from __future__ import annotations
 
 import ast

@@ -5,6 +5,7 @@ This module provides helper functions for:
 - File path filtering with glob patterns
 - File checksum computation (SHA1/SHA256)
 """
+
 from __future__ import annotations
 
 import fnmatch

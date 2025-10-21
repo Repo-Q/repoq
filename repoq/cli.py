@@ -11,6 +11,7 @@ Commands:
 
 The CLI is built with Typer and Rich for a beautiful terminal experience.
 """
+
 from __future__ import annotations
 
 import json

@@ -6,6 +6,7 @@ This module provides functions to:
 
 Requires optional dependencies: rdflib, pyshacl (install with: pip install repoq[full])
 """
+
 from __future__ import annotations
 
 import json
@@ -54,10 +55,10 @@ def export_ttl(
     try:
         g = Graph()
         data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
-        
+
         # Canonicalize JSON-LD for deterministic output
         canonical_data = canonicalize_rdf(data)
-        
+
         g.parse(data=json.dumps(canonical_data), format="json-ld")
         g.serialize(destination=ttl_path, format="turtle")
         logger.info(f"Successfully exported canonical RDF Turtle to {ttl_path}")
@@ -113,10 +114,10 @@ def validate_shapes(
     try:
         data_graph = Graph()
         data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
-        
+
         # Canonicalize JSON-LD for consistent validation
         canonical_data = canonicalize_rdf(data)
-        
+
         data_graph.parse(data=json.dumps(canonical_data), format="json-ld")
 
         shapes_graph = Graph()
@@ -134,13 +135,13 @@ def validate_shapes(
         conforms, report_graph, report_text = validate(
             data_graph, shacl_graph=shapes_graph, inference="rdfs", debug=False
         )
-        
+
         result = {"conforms": bool(conforms), "report": str(report_text)}
         if conforms:
             logger.info("SHACL validation passed")
         else:
             logger.warning(f"SHACL validation failed:\n{report_text}")
-        
+
         return result
     except OSError as e:
         logger.error(f"Failed to read shapes directory {shapes_dir}: {e}")
@@ -176,7 +177,7 @@ def canonicalize_jsonld(
     try:
         data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
         canonical_data = canonicalize_rdf(data)
-        
+
         logger.info("Successfully canonicalized JSON-LD data")
         return canonical_data
     except Exception as e:

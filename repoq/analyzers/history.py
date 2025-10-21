@@ -9,6 +9,7 @@ This module analyzes repository history to extract:
 
 Uses PyDriller when available, falls back to raw Git commands.
 """
+
 from __future__ import annotations
 
 import logging

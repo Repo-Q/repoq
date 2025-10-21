@@ -7,6 +7,7 @@ This module provides functions to:
 
 Supports both local paths and remote URLs (HTTP/HTTPS/SSH).
 """
+
 from __future__ import annotations
 
 import logging
@@ -73,7 +74,7 @@ def prepare_repo(
         if branch:
             cmd += ["--branch", branch]
         cmd += [path_or_url, tmpdir]
-        
+
         logger.info(f"Cloning repository {path_or_url} to {tmpdir}")
         try:
             subprocess.run(cmd, check=True, capture_output=True, text=True)

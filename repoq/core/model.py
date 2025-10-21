@@ -4,6 +4,7 @@ This module defines the dataclass models used throughout repoq for representing
 repository analysis results, including projects, files, modules, contributors,
 issues, and relationships.
 """
+
 from __future__ import annotations
 
 import hashlib

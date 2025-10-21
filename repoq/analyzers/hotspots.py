@@ -8,6 +8,7 @@ This module calculates hotspot scores by combining:
 High hotspot scores indicate files that are frequently changed and complex,
 making them prime candidates for refactoring and technical debt reduction.
 """
+
 from __future__ import annotations
 
 import logging
@@ -74,7 +75,7 @@ class HotspotsAnalyzer(Analyzer):
         top_n = cfg.thresholds.hotspot_top_n
         for i, (s, fid) in enumerate(scores[:top_n]):
             severity = "high" if s >= 0.66 else "medium" if s >= 0.33 else "low"
-            iid = f"repo:issue:hotspot:{fid.split(':',2)[-1].replace('/','_')}"
+            iid = f"repo:issue:hotspot:{fid.split(':', 2)[-1].replace('/', '_')}"
             if iid not in project.issues:
                 project.issues[iid] = Issue(
                     id=iid,

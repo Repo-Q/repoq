@@ -7,6 +7,7 @@ This module scans source code for patterns indicating potential issues:
 
 These markers help identify areas requiring attention, refactoring, or removal.
 """
+
 from __future__ import annotations
 
 import logging

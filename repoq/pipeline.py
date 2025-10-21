@@ -4,6 +4,7 @@ This module coordinates the execution of multiple analyzers in the correct
 sequence based on analysis mode (structure/history/full). Analyzers mutate
 the shared Project model progressively.
 """
+
 from __future__ import annotations
 
 import logging

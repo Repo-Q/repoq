@@ -9,6 +9,7 @@ This module defines configuration dataclasses and loading functions for:
 
 Configuration can be loaded from YAML files or CLI arguments.
 """
+
 from __future__ import annotations
 
 import logging
@@ -31,6 +32,7 @@ class Thresholds:
         ownership_owner_threshold: Ownership percentage to be considered owner (default: 0.5)
         fail_on_issues: Exit with error on issues at severity level (default: None)
     """
+
     complexity_high: int = 15
     hotspot_top_n: int = 50
     ownership_owner_threshold: float = 0.5  # >50% — владелец
@@ -118,11 +120,11 @@ def load_config(path: Optional[str]) -> Dict[str, Any]:
     """
     if not path:
         return {}
-    
+
     p = pathlib.Path(path)
     if not p.exists():
         raise FileNotFoundError(f"Config not found: {path}")
-    
+
     try:
         with p.open("r", encoding="utf-8") as f:
             data = yaml.safe_load(f) or {}

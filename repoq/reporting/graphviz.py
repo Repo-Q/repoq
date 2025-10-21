@@ -6,6 +6,7 @@ This module generates DOT files and SVG visualizations for:
 
 Requires optional graphviz Python package and Graphviz system installation.
 """
+
 from __future__ import annotations
 
 import logging
