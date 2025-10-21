@@ -33,7 +33,9 @@ full = [
   "graphviz>=0.20",
   "rdflib>=7.0",
   "orjson>=3.10",
-  "pyshacl>=0.23.0"
+  "pyshacl>=0.23.0",
+  "tree-sitter>=0.20",             # AST parsing for filters_trs
+  "tree-sitter-python>=0.20",      # Python grammar for tree-sitter
 ]
 dev = [
   "pytest>=8.0",
@@ -66,7 +68,9 @@ dev = [
   "ruff>=0.6",
   "black>=24.3",
   "mypy>=1.10",
-  "types-PyYAML"
+  "types-PyYAML",
+  "hypothesis>=6.0",  # Property-based testing
+  "sympy>=1.12",      # Symbolic math for TRS normalization
 ]
 docs = [
   "mkdocs>=1.5",
