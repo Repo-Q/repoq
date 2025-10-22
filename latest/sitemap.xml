@@ -5,35 +5,7 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
-         <loc>https://repo-q.github.io/repoq/latest/MILESTONE_801/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/REFACTORING_FINAL/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/REFACTORING_FINAL_1025/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/REFACTORING_SESSION_6/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/REFACTORING_SESSION_CONTINUATION/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/SELF_REFACTORING_REPORT/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
          <loc>https://repo-q.github.io/repoq/latest/ci-cd-setup/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/phase-5.7-ci-cd-report/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
@@ -57,6 +29,18 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
+         <loc>https://repo-q.github.io/repoq/latest/architecture/doc-code-sync-analyzer/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/architecture/git-status-analyzer/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/architecture/ontologist-agent/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
          <loc>https://repo-q.github.io/repoq/latest/architecture/overview/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
@@ -73,6 +57,58 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/MILESTONE_801/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/REFACTORING_FINAL/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/REFACTORING_FINAL_1025/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/REFACTORING_SESSION_6/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/REFACTORING_SESSION_CONTINUATION/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/SELF_REFACTORING_REPORT/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/after-task1-report/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/baseline-report/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/phase-5.7-ci-cd-report/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/refactoring-plan-t1.3-test/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/refactoring-plan-v2/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/refactoring-plan/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/repoq_analysis/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
          <loc>https://repo-q.github.io/repoq/latest/development/critical-trs-fixes/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
@@ -86,6 +122,10 @@
     </url>
     <url>
          <loc>https://repo-q.github.io/repoq/latest/development/mathematical-proof-quality-monotonicity/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/development/meta-loop-closure-roadmap/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
@@ -173,18 +213,6 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/dogfooding-meta-level/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/dogfooding-retrospective/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/improvement-roadmap/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
          <loc>https://repo-q.github.io/repoq/latest/vdad/phase1-domain-context/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
@@ -230,22 +258,6 @@
     </url>
     <url>
          <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-nfr-realization/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/refactor-plan-implementation/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/refactoring-progress/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/task2-cli-refactoring/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/task2-failure-analysis/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
 </urlset>

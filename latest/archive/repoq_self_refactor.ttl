@@ -1,0 +1,176 @@
+@prefix codemeta: <https://w3id.org/codemeta#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix docs: <http://example.org/vocab/docs#> .
+@prefix meta: <http://example.org/vocab/meta#> .
+@prefix okn_sd: <https://w3id.org/okn/o/sd#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix schema: <https://schema.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://github.com/kirill-0440/repoq/docs/coverage> a docs:Coverage ;
+    docs:coveragePercentage 100.0 .
+
+<https://github.com/kirill-0440/repoq/meta/self-analysis> a meta:SelfAnalysis ;
+    meta:analyzesSelf <https://github.com/kirill-0440/repoq> ;
+    meta:maxSafeLevel "2"^^xsd:nonNegativeInteger ;
+    meta:performedAt "2025-10-22T12:44:44.099279+00:00"^^xsd:dateTime ;
+    meta:readOnlyMode true ;
+    meta:safetyChecksPassed false ;
+    meta:selfReferenceDetected true ;
+    meta:stratificationLevel "1"^^xsd:nonNegativeInteger ;
+    meta:universeViolation "Meta-level file repoq/cli_meta.py missing stratificationLevel",
+        "Meta-level file repoq/core/meta_validation.py missing stratificationLevel",
+        "Meta-level file repoq/ontologies/__init__.py missing stratificationLevel",
+        "Meta-level file repoq/ontologies/manager.py missing stratificationLevel",
+        "Meta-level file repoq/ontologies/ontology_manager.py missing stratificationLevel",
+        "Meta-level file tests/e2e/test_meta_self.py missing stratificationLevel",
+        "Meta-level file tests/integration/test_meta_ontology_export.py missing stratificationLevel",
+        "Meta-level file tests/integration/test_meta_validation_export.py missing stratificationLevel",
+        "Meta-level file tests/property/test_ontology_consistency.py missing stratificationLevel",
+        "Meta-level file tests/test_meta_loop_integration.py missing stratificationLevel",
+        "Meta-level file tests/test_ontology_manager.py missing stratificationLevel",
+        "Meta-level file tests/unit/test_meta_validation.py missing stratificationLevel",
+        "repoq/ontologies/ontology_manager.py: Manager analyzes same concept it manages (universe collision risk)",
+        "tests/test_ontology_manager.py: Manager analyzes same concept it manages (universe collision risk)" .
+
+<https://github.com/kirill-0440/repoq/meta/self_analysis> a meta:SelfAnalysis ;
+    meta:analyzedProject <https://github.com/kirill-0440/repoq> ;
+    meta:performedAt "2025-10-22T12:44:44.076446+00:00"^^xsd:dateTime ;
+    meta:readOnlyMode true ;
+    meta:safetyChecksPassed true ;
+    meta:stratificationLevel "0"^^xsd:nonNegativeInteger .
+
+<https://github.com/kirill-0440/repoq/quality/complexity_gate> a quality:ComplexityGate ;
+    quality:actualValue 5.894230769230769 ;
+    quality:gateStatus "passed" ;
+    quality:threshold 15.0 .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_1> a quality:Recommendation ;
+    quality:deltaQ 66.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (17.0); Large file size (749 LOC) | Recommendations: 🟠 Refactor function `evaluate` (CCN=17, LOC=24, lines 219-246)
+   → Expected ΔQ: +67.5 points (37% of file's potential)
+   → Estimated effort: 2-3 hours; 🟠 Refactor function `_from_sympy` (CCN=16, LOC=28, lines 333-373)
+   → Expected ΔQ: +59.8 points (32% of file's potential)
+   → Estimated effort: 2-3 hours""" ;
+    quality:recommendationTitle "Refactor metrics_trs.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/normalize/metrics_trs.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_10> a quality:Recommendation ;
+    quality:deltaQ 54.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (14.0) | Recommendations: 🟡 Refactor function `enrich_with_verification_data` (CCN=14, LOC=23, lines 181-224)
+   → Expected ΔQ: +31.4 points (100% of file's potential)
+   → Estimated effort: 1-2 hours; 🔥 Reduce change frequency (refactor to stabilize)""" ;
+    quality:recommendationTitle "Refactor trs_rules.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/core/trs_rules.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_2> a quality:Recommendation ;
+    quality:deltaQ 63.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (17.0) | Recommendations: 🟠 Refactor function `run` (CCN=17, LOC=55, lines 46-116)
+   → Expected ΔQ: +48.3 points (100% of file's potential)
+   → Estimated effort: 2-3 hours""" ;
+    quality:recommendationTitle "Refactor ci_qm.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/analyzers/ci_qm.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_3> a quality:Recommendation ;
+    quality:deltaQ 63.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (17.0) | Recommendations: 🟠 Refactor function `run` (CCN=17, LOC=63, lines 36-119)
+   → Expected ΔQ: +49.7 points (100% of file's potential)
+   → Estimated effort: 2-3 hours; 🔧 Simplify control flow (reduce nested logic)""" ;
+    quality:recommendationTitle "Refactor complexity.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/analyzers/complexity.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_4> a quality:Recommendation ;
+    quality:deltaQ 61.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (16.0); Large file size (1610 LOC) | Recommendations: 🔴 Refactor function `_run_trs_verification` (CCN=16, LOC=53, lines 852-920)
+   → Expected ΔQ: +99.0 points (30% of file's potential)
+   → Estimated effort: 2-3 hours; 🔴 Refactor function `_run_command` (CCN=15, LOC=66, lines 735-849)
+   → Expected ΔQ: +91.1 points (27% of file's potential)
+   → Estimated effort: 2-3 hours""" ;
+    quality:recommendationTitle "Refactor cli.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/cli.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_5> a quality:Recommendation ;
+    quality:deltaQ 61.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (16.0); Large file size (898 LOC) | Recommendations: 🟠 Refactor function `simplify_glob_patterns` (CCN=16, LOC=31, lines 280-324)
+   → Expected ΔQ: +65.8 points (39% of file's potential)
+   → Estimated effort: 2-3 hours; 🟠 Refactor function `_merge_adjacent_patterns` (CCN=15, LOC=27, lines 440-479)
+   → Expected ΔQ: +55.1 points (33% of file's potential)
+   → Estimated effort: 2-3 hours""" ;
+    quality:recommendationTitle "Refactor filters_trs.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/normalize/filters_trs.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_6> a quality:Recommendation ;
+    quality:deltaQ 59.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (15.0) | Recommendations: 🟠 Refactor function `compute_quality_score` (CCN=15, LOC=48, lines 57-146)
+   → Expected ΔQ: +43.5 points (72% of file's potential)
+   → Estimated effort: 2-3 hours; 🟢 Refactor function `generate_pce_witness` (CCN=11, LOC=50, lines 258-351)
+   → Expected ΔQ: +16.9 points (27% of file's potential)
+   → Estimated effort: 1-2 hours""" ;
+    quality:recommendationTitle "Refactor quality.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/quality.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_7> a quality:Recommendation ;
+    quality:deltaQ 56.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (15.0) | Recommendations: 🟠 Refactor function `verify_vc` (CCN=15, LOC=122, lines 65-229)
+   → Expected ΔQ: +58.2 points (75% of file's potential)
+   → Estimated effort: 2-3 hours; 🟢 Refactor function `_validate_vc_structure` (CCN=11, LOC=25, lines 232-272)
+   → Expected ΔQ: +11.8 points (15% of file's potential)
+   → Estimated effort: 1-2 hours""" ;
+    quality:recommendationTitle "Refactor vc_verification.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/vc_verification.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_8> a quality:Recommendation ;
+    quality:deltaQ 56.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (15.0); Large file size (699 LOC) | Recommendations: 🟠 Refactor function `_scan_and_process_files` (CCN=15, LOC=36, lines 543-604)
+   → Expected ΔQ: +51.6 points (29% of file's potential)
+   → Estimated effort: 2-3 hours; 🟠 Refactor function `_detect_spdx_license` (CCN=15, LOC=26, lines 79-114)
+   → Expected ΔQ: +49.1 points (27% of file's potential)
+   → Estimated effort: 2-3 hours""" ;
+    quality:recommendationTitle "Refactor structure.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/analyzers/structure.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_9> a quality:Recommendation ;
+    quality:deltaQ 54.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (14.0); Large file size (565 LOC) | Recommendations: 🟠 Refactor function `export_ttl` (CCN=14, LOC=70, lines 298-414)
+   → Expected ΔQ: +47.7 points (58% of file's potential)
+   → Estimated effort: 1-2 hours; 🟡 Refactor function `_enrich_graph_with_meta_ontologies` (CCN=11, LOC=65, lines 200-295)
+   → Expected ΔQ: +23.1 points (28% of file's potential)
+   → Estimated effort: 1-2 hours""" ;
+    quality:recommendationTitle "Refactor rdf_export.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/core/rdf_export.py> .
+
+<https://github.com/kirill-0440/repoq> a repo:Project,
+        prov:Entity,
+        schema:SoftwareSourceCode,
+        codemeta:SoftwareSourceCode,
+        okn_sd:Software ;
+    dcterms:modified "2025-10-22T14:43:14+02:00" ;
+    prov:generatedAtTime "2025-10-22T12:44:43.373661+00:00" ;
+    prov:wasGeneratedBy "2.0.0" ;
+    schema:codeRepository "https://github.com/kirill-0440/repoq" ;
+    schema:description "Repository Quality Analysis with Semantic Web Export" ;
+    schema:name "RepoQ" ;
+    schema:programmingLanguage "Python" .
+

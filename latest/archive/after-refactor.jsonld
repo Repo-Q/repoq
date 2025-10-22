@@ -1,0 +1,2153 @@
+{
+  "@context": {
+    "schema": "https://schema.org/",
+    "codemeta": "https://w3id.org/codemeta#",
+    "repo": "http://example.org/vocab/repo#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "oslc": "http://open-services.net/ns/core#",
+    "oslc_cm": "http://open-services.net/ns/cm#",
+    "oslc_qm": "http://open-services.net/ns/qm#",
+    "oslc_config": "http://open-services.net/ns/config#",
+    "foaf": "http://xmlns.com/foaf/0.1/",
+    "spdx": "http://spdx.org/rdf/terms#",
+    "okn_sd": "https://w3id.org/okn/o/sd#",
+    "f33": "https://w3id.org/field33#",
+    "name": "schema:name",
+    "description": "schema:description",
+    "license": "dcterms:license",
+    "programmingLanguages": "schema:programmingLanguage",
+    "repositoryURL": "schema:codeRepository",
+    "lastCommitDate": "dcterms:modified",
+    "analyzedAt": "prov:generatedAtTime",
+    "repoqVersion": "prov:wasGeneratedBy",
+    "created": "dcterms:created",
+    "modified": "dcterms:modified",
+    "identifier": "dcterms:identifier",
+    "generatedBy": "prov:wasGeneratedBy",
+    "wasDerivedFrom": "prov:wasDerivedFrom",
+    "used": "prov:used",
+    "generated": "prov:generated",
+    "wasAttributedTo": "prov:wasAttributedTo",
+    "wasAssociatedWith": "prov:wasAssociatedWith",
+    "startedAtTime": "prov:startedAtTime",
+    "endedAtTime": "prov:endedAtTime",
+    "atLocation": "prov:atLocation",
+    "shortTitle": "oslc:shortTitle",
+    "status": "oslc_cm:status",
+    "severity": "oslc_cm:severity",
+    "priority": "oslc_cm:priority",
+    "relatedChangeRequest": "oslc_qm:relatedChangeRequest",
+    "testsChangeRequest": "oslc_qm:testsChangeRequest",
+    "reportsOnTestCase": "oslc_qm:reportsOnTestCase",
+    "versionId": "oslc_config:versionId",
+    "committed": "oslc_config:committed",
+    "committer": "oslc_config:committer",
+    "branch": "oslc_config:branch",
+    "fileName": "spdx:fileName",
+    "checksum": "spdx:checksum",
+    "checksumValue": "spdx:checksumValue",
+    "algorithm": "spdx:algorithm",
+    "email": "schema:email",
+    "mbox": "foaf:mbox",
+    "mbox_sha1sum": "foaf:mbox_sha1sum"
+  },
+  "@id": "/home/kirill/projects/repoq-pro-final",
+  "@type": [
+    "repo:Project",
+    "schema:SoftwareSourceCode",
+    "codemeta:SoftwareSourceCode",
+    "prov:Entity",
+    "okn_sd:Software"
+  ],
+  "name": "repoq-pro-final",
+  "description": "# RepoQ - Repository Quality Analysis",
+  "programmingLanguages": [
+    "Python"
+  ],
+  "license": null,
+  "repositoryURL": null,
+  "lastCommitDate": "2025-10-22T08:36:49+02:00",
+  "analyzedAt": "2025-10-22T06:43:08.119078+00:00",
+  "repoqVersion": "2.0.0",
+  "ciConfigured": [
+    "GitHub Actions"
+  ],
+  "modules": [
+    {
+      "@id": "repo:module:docs",
+      "@type": "repo:Module",
+      "name": "docs",
+      "path": "/home/kirill/projects/repoq-pro-final/docs",
+      "containsFile": [],
+      "containsModule": [],
+      "totalLinesOfCode": 0,
+      "totalCommits": 0,
+      "numAuthors": 0,
+      "owner": null,
+      "hotspotScore": null,
+      "mainLanguage": null
+    },
+    {
+      "@id": "repo:module:htmlcov",
+      "@type": "repo:Module",
+      "name": "htmlcov",
+      "path": "/home/kirill/projects/repoq-pro-final/htmlcov",
+      "containsFile": [],
+      "containsModule": [],
+      "totalLinesOfCode": 0,
+      "totalCommits": 0,
+      "numAuthors": 0,
+      "owner": null,
+      "hotspotScore": null,
+      "mainLanguage": null
+    },
+    {
+      "@id": "repo:module:repoq",
+      "@type": "repo:Module",
+      "name": "repoq",
+      "path": "/home/kirill/projects/repoq-pro-final/repoq",
+      "containsFile": [],
+      "containsModule": [],
+      "totalLinesOfCode": 0,
+      "totalCommits": 0,
+      "numAuthors": 0,
+      "owner": null,
+      "hotspotScore": null,
+      "mainLanguage": null
+    },
+    {
+      "@id": "repo:module:repoq.egg-info",
+      "@type": "repo:Module",
+      "name": "repoq.egg-info",
+      "path": "/home/kirill/projects/repoq-pro-final/repoq.egg-info",
+      "containsFile": [],
+      "containsModule": [],
+      "totalLinesOfCode": 0,
+      "totalCommits": 0,
+      "numAuthors": 0,
+      "owner": null,
+      "hotspotScore": null,
+      "mainLanguage": null
+    },
+    {
+      "@id": "repo:module:site",
+      "@type": "repo:Module",
+      "name": "site",
+      "path": "/home/kirill/projects/repoq-pro-final/site",
+      "containsFile": [],
+      "containsModule": [],
+      "totalLinesOfCode": 0,
+      "totalCommits": 0,
+      "numAuthors": 0,
+      "owner": null,
+      "hotspotScore": null,
+      "mainLanguage": null
+    },
+    {
+      "@id": "repo:module:tests",
+      "@type": "repo:Module",
+      "name": "tests",
+      "path": "/home/kirill/projects/repoq-pro-final/tests",
+      "containsFile": [],
+      "containsModule": [],
+      "totalLinesOfCode": 0,
+      "totalCommits": 0,
+      "numAuthors": 0,
+      "owner": null,
+      "hotspotScore": null,
+      "mainLanguage": null
+    },
+    {
+      "@id": "repo:module:tmp",
+      "@type": "repo:Module",
+      "name": "tmp",
+      "path": "/home/kirill/projects/repoq-pro-final/tmp",
+      "containsFile": [
+        "repo:file:tmp/zag_repoq-finished/repoq/config.py"
+      ],
+      "containsModule": [],
+      "totalLinesOfCode": 37,
+      "totalCommits": 0,
+      "numAuthors": 0,
+      "owner": null,
+      "hotspotScore": null,
+      "mainLanguage": null
+    }
+  ],
+  "files": [
+    {
+      "@id": "repo:file:tmp/zag_repoq-finished/repoq/config.py",
+      "@type": [
+        "repo:File",
+        "schema:SoftwareSourceCode",
+        "spdx:File",
+        "prov:Entity"
+      ],
+      "path": "tmp/zag_repoq-finished/repoq/config.py",
+      "fileName": "tmp/zag_repoq-finished/repoq/config.py",
+      "language": "Python",
+      "linesOfCode": 37,
+      "complexity": 4.0,
+      "maintainability": null,
+      "commitsCount": 0,
+      "codeChurn": 0,
+      "contributors": [],
+      "issues": [
+        "repo:issue:hotspot:tmp_zag_repoq-finished_repoq_config.py"
+      ],
+      "lastModified": null,
+      "deprecated": false,
+      "testFile": false,
+      "module": "repo:module:tmp",
+      "hotness": 0.0
+    }
+  ],
+  "contributors": [
+    {
+      "@id": "repo:person:2ee9b1d755812ff3",
+      "@type": [
+        "schema:Person",
+        "foaf:Person",
+        "prov:Agent",
+        "prov:Person"
+      ],
+      "name": "kirill.n",
+      "email": "nikitink0440@gmail.com",
+      "emailHash": "2ee9b1d755812ff3",
+      "mbox_sha1sum": "89d449db6a40d71745720f88ea7a6b35151bed3a",
+      "commits": 71,
+      "linesAdded": 0,
+      "linesDeleted": 0,
+      "owns": [],
+      "modulesContributed": []
+    }
+  ],
+  "issues": [
+    {
+      "@id": "repo:issue:hotspot:tmp_zag_repoq-finished_repoq_config.py",
+      "@type": [
+        "oslc_cm:ChangeRequest",
+        "repo:HotspotIssue",
+        "repo:Issue"
+      ],
+      "file": "repo:file:tmp/zag_repoq-finished/repoq/config.py",
+      "dcterms:title": "Hotspot",
+      "description": "Hotspot score=0.000",
+      "severity": {
+        "@id": "http://open-services.net/ns/cm#Minor"
+      },
+      "status": "Open"
+    }
+  ],
+  "dependencies": [
+    {
+      "source": "repo:module:tmp",
+      "target": "pypi:typing",
+      "weight": 1,
+      "type": "import"
+    },
+    {
+      "source": "repo:module:tmp",
+      "target": "pypi:yaml",
+      "weight": 1,
+      "type": "import"
+    },
+    {
+      "source": "repo:module:tmp",
+      "target": "pypi:dataclasses",
+      "weight": 1,
+      "type": "import"
+    },
+    {
+      "source": "repo:module:tmp",
+      "target": "pypi:__future__",
+      "weight": 1,
+      "type": "import"
+    },
+    {
+      "source": "repo:module:tmp",
+      "target": "pypi:os",
+      "weight": 1,
+      "type": "import"
+    },
+    {
+      "source": "project",
+      "target": "pypi:typer",
+      "weight": 1,
+      "type": "runtime"
+    },
+    {
+      "source": "project",
+      "target": "pypi:rich",
+      "weight": 1,
+      "type": "runtime"
+    },
+    {
+      "source": "project",
+      "target": "pypi:jinja2",
+      "weight": 1,
+      "type": "runtime"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pyyaml",
+      "weight": 1,
+      "type": "runtime"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pydriller",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:lizard",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:radon",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:graphviz",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:rdflib",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:orjson",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pyshacl",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:tree-sitter",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:tree-sitter-python",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:cryptography",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pytest",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pytest-cov",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pytest-asyncio",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pytest-mock",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:ruff",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:black",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:mypy",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:types-PyYAML",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:mkdocs",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:mkdocs-material",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:mkdocs-autorefs",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:mkdocs-mermaid2-plugin",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:pymdown-extensions",
+      "weight": 1,
+      "type": "build"
+    },
+    {
+      "source": "project",
+      "target": "pypi:mike",
+      "weight": 1,
+      "type": "build"
+    }
+  ],
+  "coupling": [],
+  "commits": [
+    {
+      "@id": "repo:commit:865812534b2717ffabebbb142a8420eaeda5fae4",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Production-ready baseline (Phase 1 complete)\n\nMajor milestone: repoq 3.0 ready for production\n\nFeatures:\n- Full repository analysis (structure, history, complexity, hotspots, CI/QM)\n- Multi-format output (JSON-LD, Turtle RDF, Markdown reports)\n- Ontology support (PROV-O, OSLC, SPDX, FOAF, Schema.org)\n- Self-hosting capability\n\nTesting:\n- 57 tests, 100% passing\n- 58% coverage\n- Unit + integration + property-based tests\n\nQuality:\n- ruff, black, mypy: all clean\n- bandit: 0 High/Medium issues\n- safety: 0 vulnerabilities\n\nDocs:\n- Complete roadmap and phase checklist\n- Lean4/OML formalization\n- CI/CD workflow ready",
+      "endedAtTime": "2025-10-21T05:16:30+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:d0cb0b52973c02e9facc47dbc5e3aad923435280",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Add comprehensive docstrings and improve error handling\n\n- repoq/core/jsonld.py: Full docstrings for all functions, specific exception handling (json.JSONDecodeError, OSError), proper logging, Path usage\n- repoq/core/model.py: Enhanced hash_email(), foaf_sha1(), Issue and Person dataclasses with comprehensive docstrings and FOAF/OSLC references\n- repoq/cli.py: Module docstring, enhanced utility functions with error handling and logging\n\nAll tests passing (57/57). Google-style docstrings with Args/Returns/Raises/Examples.",
+      "endedAtTime": "2025-10-21T05:32:05+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:159dc1aec1fbee006bbfc977def92cd8903c9482",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Complete comprehensive docstrings for CLI and models\n\n- repoq/cli.py: Added full docstrings to all command functions (structure, history, full, diff), _apply_config(), _run_command(), and main() callback with detailed Args/Returns/Examples\n- repoq/core/model.py: Completed docstrings for all remaining dataclasses: File (25+ attrs), Module, DependencyEdge, CouplingEdge, Commit, VersionResource, TestCase, TestResult, and Project (root entity)\n- All docstrings follow Google style with complete attribute documentation\n- Semantic web mappings documented (PROV-O, OSLC, FOAF, Schema.org)\n- Project.to_dict() method documented\n\nCoverage: 100% of public API now has comprehensive documentation\nTests: 57/57 passing",
+      "endedAtTime": "2025-10-21T05:40:40+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:bd9177a9afe94d2c98047c55eb478349f4f748cd",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Add comprehensive docstrings and logging to all analyzers\n\n- repoq/analyzers/base.py: Full docstring for abstract Analyzer class with interface contract documentation\n- repoq/analyzers/structure.py: Module, class, and function docstrings explaining file/module/dependency analysis, SPDX license detection, CI detection\n- repoq/analyzers/complexity.py: Docstrings for Lizard (CCN) and Radon (MI) analysis, improved ImportError handling with logging\n- repoq/analyzers/history.py: Complete docstrings for PyDriller/Git analysis, contributor tracking, code churn, temporal coupling\n- repoq/analyzers/hotspots.py: Explained hotspot scoring algorithm (churn × LOC+complexity), normalization, severity thresholds\n- repoq/analyzers/weakness.py: Documented pattern-based detection (TODO/FIXME/HACK/deprecated), improved error handling\n- repoq/analyzers/ci_qm.py: JUnit XML parsing documentation, OSLC QM mapping, enhanced error handling for ParseError/OSError\n\nAll analyzers now have:\n- Module-level docstrings explaining purpose and algorithms\n- Class docstrings with detailed behavior\n- Method docstrings with Args/Returns/Note sections\n- Proper exception handling (ImportError, OSError, ParseError)\n- Logging for debug/warning/error events\n\nTests: 57/57 passing",
+      "endedAtTime": "2025-10-21T05:46:02+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:091ae0d1942cb84a7b141c9a3efb3f2727ec35fa",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Complete docstrings for all core utility modules\n\n- repoq/core/utils.py: Documented guess_language(), is_excluded(), checksum_file() with full Args/Returns/Examples, added ValueError for unsupported algos, improved error handling\n- repoq/core/deps.py: Complete docstrings for python_imports() and js_imports(), explained AST parsing with regex fallback, documented relative import exclusion logic\n- repoq/core/repo_loader.py: Documented is_url(), prepare_repo() with detailed clone/validation logic, get_head() with proper error handling and logging\n- repoq/core/rdf_export.py: Full docstrings for export_ttl() and validate_shapes(), explained rdflib/pyshacl integration, added ImportError/OSError handling with logging\n\nAll utility modules now have:\n- Module-level docstrings explaining purpose\n- Function docstrings with Args/Returns/Raises/Examples\n- Specific exception handling (ImportError, OSError, ValueError, subprocess.CalledProcessError)\n- Proper logging at info/warning/error/debug levels\n- Enhanced error messages for troubleshooting\n\nTests: 57/57 passing\nCoverage: 100% of public utility API documented",
+      "endedAtTime": "2025-10-21T05:52:57+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:f87a1c6f3d05ea9f4dca8498b88d06474c444437",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Add comprehensive docstrings to reporting modules\n\n- repoq/reporting/markdown.py: Module docstring explaining Jinja2 report generation, full docstring for render_markdown() with template error handling\n- repoq/reporting/graphviz.py: Complete documentation for export_graphs(), _graph_dependencies(), _graph_coupling() with graceful degradation when graphviz unavailable, improved logging\n- repoq/reporting/diff.py: Full docstrings for load_json() and diff_jsonld() explaining regression detection (issues_added/removed, hotspot growth), proper error handling\n\nAll reporting modules now have:\n- Module-level docstrings explaining purpose and functionality\n- Function docstrings with Args/Returns/Raises/Examples\n- Proper exception handling (ImportError, OSError, json.JSONDecodeError)\n- Logging for info/debug/warning levels\n- Graceful degradation (graphviz optional)\n\nTests: 57/57 passing",
+      "endedAtTime": "2025-10-21T06:10:56+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:13fe8ca102f4fc464c1dc14aac8bb04500f5df1d",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Complete documentation for config, logging, and pipeline\n\n- repoq/config.py: Full docstrings for Thresholds and AnalyzeConfig dataclasses with all 20+ attributes documented, enhanced load_config() with yaml.YAMLError/OSError handling and logging\n- repoq/logging.py: Module and function docstrings explaining Rich integration, verbosity level mapping (0=WARNING, 1=INFO, 2+=DEBUG)\n- repoq/pipeline.py: Complete docstring for run_pipeline() explaining analyzer orchestration, dependency order, and mode-based execution (structure/history/full)\n\nAll configuration and orchestration modules now have:\n- Module-level docstrings\n- Complete dataclass attribute documentation\n- Function docstrings with Args/Returns/Examples\n- Proper error handling and logging\n- Clear explanation of execution flow and dependencies\n\nTests: 57/57 passing\n\n🎉 DOCUMENTATION COMPLETE: 100% of public API documented\nTotal modules enhanced: 20+\nTotal documentation added: ~1500 lines",
+      "endedAtTime": "2025-10-21T06:14:50+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:d5d5758d25703b573d9d7ccad4b07338d95c36da",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Update README with Phase 1+2 completion status\n\n- Update badges: production-ready 98%, 57 tests passing, 100% docs\n- Update version: 2.0 → 3.0\n- Add comprehensive feature list with all analyzers\n- Enhance installation instructions with optional dependencies\n- Add detailed command reference and examples\n- Document all export formats (JSON-LD, Markdown, Graphviz, RDF Turtle)\n- Add architecture section with module structure\n- Add quality metrics: 57 passing tests, 100% API documentation\n- Add CI/CD integration examples\n- Add Python API usage examples",
+      "endedAtTime": "2025-10-21T06:21:46+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:e84b142006afcc27a97dbefc6213995fd1930561",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Update ROADMAP to reflect Phase 1+2 completion\n\n- Update status: 70% ready → 98% production ready\n- Mark Phase 1 (Production Baseline) as COMPLETE\n- Mark Phase 2 (Documentation) as COMPLETE\n- Update URPKS gates: all passing or near-target\n- Add achievements section with resolved blockers\n- Add git history with 8 commits\n- Update metrics: 57 tests, 100% docs, 0 issues\n- Reclassify remaining work as optional enhancements\n- Update quick start for production usage\n- Add completion date: October 21, 2025",
+      "endedAtTime": "2025-10-21T06:24:03+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:15766781a659aa15f86a4e7fe82c6c0fee5ee47b",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Unify documentation structure\n\n- Replace verbose ROADMAP.md with clean, concise version\n- Remove outdated planning documents:\n  * EXECUTIVE_SUMMARY.md (obsolete planning doc)\n  * INDEX.md (redundant with README)\n  * PHASE1_CHECKLIST.md (Phase 1 complete)\n  * ROADMAP_ASCII.txt (duplicate of ROADMAP)\n  * ROADMAP_VISUAL.md (outdated)\n- Keep only essential documentation:\n  * README.md (main docs, 8.5K)\n  * ROADMAP.md (status & future, 3.8K)\n- New ROADMAP structure:\n  * Completed phases (1-2) with deliverables\n  * Current metrics table\n  * Optional future enhancements\n  * Production checklist\n  * Git history\n- Result: Clean, maintainable documentation structure",
+      "endedAtTime": "2025-10-21T06:27:46+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:2450ba53069b1292923c9f0a5e62120ed503ba88",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Add TRS normalization subsystem (WIP)\n\nImplement Term Rewriting Systems for deterministic analysis outputs\n\nInfrastructure (repoq/normalize/):\n- base.py: Abstract TRS with Term, Rule, RewriteSystem classes\n- spdx_trs.py: SPDX license normalization (PARTIAL - bugs found)\n- Stubs: semver, rdf, filters, metrics normalizers\n\nProperty-Based Tests:\n- tests/properties/test_spdx_normalization.py (16 tests)\n- Hypothesis integration\n- 10 passing, 6 failing (expected - found real bugs)\n\nDocumentation:\n- README: New section on Normalization & Determinism\n\nBenefits:\n- Deterministic reports, no flapping diffs\n- Content-addressable caching\n- Formal guarantees: confluence, termination, idempotence\n\nNext: Fix SPDX bugs, implement remaining TRS, integrate",
+      "endedAtTime": "2025-10-21T07:09:17+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:66c335d4b3b837b82bafe5ce0dd2cae258206e66",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "fix: Complete SPDX TRS implementation and integration\n\n## SPDX TRS Fixes\n- Fixed tokenizer regex to properly handle license IDs with dots (GPL-2.0)\n- Implemented proper recursive descent parser with correct precedence (AND > OR)\n- Replaced rule-based system with deterministic transformations\n- Fixed pattern matching and sorting logic\n\n## New Features\n- Idempotence: A OR A → A\n- Commutativity: operands sorted lexicographically\n- Absorption: A OR (A AND B) → A\n- Flattening: (A OR B) OR C → A OR B OR C\n- Deterministic normalization with caching\n\n## Integration\n- Enhanced StructureAnalyzer to use SPDX normalization\n- License detection now returns canonical SPDX expressions\n- Dual licenses normalized to 'Apache-2.0 OR MIT' format\n\n## Testing\n- All 16 property-based tests now pass ✅\n- Hypothesis found and helped fix 6 critical bugs\n- Added comprehensive test coverage for edge cases\n\n## Benefits\n- Deterministic license expressions in reports\n- Content-addressable caching via hash(NF(expr))\n- No more flapping diffs due to license ordering\n- Formal guarantees: termination, confluence, idempotence\n\nExample:\n  MIT OR MIT → MIT\n  GPL-2.0 OR MIT → GPL-2.0 OR MIT\n  (MIT AND Apache-2.0) OR MIT → MIT\n\nNext: Implement SemVer and RDF normalization",
+      "endedAtTime": "2025-10-21T13:52:34+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:a86d9019017d5128c5d96b36ee17f6ae071ca63e",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Complete SemVer TRS implementation with interval arithmetic\n\nIMPLEMENTED:\n- Full SemVer version range parser supporting npm-style ranges\n- Interval arithmetic with proper intersection/union operations\n- Version comparison with prerelease handling (semver-compliant)\n- Property-based testing with Hypothesis (21 tests passing)\n- Integration into StructureAnalyzer for dependency manifest parsing\n- Support for partial versions and Python/npm normalization\n\nFORMAL PROPERTIES VERIFIED:\n- Idempotence, Commutativity, Termination, Confluence\n\nFILES: +500 lines semver_trs.py, +400 lines tests, +150 lines integration",
+      "endedAtTime": "2025-10-21T14:19:03+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:c26a6f1589220bd3bd6e2a1d7f636bd29528f525",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Complete RDF/JSON-LD TRS implementation with graph canonicalization\n\nIMPLEMENTED:\n- Full RDF canonicalization with blank node stabilization\n- Content-based hash algorithm for deterministic blank node IDs\n- Triple sorting by lexicographic order (subject → predicate → object)\n- JSON-LD property ordering and array normalization\n- Property-based testing with Hypothesis (17 tests passing)\n- Integration into RDF export pipeline for deterministic TTL output\n\nALGORITHM:\n- Blank node hashing based on connected triple signatures\n- Recursive depth-limited graph traversal for hash computation\n- Canonical labeling with sorted assignment (_:b0, _:b1, ...)\n- JSON-LD object/array ordering with @id-based array sorting\n- Idempotent operations ensuring stable canonicalization\n\nFORMAL PROPERTIES VERIFIED:\n- Idempotence: canonicalize(canonicalize(x)) = canonicalize(x) ✓\n- Determinism: Multiple runs produce identical output ✓\n- Stability: Blank node assignments remain consistent ✓\n- Ordering: Triples/properties sorted lexicographically ✓\n\nINTEGRATION:\n- Enhanced export_ttl() with canonical JSON-LD preprocessing\n- New canonicalize_jsonld() function for direct JSON-LD normalization\n- Updated validate_shapes() to use canonical data for consistency\n- Maintains compatibility with existing rdflib/pyshacl pipeline\n\nFILES:\n+400 lines repoq/normalize/rdf_trs.py (complete RDF TRS)\n+300 lines tests/properties/test_rdf_normalization.py (comprehensive tests)\n+40 lines repoq/core/rdf_export.py (integration)\n+10 lines __init__.py (API updates)",
+      "endedAtTime": "2025-10-21T14:36:30+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:7815f44021ab5fd1874fc13891db999a69a568ed",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Advanced Filters TRS with SymPy and tree-sitter\n\nIMPLEMENTED:\n- Full logical expression canonicalization with DNF/CNF normalization\n- SymPy integration for formal logical operations and equivalence checking\n- Tree-sitter parsing for complex filter expressions (advanced AST)\n- Advanced glob pattern simplification with regex subsumption analysis\n- Pattern merging and redundancy elimination algorithms\n- Multiple canonical forms: DNF, CNF, simplified\n\nALGORITHM FEATURES:\n- SymPy-based logical transformations with symbol mapping preservation\n- Distributive laws: A ∧ (B ∨ C) = (A ∧ B) ∨ (A ∧ C)\n- De Morgan's laws: ¬(A ∧ B) = ¬A ∨ ¬B\n- Double negation elimination: ¬¬A = A\n- Associativity/commutativity for AND/OR operations\n- Advanced pattern subsumption: **/ subsumes specific/paths\n\nGLOB ENHANCEMENTS:\n- Regex conversion for precise pattern matching analysis\n- Character class sorting: [cba]*.txt → [abc]*.txt\n- Wildcard simplification: *** → **, **/** → **\n- Path separator normalization: src///**/// → src/**\n- Adjacent pattern merging with overlap detection\n\nTREE-SITTER INTEGRATION:\n- Complex expression parsing: 'size > 1000 AND *.py'\n- AST-based logical operator extraction\n- Function call recognition: file_prop(), glob_pattern()\n- Python-like syntax preprocessing for parser compatibility\n\nFORMAL PROPERTIES:\n- Logical equivalence checking via SymPy\n- Multiple normal forms (DNF/CNF/simplified)\n- Idempotence: canonicalize(canonicalize(x)) = canonicalize(x)\n- Determinism: consistent canonical representation\n- Sound transformations preserving semantics\n\nPERFORMANCE:\n- Symbol caching for repeated SymPy operations\n- O(n log n) pattern sorting with stable ordering\n- Efficient subsumption checking with early termination\n- 100 normalizations in ~11ms (complex filters)\n\nFILES:\n+600 lines repoq/normalize/filters_trs.py (complete filters TRS)\n+200 lines tests/properties/test_filters_normalization.py (comprehensive tests)\n+10 lines __init__.py (API exports)\n\nDEPENDENCIES ADDED:\n- sympy: symbolic mathematics for logical operations\n- tree-sitter: advanced parsing for complex expressions\n- tree-sitter-python: Python grammar for AST parsing\n\nINTEGRATION POINTS:\n- history.py: stable filter application order\n- ci_qm.py: canonical test selection logic\n- hotspots.py: normalized scoring predicates\n- Backward compatibility with normalize_filter()",
+      "endedAtTime": "2025-10-21T14:54:35+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:136926061efd483ea9964ec09f12206606ea2e7a",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Complete Metrics TRS with SymPy algebraic simplification\n\nIMPLEMENTED:\n- Full arithmetic expression canonicalization with algebraic simplification\n- SymPy integration for formal mathematical operations and optimization\n- Advanced aggregation functions: sum, avg, max, min, count, median, std\n- Weight normalization and coefficient optimization algorithms\n- Multiple optimization levels: basic, standard, aggressive\n- AST-based expression parsing with proper error handling\n\nALGEBRAIC FEATURES:\n- Associativity/commutativity for addition and multiplication operations\n- Distributive property: a*(b+c) = a*b + a*c\n- Like term collection: 2*x + 3*x → 5*x\n- Common factor extraction and cancellation\n- Coefficient normalization with decimal precision control\n- Expression expansion and factoring capabilities\n\nAGGREGATION ENHANCEMENTS:\n- Weighted aggregation with automatic weight normalization\n- Commutative function argument sorting for canonical representation\n- Statistical functions: median, standard deviation, variance\n- Zero-safe division and robust numeric evaluation\n- Context-based variable substitution and evaluation\n\nPARSING CAPABILITIES:\n- AST-based parsing for complex nested expressions\n- Support for weighted syntax: complexity:0.6 → complexity*0.6\n- Exponentiation operator conversion: ^ → **\n- Function call recognition with argument validation\n- Comprehensive error handling and fallback mechanisms\n\nOPTIMIZATION LEVELS:\n- Basic: Standard SymPy simplify() transformation\n- Standard: Chooses most compact between simplified and factored forms\n- Aggressive: Tests multiple strategies, selects minimal representation\n- Performance-aware: Timeout protection against SymPy infinite loops\n\nFORMAL PROPERTIES:\n- Mathematical equivalence preservation under transformation\n- Idempotence: canonicalize(canonicalize(x)) = canonicalize(x)\n- Deterministic canonical representation with lexicographic ordering\n- Evaluation consistency between original and canonical forms\n- Robust error handling with graceful degradation\n\nPERFORMANCE:\n- Timeout protection for complex SymPy operations\n- Fallback to original expression if simplification fails\n- Efficient decimal arithmetic with controlled precision\n- 100 normalizations in ~800ms (including SymPy overhead)\n\nFILES:\n+650 lines repoq/normalize/metrics_trs.py (complete metrics TRS)\n+350 lines tests/properties/test_metrics_normalization.py (comprehensive tests)\n+10 lines __init__.py (API exports)\n\nINTEGRATION POINTS:\n- hotspots.py: canonical scoring formula representation\n- complexity.py: normalized complexity metrics calculation\n- history.py: stable aggregation order for temporal metrics\n- Backward compatibility with normalize_metric()\n\nEXAMPLES:\n- '2 * lines + 3 * lines' → '*(5,var:lines)'\n- 'avg(complexity, lines)' → 'avg(var:complexity,var:lines)'\n- '((a + b) * 2 + (a + b) * 3) / (c + d + c)' → '*(+(*(5,var:a),*(5,var:b)),^(+(var:d,*(2,var:c)),-1))'\n\nDEPENDENCIES:\n- sympy: symbolic mathematics for algebraic operations\n- ast: expression parsing and tree traversal\n- decimal: high-precision arithmetic for coefficients\n- statistics: advanced aggregation functions",
+      "endedAtTime": "2025-10-21T15:01:57+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:ca8f09dcdc44514c3268fdb976e7a22cc3da8a01",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Complete TRS verification infrastructure with self-application\n\nIMPLEMENTED CI/CD AUTOMATION:\n- Complete GitHub Actions workflow for TRS verification and self-application\n- Automated property checking: idempotence, determinism, confluence, termination, soundness\n- Pre-commit hooks with TRS file change detection and quick verification\n- Self-application safety guards with stratified analysis levels\n\nTRS VERIFICATION FRAMEWORK:\n- rules/trs_properties.py: Abstract verification framework with property definitions\n- rules/trs_verifiers.py: Concrete verifiers for all 5 TRS systems (SPDX, SemVer, Filters, Metrics, RDF)\n- rules/self_application_rules.py: Safe self-analysis with paradox prevention\n- scripts/verify_trs.py: Standalone verification runner with multiple levels\n\nFORMAL PROPERTY CHECKING:\n- Critical pair analysis for confluence verification (Newman's lemma approach)\n- Termination checking with timeout protection against infinite loops\n- Idempotence verification: canonicalize(canonicalize(x)) = canonicalize(x)\n- Determinism testing: multiple runs produce identical results\n- Mathematical soundness verification for domain-specific equivalences\n\nSELF-APPLICATION SAFETY:\n- Stratified analysis levels (0-3) to prevent self-referential paradoxes\n- Resource limits and timeout protection (512MB memory, 300s time)\n- Read-only mode enforcement for self-analysis\n- Safe configuration templates (minimal, standard, comprehensive)\n- Circular dependency detection and recursion depth limiting\n\nCI INTEGRATION FEATURES:\n- Automated daily self-analysis at 02:00 UTC\n- PR comment generation with verification results\n- Artifact collection (results, logs) with 30-day retention\n- Performance regression detection against defined thresholds\n- Property-based testing with Hypothesis integration\n\nVERIFICATION RESULTS:\n✅ Filters TRS: Complete success (all properties verified)\n⚠️ SPDX/SemVer/RDF: Confluence issues (critical pair detection)\n⚠️ Metrics TRS: Idempotence violations (canonical form re-parsing)\n\nWORKING INFRASTRUCTURE:\n- Pre-commit hook successfully blocks commits with TRS violations\n- GitHub Actions workflow ready for deployment\n- Self-application safety mechanisms functional\n- All verification levels operational (basic/standard/advanced)\n\nNOTE: Some TRS systems need refinement (confluence detection, idempotence)\nThis commit establishes the complete infrastructure for continuous verification.",
+      "endedAtTime": "2025-10-21T15:15:30+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:d8f0c8e6bf6777cc8fb9b5ac6b9e69b2e8daae48",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Complete self-application lifecycle integration\n\n✅ FULL SELF-APPLICATION CAPABILITY ACHIEVED\n\nIMPLEMENTED FEATURES:\n- Safe self-analysis with stratified security levels (0-3)\n- Automatic TRS property verification (idempotence, confluence, termination)\n- GitHub Actions workflow for continuous validation\n- Pre-commit hooks for development workflow integration\n- Resource-limited execution with timeout protection\n\nWORKING SYSTEMS:\n✅ Filters TRS: Complete property verification (all tests pass)\n✅ Self-Application: Safe execution with mock analysis results\n✅ CI/CD Integration: GitHub Actions + pre-commit hooks functional\n✅ Safety Guards: Stratification, resource limits, modification protection\n✅ Verification Framework: All 5 TRS systems testable\n\nVERIFICATION RESULTS:\n- TRS Property Checking: ~900ms for all systems\n- Self-Application: 100% success rate, 0 safety violations\n- Pre-commit Hook: Blocks commits with TRS violations\n- GitHub Actions: Ready for continuous validation\n\nSAFETY ARCHITECTURE:\n- Stratified analysis levels prevent self-referential paradoxes\n- Resource limits: 512MB memory, 300s timeout, 3-level recursion max\n- Read-only mode enforcement for all self-analysis operations\n- Conservative configuration templates (minimal/standard/comprehensive)\n\nREMAINING WORK:\n⚠️ Metrics TRS: Idempotence violations (canonical form re-parsing)\n⚠️ SPDX/SemVer/RDF: Confluence detection needs enhancement\n📝 Optional: Lean4 formal proofs for mathematical correctness\n\nINTEGRATION POINTS:\n- Development: Pre-commit hook blocks problematic commits\n- CI/CD: Daily self-analysis + PR verification\n- Production: Continuous TRS property monitoring\n- Team: Automated quality reports and violation detection\n\nUSER GUIDE:\n+ SELF_APPLICATION_GUIDE.md: Complete documentation for lifecycle integration\n+ scripts/verify_trs.py: Standalone verification runner\n+ Multiple configuration levels and execution modes\n+ Detailed examples and troubleshooting guidance\n\nACHIEVEMENT: RepoQ now successfully applies its own analysis capabilities\nto its own codebase, creating a meta-quality feedback loop while maintaining\nmathematical rigor and safety guarantees.\n\nКоманда может теперь использовать RepoQ для контроля качества собственной разработки.",
+      "endedAtTime": "2025-10-21T15:19:06+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:1c2f0165f6570b4f2e54a43c1ecbe6e061e1e66c",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Add comprehensive ontology plugin system for meta-analysis\n\n🧠 ONTOLOGICAL INTELLIGENCE INTEGRATION\n\nIMPLEMENTED MULTI-DOMAIN ONTOLOGY SYSTEM:\n- Plugin-based architecture for extensible ontology support\n- 3 core ontologies: Code, C4 Model, Domain-Driven Design\n- Automatic concept extraction from project structure\n- Cross-ontology inference and semantic mapping\n- Performance-optimized with lazy loading and graceful degradation\n\nONTOLOGY SPECIFICATIONS:\n+ repoq/ontologies/plugins/code_ontology.jsonld (Code structure concepts)\n+ repoq/ontologies/plugins/c4_model.jsonld (Architectural elements)\n+ repoq/ontologies/plugins/ddd_ontology.jsonld (Domain-driven concepts)\n+ repoq/ontologies/ontology_manager.py (Plugin system & inference engine)\n\nPLUGIN SYSTEM FEATURES:\n- Automatic applicability detection (0.0-1.0 confidence scoring)\n- Dynamic ontology loading based on project characteristics\n- Semantic validation with constraint checking\n- Cross-ontology relationship inference (code ↔ architecture ↔ domain)\n- Graceful degradation when dependencies unavailable (rdflib optional)\n\nONTOLOGY COVERAGE:\n- Code Ontology: Module, Class, Method, Function, Variable concepts\n- C4 Model: Person, System, Container, Component, Code relationships\n- DDD: BoundedContext, Aggregate, Entity, ValueObject, DomainService\n- Quality attributes, risks, anti-patterns detection\n\nCONCEPT EXTRACTION EXAMPLES:\ncode:Class → c4:Component mapping (architectural traceability)\nddd:BoundedContext → c4:Container mapping (domain boundaries)\nAutomatic detection of Entity, Repository, Service patterns\nHigh complexity warnings, large module violations\n\nCROSS-ONTOLOGY INFERENCE:\n- Bidirectional mapping between ontology layers\n- Semantic relationships with confidence scoring\n- Automated architectural consistency checking\n- Domain model to implementation traceability\n\nSELF-APPLICATION INTEGRATION:\n- Enhanced self-analysis with ontological concepts extraction\n- Automatic RepoQ architectural analysis (mock data for now)\n- Safety-preserved ontology reasoning within stratified levels\n- Multi-domain insights in self-application reports\n\nPERFORMANCE CHARACTERISTICS:\n- Lazy ontology loading (only when applicable)\n- Optional rdflib dependency (graceful degradation)\n- Plugin priority system for optimization\n- Confidence-based filtering (>0.1 threshold)\n\nROADMAP PLANNING:\n+ ONTOLOGY_ROADMAP.md: 4-phase evolution plan\n- Phase 1: Critical TRS fixes + real integration (2-4 weeks)\n- Phase 2: Enhanced ontology intelligence (4-6 weeks)\n- Phase 3: Intelligent feedback loop (6-8 weeks)\n- Phase 4: Certification & formal verification (8-12 weeks)\n\nVISION REALIZATION:\nMulti-domain semantic analysis integrated into meta-quality loop:\n- Architectural consistency checking\n- Domain model validation\n- Code-to-design traceability\n- Automated pattern recognition\n- Cross-cutting concern analysis\n\nNEXT PRIORITIES:\n1. Install rdflib for full semantic reasoning\n2. Implement real project structure analysis\n3. Add microservices, security, performance ontologies\n4. Develop ML-based pattern recognition\n5. Create automated improvement suggestions\n\nMETA-LOOP ENHANCEMENT:\nRepoQ now performs semantic analysis of its own architecture using\nformal ontologies, creating unprecedented insight into the relationship\nbetween code structure, architectural design, and domain concepts.\n\nThis establishes foundation for true AI-assisted software development.",
+      "endedAtTime": "2025-10-21T15:28:43+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:8241dd80ad1ba53fc5d677aa5f918dfe6dc9a724",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Revolutionary ontological meta-quality loop integration\n\n🚀 BREAKTHROUGH: SEMANTIC META-QUALITY ANALYSIS SYSTEM OPERATIONAL\n\nREVOLUTIONARY ACHIEVEMENTS:\n✅ Complete dependency ecosystem (rdflib, owlrl, sympy, hypothesis, tree-sitter)\n✅ TRS violations systematically addressed (4/5 systems stabilized)\n✅ Real ontological analysis integration into structure analyzer\n✅ Complete project-to-ontology conversion pipeline\n✅ Cross-ontology relationship inference framework\n✅ Ontological intelligence seamlessly integrated into RepoQ's self-analysis\n\nSEMANTIC INTELLIGENCE BREAKTHROUGH:\n+ Enhanced StructureAnalyzer with _enrich_with_ontological_analysis()\n+ Real Project/File/Module object conversion to ontology-compatible format\n+ OntologyManager.analyze_project_structure() method for meta-analysis\n+ Multi-domain concept extraction (Code, C4 Model, Domain-Driven Design)\n+ Graceful degradation patterns for missing plugin methods\n+ Cross-ontology semantic mapping and relationship inference engine\n\nTECHNICAL FOUNDATIONS ESTABLISHED:\n- All critical dependencies installed and integration-tested\n- TRS violations systematically patched (SPDX, SemVer, RDF empty handling)\n- Metrics TRS idempotence improved with canonical form enforcement\n- Optional rdflib integration enables full semantic reasoning capabilities\n- Plugin-based architecture for extensible domain knowledge integration\n- Safe self-application enhanced with ontological intelligence layer\n- Performance-optimized lazy loading and comprehensive error handling\n\nMETA-LOOP OPERATIONAL STATUS:\n🧠 RepoQ successfully analyzes its own architecture using formal ontologies\n🔄 Self-improving quality analysis system established and functional\n🎯 Foundation for AI-assisted software development created and tested\n📈 Unprecedented semantic insight into software quality patterns achieved\n\nONTOLOGICAL SPECIFICATIONS CREATED:\n+ repoq/ontologies/plugins/code_ontology.jsonld (150+ code structure concepts)\n+ repoq/ontologies/plugins/c4_model.jsonld (50+ architectural elements)\n+ repoq/ontologies/plugins/ddd_ontology.jsonld (40+ domain design concepts)\n+ BREAKTHROUGH_ACHIEVEMENTS.md (comprehensive technical documentation)\n\nCROSS-ONTOLOGY INTELLIGENCE:\n- Automatic concept mapping: code:Class → c4:Component → ddd:Entity\n- Semantic relationship inference between architectural layers\n- Quality violation detection through formal constraint validation\n- Pattern recognition across Code/Architecture/Domain boundaries\n\nNEXT PHASE ROADMAP (4-week sprint):\n1. Complete TRS confluence detection optimization (Metrics focus)\n2. Implement missing plugin methods (check_applicability, extract_concepts)\n3. Add extended domain ontologies (microservices, security, performance)\n4. Develop ML-based architectural pattern recognition capabilities\n5. Create automated improvement suggestions based on semantic analysis\n\nVISION REALIZED:\nThis establishes the world's first ontological meta-quality loop - a system\nthat understands its own architecture through formal domain knowledge and\nprovides semantic insights into software quality at unprecedented depth.\n\nThe foundation for true AI-assisted software development is now operational\nand ready for the next evolution phase toward certification-grade reliability.\n\nNote: TRS verification bypassed for this revolutionary intermediate commit.\nProduction deployment blocked until confluence detection optimization complete.",
+      "endedAtTime": "2025-10-21T16:06:50+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:a07a451e68d173226b010ebf6e7452e219c3ee06",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "chore: Clean up repository structure and code formatting\n\n🧹 REPOSITORY ORGANIZATION & CLEANUP\n\nSTRUCTURE IMPROVEMENTS:\n✅ Removed duplicate ontologies/ directory\n✅ Cleaned up temporary files (.pyc, __pycache__, .pytest_cache, etc.)\n✅ Removed development caches (.mypy_cache, .ruff_cache, .hypothesis, htmlcov)\n✅ Updated .gitignore with comprehensive exclusion patterns\n\nCODE QUALITY ENHANCEMENTS:\n✅ Applied ruff formatting to all Python files (28 files reformatted)\n✅ Consistent code style across entire codebase\n✅ Proper import organization and spacing\n✅ Enhanced readability with consistent formatting\n\nDOCUMENTATION CONSOLIDATION:\n+ Added DOCUMENTATION_INDEX.md as unified navigation hub\n+ Consolidated technical documentation structure\n+ Clear separation of concerns (Architecture/Ontologies/CI-CD/Development)\n+ Comprehensive project overview and getting started guide\n\nSTRUCTURAL OPTIMIZATIONS:\n- Eliminated duplified FORMALIZATION.md\n- Centralized all ontology specifications in repoq/ontologies/\n- Organized documentation by functional areas\n- Clean separation of production vs development artifacts\n\nFILE ORGANIZATION:\n�� Root level: Core documentation (README, ROADMAP, BREAKTHROUGH_ACHIEVEMENTS)\n📁 .github/: CI/CD workflows and automation\n📁 repoq/: Main codebase with ontological intelligence system\n📁 rules/: TRS verification framework\n📁 scripts/: Self-application and verification tools\n📁 tests/: Comprehensive test suite\n\nENHANCED .GITIGNORE:\n+ Python artifacts (__pycache__, *.pyc, *.egg-info)\n+ Virtual environments (.venv/, venv/, env/)\n+ Testing artifacts (.pytest_cache, .coverage, htmlcov)\n+ Code analysis caches (.mypy_cache, .ruff_cache, .hypothesis)\n+ IDE files (.vscode/, .idea/, *.swp)\n+ OS artifacts (.DS_Store, Thumbs.db)\n\nBENEFITS:\n🎯 Clean, professional repository structure\n🔍 Improved code maintainability and readability\n📚 Unified documentation navigation system\n⚡ Faster development workflow with organized structure\n🛡️ Comprehensive gitignore preventing artifact pollution\n\nNEXT DEVELOPMENT PHASE:\n- Repository is now optimally organized for collaborative development\n- Clean foundation for Phase 2 ontology enhancements\n- Professional structure ready for open source contributions\n- Streamlined workflow for TRS optimization work\n\nRepository transformed from revolutionary proof-of-concept to\nproduction-ready, professionally organized codebase.",
+      "endedAtTime": "2025-10-21T16:17:08+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:4f8de9fa482aac173e59e887e1d2119673687111",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Implement comprehensive docs-as-code system with MkDocs Material\n\nRevolutionary documentation system for RepoQ open source project:\n\n🚀 INFRASTRUCTURE:\n- Complete MkDocs Material setup with professional theme\n- Custom CSS styling with hero sections and feature cards\n- Mermaid diagrams for architecture visualization\n- Search functionality with mkdocstrings integration\n- Responsive design for multiple devices\n\n📚 COMPREHENSIVE CONTENT:\n- Professional landing page showcasing ontological intelligence\n- Detailed installation guide with multiple deployment options\n- Complete user guide covering all RepoQ capabilities\n- In-depth ontological intelligence documentation\n- Meta-quality loop explanation with safety guarantees\n- TRS framework documentation with mathematical proofs\n- Full API reference with Python and REST APIs\n\n🔬 TECHNICAL DOCUMENTATION:\n- Ontological Intelligence: Code/C4/DDD triple ontology system\n- Meta-Quality Loop: Safe self-application with stratification\n- TRS Framework: Mathematical foundations with confluence proofs\n- Pattern Recognition: Automatic architectural pattern detection\n- Domain Modeling: DDD concepts extraction and analysis\n\n✅ PRODUCTION READY:\n- GitHub Pages deployment ready\n- Professional navigation structure\n- SEO optimized with semantic markup\n- Comprehensive cross-references and examples\n- Integration examples for CI/CD workflows\n\nThis establishes RepoQ as a professional open source project\nwith world-class documentation befitting its revolutionary\nsemantic analysis capabilities.",
+      "endedAtTime": "2025-10-21T16:39:14+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:dd28ec22e3f820a0ccc77556dbc2b3674beb74dc",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "refactor: Clean up repository structure and modernize README\n\n🧹 REPOSITORY CLEANUP:\n- Remove legacy documentation files (BREAKTHROUGH_ACHIEVEMENTS.md, etc.)\n- Remove temporary artifacts/ results/ rules/ scripts/ directories\n- Clean slate for professional open source project structure\n\n📚 REVOLUTIONARY README:\n- Completely rewritten README.md for professional open source standards\n- Emphasize revolutionary \"self-understanding software\" positioning\n- Highlight ontological intelligence and meta-quality loop breakthrough\n- Professional badges, clear value proposition, comprehensive features\n- Modern documentation links to MkDocs system\n- Contributing guidelines and development setup\n- Semantic web and formal methods positioning\n\n✨ PROFESSIONAL POLISH:\n- Clean, focused repository structure\n- All documentation now centralized in MkDocs system\n- Ready for open source community engagement\n- Professional presentation worthy of revolutionary technology\n\nRepository now has clean, professional structure with world-class\ndocumentation system and README befitting RepoQ's groundbreaking\nsemantic analysis capabilities.",
+      "endedAtTime": "2025-10-21T16:43:07+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:54326b7a0f8104da0cfa46437457664b771cbea8",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "refactor: Align documentation with realistic roadmap and current capabilities\n\n📚 DOCUMENTATION REALIGNMENT:\n- Rewrite README.md with practical positioning vs revolutionary claims\n- Update docs/index.md to reflect current vs planned features\n- Add transparent limitations page (docs/about/limitations.md)\n- Honest quality gates: <10% test coverage, missing container/CI\n- 30-60-90 day roadmap with concrete deliverables\n\n🎯 REALISTIC POSITIONING:\n- \"Practical Repository Quality Analysis\" vs \"Revolutionary\"\n- Clear separation: Available Now vs In Development\n- Honest badges: Tests=57 passing, Coverage=<10%\n- Focus on CI/CD integration and semantic web export\n- Acknowledge graceful degradation when analyzers missing\n\n✅ PRODUCTION FOCUS:\n- Phase 1: 80% test coverage, Docker, GitHub Actions, SHACL\n- Phase 2: Quality certificates, PR bot, SPARQL endpoint\n- Phase 3: Statistical coupling, ZAG framework, ML patterns\n- Transparent success metrics and community contribution areas\n\n🚨 CRITICAL GAPS IDENTIFIED:\n- Test coverage blocking production deployment\n- Missing container and CI/CD integration\n- No SHACL validation for semantic exports\n- Performance issues on large repositories\n- Statistical significance testing needed for coupling\n\nDocumentation now honestly reflects current state while\nmaintaining vision for practical, production-ready tool\nthat delivers real value to development teams.",
+      "endedAtTime": "2025-10-21T16:50:23+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:25f7256c95537891e7d095776c66c2395b2deb2d",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "refactor: Simplify README to concise 100-line format\n\n📝 CONCISE README:\n- Reduced from 658 to 110 lines (83% reduction)\n- Essential information only: features, quick start, CI/CD\n- Maintained all critical sections: installation, roadmap, contributing\n- Clean English formatting for international users\n- Focus on practical usage over lengthy explanations\n\n✅ PRESERVED KEY ELEMENTS:\n- Feature overview (current vs in development)\n- Installation and quick start commands\n- CI/CD integration example\n- JSON output sample\n- 30-60-90 roadmap summary\n- Configuration example\n- Contributing guidelines\n- Documentation link\n\nPerfect for quick evaluation and getting started while\ncomprehensive docs remain available at mkdocs site.",
+      "endedAtTime": "2025-10-21T16:56:14+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:172c01611493bcceb272bd7e76f2c41f9e61bc76",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Add comprehensive open source development strategy and community infrastructure\n\n- Add detailed opensource development strategy with URPKS analysis framework\n- Create CONTRIBUTING.md with technical guidelines and priority areas\n- Add GitHub issue templates for bugs and feature requests\n- Establish 3-phase roadmap: Technical Excellence -> Community -> Ecosystem\n- Define success metrics and risk mitigation strategies\n- Focus on critical path: 80% test coverage and TRS correctness",
+      "endedAtTime": "2025-10-21T17:02:16+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:16c4aa467f09bea87a97acef2acb9efe89274a0b",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "CRITICAL: Fix TRS mathematical soundness violations\n\n- Fix Metrics TRS idempotence violations with bounded domain validation\n- Add mathematical overflow protection for decimal operations\n- Fix Filters TRS confluence issues with consistent canonicalization\n- Implement proper pattern subsumption logic for semantic equivalence\n- Add _is_canonical_form() check to prevent re-parsing loops\n- Resolve 5/7 critical property-based test failures\n\nRemaining: 2 minor failures in glob simplification (non-blocking)\nMathematical properties now verified: idempotence ✓ confluence ✓ termination ✓",
+      "endedAtTime": "2025-10-21T17:11:21+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:cdfb1e92794aca28ce7f3e7c1962f89a1a6a377d",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Add comprehensive Quality Loop implementation roadmap\n\nSTRATEGIC PLANNING: Meta-optimizing quality loop with 3 implementation variants\n\n📋 ROADMAP OVERVIEW:\n- Variant 1: Full Implementation (8-12 weeks, complete feature set)\n- ⭐ Variant 2: MVP with Basic Monotonicity (2-3 weeks) - PRIORITIZED\n- Variant 3: Research Prototype (1 week, validation only)\n\n🎯 MVP APPROACH (RECOMMENDED):\nPhase 1 (Week 1): Core gate command + Q aggregator\n- repoq gate --base <sha> --head . --policy quality-policy.yml\n- Basic Q = 100 - 20*complexity - 30*hotspots - 10*todos\n- Hard constraints: tests_must_pass, no_new_todos, hotspots_non_increasing\n\nPhase 2 (Week 2): CI Integration\n- GitHub Actions quality-gate.yml workflow\n- Quality policy YAML configuration\n- Automatic BASE vs HEAD comparison\n\nPhase 3 (Week 3): Developer Experience\n- Pre-push hooks for local validation\n- Comprehensive developer documentation\n- Performance benchmarks\n\n✅ CURRENT STATE ASSESSMENT:\nReady Components:\n- VC certificates generation (quality.py)\n- JSON-LD/RDF export infrastructure\n- SHACL validation shapes\n- TRS mathematical soundness (5/7 fixed)\n\nMissing for MVP:\n- Incremental analysis (BASE vs HEAD)\n- repoq gate CLI command\n- Quality policy parser\n- Hard constraint validators\n\n🎨 MATHEMATICAL FOUNDATION:\nHard Constraints (blocking):\n- tests_ok: All tests must pass\n- hotspots_ratio: ≤ baseline\n- todo_count: No new TODO/FIXME\n- security_alerts: No new critical vulns\n\nSoft Goal (quality improvement):\nQ_after ≥ Q_before + ε (ε=0.1-0.5 noise guard)\n\nMonotonic Rule:\nPR accepted only if all hard constraints + Q improvement satisfied\n\n📊 RISK ANALYSIS:\nTechnical Risks: Performance (2x CI time), metric noise, gaming\nProcess Risks: Developer friction, false positives\nMitigations: Incremental analysis, adaptive ε, waiver tokens, ZAG PCQ\n\n🚀 IMPLEMENTATION PRIORITY:\nP0 (MVP, Week 1-3): Core gate + basic Q + CI integration\nP1 (Hardening, Week 4-8): ZAG protection + noise filtering + waivers\nP2 (Advanced, Week 8-12): Dashboard + weight adaptation + security\n\nNEXT ACTIONS:\n1. Implement repoq gate command with exit codes\n2. Create quality-policy.yml schema\n3. Build GitHub Actions workflow\n4. Write developer documentation\n\nThis roadmap provides clear path from MVP to production-ready\nself-reinforcing quality loop with guaranteed monotonicity.",
+      "endedAtTime": "2025-10-21T17:36:05+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:03461f2e305742950edee8d0111eb662cd1263bc",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: добавлена предупреждение об активной разработке в README\n\n- Добавлен заметный блок '⚠️ ACTIVE DEVELOPMENT' после заголовка\n- Предупреждение о возможных breaking changes и нестабильности\n- Добавлен Status badge (alpha/red) для визуальной индикации\n- Соответствует рекомендациям opensource-strategy.md по прозрачности",
+      "endedAtTime": "2025-10-21T17:50:29+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:d833c41e6e617c740947b361d578cf07234cea70",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: реализован Quality Gate MVP (repoq gate)\n\nΣ (Сигнатура):\n- Q = 100 - 20×complexity - 30×hotspots - 10×todos\n- Hard constraints: tests≥80%, TODO≤100, hotspots≤20, Δscore≥-5.0\n- Bounded: Q ∈ [0,100], monotonic, deterministic\n\nΓ (Gates — проверено):\n✅ Soundness: монотонность по компонентам\n✅ Confluence: детерминизм вычисления\n✅ Termination: конечные вычисления\n✅ Property-based tests: hypothesis стратегии\n\nΛ (Артефакты):\n- repoq/quality.py: Q-aggregator с QualityMetrics dataclass\n- repoq/gate.py: run_quality_gate() с GateResult, BASE/HEAD сравнение\n- repoq/cli.py: команда 'gate' с --base/--head/--strict\n- tests/test_quality.py: 6 тестов (bounded, monotonicity, constraints)\n- tests/test_gate.py: 2 теста (dataclass validation, invariants)\n\nR (Результат):\n- Все тесты пройдены (8/8 PASSED)\n- CLI help работает корректно\n- Exit codes: 0 (PASS) / 1 (FAIL) / 2 (ERROR)\n\nСоответствует Week 1 Quality Loop MVP Roadmap.\nRef: docs/development/quality-loop-roadmap.md",
+      "endedAtTime": "2025-10-21T18:00:50+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:d65b7e69bc41cf7933fc7187971cbc60488861a7",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: полный отчёт по выравниванию с онтологической архитектурой\n\nКРИТИЧЕСКИЕ НАХОДКИ:\n❌ Safety guards отсутствуют (self-application paradox risk)\n❌ Онтологическая интеграция 0% (нет Code/C4/DDD ontologies)\n❌ Meta-loop capability отсутствует\n✅ Математическая корректность 100% (TRS soundness verified)\n\nΣ (Анализ):\n- Сравнительный аудит Quality Gate MVP vs docs/ontology/\n- Выявлено критическое несоответствие онтологической архитектуре\n- Q-метрика синтаксическая, а не семантическая\n- Отсутствует stratified self-application (levels 0-2)\n\nΓ (Находки):\n1. CRITICAL: Нет SelfApplicationGuard → риск бесконечной рекурсии\n2. FAIL: OntologyManager отсутствует (Code/C4/DDD plugins)\n3. FAIL: Semantic inference engine не реализован\n4. FAIL: Pattern detection отсутствует\n5. PASS: Математическая корректность Q-метрики\n\n𝒫 (Решения):\n- Вариант 1: Minimal (2-3 дня, 30% alignment)\n- Вариант 2: Full (3-4 недели, 100% alignment)\n- Вариант 3: Hybrid ⭐ RECOMMENDED (1-2 недели, 60→90%)\n\nΛ (Приоритеты):\nP0 (Week 1): Safety guards + ResourceLimiter\nP1 (Week 2): BasicOntologyManager + pattern detection\nP2 (Month 2): Full Three-Ontology Architecture\nP3 (Month 3): Meta-loop self-improvement\n\nR (Действия):\nTODO #2 создан для критического выравнивания.\nЦелевое покрытие docs: 35% → 95% через 2 месяца.",
+      "endedAtTime": "2025-10-21T18:04:29+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:03410a6921ef25b923d485e914cd1b19d4144460",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: формальное математическое доказательство монотонности качества\n\n- Теоремы 1-3: монотонность Q, защита худшего элемента (PCQ/min), анти-компенсация\n- Устойчивость к шуму: лемма о выборе ε > 2ΔQ\n- PCE/witness: конструктивное существование пути улучшений\n- Оценка прироста качества от ремонта hotspots\n- Инварианты структурной устойчивости (fairness-cover, mincut)\n- Эпохальная адаптация весов без потери монотонности\n- Система waiver с балансировкой долга\n- Практические рекомендации: ε ∈ [0.2,0.5], τ* ∈ [0.75,0.9], k ∈ {3,5,8}\n- Связь с реализацией: Q = 100 - 20c - 30h - 10τ + hard constraints\n- Математическая гарантия: ∀t: Q(S_t+1) > Q(S_t) ∧ min u_i ≥ τ*\n\n13 разделов, формальные доказательства с символьной нотацией",
+      "endedAtTime": "2025-10-21T18:11:31+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:46b6f51606d232382d15f15a18c172b52e2b8e7c",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: инвентаризация tmp/ артефактов для будущей интеграции\n\nЗафиксированы наработки по онтологической мета-петле и ZAG интеграции:\n\n1. tmp/repoq-meta-loop-addons/ (19 файлов):\n   - Three-Ontology Architecture (Code/C4/DDD)\n   - TRS engine с формальными гарантиями\n   - SHACL shapes для self-application guard\n   - SPARQL queries для инференса\n   - CLI meta extensions\n\n2. tmp/zag_repoq-finished/ (51 файл):\n   - Полная ZAG интеграция (PCQ/PCE)\n   - JSON schemas для PCQ/PCE/Manifest\n   - VC Certificates + ZAG attestation\n   - Docker + CI/CD workflows\n   - Quality scoring с witness generation\n\nДокументация:\n- docs/development/tmp-artifacts-inventory.md (500+ строк)\n  - Полная структура и назначение артефактов\n  - Статус готовности каждого компонента\n  - Roadmap интеграции по Priority 0/1/2\n  - Связь с ontology-alignment-report.md\n  - Контрольные списки и риски\n\nПокрытие roadmap:\n- Week 1 (Safety Guards): 90% готово в tmp/\n- Week 2-4 (ZAG + Ontology): 95% готово в tmp/\n- Month 2-3 (Meta-Loop): 60% готово в tmp/\n\nУдалено: tmp_repoq-finished/ (старая версия, дубликат)",
+      "endedAtTime": "2025-10-21T18:19:08+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:467b5edbd9fc84998391a09d44f304afa8bf94dd",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: полное формальное обоснование всей системы RepoQ\n\nКомплексное математическое доказательство корректности всей архитектуры:\n\nТЕОРЕМЫ (11 основных):\n- A: Хорошо определённая метрика (TRS конфлюэнтность)\n- B: Строгая монотонность Q (Q(S_t+1) > Q(S_t))\n- C: Гарантия по худшему элементу (PCQ/min ≥ τ)\n- D: Запрет компенсаций (анти-Goodhart)\n- E: Конструктивный путь улучшений (PCE-witness)\n- F: Безопасность self-анализа (стратификация)\n- G: Кусочно-монотонная траектория (эпохи)\n- H: Амортизированная монотонность (waivers)\n- 6.1: Инварианты структурной справедливости (fairness-cover)\n- Лемма 5.1: Выбор ε для робастности к шуму\n\nОХВАТ ВСЕХ КОМПОНЕНТОВ:\n✅ TRS-нормализация артефактов (Newman's Lemma)\n✅ Q-метрика и её монотонность\n✅ PCQ/PCE (ZAG) с min-агрегатором\n✅ Hard constraints (H)\n✅ VC-сертификаты + SHACL-валидация\n✅ Self-application guard (levels 0-2)\n✅ Epochs с адаптацией весов\n✅ Waiver system с компенсацией\n✅ LTL-верификация в CI\n✅ Fairness-cover (mincut инварианты)\n\nФОРМАЛЬНЫЕ ГАРАНТИИ:\n1. Корректность: метрики well-defined независимо от порядка\n2. Монотонность: Q строго растёт при каждом мердже\n3. Защита худшего: PCQ/min блокирует деградацию\n4. Анти-Goodhart: компенсации невозможны (independent gates)\n5. Робастность: устойчивость к шуму (ε > 2ΔQ)\n6. Конструктивность: PCE-witness гарантирует путь\n7. Структурная устойчивость: mincut ≤ C инвариант\n8. Безопасность self: стратификация уровней\n9. Адаптивность: эпохи без слома монотонности\n10. Гибкость: waivers с амортизацией\n\nПРАКТИЧЕСКИЕ ПАРАМЕТРЫ:\n- ε ∈ [0.2, 0.5] (защита от шума)\n- τ ∈ [0.75, 0.9] (PCQ threshold)\n- k ∈ {3, 5, 8} (witness size)\n- M ∈ {1, 2} (waivers per sprint)\n\nСВЯЗЬ С КОДОМ:\n- TRS engine → tmp/repoq-meta-loop-addons/repoq/trs/engine.py\n- Q-metric → repoq/quality.py (Теорема B)\n- PCQ/PCE → tmp/zag_repoq-finished/ (Теоремы C, E)\n- SHACL → tmp/.../shapes/meta_loop.ttl (Теорема F)\n- Roadmap интеграции по Priority 0/1/2\n\nВключает: 14 разделов, 11 теорем, mermaid-диаграмму интеграции,\nLTL-формулировку, библиографию, таблицы параметров,\nпрактические примеры кода и связь со всеми документами",
+      "endedAtTime": "2025-10-21T18:24:15+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:f952b08ef30301d28302b03f92b5f86bc5969c49",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: связь формальных теорем с мета-онтологической петлей\n\nДобавлен раздел 15: полная интеграция формальной математики с meta-loop:\n\nСООТВЕТСТВИЕ УРОВНЕЙ СТРАТИФИКАЦИИ:\n- Level 0 (syntax_only) ↔ Теорема F (безопасность)\n- Level 1 (structure_safe) ↔ Теорема A (TRS корректность)\n- Level 2 (semantic_limited) ↔ Теоремы C,D,E (PCQ/анти-Goodhart/witness)\n- Level 3 (full_semantic) ↔ ЗАПРЕЩЕНО для self (парадоксы)\n\nДЕВЯТЬ КОМПОНЕНТОВ МЕТА-ПЕТЛИ (A→I):\nA→B: Structure Analysis → Теорема A (TRS-нормализация)\nB→C: Ontological Intelligence → Теорема F (стратификация)\nC→D: Concept Extraction → Теорема C (PCQ/min)\nD→E: Semantic Validation → Теорема D (анти-компенсация)\nE→F: Cross-Ontology Inference → Теорема 6.1 (fairness-cover)\nF→G: Quality Insights → Теорема B (монотонность Q)\nG→H: Architecture Understanding → Теорема E (PCE-witness)\nH→I: Self-Improvement → Теорема G (эпохи)\nI→A: Apply improvements → Теорема H (waivers)\n\nTHREE-ONTOLOGY ARCHITECTURE (формальная модель):\n- Code Ontology: O_Code = (C, R, I, A) с классами Module/Class/Function\n- C4 Model: O_C4 с Container/Component/Relationship\n- DDD Ontology: O_DDD с BoundedContext/Aggregate/Entity\n- Межонтологические маппинги: SPARQL CONSTRUCT (консервативные)\n\nТЕОРЕМА 15.1 (Консервативность маппингов):\nМонотонные SPARQL CONSTRUCT не противоречат аксиомам + сохраняют истинность\n\nТЕОРЕМА 15.2 (Безопасная мета-оптимизация):\nКомпозиция Теорем A+F+B+E+6.1 ⇒ безопасная мета-петля без парадоксов\n\nПРАКТИЧЕСКИЙ ПРИМЕР:\n- repoq meta-self . --level 2\n- Обнаружение паттернов (Plugin, Repository)\n- Bounded Context идентификация\n- PCE-witness с 3 рекомендациями (ΔQ = 6.5)\n\nVC-СЕРТИФИКАТЫ:\n- SelfAnalysisResult с stratificationGuard\n- Ontological analysis (Code/C4/DDD metrics)\n- Improvements list (PCE-witness)\n\nИТОГ: RepoQ - первая система с формально доказанной способностью\nк безопасному самопониманию и самоулучшению\n\nТаблицы соответствия, код примеров, SPARQL запросы, JSON-LD сертификаты",
+      "endedAtTime": "2025-10-21T18:27:13+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:6c9ff04bba4d196b8a884f13467e7667e5818ba2",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: добавлена интеграция Any2Math для proof-carrying нормализации\n\n- Section 2.3 в tmp-artifacts-inventory.md: описание Any2Math компонентов\n- Section 15.9 в formal-foundations-complete.md: формальные гарантии Any2Math\n- Теорема 15.3: детерминированность + proof-carrying + liveness\n- Связь с Теоремами A-H: усиление корректности и монотонности\n- Практический пример: канонизация Q-метрики, обогащение VC-сертификатов\n- CI/CD интеграция: verified mode (Lean) + fallback mode (Python TRS)\n- Снижение TCB: ~5000 LOC Lean vs ~15000 LOC Python\n- Дорожная карта: Phase 1-4 (PCQ/PCE термы, SHACL-Rules, онлайн-проверка)\n\nФормальная база: 6 гарантий (корректность, монотонность, безопасность, конструктивность, устойчивость, каноничность)\nИтого: 77 файлов в tmp/, 14 теорем, 3670+ строк документации",
+      "endedAtTime": "2025-10-21T18:49:36+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:156e9e3c26ded0539beb348813ed9ab078dd9967",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: добавлены 9 формальных Mermaid-диаграмм визуализации теорем\n\nНОВЫЙ ДОКУМЕНТ: docs/development/formal-diagrams.md (658 строк)\n\n9 диаграмм:\n1. Meta-Quality Loop — Саморефлексия RepoQ (Section 15, Теорема 15.2)\n2. TRS Pipeline (Any2Math) — Конвейер с канонизацией (Section 15.9, Теорема 15.3)\n3. Quality Monotonicity — Монотонность Q с ε-гейтом (Section 2, Теорема B)\n4. PCQ/PCE Witness — Min-агрегатор + top-k худших (Section 2,4, Теоремы C,E)\n5. Local Confluence — Критические пары TRS (Section 1, Теорема A)\n6. Stratification Levels — Self-application 0-3 (Section 7, Теорема F)\n7. Liveness ε-Heartbeat — CI heartbeat scheduler (Section 10,15.9)\n8. Cross-Ontology Mappings — Code↔C4↔DDD (Section 15.3, Теорема 15.1)\n9. Gate Semantics — Формула допуска PR (Section 0.5, Admission Predicate)\n\nОБНОВЛЕНИЯ:\n- formal-foundations-complete.md: добавлена ссылка на visual proofs\n- tmp-artifacts-inventory.md: добавлена ссылка на formal-diagrams.md\n- mkdocs.yml: добавлен nav entry для Formal Diagrams\n\nВизуальная верификация 14 теорем полностью согласована с формальной базой.",
+      "endedAtTime": "2025-10-21T18:56:43+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:fda0dc0eea27d85296f41bfc78cfa5ebbfe93584",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: добавлена ссылка на расширенную визуализацию + tmp/ в .gitignore\n\nИЗМЕНЕНИЯ:\n- docs/development/formal-diagrams.md: добавлена секция о tmp/repoq-geomap/\n  - Геометрические диаграммы высокого разрешения (PNG/SVG)\n  - 6 изображений: monotone_q, pcq_pce, trs_diamonds, pipeline, stratification, liveness\n  - Graphviz DOT исходники (apparatus.dot)\n  - LaTeX/TikZ для публикаций (confluence_diamond.tex)\n  - Статус: в разработке (pending PNG/SVG генерация)\n\n- .gitignore: добавлен tmp/ (временные артефакты документированы в tmp-artifacts-inventory.md)\n  - tmp/ больше не коммитится в основную ветку\n  - Все артефакты зафиксированы в inventory\n\nИТОГ сессии 2025-10-21:\n✅ 3 новых документа: formal-foundations-complete.md, tmp-artifacts-inventory.md, formal-diagrams.md\n✅ 14 формальных теорем (A-H, 6.1, Lemma 5.1, Any2Math.A-C, 15.1-15.3)\n✅ 9 Mermaid-диаграмм визуализации\n✅ 77 файлов в tmp/ готовых к интеграции\n✅ 3670+ строк формальной документации\n✅ 6 формальных гарантий (корректность, монотонность, безопасность, конструктивность, устойчивость, каноничность)\n\nРабота завершена. 🎯",
+      "endedAtTime": "2025-10-21T19:15:45+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:e2b3f6db088a84b224793edd4c04395fcc3f1b23",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: integrate VDAD 6-month roadmap with values/ethics/AI agent design\n\n- Add comprehensive VDAD Integration Roadmap (5 phases, ~600 lines)\n- Phase 1: Domain immersion, stakeholder mapping (6 groups), context modeling\n- Phase 2: Value elicitation (Value Register, impact mapping), prioritization (Tier 1/2/3)\n- Phase 3: Strategic decisions, Ethical Value Requirements (IEEE 7000), SMART NFRs\n- Phase 4: Architecture design (9 components), ADR log (7+ decisions), BAML AI agent spec\n- Phase 5: Implementation (Priority 0-2 from tmp/), AI agent deployment, testing (80%+ coverage)\n- Success metrics for each phase (domain model, stakeholder map, Value Register ≥20 values, ADR ≥10, coverage ≥80%)\n- Integration table aligning VDAD phases with MVP/Production/Advanced timeline\n- AI Copilot roles defined for each task (summarization, diagram generation, test creation, etc.)\n- References: ethical-se.github.io (VDAD), DPR (ADR templates), RepoQ formal docs, BAML, IEEE 7000\n- Methodology: Value-Driven Analysis and Design without fixed deadlines (step-by-step plan)\n\nRoadmap now provides strategic direction (what/why via VDAD) complementing tactical execution (how/when via MVP phases)",
+      "endedAtTime": "2025-10-21T19:43:23+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:538f84b0790dee03bfd5d9ded927b501af31bd1c",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs(vdad): complete Phase 1 - Domain Immersion & Stakeholder Mapping\n\nPhase 1.1: Domain Analysis & Context Modeling (phase1-domain-context.md)\n- Problem/solution space analysis (gaming, regression, shallow metrics vs formal guarantees)\n- 4 bounded contexts: Analysis, Quality, Ontology, Integration (DDD architecture)\n- Context Map with Mermaid diagrams (Customer-Supplier, Conformist, Shared Kernel relationships)\n- Ubiquitous language: 25+ terms (Q-metric, PCQ, ε, τ, stratification, TRS, VC, SPARQL, SHACL)\n- Entity diagram: Repository, Commit, File, Metric, QualityState, GateDecision, Certificate, Ontology, Pattern\n- 2 domain workflows: Quality Gate (7 steps), Self-Analysis with stratification (6 steps)\n- Technical debt analysis: 5 areas (ontology patterns, ZAG PCQ, Any2Math, self-analysis, BAML AI agent)\n- Roadmap alignment: P0 (gate/VC done), P1 (PCQ/patterns in progress), P2 (self-analysis/AI planned)\n- 8 domain invariants: Theorems A-H, 15.1-15.3 (correctness, monotonicity, confluence, safety)\n- Integration: Cross-references to formal-foundations (14 theorems), tmp/ (77 artifacts), roadmap\n\nPhase 1.2: Stakeholder Mapping & Value Expectations (phase1-stakeholders.md)\n- 6 stakeholder groups: Developers, Team Leads/Managers, DevOps, OSS Community, Researchers, Maintainers\n- Stakeholder map with priority matrix (Critical: Devs/Leads/Maintainers, High: DevOps, Medium: OSS/Researchers)\n- 6 detailed personas: Alex (mid-level dev), Jordan (senior frontend), Morgan (eng manager), Casey (DevOps), River (OSS contributor), Dr. Taylor (PhD researcher), Kirill (maintainer)\n- Each persona: Demographics, goals (3-5), pain points (5), value expectations (5-6), interaction patterns, quote\n- Stakeholder value preview: Top 3 values per group (transparency/speed/fairness for devs, gaming protection/accountability for leads, etc.)\n- Stakeholder touchpoints: 5 journey maps (developer PR flow, manager dashboard, DevOps CI config, OSS contribution, researcher experimentation)\n- 4 conflict analyses with resolutions: Speed vs Rigor (tiered modes), Flexibility vs Consistency (hierarchical policies), Innovation vs Stability (feature flags + SemVer), Openness vs Commercial (Apache 2.0)\n\nSuccess Metrics Achieved:\n- ✅ Domain model: 4 bounded contexts documented\n- ✅ Context Map: Mermaid diagram with relationships\n- ✅ Ubiquitous language: 25+ terms aligned with formal-foundations\n- ✅ Entity diagram: Core entities + relationships\n- ✅ Workflows: 2 sequence diagrams\n- ✅ Stakeholder groups: 6 identified\n- ✅ Personas: 6 detailed with goals/pains/values\n- ✅ Stakeholder map: Priority matrix + touchpoints\n- ✅ Conflict analysis: 4 resolutions\n\nNext: Phase 2 (Value Elicitation) - Build formal Value Register with ≥20 values, Value Impact Map, prioritization",
+      "endedAtTime": "2025-10-21T19:50:19+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:cc5cfca307d7267be6480f7488a499fb10468c73",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: add VDAD Phase 1 to mkdocs navigation",
+      "endedAtTime": "2025-10-21T19:50:46+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:42db069baa2954dfd2a04491f14f964e81934c1f",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs(vdad): complete Phase 2 - Value Elicitation & Prioritization\n\nValue Register (27 values):\n- Tier 1 (Critical, 8 values): Transparency, Gaming Protection, Correctness, Monotonicity, Speed, Fairness, Reliability, Actionability\n  - All score ≥20/30 (high stakeholder count + strategic alignment + impact + risk)\n  - Top scorers (23/30): Gaming Protection, Correctness, Monotonicity, Reliability\n- Tier 2 (Important, 11 values): Auditability, Constructiveness, Safety, Learning, Simplicity, Reproducibility, Extensibility, Privacy, Incrementality, Innovation, Openness\n  - Score 13-16/30 (important but not MVP-blocking)\n- Tier 3 (Nice-to-Have, 8 values): Aesthetics, Community, Sustainability, Flexibility, Observability, Context-Awareness, Team Accountability, ROI Evidence\n  - Score 7-12/30 (fewer stakeholders or lower impact)\n\nValue Impact Map:\n- Feature-value connections: 10 core features × 19 Tier 1+2 values\n- Mermaid diagram showing which features support which values\n- Feature-Value Matrix: Status for each (✅ Done, 🔄 In Progress, ⏸️ Planned)\n- Examples: repoq gate → Transparency/Speed/Actionability, PCQ → Gaming Protection/Fairness, Any2Math → Correctness/Reliability\n\nPrioritization Methodology:\n- 4 criteria: Stakeholder Count (1-6), Strategic Alignment (1-5), Impact (1-5), Risk (1-5)\n- Formula: Priority Score = (Stakeholder Count × 2) + Strategic Alignment + Impact + Risk\n- Tier thresholds: T1 ≥15, T2 10-14, T3 <10\n\nStakeholder Coverage Analysis:\n- All 6 groups have ≥67% of their Tier 1+2 values addressed (target: ≥75%)\n- Developers: 5/5 Tier 1 (100%), 4/5 Tier 2 (80%) - Excellent\n- Team Leads: 3/3 Tier 1 (100%), 2/3 Tier 2 (67%) - Good\n- DevOps: 2/2 Tier 1 (100%), 2/2 Tier 2 (100%) - Excellent\n- OSS/Researchers/Maintainers: 100% coverage on both tiers\n\nValue Gaps:\n- V07 Reliability (Any2Math): Planned Phase 4\n- V08 Actionability (AI suggestions): Planned Phase 5 (BAML)\n- V09 Auditability (cert registry): Planned Phase 4\n- V11 Safety (meta-self CLI): Planned Phase 5\n- V12 Learning (tutorials): Planned Phase 5\n- V17 Incrementality (gradual thresholds): Phase 3 policy design\n\nRoadmap Alignment:\n- MVP (P0): 6/8 Tier 1 values (75%) - Strong foundation\n- Production (P1): 8/8 Tier 1 (100%) + 7/11 Tier 2 (64%) - Comprehensive\n- Advanced (P2): Tier 2 (82%) + Tier 3 (38%) - Well-rounded\n\nEthical Value Requirements (IEEE 7000):\n- EVR-01 (Transparency): Human-readable explanations, ΔQ breakdown, file-level contributions, PCE witness\n- EVR-02 (Gaming Protection): PCQ min-aggregator, AI anomaly detection, Any2Math normalization\n- EVR-03 (Fairness): No penalty for necessary complexity/refactoring, configurable exemptions, context awareness\n- EVR-04 (Privacy): No external data transmission without consent, local analysis, opt-in LLM only\n\nSuccess Metrics Achieved:\n- ✅ 27 values (target: ≥20)\n- ✅ Value descriptions (1-2 sentences each)\n- ✅ Stakeholder mapping (★★★/★★/★ priorities)\n- ✅ Feature mapping (≥1 feature per value)\n- ✅ Value Impact Map (Mermaid diagram)\n- ✅ Prioritization matrix (4 criteria)\n- ✅ Tier classification (8/11/8 balanced)\n- ✅ Stakeholder coverage (≥67% all groups)\n- ✅ 4 EVRs formalized\n\nNext: Phase 3 (Strategic Decisions & Requirements) - Translate Tier 1 values into concrete FR/NFR",
+      "endedAtTime": "2025-10-21T20:02:33+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:5c6a80fa37f41f1f1f7118f5043127429013f467",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: add Phase 2 Value Register to mkdocs navigation",
+      "endedAtTime": "2025-10-21T20:02:56+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:09c69500fae352b36ef55c3c452fe31b424b8daa",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs(vdad): complete Phase 3 - Strategic Decisions & Requirements\n\nStrategic Decision Log (8 decisions for Tier 1 values):\n- SD-01 (Transparency): Detailed gate output with ΔQ breakdown, file-level deltas, PCE witness\n- SD-02 (Gaming Protection): ZAG PCQ min-aggregator, bottleneck quality per module\n- SD-03 (Correctness/Reliability): Any2Math Lean normalization, TRS confluence+termination proofs\n- SD-04 (Monotonicity): Admission predicate A(S_base, S_head) = (H) ∧ (ΔQ≥ε) ∧ (PCQ≥τ)\n- SD-05 (Speed): Incremental analysis with caching (5-10x faster, 80-90% cache hit)\n- SD-06 (Fairness/Actionability): PCE k-repair witness + inline/config exemptions for necessary complexity\n- SD-07 (Reliability/Privacy): Local-only core analysis, opt-in BAML AI agent (Phase 5)\n- SD-08 (Safety): Stratified self-application (L_0→L_1→L_2), SelfApplicationGuard enforces i>j\n\nFunctional Requirements (19 FR):\n- FR-01 to FR-03: Transparency (detailed output, PCE witness, PR comment bot)\n- FR-04 to FR-05: Gaming protection (PCQ min-aggregator, τ threshold in admission)\n- FR-06 to FR-07: Correctness (Any2Math normalization, Lean proof verification)\n- FR-08 to FR-09: Monotonicity (admission predicate, configurable ε/τ in YAML)\n- FR-10: Speed (incremental analysis, cache by file SHA + policy version)\n- FR-11 to FR-13: Fairness/Actionability (PCE witness algorithm, inline exemptions, config exemptions with expiry)\n- FR-14 to FR-15: Privacy (local-only core, opt-in AI with consent warning)\n- FR-16 to FR-17: Safety (stratification guard, meta-self CLI command)\n- FR-18 to FR-19: Integration (GitHub Actions template, VC certificate export)\n\nNon-Functional Requirements (12 NFR, SMART-compliant):\n- NFR-01: Analysis time ≤2 min (P90) for <1K files, ≤5 min for <10K files\n- NFR-02: PCQ overhead ≤20% (time_with_pcq / time_without_pcq ≤ 1.2)\n- NFR-03: Deterministic (identical Q for identical inputs, 100 runs, zero variance)\n- NFR-04: Monotonicity guarantee (Q(S_i+1) - Q(S_i) ≥ ε for all transitions, ≥100 commits)\n- NFR-05: False negative rate <1% (failing to block regression, 1000-commit benchmark)\n- NFR-06: False positive rate <5% (blocking legitimate improvement, 1000-commit benchmark)\n- NFR-07: Time to comprehension <30 sec median (usability study, n≥20, eye-tracking)\n- NFR-08: Developer satisfaction ≥80% agreement on clarity/actionability (5-point Likert)\n- NFR-09: Zero network calls (core analysis, verified via tcpdump)\n- NFR-10: Test coverage ≥80% line, ≥70% branch (coverage.py, CI-enforced)\n- NFR-11: Large repo support (100K files in 30 min full / 5 min incremental 1% churn)\n- NFR-12: Python 3.9+ support (CI matrix: 3.9, 3.10, 3.11, 3.12)\n\nEthical Value Requirements (4 EVRs, IEEE 7000-compliant):\n- EVR-01 (Transparency): Human-readable explanations, ΔQ breakdown, file contributions, PCE witness, PR comment formatting\n  - AC-01.1: ≥90% developer comprehension, AC-01.2: <30 sec median time-to-comprehension, AC-01.3: 100% gate failures include PCE, AC-01.4: PR comment with ≥5 columns\n- EVR-02 (Gaming Protection): PCQ prevents compensation, AI flags anomalies (Phase 5), Any2Math eliminates syntactic gaming\n  - AC-02.1: PCQ blocks bad module even with high avg Q, AC-02.2: <10% false positive, AC-02.3: ≥80% true positive, AC-02.4: Identical Q for 100 equivalent code pairs\n- EVR-03 (Fairness): No penalty for necessary complexity/refactoring/domain patterns/legacy debt\n  - AC-03.1: ≥90% algorithm functions use exemptions without abuse, AC-03.2: PCE identifies k-file subset for legacy, AC-03.3: ≥80% developers agree fair, AC-03.4: Zero blocks on 50+ well-tested algorithms\n- EVR-04 (Privacy): No external data transmission without consent, local core analysis, opt-in AI, no telemetry\n  - AC-04.1: Zero outbound connections (tcpdump), AC-04.2: --enable-ai fails without API key, AC-04.3: GDPR/SOC2/ISO27001 compliant, AC-04.4: No persistent code storage beyond 30-day cache\n\nRequirements Traceability Matrix:\n- Full chain: Value → Decision → Requirement → Test (11 values traced, 31 requirements)\n- Coverage: 100% Tier 1 values → ≥1 requirement\n- Status: 8 implemented (26%), 6 in progress (19%), 17 planned (55%)\n- Tests: 25+ test cases identified across FR/NFR/EVR\n\nADR Format (Context/Decision/Rationale/Alternatives/Consequences):\n- All 8 strategic decisions include rejected alternatives with justification\n- Trade-offs documented (e.g., Any2Math: +Correctness +Innovation -Complexity -Performance)\n- Requirements linked to each decision (e.g., SD-01 → FR-01, FR-02, FR-03, NFR-07, NFR-08)\n\nSuccess Metrics Achieved:\n- ✅ 8 strategic decisions (one per Tier 1 value)\n- ✅ 19 FR + 12 NFR (31 total requirements)\n- ✅ All NFRs SMART-compliant (Specific, Measurable, Agreed, Realistic, Time-bound)\n- ✅ 4 EVRs with 2-4 acceptance criteria each\n- ✅ Full traceability matrix (no orphaned requirements)\n- ✅ Validation checklist (completeness, SMART, consistency, testability)\n\nNext: Phase 4 (Architecture Design) - Component architecture, C4 diagrams, ADRs, NFR realization, BAML agent spec",
+      "endedAtTime": "2025-10-21T20:11:07+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:87b51c046c1b345fefe041ca96a87a709732c771",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: add Phase 3 Requirements to mkdocs navigation",
+      "endedAtTime": "2025-10-21T20:11:32+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:ac6bbdf0e8eccd86008dde08245725ecca182aea",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs(vdad): complete Phase 4 - Architecture Design & ADRs (5 modular documents)\n\n[Σ - SIGNATURE]\nPhase 4 (VDAD Step 7: Architecture Design) создаёт детальную архитектуру RepoQ\nдля выполнения всех 31 требований из Phase 3 (19 FR + 12 NFR).\n\nСоздано 5 модульных документов (~12000 строк):\n1. phase4-architecture-overview.md (~2200 строк)\n2. phase4-c4-diagrams.md (~1000 строк)\n3. phase4-adrs.md (~3500 строк)\n4. phase4-nfr-realization.md (~3000 строк)\n5. phase4-baml-agent.md (~2300 строк)\n\n[Γ - GATES CHECK]\n✅ Soundness: Все компоненты покрывают 31/31 требований\n✅ Confluence: Архитектурные решения согласованы (ADRs)\n✅ Completeness: C4 диаграммы (Context, Container, Component)\n✅ Termination: NFR-стратегии конкретны и исполнимы\n✅ Safety: BAML AI agent opt-in only, security boundaries\n\n[𝒫 - OPTIONS & Λ - AGGREGATION]\nВыбрана модульная структура (5 документов) вместо монолитного файла:\n- Лучше для навигации (отдельные разделы)\n- Удобнее для review (изменения локализованы)\n- Соответствует arc42 template (распределённая документация)\n\n[R - RESULT]\nДокументы Phase 4:\n\n1. Architecture Overview (2200 строк):\n   - 9 компонентов (CLI, Analysis Engine, Gate Logic, Ontology, ZAG, Any2Math, VC, Self-Application Guard, Config)\n   - 6 архитектурных принципов (Formal Correctness, Local-First, Performance, Safe Self-Understanding, Gaming-Resistant, Constructive)\n   - Data flow diagrams (Gate evaluation, Self-analysis)\n   - Technology stack (RDFLib, BAML, Lean, pytest, etc.)\n   - Requirements coverage: 31/31 mapped to components\n\n2. C4 Diagrams (1000 строк):\n   - Level 1 (Context): RepoQ + 6 external actors/systems\n   - Level 2 (Container): 9 containers + 3 data stores + interactions\n   - Level 3 (Component): 2 detailed diagrams (Analysis Engine, Gate Logic)\n   - Deployment view: Local + CI/CD scenarios\n   - All diagrams in Mermaid (git-friendly, no binary)\n\n3. ADRs (3500 строк):\n   - 12 architectural decisions (ADR-001 to ADR-012)\n   - Format: Lightweight ADR (Context, Decision, Rationale, Consequences)\n   - Key decisions: BAML for AI, RDFLib+Oxigraph, Any2Math subprocess, arc42 docs, Mermaid diagrams, Stratification L0-L2, PCQ min-aggregator, SHA caching, Local-first, W3C VCs, Python 3.11+, GitHub Actions\n   - Each ADR: Alternatives considered, risks, mitigation strategies\n\n4. NFR Realization (3000 строк):\n   - 12 NFRs with concrete strategies (NFR-01 to NFR-12)\n   - NFR-01 (Speed): Incremental + Cache + Parallel → ≤2 min P90\n   - NFR-03 (Determinism): Any2Math + Frozen deps → 100% reproducible\n   - NFR-04 (Monotonicity): Admission predicate + Property tests → proven\n   - NFR-09 (Privacy): Local-only + tcpdump CI → zero network calls\n   - NFR-10 (Coverage): Unit + Integration + Property tests → ≥80%\n   - Each NFR: Target metric (SMART), strategy, implementation, validation, risks\n\n5. BAML Agent (2300 строк):\n   - 4 BAML functions: AnalyzePRContext, GenerateExplanation, SuggestImprovements, DetectAnomalies\n   - Type-safe LLM outputs (no hallucinations)\n   - Security boundaries: Opt-in only, data minimization, no secrets, rate limiting\n   - Phased rollout: Experimental → Advisory → Active → Default-On\n   - Testing strategy: Unit (mock), Integration (real LLM), Property-based\n   - Monitoring: Adoption rate, success rate, latency, cost, FP rate, satisfaction\n\n[VALIDATION]\n✅ All 31 requirements satisfied by architecture\n✅ All 12 ADRs documented with alternatives + risks\n✅ All 12 NFRs mapped to concrete strategies\n✅ C4 diagrams cover Context, Container, Component levels\n✅ BAML agent fully specified (Phase 5 ready)\n✅ arc42 template implicitly followed (12 sections mapped)\n✅ Mermaid diagrams (git-friendly, reviewable)\n\n[ARTIFACTS]\n- docs/vdad/phase4-architecture-overview.md (2200 строк)\n- docs/vdad/phase4-c4-diagrams.md (1000 строк)\n- docs/vdad/phase4-adrs.md (3500 строк)\n- docs/vdad/phase4-nfr-realization.md (3000 строк)\n- docs/vdad/phase4-baml-agent.md (2300 строк)\n- mkdocs.yml: Updated navigation (5 Phase 4 links)\n\n[NEXT STEPS]\nPhase 5: Implementation, Integration & Validation\n- Integrate tmp/ artifacts (ZAG, Any2Math, meta-loop)\n- Implement BAML AI agent (experimental rollout)\n- Test coverage 64% → 80%+\n- Docker multi-stage build\n- GitHub Actions CI/CD pipeline\n\n[METRICS]\n- Total Phase 4 documentation: ~12000 строк\n- Total VDAD documentation (Phases 1-4): ~16300 строк\n- Total commits: 11 (e2b3f6d → this commit)\n- Total time: ~4 weeks (Phases 1-4)",
+      "endedAtTime": "2025-10-21T21:11:18+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:fd7e9761cb11bd9c8c9fbf89a9e543572e255c82",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat(ontology): implement OntologyManager with TDD Cycle 1\n\nTDD RED phase:\n- Created 12 tests (10 active, 2 skipped)\n- Verified tests fail (ModuleNotFoundError)\n- Test classes: Basics, SPARQL, Backend, PatternDetection, Persistence, Integration\n\nTDD GREEN phase:\n- Minimal OntologyManager implementation (316 lines)\n- RDFLib backend with namespace registration (code, c4, ddd)\n- Triple management: add_triple, query (SPARQL SELECT)\n- Pattern detection: MVC, LayeredArchitecture\n- Persistence: save/load Turtle format\n- All 10 active tests passing\n\nTDD REFACTOR phase:\n- Added comprehensive docstrings (Google style)\n- Type hints (Python 3.11+: list[dict], URIRef | Literal)\n- Module-level namespace constants (DRY principle)\n- Improved error messages (ImportError with chaining)\n- Simplified docstrings to avoid syntax errors\n- Code quality: 100% test pass rate maintained\n\nSoundness gates (Γ):\n✅ All 10 active tests passing (2 skipped by design)\n✅ RDFLib ensures deterministic triple addition\n✅ SPARQL queries terminate (no recursion)\n✅ Pattern detection is read-only (no side effects)\n\nCloses: Phase 5.1 OntologyManager TDD\nRelated: ADR-002 (RDFLib backend), Phase 4 Architecture",
+      "endedAtTime": "2025-10-21T21:33:59+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:b410db8a41a2c47a6624e71adcf49045c95e106c",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat(core): implement StratificationGuard with TDD Cycle 2\n\nTDD RED phase:\n- Created 17 tests (16 active, 1 skipped)\n- Verified tests fail (ModuleNotFoundError)\n- Test classes: Basics, QuoteUnquote, MetaEval, LevelTracking, Integration\n\nTDD GREEN phase:\n- StratificationGuard implementation (310 lines)\n- Level transition checking (L_n → L_m rules)\n  - Upward transitions (L_n → L_m where m > n): SAFE\n  - Same level (L_n → L_n): UNSAFE (self-reference)\n  - Downward (L_n → L_m where m < n): UNSAFE (paradox risk)\n- Quote/Unquote operations (with level tracking)\n  - quote: raises level by 1 (L_n → L_{n+1})\n  - unquote: lowers level safely (checks target < current, target >= 0)\n- MetaEval safety (cycle detection, max depth)\n  - Cycle detection: Prevents self-referential evaluation\n  - Max depth: Prevents infinite recursion (default: 10)\n- Level stack tracking (push/pop for nested operations)\n- All 16 active tests passing\n\nTDD REFACTOR phase:\n- Extracted helper methods: _has_cycle, _exceeds_max_depth, _safe_eval\n- Improved code readability (separation of concerns)\n- Fixed test regex patterns (case-insensitive matching)\n- 100% test pass rate maintained\n\nSoundness gates (Γ):\n✅ All 16 active tests passing (1 skipped by design - Phase 5.3)\n✅ Stratification enforced (only upward transitions)\n✅ Paradox prevention (L_n → L_m where m ≤ n forbidden)\n✅ Cycle detection (meta_eval self-reference caught)\n✅ Termination guarantee (max depth limit)\n\nImplements: Theorem F (Safe self-application via stratification)\nCloses: Phase 5.2 StratificationGuard TDD\nRelated: Phase 4 Architecture (ADR-006 Stratification)",
+      "endedAtTime": "2025-10-21T21:42:13+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:5911e66fcaad8be67268f434aa6a907cfdf68100",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat(integration): implement MetaLoop integration with TDD Cycle 3\n\nTDD RED phase:\n- Created 14 integration tests (12 active, 2 skipped)\n- Test classes:\n  - OntologyManagerWithGuard: RDF + Guard integration\n  - MetaContextIntegration: tmp/meta-loop meta_context.jsonld\n  - SHACLValidationWithStratification: SHACL policy enforcement\n  - QuoteUnquoteWithRDF: Quote/Unquote with RDF triples\n  - MetaLoopCLIIntegration: CLI commands (Phase 5.4)\n  - OntologyManagerHelperMethods: New helper methods\n\nTDD GREEN phase:\n- Extended OntologyManager with integration methods:\n  - count(): Return triple count (delegates to backend)\n  - add_triple_with_guard(): Add triple with stratification validation\n- Extended RDFLibBackend:\n  - count(): len(self.graph)\n- TYPE_CHECKING import for StratificationGuard type hint\n- Integration validated:\n  - OntologyManager + StratificationGuard work together\n  - RDF level metadata (mq:level) tracked correctly\n  - Pattern detection respects stratification\n  - Quote/Unquote operations on RDF triples\n  - meta_context.jsonld loaded successfully\n- All 12 active tests passing\n\nTDD REFACTOR phase:\n- Improved docstring for add_triple_with_guard (Phase 5.3 context)\n- Added detailed examples for integration usage\n- 100% test pass rate maintained (38/38 active tests across all cycles)\n\nSoundness gates (Γ):\n✅ All 12 active tests passing (2 skipped - Phase 5.4)\n✅ OntologyManager + StratificationGuard integration verified\n✅ RDF level metadata tracking working\n✅ Unsafe transitions rejected (L1 → L0)\n✅ Safe transitions allowed (L0 → L1, L0 → L2)\n✅ No regression in Cycles 1-2 (38 total tests passing)\n\nIntegration with tmp/repoq-meta-loop-addons:\n- meta_context.jsonld: Validated namespace structure\n- meta_loop.ttl: SHACL policy constraints validated\n- Level constraints: Self-analysis limited to L0..L2 (per SHACL)\n\nCloses: Phase 5.3 MetaLoop Integration\nRelated: Phase 5.1 (OntologyManager), Phase 5.2 (StratificationGuard)\nNext: Phase 5.4 (Quality Policy Configuration)",
+      "endedAtTime": "2025-10-21T21:48:41+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:aafe9d5afbd84b94571c78c1ec1d4b6003fc0eda",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Phase 5.4 - Quality Policy Configuration (TDD Cycle 4)\n\nTDD RED→GREEN→REFACTOR complete:\n- Created tests/test_quality_policy.py (15 tests, all passing)\n- Implemented repoq/config/quality_policy.py (550 lines)\n  * Dataclasses: GateConfig, ConfluenceGateConfig, TerminationGateConfig,\n    GatesConfig, StratificationConfig, QualityThresholdsConfig, ProjectConfig, QualityPolicy\n  * QualityPolicyParser: YAML parsing with validation\n  * QualityPolicyGenerator: Default policy file generation\n  * QualityPolicyValidator: Schema validation\n  * load_policy(): Auto-discover .github/quality-policy.yml\n- Restructured config.py → config/settings.py (package structure)\n- Created repoq/config/__init__.py (package initialization)\n- Extended StratificationGuard:\n  * from_policy(): Create guard from QualityPolicy\n  * check_transition_with_policy(): Policy-aware validation\n- Created .github/quality-policy.yml (default policy)\n  * Gates: soundness, confluence (Knuth-Bendix), termination\n  * Stratification: max_level=10, self_analysis_max_level=2\n  * Quality thresholds: coverage=0.80, complexity=15, duplication=0.10\n\nTest Results:\n- Cycle 4: 15/15 tests passing\n- Total: 53/53 active tests passing (5 skipped)\n- No regression across all 4 cycles\n\nΣ→Γ→𝒫→Λ→R:\n- Σ: YAML-based policy, dataclass model, defaults, schema validation\n- Γ: ✓ Soundness (required fields), ✓ Confluence (Knuth-Bendix),\n  ✓ Termination (max_iterations), ✓ Stratification (max_level)\n- 𝒫: Dataclass-based parsing (chosen for type safety + validation)\n- Λ: All gates green, 100% test pass rate\n- R: Production-ready policy system",
+      "endedAtTime": "2025-10-21T22:00:33+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:13e2531fba9777e31d94b9773c56fee0e099e9db",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "fix: Phase 5.5 - Bug fixes and test coverage expansion\n\nTDD RED→GREEN→REFACTOR complete:\n\nBUG FIXES (2 failed tests):\n- Fixed test_glob_simplification_idempotence (idempotence violation)\n  * Problem: simplify_glob_patterns(['*.py', '**/*.py']) → ['**', '*.py'] → ['**']\n  * Root cause: _merge_adjacent_patterns created '**' which didn't go through subsumption check\n  * Solution: Added final redundancy removal after re-normalization\n  * Impact: simplify_glob_patterns now truly idempotent\n\n- Fixed test_regex_conversion (character class escaping)\n  * Problem: _glob_to_regex('[abc]*.txt') → '^[abc\\][^/]*\\.txt$' (escaped brackets)\n  * Root cause: re.escape() escaped '[' and ']', then regex substitution failed\n  * Solution: Extract character classes before escaping, restore after wildcard conversion\n  * Impact: Character classes now preserved correctly in regex conversion\n\nCOVERAGE EXPANSION:\n- Added tests/test_gate.py::TestFormatGateReport (3 new tests)\n  * test_format_passed_gate: PASS report with all metrics\n  * test_format_failed_gate_with_violations: FAIL report with 4 violations\n  * test_format_report_includes_deltas_section: Deltas formatting\n- Coverage repoq/gate.py: 32% → 39% (+7%)\n- Coverage repoq/quality.py: 95% → 96% (+1%)\n- Coverage repoq/normalize/filters_trs.py: 66% → 67% (+1%)\n- Coverage repoq/normalize/metrics_trs.py: 75% → 76% (+1%)\n- Total: 63% (stable, improved quality)\n\nTest Results:\n- 229 passed (was 226), 5 skipped\n- Fixed 2 failed tests in test_filters_normalization.py\n- Added 3 new tests for format_gate_report\n\nΣ→Γ→𝒫→Λ→R:\n- Σ: Glob pattern normalization (idempotence, character classes), gate report formatting\n- Γ: ✓ Soundness (idempotence proven with final redundancy removal),\n  ✓ Confluence (character class regex correctly converted)\n- 𝒫: Placeholder-based escaping (chosen for correctness)\n- Λ: Idempotence weight=0.25, Character classes weight=0.20, Coverage weight=0.15\n- R: 2 critical bugs fixed, 3 new tests, 63% coverage maintained",
+      "endedAtTime": "2025-10-21T22:11:58+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:1c95bc679f144a8be5721708e28767d0bf356cd9",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Phase 5.6 - Docker Multi-Stage Build\n\nMulti-stage Dockerfile + docker-compose.yml для dev/test/prod environments.\n\nARTIFACTS:\n1. Dockerfile (multi-stage, Alpine-based, 161MB)\n   - Stage 1 (builder): Compile deps, build wheel, download [full] extras\n   - Stage 2 (runtime): Minimal image with runtime deps only\n   - Security: Non-root user (repoq:repoq)\n   - Health check: repoq --help validation\n   - Optimizations: Layer caching, wheel reuse, .dockerignore\n\n2. docker-compose.yml (4 services)\n   - repoq-dev: Hot-reload development (mount src, pip install -e)\n   - repoq-test: Isolated test environment (pytest + coverage)\n   - repoq-docs: MkDocs serve on localhost:8000\n   - repoq-prod: Production analysis (read-only volume mount)\n\n3. .dockerignore (optimize build context)\n   - Excluded: .git/, venv/, __pycache__/, docs/, tests/, IDE files\n   - Reduced context size: faster builds, smaller images\n\n4. pyproject.toml (fixed package discovery)\n   - Added subpackages: analyzers, core, config, normalize, ontologies, reporting, shapes\n   - Fixed ModuleNotFoundError: config package now included in wheel\n\n5. CONTRIBUTING.md (Docker section)\n   - Docker environment setup (recommended)\n   - Development workflow (hot-reload, attach, rebuild)\n   - Testing workflow (docker-compose up repoq-test)\n   - Benefits: reproducible builds, CI parity, no system pollution\n\nBUILD & TEST RESULTS:\n- Image size: 161MB (Alpine base + Python deps)\n- Layer breakdown: 50.8MB apk + 49.4MB pip + 6.4MB wheels\n- CLI verification: ✓ repoq --help working\n- Health check: ✓ 30s interval, 3s timeout, 3 retries\n- Multi-arch: x86_64 (ARM support pending)\n\nUSAGE EXAMPLES:\n  # Build production image\n  docker build -t repoq:latest .\n\n  # Development with hot-reload\n  docker-compose up repoq-dev\n\n  # Run tests in container\n  docker-compose up repoq-test\n\n  # Serve docs locally\n  docker-compose up repoq-docs\n\n  # Analyze repository\n  docker run --rm -v $(pwd):/repo:ro repoq:latest structure /repo -o analysis.jsonld\n\nΣ→Γ→𝒫→Λ→R:\n- Σ: Multi-stage Docker (builder + runtime), Alpine base, non-root user\n- Γ: ✓ Soundness (wheel build verified), ✓ Termination (health check 3s timeout),\n  ✓ Reproducibility (fixed dependencies in wheels), ✓ Security (non-root)\n- 𝒫: Alpine vs Debian (Alpine chosen: -60% size, same functionality)\n- Λ: Size weight=0.30 (161MB excellent), Security=0.25 (non-root+Alpine),\n  Reproducibility=0.20 (wheel-based), Usability=0.15 (docker-compose), Performance=0.10\n- R: Production-ready Docker setup (CI/CD integration ready)",
+      "endedAtTime": "2025-10-21T22:29:11+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:fe87c2e27259a85f82fe5ed4716e7cbcc7568798",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat(ci): Phase 5.7 - GitHub Actions CI/CD automation\n\n[Σ] SIGNATURE - Phase 5.7: GitHub Actions CI/CD\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nLanguage L:    GitHub Actions YAML, Python scripts\nMeta-language: CI/CD orchestration patterns\nTarget:        Automated testing, releases, quality gates\n\n[Γ] GATES - Validated Invariants\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✅ Coverage threshold: 60% minimum enforced\n✅ Docker validation: Build + CLI tests + size ≤200MB\n✅ Multi-arch support: AMD64 + ARM64 (QEMU)\n✅ Security: PyPI trusted publishing (OIDC)\n✅ Quality gates: PR validation with automated comments\n\n[𝒫] OPTIONS - Implemented Workflows\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n1. ci.yml (ENHANCED):\n   - Coverage threshold check (60% min, uses coverage.json)\n   - Docker build validation (size check, CLI tests)\n   - GitHub Actions cache for layers\n\n2. release.yml (NEW - 280+ lines):\n   - Version validation: Tag format + pyproject.toml match\n   - Multi-arch Docker: AMD64 + ARM64, push to Docker Hub\n   - PyPI trusted publishing: OIDC (no token)\n   - GitHub releases: Automated changelog from git log\n   - Prerelease detection: Pattern-based\n\n3. pr-quality-gate.yml (NEW - 240+ lines):\n   - Coverage: 60% min, 80% target, ±2% regression tolerance\n   - Code quality: Ruff check, max 10 critical issues\n   - PR comments: Automated quality report (creates/updates)\n   - Policy validation: Check .github/quality-policy.yml\n   - Size check: Docker image ≤200MB\n\n[Λ] AGGREGATION - Quality Metrics\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCoverage:     60% threshold enforced (CI + PR gates)\nDocker:       161MB (validated in CI, target 200MB)\nTests:        229 passing (Python 3.9-3.12 matrix)\nSecurity:     Trusted publishing (no secrets in repo)\nAutomation:   100% (CI, releases, PR validation)\n\n[R] RESULT - Artifacts\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nMODIFIED:\n  - .github/workflows/ci.yml\n    + Coverage threshold check (60%)\n    + docker-build job (build, test, size validation)\n\nNEW:\n  - .github/workflows/release.yml\n    + 7 jobs: validate-tag, test, build-wheel, docker-build,\n              publish-pypi, create-github-release, notify-success\n    + Multi-arch Docker (AMD64 + ARM64)\n    + PyPI trusted publishing (OIDC)\n    + Automated changelog generation\n\n  - .github/workflows/pr-quality-gate.yml\n    + 3 jobs: quality-gate, policy-validation, size-check\n    + Coverage regression detection (±2%)\n    + PR comments with quality report\n    + Policy validation (.github/quality-policy.yml)\n\n  - docs/ci-cd-setup.md (900+ lines)\n    + Complete CI/CD documentation\n    + Workflow descriptions, prerequisites, troubleshooting\n    + GitLab CI and Jenkins integration examples\n    + Best practices, security guidelines\n\nUPDATED:\n  - README.md\n    + Badges: Python 3.9+, CI, Tests 229, Coverage 63%, Docker 161MB, Status beta\n  - CONTRIBUTING.md\n    + Added CI/CD documentation links\n\nPhase 5 Progress: 7/8 complete (5.1-5.7)\nNext: Phase 5.8 - BAML AI Agent rollout",
+      "endedAtTime": "2025-10-21T22:39:53+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:4aecae4927a258b951463b7870ac9b43a639e338",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "fix(ci): upgrade actions/upload-artifact and actions/download-artifact from v3 to v4\n\n[Γ] GATES - Compatibility Fix\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✅ Compatibility: GitHub Actions artifact actions v3 deprecated\n✅ Migration: v3 → v4 (all workflows)\n✅ Breaking changes: None (v4 backward compatible with v3 API)\n\n[R] RESULT - Changes Applied\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nMODIFIED: .github/workflows/ci.yml\n  - actions/upload-artifact@v3 → @v4 (2 occurrences)\n\nMODIFIED: .github/workflows/release.yml\n  - actions/upload-artifact@v3 → @v4 (1 occurrence)\n  - actions/download-artifact@v3 → @v4 (2 occurrences)\n\nMODIFIED: .github/workflows/trs-verification.yml\n  - actions/upload-artifact@v3 → @v4 (1 occurrence)\n  - actions/download-artifact@v3 → @v4 (1 occurrence)\n\nTotal: 3 workflows updated, 7 action upgrades\n\nReference: https://github.blog/changelog/2024-04-16-deprecation-notice-v3-of-the-artifact-actions/",
+      "endedAtTime": "2025-10-21T22:45:48+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:614e2f3149a73dde26083afb9cbd07bccf1d34f2",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat(ai): Phase 5.8 - BAML AI Agent for TRS/Ontology validation\n\n[Σ] SIGNATURE - Phase 5.8: BAML AI Agent\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nLanguage L:    BAML (domain-specific language for LLM structured output)\nMeta-language: Python client wrapper with 4-phase rollout strategy\nTarget:        AI-assisted validation (TRS confluence/termination, ontology consistency, stratification safety)\n\n[Γ] GATES - Validated Invariants\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✅ 4-Phase Rollout: DISABLED → EXPERIMENTAL → ADVISORY → ACTIVE → DEFAULT_ON\n✅ Confidence Scoring: 0.0-1.0 threshold for human review prioritization\n✅ Fail-Open Policy: Agent failures don't block development\n✅ API Key Security: Environment variables, no secrets in code\n✅ Graceful Degradation: Missing BAML client → DISABLED mode\n✅ Type Safety: BAML generates Pydantic models for all outputs\n\n[𝒫] OPTIONS - Implementation Choices\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nBAML Functions (4):\n1. ValidateTRSRule: Confluence + termination analysis\n   - Critical pairs computation\n   - Newman's Lemma application\n   - Polynomial interpretation / LPO\n\n2. CheckCriticalPairs: Overlap analysis\n   - Non-trivial overlap detection\n   - Joinability checking\n\n3. ValidateOntology: RDF/OWL consistency\n   - Contradictory axioms detection\n   - Class hierarchy cycles\n   - SHACL compliance\n\n4. AnalyzeStratification: Russell's Paradox prevention\n   - Universe level analysis (Type₀, Type₁, ...)\n   - Theorem F (Feferman) application\n   - Girard's Rule verification\n\nLLM Providers (3):\n- GPT-4 Turbo (primary, temp=0.1)\n- Claude 3.5 Sonnet (fallback)\n- GPT-4o-mini (budget fallback)\n- Fallback chain: GPT-4 → Claude → GPT-4o-mini\n\n[Λ] AGGREGATION - Quality Metrics\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nTest Coverage:\n- 17 tests (100% pass rate)\n- AgentConfig: 3 tests (phases, validation, defaults)\n- BAMLAgent: 3 tests (disabled, invalid config, missing client)\n- TRS Validation: 5 tests (all phases, confidence thresholds, exceptions)\n- Ontology Validation: 1 test (blocking on inconsistency)\n- Stratification Analysis: 1 test (blocking on unsafe)\n- Integration: 3 tests (singleton, configure, rollout simulation)\n- Error Handling: 1 test (fail-open on exception)\n\nPhase Behavior Matrix:\n| Phase        | Enabled | Can Block | Use Case                    |\n|--------------|---------|-----------|------------------------------|\n| DISABLED     | ❌      | ❌        | Default (no API keys)        |\n| EXPERIMENTAL | ✅      | ❌        | Internal testing, logging    |\n| ADVISORY     | ✅      | ❌        | Suggestions in PR comments   |\n| ACTIVE       | ✅      | ✅        | Blocking with human review   |\n| DEFAULT_ON   | ✅      | ✅        | Production default (opt-out) |\n\n[R] RESULT - Deliverables\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nNEW FILES CREATED:\n\n1. repoq/ai/baml_src/main.baml (397 lines)\n   - 4 enum types: ConfluenceStatus, TerminationStatus, ValidationSeverity\n   - 7 class types: CriticalPair, TerminationProof, OntologyIssue, TRSValidationResult, OntologyValidationResult, StratificationAnalysis\n   - 4 LLM clients: GPT4, GPT4Mini, Claude, ProductionAgent (fallback)\n   - 5 functions: ValidateTRSRule, CheckCriticalPairs, ValidateOntology, AnalyzeStratification, ReviewPullRequest\n   - Jinja templating with {{ ctx.output_format }} for type-safe outputs\n\n2. repoq/ai/baml_src/generators.baml (9 lines)\n   - Generator config: python/pydantic, version 0.211.2\n   - Output dir: ../baml_client\n\n3. repoq/ai/baml_agent.py (423 lines)\n   - AgentPhase enum: DISABLED, EXPERIMENTAL, ADVISORY, ACTIVE, DEFAULT_ON\n   - AgentConfig dataclass: phase, confidence_threshold, require_human_review, API keys\n   - BAMLAgent class: Wrapper with phase-aware logic\n     - validate_trs_rule(rule_lhs, rule_rhs, existing_rules, context)\n     - validate_ontology(ontology_turtle, ontology_context, shacl_shapes?)\n     - analyze_stratification(current_code, meta_operations, self_analysis_depth)\n   - Singleton access: get_agent(), configure_agent()\n   - Error handling: Fail-open, graceful degradation, logging\n\n4. repoq/ai/__init__.py (29 lines)\n   - Public API exports\n   - Module docstring (4-phase rollout overview)\n\n5. repoq/ai/baml_client/* (BAML-GENERATED, 16 files)\n   - async_client.py, sync_client.py: Type-safe LLM clients\n   - types.py: Pydantic models for all BAML types\n   - runtime.py: BAML runtime integration\n   - parser.py: JSON→Pydantic parsing\n   - tracing.py: Observability hooks\n\n6. tests/test_baml_agent.py (497 lines, 17 tests)\n   - Mock fixtures: mock_trs_result, mock_ontology_result, mock_stratification_result\n   - AgentConfig tests: defaults, phases, validation\n   - BAMLAgent tests: disabled, invalid config, missing client\n   - TRS validation tests: all phases, confidence, exceptions\n   - Ontology validation tests: blocking on inconsistency\n   - Stratification tests: blocking on unsafe\n   - Integration tests: singleton, configure, rollout simulation\n   - Uses pytest-asyncio for async test support\n\nMODIFIED:\n\n7. pyproject.toml\n   - Added pytest-asyncio>=0.21 (async test support)\n   - Added pytest-mock>=3.12 (mocking utilities)\n\nBAML FEATURES USED:\n- client<llm> with fallback strategy\n- function with Jinja prompt templates\n- enum and class types (Pydantic codegen)\n- {{ ctx.output_format }} automatic format instructions\n- provider: openai, anthropic, fallback\n- Retry policies (implicit in fallback chain)\n\nDOCUMENTATION:\n- Inline code comments: BAML syntax, phase logic, error handling\n- Test docstrings: Test strategy, expected behavior\n- README-ready: 4-phase rollout explanation\n\nPhase 5 Progress: 8/8 complete (100%)\nNext: Production deployment with EXPERIMENTAL phase",
+      "endedAtTime": "2025-10-21T23:01:47+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:568737586948a5e168ac054267287a32a6621619",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat(docs): Phase 6.1 - uv setup + mkdocstrings API reference\n\n[Σ] Signature\n- Migrate to uv for modern dependency management\n- Add __init__.py to all packages (core, analyzers, reporting, ontologies)\n- Configure mkdocstrings for automatic API documentation generation\n- Fix API reference paths (ontology_manager in repoq.ontologies, not core)\n\n[Γ] Gates\n- ✅ uv sync --all-groups: 88 packages resolved\n- ✅ mkdocs build: Documentation built in 4.72s\n- ✅ mkdocs serve: Server running on localhost:8000\n- ✅ Package installed in editable mode via uv\n\n[R] Result\nFiles modified:\n- pyproject.toml: Added [dependency-groups] for uv, removed [tool.uv] deprecated syntax\n- mkdocs.yml: Added paths=[\".\"] to mkdocstrings, disabled inheritance diagram\n- docs/api/reference.md: Full rewrite with mkdocstrings directives for auto-generation\n- .gitignore: Added site/ (mkdocs build output)\n\nFiles created:\n- repoq/core/__init__.py: Package init with docstring\n- repoq/analyzers/__init__.py: Package init with docstring\n- repoq/reporting/__init__.py: Package init with docstring\n- repoq/ontologies/__init__.py: Package init with docstring\n- uv.lock: Dependency lock file (88 packages)\n\nTest: uv run mkdocs serve --dev-addr localhost:8000\nAPI Reference: http://localhost:8000/repoq/api/reference/\n\nPhase 6.1 COMPLETE ✅",
+      "endedAtTime": "2025-10-21T23:22:24+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:302f7a0487dc67e31cd5a2789e19f388102bd777",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "fix(deps): Add missing dependencies (hypothesis, sympy, tree-sitter)\n\n[Σ] Signature\n- Add hypothesis>=6.0 to dev dependencies for property-based testing\n- Add sympy>=1.12 to dev dependencies for symbolic math in TRS normalization\n- Add tree-sitter>=0.20 and tree-sitter-python>=0.20 to full extras for AST parsing\n\n[Γ] Gates\n- ✅ uv sync --all-groups --all-extras: 98 packages resolved\n- ✅ pytest tests/ -q: 246 passed, 5 skipped\n\n[R] Result\nFiles modified:\n- pyproject.toml: Added hypothesis, sympy (dev), tree-sitter, tree-sitter-python (full)\n- uv.lock: Updated with new dependencies\n\nTest: uv run pytest tests/ -q\nResult: 246 passed, 5 skipped, 115 warnings in 24.01s ✅",
+      "endedAtTime": "2025-10-22T01:30:12+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:df4572c46b002876d65f684e9043b4c40755c3f6",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Add uv setup guide\n\n[Σ] Signature\n- Add comprehensive uv setup guide for developers\n- Include installation, usage, troubleshooting sections\n- Add to mkdocs navigation\n\n[R] Result\nFiles created:\n- docs/development/uv-setup.md: Complete uv setup guide (150 lines)\n\nFiles modified:\n- mkdocs.yml: Added uv-setup.md to Development section",
+      "endedAtTime": "2025-10-22T01:30:52+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:340f7aab72517a4c4e212533292be3496cf853fe",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Phase 6.3 - Complete User Guide\n\n[Σ] Signature\n- Create comprehensive User Guide with 4 major sections\n- Quick Start: Installation, first analysis, common use cases\n- Configuration: quality_policy.yaml, CLI flags, environment variables\n- CLI Commands: Complete reference for all commands with examples\n- Workflows: Best practices for development, CI/CD, maintenance, team collaboration\n\n[Γ] Gates\n- ✅ mkdocs build: Documentation built in 4.72s\n- ✅ All sections properly formatted with examples\n- ✅ Navigation updated in mkdocs.yml\n\n[R] Result\nFiles created:\n- docs/getting-started/quickstart.md: Quick start guide (260 lines)\n- docs/user-guide/configuration.md: Complete configuration reference (430 lines)\n- docs/user-guide/commands.md: CLI commands reference (590 lines)\n- docs/user-guide/workflows.md: Workflow best practices (530 lines)\n\nFiles modified:\n- mkdocs.yml: Updated navigation structure for User Guide\n\nTotal: 1,810 lines of comprehensive user documentation\n\nPhase 6.3 COMPLETE ✅",
+      "endedAtTime": "2025-10-22T01:39:22+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:8863b9ef530dbda86c2cca41733837dc8ba2ef1b",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Phase 6.4 - Architecture Deep Dive (3,270+ lines)\n\n- Created 6 comprehensive architecture documentation files:\n  - overview.md (350 lines): High-level architecture, components, data flow\n  - trs-framework.md (580 lines): Term Rewriting Systems with confluence/termination proofs\n  - rdf-export.md (640 lines): PROV-O, OSLC-CM, SPDX, SHACL validation\n  - baml-agent.md (680 lines): 4-phase AI rollout (disabled/observe/assist/auto)\n  - analyzer-pipeline.md (650 lines): Dependency resolution, parallel execution, caching\n  - stratification-guard.md (720 lines): Russell's paradox prevention, universe levels\n\n- Updated mkdocs.yml navigation with new Architecture section\n- All Mermaid diagrams rendering correctly\n- Documentation builds successfully (5.73s)\n- Includes mathematical proofs, code examples, benchmarks\n\nCloses Phase 6.4 of MkDocs Documentation roadmap.",
+      "endedAtTime": "2025-10-22T01:57:30+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:7a64ffe858fcbf3d421b5a7a514abbd8504d3086",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Phase 6.5 - Tutorials & Examples (~3,200 lines)\n\nComplete tutorial series:\n- 01-first-analysis.md (~500 lines): Installation, basic workflow, metrics interpretation\n- 02-custom-analyzer.md (~600 lines): BaseAnalyzer pattern, SecurityAnalyzer, DependencyAnalyzer examples\n- 03-ci-cd-integration.md (~550 lines): GitHub Actions, GitLab CI, Jenkins, quality gates\n- 04-advanced-filtering.md (~500 lines): Glob patterns, tree-sitter AST filtering, optimization\n- 05-rdf-queries.md (~600 lines): SPARQL queries, triplestore integration, knowledge graphs\n- 06-ai-agent-config.md (~450 lines): 4-phase AI rollout, BAML configuration, stratification safety\n\nUpdated mkdocs.yml navigation with Tutorials section.\nDocumentation builds successfully in 6.32 seconds.",
+      "endedAtTime": "2025-10-22T02:09:38+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:9e2b0c452caf583695d4a8855a83319a922e72d3",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Phase 6.6 - GitHub Pages Deployment\n\nComplete CI/CD workflow for documentation:\n- GitHub Actions workflow (.github/workflows/docs.yml):\n  * Auto-build on push to main (docs changes)\n  * Deploy with mike versioning (stable/latest)\n  * Link checking in pull requests\n  * PR preview artifacts\n- Added mike>=2.0 for documentation versioning\n- Updated URLs to Repo-Q organization:\n  * site_url: https://repo-q.github.io/repoq\n  * repo_url: https://github.com/Repo-Q/repoq\n- Deployment README with activation instructions\n\nNext: Enable GitHub Pages in repository settings (gh-pages branch).\n\nPhase 6 (MkDocs Documentation) COMPLETE: 6/6 subphases ✅\nTotal documentation: ~8,500 lines across 50+ markdown files.",
+      "endedAtTime": "2025-10-22T02:13:49+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:c8fb79af5e04510f559f124109c0c047ae214904",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Add 'analyze' command as intuitive alias for 'full'\n\nChanges:\n- Added 'repoq analyze' command with clear documentation\n- Default repository argument is '.' (current directory)\n- Comprehensive help with examples\n- Makes CLI more intuitive for new users\n\nSelf-analysis results:\n- Analyzed RepoQ repository itself\n- 18,973 LOC Python code\n- 63 commits by kirill.n\n- Top hotspots:\n  * ontology_manager.py (score=0.561, 861 LOC)\n  * filters_trs.py (score=0.508, 895 LOC)\n  * cli.py (score=0.436, 1,075 LOC)\n- Results saved to repoq_analysis.jsonld and repoq_analysis.md\n\nThis improves UX as documented in Phase 6.5 tutorials.",
+      "endedAtTime": "2025-10-22T02:17:28+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:672a6beaec77dba7ba8b90d8668af11dabca6886",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "fix: Resolve analysis errors in ontology plugins and analyzers\n\nFixed 3 critical issues preventing clean analysis:\n\n1. OntologyPlugin base class:\n   - Added check_applicability() as alias for detect_applicability()\n   - Resolves: 'OntologyPlugin' object has no attribute 'check_applicability'\n   - Affects: CodeOntologyPlugin, C4ModelPlugin, DDDOntologyPlugin\n\n2. CodeOntologyPlugin:\n   - Fixed detect_applicability() to handle both dict and string file formats\n   - Added isinstance() check before calling .endswith()\n   - Resolves: 'dict' object has no attribute 'endswith'\n\n3. OntologyManager:\n   - Changed active_plugins from List to Set for consistency\n   - Resolves: 'list' object has no attribute 'add'\n   - Prevents O(n) lookups, improves performance\n\n4. ComplexityAnalyzer:\n   - Changed lizard threads parameter from 0 to 1\n   - Resolves: 'Number of processes must be at least 1'\n\n5. HistoryAnalyzer:\n   - Added hasattr() check for commit.modifications\n   - Graceful fallback to Git CLI if PyDriller API incompatible\n   - Resolves: 'Commit' object has no attribute 'modifications'\n\nResult: Clean analysis with no ERRORs, all plugins working.",
+      "endedAtTime": "2025-10-22T02:24:16+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:d1a127ad9c632fc57f98cd03535b62629b5d5384",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "docs: Update self-analysis with clean results (no errors)\n\nUpdated RepoQ self-analysis results after bug fixes:\n- 18,991 LOC Python\n- 64 commits total\n- Clean execution (no ERROR messages)\n- All ontology plugins working correctly\n\nPrevious analysis had 5 ERROR messages, now resolved.",
+      "endedAtTime": "2025-10-22T02:25:13+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:33c49679faf5cb19fd20c70ff371e8eb04efb891",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "test: Add comprehensive testing infrastructure\n\nAdded complete testing and tooling infrastructure:\n\n**Pre-commit hooks (.pre-commit-config.yaml):**\n- Ruff linter & formatter\n- Mypy type checking\n- Bandit security scanning\n- YAML/JSON/Markdown linting\n- Pytest smoke tests on commit\n- CLI smoke test validation\n\n**Test structure:**\n- tests/unit/ - Unit & smoke tests (fast)\n- tests/integration/ - Integration tests (real repos)\n- tests/e2e/ - End-to-end CLI tests\n- tests/fixtures/ - Shared test data\n- tests/conftest.py - Pytest fixtures\n\n**Test files created:**\n- test_smoke.py (22 tests, 17 passing)\n  * CLI commands validation\n  * Core model instantiation\n  * Analyzers imports\n  * Exporters functionality\n  * Config loading\n- test_analyzers.py (integration tests)\n  * StructureAnalyzer with real repos\n  * ComplexityAnalyzer metrics\n  * HistoryAnalyzer git data\n  * HotspotsAnalyzer scoring\n  * Full pipeline workflow\n- test_cli.py (e2e tests)\n  * Complete CLI workflows\n  * All output formats\n  * Error handling\n  * Self-analysis\n\n**Configuration:**\n- pyproject.toml: pytest, bandit, coverage config\n- .yamllint.yml: YAML linting rules\n- .markdownlint.json: Markdown rules\n- Makefile: 20+ dev commands\n\n**Dependencies added:**\n- pre-commit >= 3.0\n- bandit[toml] >= 1.7\n- pytest-xdist (parallel)\n- pytest-timeout\n\n**Next:** Fix 5 failing smoke tests (API mismatches)",
+      "endedAtTime": "2025-10-22T02:34:17+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:bf12f9863eb41c0ec9432453fbdbfec8fbbd5320",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "test: Fix smoke test API mismatches and format code\n\n- Fixed File model API: lines → lines_of_code\n- Fixed JSON-LD @type checks: handle list instead of string\n- Fixed AnalyzeConfig defaults: include_extensions=None, exclude_globs has defaults\n- Fixed OntologyManager method: apply_ontologies → analyze_project\n- Fixed JSON-LD export keys: files/commits/contributors (no repoq: prefix)\n- Fixed hotspot checks: hotspot_score → hotness for File model\n- Relaxed integration tests for minimal test repos\n- Auto-formatted code with ruff\n- Removed old test_cli.py duplicate\n- Fixed pre-commit python version: 3.11 → 3.13\n- Removed poetry-check from pre-commit (using UV)\n\nResult: ✅ 22/22 smoke tests passing\nResult: ✅ 278/278 tests passing (5 expected skips)\nTest coverage: unit (22) + integration (12) + e2e (10) = 44 new tests",
+      "endedAtTime": "2025-10-22T02:52:39+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:5da7631a3b44569912ce26683ef328f2861117a6",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "test: Fix E2E tests to handle files as dict\n\n- Fixed test_analyze_with_exclusions: files can be dict, not list\n- Fixed test_self_analysis_e2e: files stored under 'files' key as dict\n- Handle both dict and list formats for files\n- Handle both 'path' and 'repoq:path' keys\n\nResult: ✅ All 11 E2E tests passing",
+      "endedAtTime": "2025-10-22T02:57:18+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:2f924483c8d0bb287db85dc2e10b599e4dba5858",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Add analysis timestamps and version metadata\n\nAdded analysis provenance metadata to Project model and JSON-LD export:\n\n- Project.analyzed_at: ISO 8601 timestamp when analysis was performed\n- Project.repoq_version: Version of RepoQ tool used for analysis\n- Mapped to PROV-O: analyzedAt → prov:generatedAtTime\n- Mapped to PROV-O: repoqVersion → prov:wasGeneratedBy\n- Auto-populated in CLI during project creation\n\nThis enables:\n- Reproducibility: Know when and with which version analysis was run\n- Provenance tracking: Full PROV-O compliant metadata\n- Change detection: Compare analysis timestamps for staleness\n- Debugging: Identify version-specific issues\n\nExample output:\n{\n  \"analyzedAt\": \"2025-10-22T05:30:54.801059+00:00\",\n  \"repoqVersion\": \"2.0.0\",\n  \"lastCommitDate\": \"2025-10-22T02:57:18+02:00\"\n}\n\nResult: ✅ All 278 tests passing",
+      "endedAtTime": "2025-10-22T07:32:35+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:f6cefe93160626225974cbb80bec02636aaba438",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Phase 4 critical components (85% compliance)\n\nРеализованы все 9 критических задач Phase 4:\n\n✅ 1. MetricCache (SHA-based + LRU) - 380 LOC\n✅ 2. IncrementalAnalyzer (git diff) - 285 LOC\n✅ 3. gate CLI command - 115 LOC\n✅ 4. meta-self CLI command - 100 LOC\n✅ 5. PCQ MinAggregator - 50 LOC\n✅ 6. PCE WitnessGenerator - 70 LOC\n✅ 7. Full AdmissionPredicate - H ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)\n✅ 8. verify CLI command (W3C VC) - 350 LOC\n✅ 9. E2E tests - 7 passing smoke tests\n\n**Compliance**: 52% → 85% (+33 points)\n**Performance**: 9x speedup (NFR-01 achieved)\n**Code**: +1546 LOC, avg complexity 3.6\n\nΓ-gates: soundness✅ confluence✅ termination✅ stratification✅",
+      "endedAtTime": "2025-10-22T08:16:36+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    },
+    {
+      "@id": "repo:commit:31fc72bb19103409991c21ae5890d435707e0cde",
+      "@type": [
+        "prov:Activity",
+        "repo:Commit"
+      ],
+      "dcterms:description": "feat: Add refactor-plan command (PCE-based task generation)\n\n- New module: repoq/refactoring.py (400+ LOC)\n  - RefactoringTask & RefactoringPlan dataclasses\n  - PCE algorithm: greedy ΔQ-based selection\n  - Formula: ΔQ = 5.0×complexity + 2.0×todos + 3.0×issues + 4.0×hotspot\n  - Priority assignment: critical/high/medium/low\n  - Effort estimation: 15min to 8 hours\n\n- CLI command: repoq refactor-plan\n  - Input: JSON-LD analysis file\n  - Outputs: Markdown, JSON, GitHub Issues\n  - Flags: --top-k (default 10), --min-delta-q (default 3.0), --format\n\n- E2E tests: tests/e2e/test_refactor_plan.py (3/3 passing)\n\n- Documentation: README.md updated with examples\n\n- Demo artifacts:\n  - baseline-quality.jsonld (88 Python files analyzed)\n  - baseline-report.md (full analysis report)\n  - refactoring-plan.md (top-5 critical tasks, ΔQ=+768)\n  - refactoring-tasks.json (JSON export for CI/CD)\n\nThis completes Phase 4.1: Actionable refactoring output for dogfooding demo.\nNext: Execute top-3 refactoring tasks on RepoQ itself.",
+      "endedAtTime": "2025-10-22T08:36:49+02:00",
+      "wasAssociatedWith": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      }
+    }
+  ],
+  "config": [
+    {
+      "@id": "repo:version:865812534b2717ffabebbb142a8420eaeda5fae4",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "865812534b2717ffabebbb142a8420eaeda5fae4",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T05:16:30+02:00"
+    },
+    {
+      "@id": "repo:version:d0cb0b52973c02e9facc47dbc5e3aad923435280",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "d0cb0b52973c02e9facc47dbc5e3aad923435280",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T05:32:05+02:00"
+    },
+    {
+      "@id": "repo:version:159dc1aec1fbee006bbfc977def92cd8903c9482",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "159dc1aec1fbee006bbfc977def92cd8903c9482",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T05:40:40+02:00"
+    },
+    {
+      "@id": "repo:version:bd9177a9afe94d2c98047c55eb478349f4f748cd",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "bd9177a9afe94d2c98047c55eb478349f4f748cd",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T05:46:02+02:00"
+    },
+    {
+      "@id": "repo:version:091ae0d1942cb84a7b141c9a3efb3f2727ec35fa",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "091ae0d1942cb84a7b141c9a3efb3f2727ec35fa",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T05:52:57+02:00"
+    },
+    {
+      "@id": "repo:version:f87a1c6f3d05ea9f4dca8498b88d06474c444437",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "f87a1c6f3d05ea9f4dca8498b88d06474c444437",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T06:10:56+02:00"
+    },
+    {
+      "@id": "repo:version:13fe8ca102f4fc464c1dc14aac8bb04500f5df1d",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "13fe8ca102f4fc464c1dc14aac8bb04500f5df1d",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T06:14:50+02:00"
+    },
+    {
+      "@id": "repo:version:d5d5758d25703b573d9d7ccad4b07338d95c36da",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "d5d5758d25703b573d9d7ccad4b07338d95c36da",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T06:21:46+02:00"
+    },
+    {
+      "@id": "repo:version:e84b142006afcc27a97dbefc6213995fd1930561",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "e84b142006afcc27a97dbefc6213995fd1930561",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T06:24:03+02:00"
+    },
+    {
+      "@id": "repo:version:15766781a659aa15f86a4e7fe82c6c0fee5ee47b",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "15766781a659aa15f86a4e7fe82c6c0fee5ee47b",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T06:27:46+02:00"
+    },
+    {
+      "@id": "repo:version:2450ba53069b1292923c9f0a5e62120ed503ba88",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "2450ba53069b1292923c9f0a5e62120ed503ba88",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T07:09:17+02:00"
+    },
+    {
+      "@id": "repo:version:66c335d4b3b837b82bafe5ce0dd2cae258206e66",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "66c335d4b3b837b82bafe5ce0dd2cae258206e66",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T13:52:34+02:00"
+    },
+    {
+      "@id": "repo:version:a86d9019017d5128c5d96b36ee17f6ae071ca63e",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "a86d9019017d5128c5d96b36ee17f6ae071ca63e",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T14:19:03+02:00"
+    },
+    {
+      "@id": "repo:version:c26a6f1589220bd3bd6e2a1d7f636bd29528f525",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "c26a6f1589220bd3bd6e2a1d7f636bd29528f525",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T14:36:30+02:00"
+    },
+    {
+      "@id": "repo:version:7815f44021ab5fd1874fc13891db999a69a568ed",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "7815f44021ab5fd1874fc13891db999a69a568ed",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T14:54:35+02:00"
+    },
+    {
+      "@id": "repo:version:136926061efd483ea9964ec09f12206606ea2e7a",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "136926061efd483ea9964ec09f12206606ea2e7a",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T15:01:57+02:00"
+    },
+    {
+      "@id": "repo:version:ca8f09dcdc44514c3268fdb976e7a22cc3da8a01",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "ca8f09dcdc44514c3268fdb976e7a22cc3da8a01",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T15:15:30+02:00"
+    },
+    {
+      "@id": "repo:version:d8f0c8e6bf6777cc8fb9b5ac6b9e69b2e8daae48",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "d8f0c8e6bf6777cc8fb9b5ac6b9e69b2e8daae48",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T15:19:06+02:00"
+    },
+    {
+      "@id": "repo:version:1c2f0165f6570b4f2e54a43c1ecbe6e061e1e66c",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "1c2f0165f6570b4f2e54a43c1ecbe6e061e1e66c",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T15:28:43+02:00"
+    },
+    {
+      "@id": "repo:version:8241dd80ad1ba53fc5d677aa5f918dfe6dc9a724",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "8241dd80ad1ba53fc5d677aa5f918dfe6dc9a724",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T16:06:50+02:00"
+    },
+    {
+      "@id": "repo:version:a07a451e68d173226b010ebf6e7452e219c3ee06",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "a07a451e68d173226b010ebf6e7452e219c3ee06",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T16:17:08+02:00"
+    },
+    {
+      "@id": "repo:version:4f8de9fa482aac173e59e887e1d2119673687111",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "4f8de9fa482aac173e59e887e1d2119673687111",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T16:39:14+02:00"
+    },
+    {
+      "@id": "repo:version:dd28ec22e3f820a0ccc77556dbc2b3674beb74dc",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "dd28ec22e3f820a0ccc77556dbc2b3674beb74dc",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T16:43:07+02:00"
+    },
+    {
+      "@id": "repo:version:54326b7a0f8104da0cfa46437457664b771cbea8",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "54326b7a0f8104da0cfa46437457664b771cbea8",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T16:50:23+02:00"
+    },
+    {
+      "@id": "repo:version:25f7256c95537891e7d095776c66c2395b2deb2d",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "25f7256c95537891e7d095776c66c2395b2deb2d",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T16:56:14+02:00"
+    },
+    {
+      "@id": "repo:version:172c01611493bcceb272bd7e76f2c41f9e61bc76",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "172c01611493bcceb272bd7e76f2c41f9e61bc76",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T17:02:16+02:00"
+    },
+    {
+      "@id": "repo:version:16c4aa467f09bea87a97acef2acb9efe89274a0b",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "16c4aa467f09bea87a97acef2acb9efe89274a0b",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T17:11:21+02:00"
+    },
+    {
+      "@id": "repo:version:cdfb1e92794aca28ce7f3e7c1962f89a1a6a377d",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "cdfb1e92794aca28ce7f3e7c1962f89a1a6a377d",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T17:36:05+02:00"
+    },
+    {
+      "@id": "repo:version:03461f2e305742950edee8d0111eb662cd1263bc",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "03461f2e305742950edee8d0111eb662cd1263bc",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T17:50:29+02:00"
+    },
+    {
+      "@id": "repo:version:d833c41e6e617c740947b361d578cf07234cea70",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "d833c41e6e617c740947b361d578cf07234cea70",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:00:50+02:00"
+    },
+    {
+      "@id": "repo:version:d65b7e69bc41cf7933fc7187971cbc60488861a7",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "d65b7e69bc41cf7933fc7187971cbc60488861a7",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:04:29+02:00"
+    },
+    {
+      "@id": "repo:version:03410a6921ef25b923d485e914cd1b19d4144460",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "03410a6921ef25b923d485e914cd1b19d4144460",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:11:31+02:00"
+    },
+    {
+      "@id": "repo:version:46b6f51606d232382d15f15a18c172b52e2b8e7c",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "46b6f51606d232382d15f15a18c172b52e2b8e7c",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:19:08+02:00"
+    },
+    {
+      "@id": "repo:version:467b5edbd9fc84998391a09d44f304afa8bf94dd",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "467b5edbd9fc84998391a09d44f304afa8bf94dd",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:24:15+02:00"
+    },
+    {
+      "@id": "repo:version:f952b08ef30301d28302b03f92b5f86bc5969c49",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "f952b08ef30301d28302b03f92b5f86bc5969c49",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:27:13+02:00"
+    },
+    {
+      "@id": "repo:version:6c9ff04bba4d196b8a884f13467e7667e5818ba2",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "6c9ff04bba4d196b8a884f13467e7667e5818ba2",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:49:36+02:00"
+    },
+    {
+      "@id": "repo:version:156e9e3c26ded0539beb348813ed9ab078dd9967",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "156e9e3c26ded0539beb348813ed9ab078dd9967",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T18:56:43+02:00"
+    },
+    {
+      "@id": "repo:version:fda0dc0eea27d85296f41bfc78cfa5ebbfe93584",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "fda0dc0eea27d85296f41bfc78cfa5ebbfe93584",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T19:15:45+02:00"
+    },
+    {
+      "@id": "repo:version:e2b3f6db088a84b224793edd4c04395fcc3f1b23",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "e2b3f6db088a84b224793edd4c04395fcc3f1b23",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T19:43:23+02:00"
+    },
+    {
+      "@id": "repo:version:538f84b0790dee03bfd5d9ded927b501af31bd1c",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "538f84b0790dee03bfd5d9ded927b501af31bd1c",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T19:50:19+02:00"
+    },
+    {
+      "@id": "repo:version:cc5cfca307d7267be6480f7488a499fb10468c73",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "cc5cfca307d7267be6480f7488a499fb10468c73",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T19:50:46+02:00"
+    },
+    {
+      "@id": "repo:version:42db069baa2954dfd2a04491f14f964e81934c1f",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "42db069baa2954dfd2a04491f14f964e81934c1f",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T20:02:33+02:00"
+    },
+    {
+      "@id": "repo:version:5c6a80fa37f41f1f1f7118f5043127429013f467",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "5c6a80fa37f41f1f1f7118f5043127429013f467",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T20:02:56+02:00"
+    },
+    {
+      "@id": "repo:version:09c69500fae352b36ef55c3c452fe31b424b8daa",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "09c69500fae352b36ef55c3c452fe31b424b8daa",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T20:11:07+02:00"
+    },
+    {
+      "@id": "repo:version:87b51c046c1b345fefe041ca96a87a709732c771",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "87b51c046c1b345fefe041ca96a87a709732c771",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T20:11:32+02:00"
+    },
+    {
+      "@id": "repo:version:ac6bbdf0e8eccd86008dde08245725ecca182aea",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "ac6bbdf0e8eccd86008dde08245725ecca182aea",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T21:11:18+02:00"
+    },
+    {
+      "@id": "repo:version:fd7e9761cb11bd9c8c9fbf89a9e543572e255c82",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "fd7e9761cb11bd9c8c9fbf89a9e543572e255c82",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T21:33:59+02:00"
+    },
+    {
+      "@id": "repo:version:b410db8a41a2c47a6624e71adcf49045c95e106c",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "b410db8a41a2c47a6624e71adcf49045c95e106c",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T21:42:13+02:00"
+    },
+    {
+      "@id": "repo:version:5911e66fcaad8be67268f434aa6a907cfdf68100",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "5911e66fcaad8be67268f434aa6a907cfdf68100",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T21:48:41+02:00"
+    },
+    {
+      "@id": "repo:version:aafe9d5afbd84b94571c78c1ec1d4b6003fc0eda",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "aafe9d5afbd84b94571c78c1ec1d4b6003fc0eda",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T22:00:33+02:00"
+    },
+    {
+      "@id": "repo:version:13e2531fba9777e31d94b9773c56fee0e099e9db",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "13e2531fba9777e31d94b9773c56fee0e099e9db",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T22:11:58+02:00"
+    },
+    {
+      "@id": "repo:version:1c95bc679f144a8be5721708e28767d0bf356cd9",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "1c95bc679f144a8be5721708e28767d0bf356cd9",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T22:29:11+02:00"
+    },
+    {
+      "@id": "repo:version:fe87c2e27259a85f82fe5ed4716e7cbcc7568798",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "fe87c2e27259a85f82fe5ed4716e7cbcc7568798",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T22:39:53+02:00"
+    },
+    {
+      "@id": "repo:version:4aecae4927a258b951463b7870ac9b43a639e338",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "4aecae4927a258b951463b7870ac9b43a639e338",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T22:45:48+02:00"
+    },
+    {
+      "@id": "repo:version:614e2f3149a73dde26083afb9cbd07bccf1d34f2",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "614e2f3149a73dde26083afb9cbd07bccf1d34f2",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T23:01:47+02:00"
+    },
+    {
+      "@id": "repo:version:568737586948a5e168ac054267287a32a6621619",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "568737586948a5e168ac054267287a32a6621619",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-21T23:22:24+02:00"
+    },
+    {
+      "@id": "repo:version:302f7a0487dc67e31cd5a2789e19f388102bd777",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "302f7a0487dc67e31cd5a2789e19f388102bd777",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T01:30:12+02:00"
+    },
+    {
+      "@id": "repo:version:df4572c46b002876d65f684e9043b4c40755c3f6",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "df4572c46b002876d65f684e9043b4c40755c3f6",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T01:30:52+02:00"
+    },
+    {
+      "@id": "repo:version:340f7aab72517a4c4e212533292be3496cf853fe",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "340f7aab72517a4c4e212533292be3496cf853fe",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T01:39:22+02:00"
+    },
+    {
+      "@id": "repo:version:8863b9ef530dbda86c2cca41733837dc8ba2ef1b",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "8863b9ef530dbda86c2cca41733837dc8ba2ef1b",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T01:57:30+02:00"
+    },
+    {
+      "@id": "repo:version:7a64ffe858fcbf3d421b5a7a514abbd8504d3086",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "7a64ffe858fcbf3d421b5a7a514abbd8504d3086",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:09:38+02:00"
+    },
+    {
+      "@id": "repo:version:9e2b0c452caf583695d4a8855a83319a922e72d3",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "9e2b0c452caf583695d4a8855a83319a922e72d3",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:13:49+02:00"
+    },
+    {
+      "@id": "repo:version:c8fb79af5e04510f559f124109c0c047ae214904",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "c8fb79af5e04510f559f124109c0c047ae214904",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:17:28+02:00"
+    },
+    {
+      "@id": "repo:version:672a6beaec77dba7ba8b90d8668af11dabca6886",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "672a6beaec77dba7ba8b90d8668af11dabca6886",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:24:16+02:00"
+    },
+    {
+      "@id": "repo:version:d1a127ad9c632fc57f98cd03535b62629b5d5384",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "d1a127ad9c632fc57f98cd03535b62629b5d5384",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:25:13+02:00"
+    },
+    {
+      "@id": "repo:version:33c49679faf5cb19fd20c70ff371e8eb04efb891",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "33c49679faf5cb19fd20c70ff371e8eb04efb891",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:34:17+02:00"
+    },
+    {
+      "@id": "repo:version:bf12f9863eb41c0ec9432453fbdbfec8fbbd5320",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "bf12f9863eb41c0ec9432453fbdbfec8fbbd5320",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:52:39+02:00"
+    },
+    {
+      "@id": "repo:version:5da7631a3b44569912ce26683ef328f2861117a6",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "5da7631a3b44569912ce26683ef328f2861117a6",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T02:57:18+02:00"
+    },
+    {
+      "@id": "repo:version:2f924483c8d0bb287db85dc2e10b599e4dba5858",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "2f924483c8d0bb287db85dc2e10b599e4dba5858",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T07:32:35+02:00"
+    },
+    {
+      "@id": "repo:version:f6cefe93160626225974cbb80bec02636aaba438",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "f6cefe93160626225974cbb80bec02636aaba438",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T08:16:36+02:00"
+    },
+    {
+      "@id": "repo:version:31fc72bb19103409991c21ae5890d435707e0cde",
+      "@type": [
+        "oslc_config:VersionResource"
+      ],
+      "versionId": "31fc72bb19103409991c21ae5890d435707e0cde",
+      "branch": "main",
+      "committer": {
+        "@id": "repo:person:2ee9b1d755812ff3"
+      },
+      "committed": "2025-10-22T08:36:49+02:00"
+    }
+  ],
+  "tests": []
+}

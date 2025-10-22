@@ -1,0 +1,33 @@
+2025-10-22 13:07:28,865 [INFO] __main__: === Starting RepoQ self-analysis ===
+2025-10-22 13:07:28,866 [INFO] __main__: Running structure analysis...
+2025-10-22 13:07:29,062 [INFO] repoq.analyzers.structure: Processed 104 files
+2025-10-22 13:07:29,112 [INFO] repoq.ontologies.ontology_manager: Loaded 3 ontology plugins
+2025-10-22 13:07:29,112 [INFO] repoq.ontologies.ontology_manager: Applied CodeOntologyPlugin: 0 concepts, 0 violations
+2025-10-22 13:07:29,112 [INFO] repoq.analyzers.structure: Ontological analysis completed: 0 concepts extracted
+2025-10-22 13:07:29,112 [INFO] __main__: Running complexity analysis...
+2025-10-22 13:07:29,313 [INFO] __main__: Running weakness detection...
+2025-10-22 13:07:29,362 [INFO] __main__: Running CI quality checks...
+2025-10-22 13:07:29,366 [INFO] __main__: Running history analysis...
+2025-10-22 13:07:29,397 [WARNING] repoq.analyzers.history: PyDriller analysis failed: The path to the repo has to be of type 'string' or 'list of strings'!, falling back to Git CLI
+2025-10-22 13:07:29,549 [INFO] __main__: Running hotspot detection...
+2025-10-22 13:07:29,549 [INFO] __main__: ✓ Analyzed 104 files
+2025-10-22 13:07:29,549 [INFO] __main__: ✓ Found 140 issues
+2025-10-22 13:07:29,549 [INFO] __main__: ✓ Identified 50 hotspots
+2025-10-22 13:07:29,549 [INFO] __main__: ✓ Detected 8 modules
+2025-10-22 13:07:29,549 [INFO] __main__: === Exporting RDF with full enrichment ===
+2025-10-22 13:07:29,549 [ERROR] __main__: Self-refactoring analysis failed: export_ttl() got an unexpected keyword argument 'path'
+Traceback (most recent call last):
+  File "/home/kirill/projects/repoq-pro-final/scripts/self_refactor.py", line 343, in main
+    export_with_full_enrichment(project, output_path)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/kirill/projects/repoq-pro-final/scripts/self_refactor.py", line 129, in export_with_full_enrichment
+    export_ttl(
+    ~~~~~~~~~~^
+        project=project,
+        ^^^^^^^^^^^^^^^^
+    ...<8 lines>...
+        stratification_level=1,  # Safe level (0=base, 1=meta, 2=meta-meta)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+TypeError: export_ttl() got an unexpected keyword argument 'path'
