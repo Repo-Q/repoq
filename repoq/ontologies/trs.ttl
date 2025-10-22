@@ -1,0 +1,347 @@
+@prefix trs: <http://example.org/vocab/trs#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/trs#> a owl:Ontology ;
+    dcterms:title "RepoQ TRS Ontology" ;
+    dcterms:description """
+        Ontology for Term Rewriting Systems (TRS).
+        Formalizes rewrite rules, critical pairs, confluence, termination.
+        Supports mathematical verification of code transformations.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "TRS ontology with confluence and termination support" ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Rewriting> ,
+                 <https://en.wikipedia.org/wiki/Confluence_(abstract_rewriting)> ,
+                 <https://www.term-rewriting.org/> .
+
+# ============================================================================
+# CORE TRS CONCEPTS
+# ============================================================================
+
+trs:Rule a owl:Class ;
+    rdfs:label "Rewrite Rule" ;
+    rdfs:comment """
+        Term rewrite rule: LHS → RHS.
+        Transforms left-hand side pattern into right-hand side.
+        Example: f(g(x)) → h(x) (function composition simplification)
+    """ .
+
+trs:RewriteSystem a owl:Class ;
+    rdfs:label "Rewrite System" ;
+    rdfs:comment """
+        Collection of rewrite rules forming a TRS.
+        System properties: confluence, termination, soundness.
+    """ .
+
+trs:Term a owl:Class ;
+    rdfs:label "Term" ;
+    rdfs:comment """
+        Expression in term algebra (variables, functions, constants).
+        Example: f(g(x, c), h(y))
+    """ .
+
+trs:Variable a owl:Class ;
+    rdfs:subClassOf trs:Term ;
+    rdfs:label "Variable" ;
+    rdfs:comment "Variable symbol in term (e.g., x, y, z)" .
+
+trs:Function a owl:Class ;
+    rdfs:subClassOf trs:Term ;
+    rdfs:label "Function" ;
+    rdfs:comment "Function symbol with arity (e.g., f/2, g/1)" .
+
+trs:Constant a owl:Class ;
+    rdfs:subClassOf trs:Term ;
+    rdfs:label "Constant" ;
+    rdfs:comment "Constant term (e.g., 0, true, nil)" .
+
+# ============================================================================
+# CRITICAL PAIRS & CONFLUENCE
+# ============================================================================
+
+trs:CriticalPair a owl:Class ;
+    rdfs:label "Critical Pair" ;
+    rdfs:comment """
+        Pair of terms resulting from overlapping rule applications.
+        (t1, t2) is critical if both derive from same term via different rules.
+        Joinable if ∃s. t1 →* s ∧ t2 →* s (confluence condition).
+    """ ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Critical_pair_(logic)> .
+
+trs:Overlap a owl:Class ;
+    rdfs:label "Overlap" ;
+    rdfs:comment """
+        Situation where two rules can apply to overlapping subterms.
+        Source of critical pairs.
+    """ .
+
+trs:NormalForm a owl:Class ;
+    rdfs:label "Normal Form" ;
+    rdfs:comment """
+        Term that cannot be rewritten further (irreducible).
+        Every term should have unique normal form (confluence).
+    """ .
+
+trs:ConfluenceProof a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Confluence Proof" ;
+    rdfs:comment """
+        Proof that rewrite system is confluent (Church-Rosser).
+        Methods: Newman's lemma, orthogonality, completion.
+    """ .
+
+trs:TerminationProof a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Termination Proof" ;
+    rdfs:comment """
+        Proof that rewrite system terminates (no infinite reductions).
+        Methods: well-founded ordering, polynomial interpretations.
+    """ .
+
+# ============================================================================
+# RULE PROPERTIES
+# ============================================================================
+
+trs:leftHandSide a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range trs:Term ;
+    rdfs:label "Left-Hand Side" ;
+    rdfs:comment "Pattern to match (LHS of rule)" .
+
+trs:rightHandSide a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range trs:Term ;
+    rdfs:label "Right-Hand Side" ;
+    rdfs:comment "Replacement term (RHS of rule)" .
+
+trs:ruleCondition a owl:DatatypeProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range xsd:string ;
+    rdfs:label "Rule Condition" ;
+    rdfs:comment """
+        Optional condition for rule application.
+        Example: 'x > 0' for conditional rewrite.
+    """ .
+
+trs:confluent a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Confluent" ;
+    rdfs:comment "True if rule preserves confluence when added to system" .
+
+trs:terminating a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Terminating" ;
+    rdfs:comment "True if rule preserves termination when added to system" .
+
+trs:orthogonal a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Orthogonal" ;
+    rdfs:comment """
+        True if rule is left-linear and non-overlapping with others.
+        Orthogonal systems are automatically confluent.
+    """ .
+
+# ============================================================================
+# CONFLUENCE PROPERTIES
+# ============================================================================
+
+trs:hasProof a owl:ObjectProperty ;
+    rdfs:label "Has Proof" ;
+    rdfs:comment "Links rule/system to its confluence/termination proof" .
+
+trs:confluenceProven a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Confluence Proven" ;
+    rdfs:comment """
+        True if confluence has been formally proven.
+        CRITICAL: Systems without proof require human review.
+    """ .
+
+trs:terminationProven a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Termination Proven" ;
+    rdfs:comment "True if termination has been formally proven" .
+
+trs:criticalPair a owl:ObjectProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range trs:CriticalPair ;
+    rdfs:label "Critical Pair" ;
+    rdfs:comment "Critical pairs in this system" .
+
+trs:leftTerm a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:CriticalPair ;
+    rdfs:range trs:Term ;
+    rdfs:label "Left Term" ;
+    rdfs:comment "Left term of critical pair" .
+
+trs:rightTerm a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:CriticalPair ;
+    rdfs:range trs:Term ;
+    rdfs:label "Right Term" ;
+    rdfs:comment "Right term of critical pair" .
+
+trs:commonReduct a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:CriticalPair ;
+    rdfs:range trs:Term ;
+    rdfs:label "Common Reduct" ;
+    rdfs:comment """
+        Term to which both sides reduce (joinability witness).
+        If exists, critical pair is joinable (good for confluence).
+    """ .
+
+trs:joinable a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:CriticalPair ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Joinable" ;
+    rdfs:comment "True if critical pair has common reduct" .
+
+# ============================================================================
+# TERMINATION MEASURES
+# ============================================================================
+
+trs:TerminationMeasure a owl:Class ;
+    rdfs:label "Termination Measure" ;
+    rdfs:comment """
+        Well-founded ordering proving termination.
+        Must decrease with every rewrite step.
+    """ .
+
+trs:LexicographicOrder a owl:Class ;
+    rdfs:subClassOf trs:TerminationMeasure ;
+    rdfs:label "Lexicographic Order" ;
+    rdfs:comment "Dictionary-style ordering on terms" .
+
+trs:PolynomialInterpretation a owl:Class ;
+    rdfs:subClassOf trs:TerminationMeasure ;
+    rdfs:label "Polynomial Interpretation" ;
+    rdfs:comment """
+        Assigns polynomials to function symbols.
+        Termination proven if interpretation strictly decreases.
+    """ .
+
+trs:RecursivePathOrder a owl:Class ;
+    rdfs:subClassOf trs:TerminationMeasure ;
+    rdfs:label "Recursive Path Order (RPO)" ;
+    rdfs:comment "Powerful well-founded ordering for terms" .
+
+trs:terminationMeasure a owl:ObjectProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range trs:TerminationMeasure ;
+    rdfs:label "Termination Measure" ;
+    rdfs:comment "Measure proving this rule terminates" .
+
+trs:measureDecreases a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:Rule ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Measure Decreases" ;
+    rdfs:comment "True if termination measure strictly decreases" .
+
+# ============================================================================
+# COMPLETION & STRATEGY
+# ============================================================================
+
+trs:CompletionStrategy a owl:Class ;
+    rdfs:label "Completion Strategy" ;
+    rdfs:comment """
+        Strategy for completing rewrite system (Knuth-Bendix).
+        Adds rules to make critical pairs joinable.
+    """ .
+
+trs:KnuthBendixCompletion a owl:Class ;
+    rdfs:subClassOf trs:CompletionStrategy ;
+    rdfs:label "Knuth-Bendix Completion" ;
+    rdfs:comment """
+        Classic completion algorithm.
+        Iteratively adds rules until confluence achieved.
+    """ ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Knuth%E2%80%93Bendix_completion_algorithm> .
+
+trs:completionStrategy a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range trs:CompletionStrategy ;
+    rdfs:label "Completion Strategy" .
+
+trs:completionAttempts a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Completion Attempts" ;
+    rdfs:comment "Number of completion iterations attempted" .
+
+trs:completionSucceeded a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Completion Succeeded" ;
+    rdfs:comment "True if completion made system confluent" .
+
+# ============================================================================
+# SOUNDNESS
+# ============================================================================
+
+trs:Soundness a owl:Class ;
+    rdfs:label "Soundness Property" ;
+    rdfs:comment """
+        System is sound if rewrite preserves semantics.
+        LHS and RHS must be semantically equivalent.
+    """ .
+
+trs:soundnessProven a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Soundness Proven" ;
+    rdfs:comment "True if soundness formally proven (e.g., in Lean4)" .
+
+trs:soundnessProof a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain trs:RewriteSystem ;
+    rdfs:range prov:Entity ;
+    rdfs:label "Soundness Proof" ;
+    rdfs:comment "Reference to formal soundness proof artifact" .
+
+# ============================================================================
+# AXIOMS
+# ============================================================================
+
+# Every rule must have LHS and RHS
+trs:Rule rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty trs:leftHandSide ;
+    owl:cardinality 1
+] .
+
+trs:Rule rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty trs:rightHandSide ;
+    owl:cardinality 1
+] .
+
+# Every critical pair must have two terms
+trs:CriticalPair rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty trs:leftTerm ;
+    owl:cardinality 1
+] .
+
+trs:CriticalPair rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty trs:rightTerm ;
+    owl:cardinality 1
+] .
+
+# Critical pairs must have joinability status
+trs:CriticalPair rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty trs:joinable ;
+    owl:cardinality 1
+] .

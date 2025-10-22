@@ -1,0 +1,167 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# QUALITY GATE SHAPE
+# ============================================================================
+
+quality:GateShape a sh:NodeShape ;
+    sh:targetClass quality:Gate ;
+    sh:name "Quality Gate Shape" ;
+
+    # Must have status
+    sh:property [
+        sh:path quality:gateStatus ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("passed" "failed" "warning" "skipped")
+    ] ;
+
+    # Must have threshold and actual value
+    sh:property [
+        sh:path quality:threshold ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    sh:property [
+        sh:path quality:actualValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # CRITICAL: Failed gates that block merge
+    sh:sparql [
+        sh:message "Quality gate FAILED and blocks merge" ;
+        sh:prefixes quality: ;
+        sh:select """
+            SELECT $this ?actual ?threshold
+            WHERE {
+                $this quality:gateStatus "failed" ;
+                      quality:blocksMerge true ;
+                      quality:actualValue ?actual ;
+                      quality:threshold ?threshold .
+            }
+        """ ;
+        sh:severity sh:Violation
+    ] .
+
+# ============================================================================
+# CERTIFICATE SHAPE
+# ============================================================================
+
+quality:CertificateShape a sh:NodeShape ;
+    sh:targetClass quality:Certificate ;
+    sh:name "Quality Certificate Shape" ;
+
+    # Must have assurance level
+    sh:property [
+        sh:path quality:assuranceLevel ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("basic" "standard" "enhanced" "formal")
+    ] ;
+
+    # Must have issuance timestamp
+    sh:property [
+        sh:path quality:issuedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # Must certify project or commit
+    sh:property [
+        sh:path quality:certifiesProject ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # Warn if expired
+    sh:sparql [
+        sh:message "Certificate expired" ;
+        sh:prefixes quality: ;
+        sh:select """
+            SELECT $this ?expires
+            WHERE {
+                $this quality:expiresAt ?expires .
+                FILTER (?expires < NOW())
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# RECOMMENDATION SHAPE
+# ============================================================================
+
+quality:RecommendationShape a sh:NodeShape ;
+    sh:targetClass quality:Recommendation ;
+    sh:name "Refactoring Recommendation Shape" ;
+
+    # Must have priority
+    sh:property [
+        sh:path quality:priority ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("critical" "high" "medium" "low")
+    ] ;
+
+    # Must have ΔQ estimate
+    sh:property [
+        sh:path quality:deltaQ ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:message "ΔQ must be non-negative"
+    ] ;
+
+    # Must target file or function
+    sh:property [
+        sh:path quality:targetsFile ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # Should have current/target complexity
+    sh:property [
+        sh:path quality:currentComplexity ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.0
+    ] ;
+
+    sh:property [
+        sh:path quality:targetComplexity ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.0
+    ] .
+
+# ============================================================================
+# QUALITY SCORE SHAPE
+# ============================================================================
+
+quality:QualityScoreShape a sh:NodeShape ;
+    sh:targetClass quality:QualityScore ;
+    sh:name "Quality Score Shape" ;
+
+    # Score must be 0-10
+    sh:property [
+        sh:path quality:scoreValue ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 10.0
+    ] ;
+
+    # Must have calculation timestamp
+    sh:property [
+        sh:path quality:calculatedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] .

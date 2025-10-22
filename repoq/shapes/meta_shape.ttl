@@ -1,0 +1,233 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix meta: <http://example.org/vocab/meta#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# SELF-ANALYSIS SHAPE - Russell's Paradox Guard
+# ============================================================================
+
+meta:SelfAnalysisShape a sh:NodeShape ;
+    sh:targetClass meta:SelfAnalysis ;
+    sh:name "Self-Analysis Shape" ;
+    sh:description "Validates safe self-application with stratification" ;
+
+    # CRITICAL: Stratification level must be 0-2 (Russell's guard)
+    sh:property [
+        sh:path meta:stratificationLevel ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 2 ;
+        sh:message "Stratification level must be 0-2 to prevent Russell's paradox" ;
+        sh:severity sh:Violation
+    ] ;
+
+    # Self-analysis MUST be read-only
+    sh:property [
+        sh:path meta:readOnlyMode ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:hasValue true ;
+        sh:message "Self-analysis must be read-only to prevent modification paradoxes" ;
+        sh:severity sh:Violation
+    ] ;
+
+    # Must have max safe level
+    sh:property [
+        sh:path meta:maxSafeLevel ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 0 ;
+        sh:maxInclusive 10 ;
+        sh:message "Max safe level must be 0-10"
+    ] ;
+
+    # Must have performed timestamp
+    sh:property [
+        sh:path meta:performedAt ;
+        sh:datatype xsd:dateTime ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # If self-reference detected, extra validation required
+    sh:property [
+        sh:path meta:selfReferenceDetected ;
+        sh:datatype xsd:boolean ;
+        sh:maxCount 1
+    ] ;
+
+    # Safety checks must pass
+    sh:property [
+        sh:path meta:safetyChecksPassed ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Self-analysis must record safety check status"
+    ] .
+
+# ============================================================================
+# QUOTE OPERATION SHAPE
+# ============================================================================
+
+meta:QuoteShape a sh:NodeShape ;
+    sh:targetClass meta:Quote ;
+    sh:name "Quote Operation Shape" ;
+
+    # Quote must specify level
+    sh:property [
+        sh:path meta:quotedAtLevel ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:message "Quote must specify source level"
+    ] ;
+
+    # Quote must reference original expression
+    sh:property [
+        sh:path meta:quotedFrom ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Quote must reference original expression"
+    ] .
+
+# ============================================================================
+# UNQUOTE OPERATION SHAPE
+# ============================================================================
+
+meta:UnquoteShape a sh:NodeShape ;
+    sh:targetClass meta:Unquote ;
+    sh:name "Unquote Operation Shape" ;
+
+    # Unquote must specify level
+    sh:property [
+        sh:path meta:unquotedAtLevel ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0 ;
+        sh:message "Unquote must specify target level"
+    ] ;
+
+    # Unquote must reference target expression
+    sh:property [
+        sh:path meta:unquotedTo ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Unquote must reference target expression"
+    ] .
+
+# ============================================================================
+# META-EVALUATION SHAPE
+# ============================================================================
+
+meta:MetaEvaluationShape a sh:NodeShape ;
+    sh:targetClass meta:MetaEvaluation ;
+    sh:name "Meta-Evaluation Shape" ;
+
+    # Bounded evaluation depth (prevent infinite loops)
+    sh:property [
+        sh:path meta:maxEvaluationDepth ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 100 ;
+        sh:message "Evaluation depth must be bounded (1-100)" ;
+        sh:severity sh:Violation
+    ] .
+
+# ============================================================================
+# STRATIFICATION CONSISTENCY (SPARQL Constraint)
+# ============================================================================
+
+meta:StratificationConsistencyShape a sh:NodeShape ;
+    sh:targetClass meta:SelfAnalysis ;
+    sh:name "Stratification Consistency" ;
+    sh:description "Validates that quote/unquote respect stratification levels" ;
+
+    # SPARQL constraint: Quote must increase level
+    sh:sparql [
+        sh:message "Quote must increase stratification level (N → N+1)" ;
+        sh:prefixes meta: ;
+        sh:select """
+            SELECT $this ?quote ?level
+            WHERE {
+                $this meta:stratificationLevel ?level .
+                ?quote a meta:Quote ;
+                       meta:quotedAtLevel ?quotedLevel .
+                FILTER (?quotedLevel <= ?level)
+            }
+        """ ;
+        sh:severity sh:Violation
+    ] ;
+
+    # SPARQL constraint: Unquote must decrease level
+    sh:sparql [
+        sh:message "Unquote must decrease stratification level (N → N-1)" ;
+        sh:prefixes meta: ;
+        sh:select """
+            SELECT $this ?unquote ?level
+            WHERE {
+                $this meta:stratificationLevel ?level .
+                ?unquote a meta:Unquote ;
+                         meta:unquotedAtLevel ?unquotedLevel .
+                FILTER (?unquotedLevel >= ?level)
+            }
+        """ ;
+        sh:severity sh:Violation
+    ] .
+
+# ============================================================================
+# UNIVERSE VIOLATION CHECK
+# ============================================================================
+
+meta:UniverseViolationShape a sh:NodeShape ;
+    sh:targetClass meta:SelfAnalysis ;
+    sh:name "Universe Violation Check" ;
+
+    # If universe violations exist, human review required
+    sh:sparql [
+        sh:message "Universe violations detected - requires human review" ;
+        sh:prefixes meta: ;
+        sh:select """
+            SELECT $this ?violation
+            WHERE {
+                $this meta:universeViolation ?violation .
+                $this meta:safetyChecksPassed false .
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# SAFETY VALIDATION (Overall Check)
+# ============================================================================
+
+meta:OverallSafetyShape a sh:NodeShape ;
+    sh:targetClass meta:SelfAnalysis ;
+    sh:name "Overall Safety Validation" ;
+
+    # All safety properties must be valid
+    sh:and (
+        meta:SelfAnalysisShape
+        meta:StratificationConsistencyShape
+    ) ;
+
+    # If safety checks failed, block operation
+    sh:sparql [
+        sh:message "Safety checks failed - self-analysis blocked" ;
+        sh:prefixes meta: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this meta:safetyChecksPassed false .
+                FILTER NOT EXISTS { $this meta:selfReferenceDetected true }
+            }
+        """ ;
+        sh:severity sh:Violation
+    ] .

@@ -1,0 +1,176 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix docs: <http://example.org/vocab/docs#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# DOCUMENT SHAPE
+# ============================================================================
+
+docs:DocumentShape a sh:NodeShape ;
+    sh:targetClass docs:Document ;
+    sh:name "Document Shape" ;
+
+    # Must have title
+    sh:property [
+        sh:path docs:title ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1
+    ] ;
+
+    # Must have format
+    sh:property [
+        sh:path docs:format ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("markdown" "html" "pdf" "rst" "asciidoc")
+    ] ;
+
+    # Should have last updated timestamp
+    sh:property [
+        sh:path docs:lastUpdated ;
+        sh:datatype xsd:dateTime
+    ] .
+
+# ============================================================================
+# TUTORIAL SHAPE
+# ============================================================================
+
+docs:TutorialShape a sh:NodeShape ;
+    sh:targetClass docs:Tutorial ;
+    sh:name "Tutorial Shape" ;
+
+    # Tutorial should have code examples
+    sh:property [
+        sh:path docs:hasCodeExample ;
+        sh:minCount 1 ;
+        sh:message "Tutorial should have at least one code example"
+    ] ;
+
+    # Should document concepts
+    sh:property [
+        sh:path docs:documentsConcept ;
+        sh:minCount 1 ;
+        sh:message "Tutorial should document ontology concepts"
+    ] .
+
+# ============================================================================
+# API REFERENCE SHAPE
+# ============================================================================
+
+docs:APIReferenceShape a sh:NodeShape ;
+    sh:targetClass docs:APIReference ;
+    sh:name "API Reference Shape" ;
+
+    # Must document at least one concept
+    sh:property [
+        sh:path docs:documentsConcept ;
+        sh:minCount 1 ;
+        sh:message "API reference must document at least one concept"
+    ] .
+
+# ============================================================================
+# CODE EXAMPLE SHAPE
+# ============================================================================
+
+docs:CodeExampleShape a sh:NodeShape ;
+    sh:targetClass docs:CodeExample ;
+    sh:name "Code Example Shape" ;
+
+    # Must specify language
+    sh:property [
+        sh:path docs:exampleLanguage ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1
+    ] ;
+
+    # Must be validated
+    sh:property [
+        sh:path docs:exampleValidated ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # Warn if not validated
+    sh:sparql [
+        sh:message "Code example not validated - may be broken" ;
+        sh:prefixes docs: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this docs:exampleValidated false .
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# DOCUMENTATION COVERAGE SHAPE
+# ============================================================================
+
+docs:CoverageShape a sh:NodeShape ;
+    sh:targetClass docs:Coverage ;
+    sh:name "Documentation Coverage Shape" ;
+
+    # Must have percentage
+    sh:property [
+        sh:path docs:coveragePercentage ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 100.0
+    ] ;
+
+    # Warn if coverage < 80%
+    sh:sparql [
+        sh:message "Documentation coverage below 80%" ;
+        sh:prefixes docs: ;
+        sh:select """
+            SELECT $this ?coverage
+            WHERE {
+                $this docs:coveragePercentage ?coverage .
+                FILTER (?coverage < 80.0)
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# DOCUMENTATION CURRENCY SHAPE
+# ============================================================================
+
+docs:CurrencyShape a sh:NodeShape ;
+    sh:targetClass docs:Document ;
+    sh:name "Documentation Currency Check" ;
+
+    # Warn if docs not current
+    sh:sparql [
+        sh:message "Documentation out of date with code" ;
+        sh:prefixes docs: ;
+        sh:select """
+            SELECT $this ?title
+            WHERE {
+                $this docs:title ?title ;
+                      docs:isCurrent false .
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] ;
+
+    # Warn if has TODO/FIXME
+    sh:sparql [
+        sh:message "Documentation has unresolved TODOs" ;
+        sh:prefixes docs: ;
+        sh:select """
+            SELECT $this ?todo
+            WHERE {
+                $this docs:hasTODO ?todo .
+            }
+        """ ;
+        sh:severity sh:Info
+    ] .

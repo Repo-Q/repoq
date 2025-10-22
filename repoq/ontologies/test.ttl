@@ -1,0 +1,302 @@
+@prefix test: <http://example.org/vocab/test#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/test#> a owl:Ontology ;
+    dcterms:title "RepoQ Testing Ontology" ;
+    dcterms:description """
+        Ontology for test cases, coverage, property-based testing.
+        Maps tests to ontology concepts for traceability.
+        Enables validation that every concept has corresponding tests.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "Testing ontology with property-based test support" .
+
+# ============================================================================
+# TEST CONCEPTS
+# ============================================================================
+
+test:TestCase a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "Test Case" ;
+    rdfs:comment """
+        A single test case (unit, integration, e2e, property).
+        Activities that validate code behavior.
+    """ .
+
+test:UnitTest a owl:Class ;
+    rdfs:subClassOf test:TestCase ;
+    rdfs:label "Unit Test" ;
+    rdfs:comment "Test of a single function/method in isolation" .
+
+test:IntegrationTest a owl:Class ;
+    rdfs:subClassOf test:TestCase ;
+    rdfs:label "Integration Test" ;
+    rdfs:comment "Test of multiple components interacting" .
+
+test:E2ETest a owl:Class ;
+    rdfs:subClassOf test:TestCase ;
+    rdfs:label "End-to-End Test" ;
+    rdfs:comment "Test of complete user workflow through system" .
+
+test:PropertyTest a owl:Class ;
+    rdfs:subClassOf test:TestCase ;
+    rdfs:label "Property Test" ;
+    rdfs:comment """
+        Property-based test (Hypothesis/QuickCheck style).
+        Validates properties that should hold for all inputs.
+        Example: ∀x. sort(sort(x)) = sort(x) (idempotence)
+    """ ;
+    rdfs:seeAlso <https://hypothesis.works/articles/what-is-property-based-testing/> .
+
+test:ContractTest a owl:Class ;
+    rdfs:subClassOf test:TestCase ;
+    rdfs:label "Contract Test" ;
+    rdfs:comment """
+        Test validating consistency between ontology and implementation.
+        Example: File.complexity >= 0.0 (from SHACL) ↔ assert file.complexity >= 0
+    """ .
+
+test:GoldenSnapshotTest a owl:Class ;
+    rdfs:subClassOf test:TestCase ;
+    rdfs:label "Golden Snapshot Test" ;
+    rdfs:comment """
+        Test comparing output against golden reference.
+        Detects regressions in complex outputs (JSON-LD, reports).
+    """ .
+
+test:MutationTest a owl:Class ;
+    rdfs:subClassOf test:TestCase ;
+    rdfs:label "Mutation Test" ;
+    rdfs:comment """
+        Test validating test quality by introducing mutations.
+        Measures if tests catch intentional bugs.
+    """ .
+
+# ============================================================================
+# TEST FIXTURES
+# ============================================================================
+
+test:Fixture a owl:Class ;
+    rdfs:label "Test Fixture" ;
+    rdfs:comment """
+        Reusable test setup/teardown component.
+        Pytest fixtures, test data, mock objects.
+    """ .
+
+test:MockObject a owl:Class ;
+    rdfs:subClassOf test:Fixture ;
+    rdfs:label "Mock Object" ;
+    rdfs:comment "Test double for isolating unit tests" .
+
+test:TestData a owl:Class ;
+    rdfs:subClassOf test:Fixture ;
+    rdfs:label "Test Data" ;
+    rdfs:comment "Sample data for testing (repos, files, commits)" .
+
+# ============================================================================
+# COVERAGE
+# ============================================================================
+
+test:Coverage a owl:Class ;
+    rdfs:label "Test Coverage" ;
+    rdfs:comment """
+        Coverage measurement for code, branches, concepts.
+        Tracks which parts of system are validated by tests.
+    """ .
+
+test:LineCoverage a owl:Class ;
+    rdfs:subClassOf test:Coverage ;
+    rdfs:label "Line Coverage" ;
+    rdfs:comment "Percentage of source lines executed by tests" .
+
+test:BranchCoverage a owl:Class ;
+    rdfs:subClassOf test:Coverage ;
+    rdfs:label "Branch Coverage" ;
+    rdfs:comment "Percentage of conditional branches tested" .
+
+test:ConceptCoverage a owl:Class ;
+    rdfs:subClassOf test:Coverage ;
+    rdfs:label "Concept Coverage" ;
+    rdfs:comment """
+        Percentage of ontology concepts validated by tests.
+        Example: File concept has 85% property coverage.
+    """ .
+
+# ============================================================================
+# PROPERTIES
+# ============================================================================
+
+test:testedConcept a owl:ObjectProperty ;
+    rdfs:domain test:TestCase ;
+    rdfs:range owl:Class ;
+    rdfs:label "Tested Concept" ;
+    rdfs:comment """
+        Links test case to ontology concept it validates.
+        Enables traceability: concept → tests → implementation.
+    """ .
+
+test:testedProperty a owl:ObjectProperty ;
+    rdfs:domain test:TestCase ;
+    rdfs:range rdf:Property ;
+    rdfs:label "Tested Property" ;
+    rdfs:comment "Links test to specific ontology property validated" .
+
+test:testName a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain test:TestCase ;
+    rdfs:range xsd:string ;
+    rdfs:label "Test Name" ;
+    rdfs:comment "Human-readable test name (e.g., 'test_complexity_non_negative')" .
+
+test:testStatus a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain test:TestCase ;
+    rdfs:range test:TestStatus ;
+    rdfs:label "Test Status" ;
+    rdfs:comment "Current status: passed, failed, skipped, xfail" .
+
+test:TestStatus a rdfs:Datatype ;
+    owl:oneOf ("passed" "failed" "skipped" "xfail") .
+
+test:testDuration a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain test:TestCase ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Test Duration" ;
+    rdfs:comment "Execution time in seconds" ;
+    owl:minInclusive 0.0 .
+
+test:coveragePercentage a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain test:Coverage ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Coverage Percentage" ;
+    rdfs:comment "Coverage as percentage (0.0-100.0)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 100.0 .
+
+test:coverageTarget a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Coverage Target" ;
+    rdfs:comment "Target coverage threshold (e.g., 80.0)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 100.0 .
+
+test:usesFixture a owl:ObjectProperty ;
+    rdfs:domain test:TestCase ;
+    rdfs:range test:Fixture ;
+    rdfs:label "Uses Fixture" ;
+    rdfs:comment "Test depends on this fixture" .
+
+# ============================================================================
+# PROPERTY TEST SPECIFICS
+# ============================================================================
+
+test:propertyDescription a owl:DatatypeProperty ;
+    rdfs:domain test:PropertyTest ;
+    rdfs:range xsd:string ;
+    rdfs:label "Property Description" ;
+    rdfs:comment """
+        Mathematical property being tested.
+        Example: 'Idempotence: f(f(x)) = f(x) for all x'
+    """ .
+
+test:generatedExamples a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain test:PropertyTest ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Generated Examples" ;
+    rdfs:comment "Number of examples generated by property test" ;
+    owl:minInclusive 1 .
+
+test:shrinkingSteps a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain test:PropertyTest ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Shrinking Steps" ;
+    rdfs:comment """
+        Number of shrinking steps to minimal failing example.
+        Lower is better (simpler counterexample).
+    """ ;
+    owl:minInclusive 0 .
+
+test:counterexample a owl:DatatypeProperty ;
+    rdfs:domain test:PropertyTest ;
+    rdfs:range xsd:string ;
+    rdfs:label "Counterexample" ;
+    rdfs:comment "Minimal input that falsifies property (if test fails)" .
+
+# ============================================================================
+# TEST SUITE
+# ============================================================================
+
+test:TestSuite a owl:Class ;
+    rdfs:label "Test Suite" ;
+    rdfs:comment """
+        Collection of related test cases.
+        Example: 'analyzers test suite', 'ontology validation suite'.
+    """ .
+
+test:containsTest a owl:ObjectProperty ;
+    rdfs:domain test:TestSuite ;
+    rdfs:range test:TestCase ;
+    rdfs:label "Contains Test" .
+
+test:suitePassRate a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain test:TestSuite ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Suite Pass Rate" ;
+    rdfs:comment "Percentage of tests passing in suite" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 100.0 .
+
+# ============================================================================
+# AXIOMS
+# ============================================================================
+
+# Every test must have name and status
+test:TestCase rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty test:testName ;
+    owl:cardinality 1
+] .
+
+test:TestCase rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty test:testStatus ;
+    owl:cardinality 1
+] .
+
+# Property tests must have property description
+test:PropertyTest rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty test:propertyDescription ;
+    owl:minCardinality 1
+] .
+
+# Contract tests must validate at least one concept
+test:ContractTest rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty test:testedConcept ;
+    owl:minCardinality 1
+] .
+
+# Coverage must be measurable
+test:Coverage rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty test:coveragePercentage ;
+    owl:cardinality 1
+] .
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+test:Testing a owl:AnnotationProperty ;
+    rdfs:label "Testing reference" ;
+    rdfs:seeAlso <https://hypothesis.works/> ,
+                 <https://docs.pytest.org/> ,
+                 <https://en.wikipedia.org/wiki/Property_testing> ,
+                 <https://martinfowler.com/bliki/ContractTest.html> .

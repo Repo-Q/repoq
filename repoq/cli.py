@@ -47,6 +47,15 @@ Analyze git repositories for code quality metrics, generate reports in multiple 
 """,
 )
 
+# Add meta-loop introspection commands
+try:
+    from .cli_meta import app as meta_app
+
+    app.add_typer(meta_app, name="meta", help="Meta-loop introspection and validation")
+except ImportError:
+    # Meta commands not available (missing dependencies)
+    pass
+
 
 # ==================== Common Helper Functions ====================
 # Extracted to reduce complexity and duplication across commands
@@ -66,10 +75,10 @@ def _load_jsonld_analysis(path: str | Path) -> dict[str, Any]:
         json.JSONDecodeError: If file is not valid JSON
     """
     analysis_path = Path(path).resolve()
-    
+
     if not analysis_path.exists():
         raise FileNotFoundError(f"Analysis file not found: {path}")
-    
+
     try:
         with open(analysis_path, "r", encoding="utf-8") as fh:
             return json.load(fh)
@@ -91,14 +100,14 @@ def _validate_file_exists(path: str | Path, file_type: str = "File") -> Path:
         typer.Exit: If file doesn't exist (exit code 2)
     """
     from rich.console import Console
-    
+
     console = Console()
     resolved = Path(path).resolve()
-    
+
     if not resolved.exists():
         console.print(f"[bold red]❌ {file_type} not found: {path}[/bold red]")
         raise typer.Exit(2)
-    
+
     return resolved
 
 
@@ -121,7 +130,7 @@ def _setup_output_paths(
     """
     output_path = Path(output).resolve() if output else Path(default_output)
     md_path = Path(md).resolve() if md else Path(default_md)
-    
+
     return output_path, md_path
 
 
@@ -133,10 +142,10 @@ def _format_error(msg: str, hint: str | None = None) -> None:
         hint: Optional hint/suggestion for user
     """
     from rich.console import Console
-    
+
     console = Console()
     console.print(f"[bold red]❌ {msg}[/bold red]")
-    
+
     if hint:
         console.print(f"\n[yellow]💡 Hint: {hint}[/yellow]")
 
@@ -1399,7 +1408,6 @@ def refactor_plan(
         $ repoq refactor-plan baseline-quality.jsonld --format github -o issues.json
     """
     from rich.console import Console
-    from rich.markdown import Markdown
 
     from repoq.refactoring import generate_refactoring_plan
 
@@ -1434,7 +1442,7 @@ def refactor_plan(
     except FileNotFoundError:
         _format_error(
             f"Analysis file not found: {analysis}",
-            "Run 'repoq analyze' first to generate analysis data"
+            "Run 'repoq analyze' first to generate analysis data",
         )
         raise typer.Exit(2)
     except Exception as e:
@@ -1450,7 +1458,7 @@ def _handle_refactor_plan_output(
     console,
 ) -> None:
     """Handle output formatting and file writing for refactor-plan command.
-    
+
     Args:
         plan: RefactoringPlan object
         format_type: Output format (markdown, json, github)
@@ -1458,7 +1466,7 @@ def _handle_refactor_plan_output(
         console: Rich Console for printing
     """
     from rich.markdown import Markdown
-    
+
     if format_type == "markdown":
         report = plan.to_markdown()
 
@@ -1528,7 +1536,6 @@ def _handle_refactor_plan_output(
             if count > 0:
                 emoji = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}
                 console.print(f"  {emoji[priority]} {priority.capitalize()}: {count}")
-
 
 
 if __name__ == "__main__":

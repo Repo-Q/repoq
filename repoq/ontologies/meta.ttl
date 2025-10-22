@@ -1,0 +1,251 @@
+@prefix meta: <http://example.org/vocab/meta#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/meta#> a owl:Ontology ;
+    dcterms:title "RepoQ Meta-Ontology" ;
+    dcterms:description """
+        Ontology for safe self-application and meta-level reasoning.
+        Implements stratification to prevent Russell's paradox analogs.
+        Enables RepoQ to analyze itself safely with quote/unquote mechanisms.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "Meta-level ontology for self-analysis with stratification guards" .
+
+# ============================================================================
+# CORE META CONCEPTS
+# ============================================================================
+
+meta:SelfAnalysis a owl:Class ;
+    rdfs:subClassOf repo:Analysis ;
+    rdfs:label "Self-Analysis" ;
+    rdfs:comment """
+        Analysis performed by RepoQ on its own codebase.
+        MUST respect stratification levels to prevent paradoxes.
+        Russell's Paradox analog: 'set of all sets that don't contain themselves'.
+        Solution: Stratification with max level constraint.
+    """ ;
+    dcterms:description "Safe self-application of analysis with stratification" .
+
+meta:MetaLevel a owl:Class ;
+    rdfs:label "Meta-Level" ;
+    rdfs:comment """
+        Represents a level in the stratification hierarchy.
+        Level 0: Base code analysis (normal operation)
+        Level 1: Analysis of analyzers themselves
+        Level 2: Analysis of meta-analysis components
+        Level 3+: FORBIDDEN (Russell's paradox risk)
+    """ .
+
+meta:Quote a owl:Class ;
+    rdfs:label "Quote Operation" ;
+    rdfs:comment """
+        Quoting mechanism: lifts expression from level N to level N+1.
+        Allows reasoning about code/data as data.
+        Example: 'analyze(file.py)' quoted becomes data about analysis.
+    """ ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Quotation_(logic)> .
+
+meta:Unquote a owl:Class ;
+    rdfs:label "Unquote Operation" ;
+    rdfs:comment """
+        Unquoting mechanism: evaluates quoted expression at level N-1.
+        SAFETY: Cannot unquote to level higher than current (downward only).
+        Prevents escaping stratification boundaries.
+    """ .
+
+meta:MetaEvaluation a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "Meta-Evaluation" ;
+    rdfs:comment """
+        Evaluation of meta-level expressions.
+        MUST track evaluation depth to prevent infinite loops.
+        Bounded by maxEvaluationDepth property.
+    """ .
+
+# ============================================================================
+# STRATIFICATION PROPERTIES
+# ============================================================================
+
+meta:stratificationLevel a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Stratification Level" ;
+    rdfs:comment """
+        Current stratification level (0, 1, or 2).
+        Level 0: Base analysis (analyzing user code)
+        Level 1: Meta-analysis (analyzing RepoQ code)
+        Level 2: Meta-meta-analysis (analyzing meta-analysis components)
+        Level 3+: FORBIDDEN by SHACL constraint (Russell's guard)
+    """ ;
+    owl:maxInclusive 2 .
+
+meta:maxSafeLevel a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Maximum Safe Level" ;
+    rdfs:comment """
+        Maximum stratification level allowed for this analysis.
+        Typically 2 for self-analysis, 10 for general meta-reasoning.
+    """ ;
+    owl:minInclusive 0 ;
+    owl:maxInclusive 10 .
+
+meta:readOnlyMode a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Read-Only Mode" ;
+    rdfs:comment """
+        Self-analysis MUST be read-only to prevent modification paradoxes.
+        If true, analysis can only observe, not modify code.
+        Prevents: 'code that modifies itself based on its own analysis'.
+    """ ;
+    owl:hasValue true .
+
+meta:quotedFrom a owl:ObjectProperty ;
+    rdfs:domain meta:Quote ;
+    rdfs:label "Quoted From" ;
+    rdfs:comment "References the original expression that was quoted" .
+
+meta:quotedAtLevel a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:Quote ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Quoted At Level" ;
+    rdfs:comment "Level at which expression was quoted (target = N+1)" .
+
+meta:unquotedTo a owl:ObjectProperty ;
+    rdfs:domain meta:Unquote ;
+    rdfs:label "Unquoted To" ;
+    rdfs:comment "References the expression after unquoting" .
+
+meta:unquotedAtLevel a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:Unquote ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Unquoted At Level" ;
+    rdfs:comment "Level at which expression was unquoted (target = N-1)" .
+
+meta:maxEvaluationDepth a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:MetaEvaluation ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Max Evaluation Depth" ;
+    rdfs:comment """
+        Maximum depth for recursive meta-evaluation.
+        Prevents infinite evaluation loops.
+        Typical value: 10 (sufficient for practical meta-reasoning).
+    """ ;
+    owl:minInclusive 1 ;
+    owl:maxInclusive 100 .
+
+# ============================================================================
+# SELF-REFERENCE SAFETY
+# ============================================================================
+
+meta:analyzesSelf a owl:ObjectProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range repo:Project ;
+    rdfs:label "Analyzes Self" ;
+    rdfs:comment """
+        Indicates that this analysis targets RepoQ's own codebase.
+        Triggers stratification and safety checks.
+    """ .
+
+meta:selfReferenceDetected a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Self-Reference Detected" ;
+    rdfs:comment """
+        True if analysis detects self-reference patterns.
+        Triggers enhanced safety validation.
+    """ .
+
+meta:universeViolation a owl:DatatypeProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range xsd:string ;
+    rdfs:label "Universe Violation" ;
+    rdfs:comment """
+        Describes detected universe/type level violations.
+        Example: 'Type refers to itself at same universe level'.
+        Each violation indicates potential paradox risk.
+    """ .
+
+# ============================================================================
+# PROVENANCE & TRACKING
+# ============================================================================
+
+meta:performedAt a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "Performed At" ;
+    rdfs:comment "Timestamp when self-analysis was performed" .
+
+meta:analyzedCommit a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range xsd:string ;
+    rdfs:label "Analyzed Commit" ;
+    rdfs:comment "Git commit SHA that was analyzed" .
+
+meta:safetyChecksPassed a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain meta:SelfAnalysis ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Safety Checks Passed" ;
+    rdfs:comment """
+        True if all stratification and safety checks passed.
+        False triggers human review requirement.
+    """ .
+
+# ============================================================================
+# AXIOMS & CONSTRAINTS (OWL2 DL)
+# ============================================================================
+
+# Axiom: Self-analysis must have stratification level
+meta:SelfAnalysis rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty meta:stratificationLevel ;
+    owl:cardinality 1
+] .
+
+# Axiom: Self-analysis must be read-only
+meta:SelfAnalysis rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty meta:readOnlyMode ;
+    owl:hasValue true
+] .
+
+# Axiom: Quote increases level
+meta:Quote rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty meta:quotedAtLevel ;
+    owl:cardinality 1
+] .
+
+# Axiom: Unquote decreases level
+meta:Unquote rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty meta:unquotedAtLevel ;
+    owl:cardinality 1
+] .
+
+# Axiom: Meta-evaluation has bounded depth
+meta:MetaEvaluation rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty meta:maxEvaluationDepth ;
+    owl:cardinality 1
+] .
+
+# ============================================================================
+# DOCUMENTATION & REFERENCES
+# ============================================================================
+
+# Related standards
+meta:Meta a owl:AnnotationProperty ;
+    rdfs:label "Meta-level reference" ;
+    rdfs:seeAlso <https://plato.stanford.edu/entries/self-reference/> ,
+                 <https://en.wikipedia.org/wiki/Tarski%27s_undefinability_theorem> ,
+                 <https://ncatlab.org/nlab/show/Russell%27s+paradox> ,
+                 <https://leanprover.github.io/theorem_proving_in_lean/> .

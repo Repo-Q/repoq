@@ -1,0 +1,315 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix test: <http://example.org/vocab/test#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# TEST CASE SHAPE
+# ============================================================================
+
+test:TestCaseShape a sh:NodeShape ;
+    sh:targetClass test:TestCase ;
+    sh:name "Test Case Shape" ;
+    sh:description "Validates test case properties" ;
+
+    # Every test must have name
+    sh:property [
+        sh:path test:testName ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1 ;
+        sh:message "Test must have non-empty name"
+    ] ;
+
+    # Every test must have status
+    sh:property [
+        sh:path test:testStatus ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("passed" "failed" "skipped" "xfail") ;
+        sh:message "Test status must be: passed, failed, skipped, or xfail"
+    ] ;
+
+    # Duration must be non-negative
+    sh:property [
+        sh:path test:testDuration ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.0 ;
+        sh:message "Test duration must be non-negative"
+    ] ;
+
+    # Test should validate at least one concept
+    sh:property [
+        sh:path test:testedConcept ;
+        sh:minCount 0 ;
+        sh:message "Test should validate at least one ontology concept"
+    ] .
+
+# ============================================================================
+# PROPERTY TEST SHAPE
+# ============================================================================
+
+test:PropertyTestShape a sh:NodeShape ;
+    sh:targetClass test:PropertyTest ;
+    sh:name "Property Test Shape" ;
+
+    # Must have property description
+    sh:property [
+        sh:path test:propertyDescription ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:minLength 10 ;
+        sh:message "Property test must describe mathematical property (min 10 chars)"
+    ] ;
+
+    # Must generate examples
+    sh:property [
+        sh:path test:generatedExamples ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 1 ;
+        sh:maxInclusive 10000 ;
+        sh:message "Property test must generate 1-10000 examples"
+    ] ;
+
+    # Shrinking steps (if test failed)
+    sh:property [
+        sh:path test:shrinkingSteps ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 0
+    ] ;
+
+    # Counterexample (if test failed)
+    sh:sparql [
+        sh:message "Failed property test must provide counterexample" ;
+        sh:prefixes test: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this test:testStatus "failed" .
+                FILTER NOT EXISTS { $this test:counterexample ?ce }
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# CONTRACT TEST SHAPE
+# ============================================================================
+
+test:ContractTestShape a sh:NodeShape ;
+    sh:targetClass test:ContractTest ;
+    sh:name "Contract Test Shape" ;
+
+    # Must validate at least one concept
+    sh:property [
+        sh:path test:testedConcept ;
+        sh:minCount 1 ;
+        sh:message "Contract test must validate at least one ontology concept"
+    ] .
+
+# ============================================================================
+# GOLDEN SNAPSHOT TEST SHAPE
+# ============================================================================
+
+test:GoldenSnapshotTestShape a sh:NodeShape ;
+    sh:targetClass test:GoldenSnapshotTest ;
+    sh:name "Golden Snapshot Test Shape" ;
+
+    # Should use fixture for golden data
+    sh:property [
+        sh:path test:usesFixture ;
+        sh:minCount 1 ;
+        sh:message "Golden snapshot test should use fixture for reference data"
+    ] .
+
+# ============================================================================
+# COVERAGE SHAPE
+# ============================================================================
+
+test:CoverageShape a sh:NodeShape ;
+    sh:targetClass test:Coverage ;
+    sh:targetClass test:LineCoverage ;
+    sh:targetClass test:BranchCoverage ;
+    sh:targetClass test:ConceptCoverage ;
+    sh:name "Coverage Shape" ;
+
+    # Coverage percentage must be 0-100
+    sh:property [
+        sh:path test:coveragePercentage ;
+        sh:datatype xsd:decimal ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 100.0 ;
+        sh:message "Coverage must be 0-100%"
+    ] .
+
+# ============================================================================
+# COVERAGE TARGET SHAPE
+# ============================================================================
+
+test:CoverageTargetShape a sh:NodeShape ;
+    sh:name "Coverage Target Validation" ;
+
+    # Coverage target (if specified) must be achievable
+    sh:property [
+        sh:path test:coverageTarget ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 100.0 ;
+        sh:message "Coverage target must be 0-100%"
+    ] ;
+
+    # Warn if coverage below target
+    sh:sparql [
+        sh:message "Coverage below target threshold" ;
+        sh:prefixes test: ;
+        sh:select """
+            SELECT $this ?actual ?target
+            WHERE {
+                $this test:coveragePercentage ?actual ;
+                      test:coverageTarget ?target .
+                FILTER (?actual < ?target)
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# CONCEPT COVERAGE SHAPE
+# ============================================================================
+
+test:ConceptCoverageShape a sh:NodeShape ;
+    sh:targetClass test:ConceptCoverage ;
+    sh:name "Concept Coverage Shape" ;
+
+    # Should identify untested concepts
+    sh:property [
+        sh:path test:testedConcept ;
+        sh:minCount 0 ;
+        sh:message "Concept coverage should track which concepts are tested"
+    ] .
+
+# ============================================================================
+# TEST SUITE SHAPE
+# ============================================================================
+
+test:TestSuiteShape a sh:NodeShape ;
+    sh:targetClass test:TestSuite ;
+    sh:name "Test Suite Shape" ;
+
+    # Suite must contain tests
+    sh:property [
+        sh:path test:containsTest ;
+        sh:minCount 1 ;
+        sh:message "Test suite must contain at least one test"
+    ] ;
+
+    # Pass rate must be 0-100
+    sh:property [
+        sh:path test:suitePassRate ;
+        sh:datatype xsd:decimal ;
+        sh:minInclusive 0.0 ;
+        sh:maxInclusive 100.0
+    ] ;
+
+    # Warn if pass rate < 80%
+    sh:sparql [
+        sh:message "Test suite pass rate below 80%" ;
+        sh:prefixes test: ;
+        sh:select """
+            SELECT $this ?passRate
+            WHERE {
+                $this test:suitePassRate ?passRate .
+                FILTER (?passRate < 80.0)
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# CODE EXAMPLE VALIDATION SHAPE
+# ============================================================================
+
+test:CodeExampleValidationShape a sh:NodeShape ;
+    sh:targetClass test:CodeExample ;
+    sh:name "Code Example Validation" ;
+
+    # Code examples must be validated
+    sh:property [
+        sh:path test:exampleValidated ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # Warn if example not validated
+    sh:sparql [
+        sh:message "Code example not validated - may be broken" ;
+        sh:prefixes test: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this test:exampleValidated false .
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .
+
+# ============================================================================
+# FIXTURE SHAPE
+# ============================================================================
+
+test:FixtureShape a sh:NodeShape ;
+    sh:targetClass test:Fixture ;
+    sh:name "Test Fixture Shape" ;
+
+    # Fixture should be used by at least one test
+    sh:sparql [
+        sh:message "Fixture not used by any test - dead code?" ;
+        sh:prefixes test: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a test:Fixture .
+                FILTER NOT EXISTS { ?test test:usesFixture $this }
+            }
+        """ ;
+        sh:severity sh:Info
+    ] .
+
+# ============================================================================
+# OVERALL TEST QUALITY SHAPE
+# ============================================================================
+
+test:OverallTestQualityShape a sh:NodeShape ;
+    sh:name "Overall Test Quality Validation" ;
+
+    # Critical: Failed tests must be investigated
+    sh:sparql [
+        sh:message "Test failures detected - requires investigation" ;
+        sh:prefixes test: ;
+        sh:select """
+            SELECT $this ?testName
+            WHERE {
+                $this test:testName ?testName ;
+                      test:testStatus "failed" .
+            }
+        """ ;
+        sh:severity sh:Violation
+    ] ;
+
+    # Warning: Skipped tests should have reason
+    sh:sparql [
+        sh:message "Skipped test without clear reason" ;
+        sh:prefixes test: ;
+        sh:select """
+            SELECT $this ?testName
+            WHERE {
+                $this test:testName ?testName ;
+                      test:testStatus "skipped" .
+                FILTER NOT EXISTS { $this rdfs:comment ?reason }
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .

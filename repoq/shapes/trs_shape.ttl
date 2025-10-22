@@ -1,0 +1,153 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix trs: <http://example.org/vocab/trs#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# TRS RULE SHAPE
+# ============================================================================
+
+trs:RuleShape a sh:NodeShape ;
+    sh:targetClass trs:Rule ;
+    sh:name "TRS Rule Shape" ;
+
+    # Must have LHS and RHS
+    sh:property [
+        sh:path trs:leftHandSide ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Rule must have left-hand side"
+    ] ;
+
+    sh:property [
+        sh:path trs:rightHandSide ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Rule must have right-hand side"
+    ] ;
+
+    # Should have termination measure
+    sh:property [
+        sh:path trs:terminationMeasure ;
+        sh:minCount 0 ;
+        sh:message "Rule should have termination measure for safety"
+    ] .
+
+# ============================================================================
+# REWRITE SYSTEM SHAPE
+# ============================================================================
+
+trs:RewriteSystemShape a sh:NodeShape ;
+    sh:targetClass trs:RewriteSystem ;
+    sh:name "Rewrite System Shape" ;
+
+    # Confluence must be proven or attempted
+    sh:property [
+        sh:path trs:confluenceProven ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Confluence status must be recorded"
+    ] ;
+
+    # Termination must be proven or attempted
+    sh:property [
+        sh:path trs:terminationProven ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Termination status must be recorded"
+    ] ;
+
+    # Soundness must be proven
+    sh:property [
+        sh:path trs:soundnessProven ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:message "Soundness status must be recorded"
+    ] ;
+
+    # CRITICAL: Block if soundness not proven
+    sh:sparql [
+        sh:message "Soundness not proven - BLOCKS merge" ;
+        sh:prefixes trs: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this trs:soundnessProven false .
+            }
+        """ ;
+        sh:severity sh:Violation
+    ] .
+
+# ============================================================================
+# CRITICAL PAIR SHAPE
+# ============================================================================
+
+trs:CriticalPairShape a sh:NodeShape ;
+    sh:targetClass trs:CriticalPair ;
+    sh:name "Critical Pair Shape" ;
+
+    # Must have two terms
+    sh:property [
+        sh:path trs:leftTerm ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    sh:property [
+        sh:path trs:rightTerm ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # Must have joinability status
+    sh:property [
+        sh:path trs:joinable ;
+        sh:datatype xsd:boolean ;
+        sh:minCount 1 ;
+        sh:maxCount 1
+    ] ;
+
+    # CRITICAL: Non-joinable pairs block confluence
+    sh:sparql [
+        sh:message "Non-joinable critical pair - BLOCKS confluence" ;
+        sh:prefixes trs: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this trs:joinable false .
+            }
+        """ ;
+        sh:severity sh:Violation
+    ] .
+
+# ============================================================================
+# COMPLETION SHAPE
+# ============================================================================
+
+trs:CompletionShape a sh:NodeShape ;
+    sh:targetClass trs:RewriteSystem ;
+    sh:name "Completion Validation" ;
+
+    # If completion attempted, track attempts
+    sh:property [
+        sh:path trs:completionAttempts ;
+        sh:datatype xsd:nonNegativeInteger ;
+        sh:minInclusive 0
+    ] ;
+
+    # Warn if completion failed
+    sh:sparql [
+        sh:message "Completion attempted but failed - manual review needed" ;
+        sh:prefixes trs: ;
+        sh:select """
+            SELECT $this ?attempts
+            WHERE {
+                $this trs:completionAttempts ?attempts ;
+                      trs:completionSucceeded false .
+                FILTER (?attempts > 0)
+            }
+        """ ;
+        sh:severity sh:Warning
+    ] .

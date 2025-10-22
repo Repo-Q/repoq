@@ -1,0 +1,389 @@
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/quality#> a owl:Ontology ;
+    dcterms:title "RepoQ Quality Ontology" ;
+    dcterms:description """
+        Ontology for quality metrics, gates, certificates, refactoring.
+        Supports ZAG framework (PCQ/PCE), quality certificates, ΔQ estimation.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "Quality ontology with certificates and ΔQ refactoring support" .
+
+# ============================================================================
+# QUALITY METRICS
+# ============================================================================
+
+quality:Metric a owl:Class ;
+    rdfs:label "Quality Metric" ;
+    rdfs:comment """
+        Measurable indicator of code quality.
+        Examples: complexity, maintainability, coverage, duplication.
+    """ .
+
+quality:ComplexityMetric a owl:Class ;
+    rdfs:subClassOf quality:Metric ;
+    rdfs:label "Complexity Metric" ;
+    rdfs:comment "Cyclomatic, cognitive, essential complexity" .
+
+quality:MaintainabilityMetric a owl:Class ;
+    rdfs:subClassOf quality:Metric ;
+    rdfs:label "Maintainability Metric" ;
+    rdfs:comment "Maintainability index, comment ratio, etc." .
+
+quality:CoverageMetric a owl:Class ;
+    rdfs:subClassOf quality:Metric ;
+    rdfs:label "Coverage Metric" ;
+    rdfs:comment "Test coverage (line, branch, concept)" .
+
+quality:DuplicationMetric a owl:Class ;
+    rdfs:subClassOf quality:Metric ;
+    rdfs:label "Duplication Metric" ;
+    rdfs:comment "Code duplication percentage" .
+
+quality:HotnessMetric a owl:Class ;
+    rdfs:subClassOf quality:Metric ;
+    rdfs:label "Hotness Metric" ;
+    rdfs:comment "Combination of complexity and churn (temporal coupling)" .
+
+# ============================================================================
+# QUALITY GATES
+# ============================================================================
+
+quality:Gate a owl:Class ;
+    rdfs:label "Quality Gate" ;
+    rdfs:comment """
+        Quality checkpoint that must pass before merge/release.
+        Examples: coverage > 80%, complexity < 15, no critical issues.
+    """ .
+
+quality:SoundnessGate a owl:Class ;
+    rdfs:subClassOf quality:Gate ;
+    rdfs:label "Soundness Gate" ;
+    rdfs:comment """
+        Validates semantic correctness.
+        TRS rules preserve meaning, no broken invariants.
+    """ .
+
+quality:ConfluenceGate a owl:Class ;
+    rdfs:subClassOf quality:Gate ;
+    rdfs:label "Confluence Gate" ;
+    rdfs:comment """
+        Validates Church-Rosser property.
+        Critical pairs are joinable, system is confluent.
+    """ .
+
+quality:TerminationGate a owl:Class ;
+    rdfs:subClassOf quality:Gate ;
+    rdfs:label "Termination Gate" ;
+    rdfs:comment """
+        Validates that operations terminate.
+        Well-founded measures, bounded iterations.
+    """ .
+
+quality:CoverageGate a owl:Class ;
+    rdfs:subClassOf quality:Gate ;
+    rdfs:label "Coverage Gate" ;
+    rdfs:comment "Minimum test coverage threshold" .
+
+quality:ComplexityGate a owl:Class ;
+    rdfs:subClassOf quality:Gate ;
+    rdfs:label "Complexity Gate" ;
+    rdfs:comment "Maximum complexity threshold" .
+
+# ============================================================================
+# GATE PROPERTIES
+# ============================================================================
+
+quality:gateStatus a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Gate ;
+    rdfs:range quality:GateStatus ;
+    rdfs:label "Gate Status" .
+
+quality:GateStatus a rdfs:Datatype ;
+    owl:oneOf ("passed" "failed" "warning" "skipped") .
+
+quality:threshold a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Gate ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Threshold" ;
+    rdfs:comment "Threshold value for gate (e.g., 80.0 for coverage)" .
+
+quality:actualValue a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Gate ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Actual Value" ;
+    rdfs:comment "Measured value being compared to threshold" .
+
+quality:blocksMerge a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Gate ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Blocks Merge" ;
+    rdfs:comment "True if failing this gate blocks PR merge" .
+
+quality:violation a owl:DatatypeProperty ;
+    rdfs:domain quality:Gate ;
+    rdfs:range xsd:string ;
+    rdfs:label "Violation" ;
+    rdfs:comment "Description of gate violation (if failed)" .
+
+# ============================================================================
+# QUALITY CERTIFICATES (ZAG Framework)
+# ============================================================================
+
+quality:Certificate a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Quality Certificate" ;
+    rdfs:comment """
+        Verifiable quality certificate following ZAG framework.
+        Contains PCQ (Program Code Quality) and PCE (Program Code Execution).
+        Cryptographically signed, traceable to analysis.
+    """ ;
+    rdfs:seeAlso <https://github.com/vdpappu/zag-aiq> .
+
+quality:PCQ a owl:Class ;
+    rdfs:subClassOf quality:Certificate ;
+    rdfs:label "Program Code Quality Certificate" ;
+    rdfs:comment """
+        Certificate for static code quality (complexity, maintainability).
+        Part of ZAG framework.
+    """ .
+
+quality:PCE a owl:Class ;
+    rdfs:subClassOf quality:Certificate ;
+    rdfs:label "Program Code Execution Certificate" ;
+    rdfs:comment """
+        Certificate for dynamic properties (test coverage, performance).
+        Part of ZAG framework.
+    """ .
+
+quality:assuranceLevel a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Certificate ;
+    rdfs:range quality:AssuranceLevel ;
+    rdfs:label "Assurance Level" .
+
+quality:AssuranceLevel a rdfs:Datatype ;
+    owl:oneOf ("basic" "standard" "enhanced" "formal") ;
+    rdfs:comment """
+        basic: Automated checks only
+        standard: + Human review
+        enhanced: + Mathematical proofs
+        formal: + Mechanized verification (Lean4)
+    """ .
+
+quality:issuedBy a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Certificate ;
+    rdfs:range prov:Agent ;
+    rdfs:label "Issued By" ;
+    rdfs:comment "Agent (RepoQ) that issued certificate" .
+
+quality:issuedAt a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Certificate ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "Issued At" ;
+    rdfs:comment "Timestamp of certificate issuance" .
+
+quality:expiresAt a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Certificate ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "Expires At" ;
+    rdfs:comment "Certificate expiration timestamp" .
+
+quality:certifiesProject a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Certificate ;
+    rdfs:range repo:Project ;
+    rdfs:label "Certifies Project" .
+
+quality:certifiesCommit a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Certificate ;
+    rdfs:range xsd:string ;
+    rdfs:label "Certifies Commit" ;
+    rdfs:comment "Git commit SHA certified" .
+
+quality:signature a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Certificate ;
+    rdfs:range xsd:string ;
+    rdfs:label "Signature" ;
+    rdfs:comment "Cryptographic signature (ed25519, etc.)" .
+
+# ============================================================================
+# REFACTORING RECOMMENDATIONS
+# ============================================================================
+
+quality:Recommendation a owl:Class ;
+    rdfs:label "Refactoring Recommendation" ;
+    rdfs:comment """
+        Suggestion to improve code quality through refactoring.
+        Includes ΔQ (expected quality improvement).
+    """ .
+
+quality:ExtractFunctionRecommendation a owl:Class ;
+    rdfs:subClassOf quality:Recommendation ;
+    rdfs:label "Extract Function" ;
+    rdfs:comment "Suggest extracting helper function" .
+
+quality:SimplifyComplexityRecommendation a owl:Class ;
+    rdfs:subClassOf quality:Recommendation ;
+    rdfs:label "Simplify Complexity" ;
+    rdfs:comment "Suggest reducing cyclomatic complexity" .
+
+quality:ImproveTestCoverageRecommendation a owl:Class ;
+    rdfs:subClassOf quality:Recommendation ;
+    rdfs:label "Improve Test Coverage" ;
+    rdfs:comment "Suggest adding tests for uncovered code" .
+
+quality:targetsFile a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range repo:File ;
+    rdfs:label "Targets File" .
+
+quality:targetsFunction a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range xsd:string ;
+    rdfs:label "Targets Function" ;
+    rdfs:comment "Function name to refactor" .
+
+quality:priority a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range quality:Priority ;
+    rdfs:label "Priority" .
+
+quality:Priority a rdfs:Datatype ;
+    owl:oneOf ("critical" "high" "medium" "low") .
+
+# ============================================================================
+# DELTA Q (ΔQ) - Quality Improvement Estimation
+# ============================================================================
+
+quality:deltaQ a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Delta Q (ΔQ)" ;
+    rdfs:comment """
+        Expected quality improvement from applying recommendation.
+        Formula: ΔQ = (CCN_delta × 5.0 + LOC_delta × 0.5) × file_factor
+        Higher ΔQ = higher priority refactoring.
+    """ ;
+    owl:minInclusive 0.0 .
+
+quality:estimatedEffort a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range xsd:string ;
+    rdfs:label "Estimated Effort" ;
+    rdfs:comment "Human-readable effort estimate (e.g., '2-3 hours')" .
+
+quality:currentComplexity a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Current Complexity" .
+
+quality:targetComplexity a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Target Complexity" .
+
+quality:improvementPercentage a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:Recommendation ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Improvement Percentage" ;
+    rdfs:comment "ΔQ as percentage of file's total potential" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 100.0 .
+
+# ============================================================================
+# QUALITY SCORE
+# ============================================================================
+
+quality:QualityScore a owl:Class ;
+    rdfs:label "Quality Score" ;
+    rdfs:comment """
+        Composite quality score (0-10 scale).
+        Aggregates multiple metrics with configurable weights.
+    """ .
+
+quality:scoreValue a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:QualityScore ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Score Value" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 10.0 .
+
+quality:calculatedAt a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain quality:QualityScore ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "Calculated At" .
+
+quality:basedOnMetrics a owl:ObjectProperty ;
+    rdfs:domain quality:QualityScore ;
+    rdfs:range quality:Metric ;
+    rdfs:label "Based On Metrics" .
+
+quality:weight a owl:DatatypeProperty ;
+    rdfs:domain quality:Metric ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Weight" ;
+    rdfs:comment "Weight in quality score calculation (0.0-1.0)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 1.0 .
+
+# ============================================================================
+# AXIOMS
+# ============================================================================
+
+# Every gate must have status
+quality:Gate rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty quality:gateStatus ;
+    owl:cardinality 1
+] .
+
+# Every certificate must have assurance level and issuance timestamp
+quality:Certificate rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty quality:assuranceLevel ;
+    owl:cardinality 1
+] .
+
+quality:Certificate rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty quality:issuedAt ;
+    owl:cardinality 1
+] .
+
+# Every recommendation must have priority and ΔQ
+quality:Recommendation rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty quality:priority ;
+    owl:cardinality 1
+] .
+
+quality:Recommendation rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty quality:deltaQ ;
+    owl:cardinality 1
+] .
+
+# Quality score must have value
+quality:QualityScore rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty quality:scoreValue ;
+    owl:cardinality 1
+] .
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+quality:Quality a owl:AnnotationProperty ;
+    rdfs:label "Quality reference" ;
+    rdfs:seeAlso <https://github.com/vdpappu/zag-aiq> ,
+                 <https://en.wikipedia.org/wiki/Software_quality> ,
+                 <https://martinfowler.com/articles/continuousIntegration.html> .
