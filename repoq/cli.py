@@ -849,75 +849,131 @@ def _run_command(
             shutil.rmtree(cleanup, ignore_errors=True)
 
 
-def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str, Any]:
-    """Run TRS property verification."""
-    # Import here to avoid circular dependencies
+def _build_pytest_command(test_file: str, level: str) -> list[str]:
+    """Build pytest command with appropriate options based on verification level.
+    
+    Args:
+        test_file: Path to test file
+        level: Verification level ('basic', 'advanced', or 'full')
+        
+    Returns:
+        List of command arguments for subprocess
+    """
+    python_exe = sys.executable
+    cmd = [python_exe, "-m", "pytest", test_file, "-v", "--tb=short"]
+    
+    if level == "basic":
+        cmd.append("-k 'not test_advanced'")
+    elif level == "advanced":
+        cmd.extend(["--hypothesis-max-examples=1000"])
+    
+    return cmd
+
+
+def _run_single_trs_test(test_file: str, level: str) -> dict[str, Any]:
+    """Run a single TRS property test file.
+    
+    Args:
+        test_file: Path to test file
+        level: Verification level
+        
+    Returns:
+        Dictionary with test results (passed, exit_code, stdout, stderr)
+    """
+    import subprocess
+    
+    cmd = _build_pytest_command(test_file, level)
+    
     try:
-        import subprocess
+        result = subprocess.run(cmd, capture_output=True, text=True, cwd=Path.cwd())
+        
+        return {
+            "passed": result.returncode == 0,
+            "exit_code": result.returncode,
+            "stdout": result.stdout[-500:] if result.stdout else "",  # Last 500 chars
+            "stderr": result.stderr[-500:] if result.stderr else "",
+        }
+    except Exception as e:
+        return {"passed": False, "error": str(e)}
 
-        # Run property-based tests for TRS verification
-        test_files = [
-            "tests/properties/test_metrics_normalization.py",
-            "tests/properties/test_filters_normalization.py",
-            "tests/properties/test_spdx_normalization.py",
-            "tests/properties/test_semver_normalization.py",
-            "tests/properties/test_rdf_normalization.py",
-        ]
 
-        results = {}
-        all_passed = True
+def _format_test_result(system_name: str, result: dict[str, Any], quiet: bool) -> bool:
+    """Format and print test result.
+    
+    Args:
+        system_name: Name of the TRS system being tested
+        result: Test result dictionary
+        quiet: Whether to suppress output
+        
+    Returns:
+        True if test passed, False otherwise
+    """
+    passed = result.get("passed", False)
+    
+    if not quiet:
+        if passed:
+            print(f"    ✅ {system_name} passed")
+        else:
+            error = result.get("error")
+            if error:
+                print(f"    ❌ {system_name} error: {error}")
+            else:
+                print(f"    ❌ {system_name} failed")
+    
+    return passed
 
-        for test_file in test_files:
-            if not Path(test_file).exists():
-                continue
 
-            system_name = Path(test_file).stem.replace("test_", "").replace("_normalization", "")
-
-            if not quiet:
-                print(f"  Testing {system_name.upper()} TRS...")
-
-            # Run pytest for this file
-            python_exe = sys.executable  # Use current Python interpreter
-            cmd = [python_exe, "-m", "pytest", test_file, "-v", "--tb=short"]
-            if level == "basic":
-                cmd.append("-k 'not test_advanced'")
-            elif level == "advanced":
-                cmd.extend(["--hypothesis-max-examples=1000"])
-
-            try:
-                result = subprocess.run(cmd, capture_output=True, text=True, cwd=Path.cwd())
-
-                passed = result.returncode == 0
-                results[system_name] = {
-                    "passed": passed,
-                    "exit_code": result.returncode,
-                    "stdout": result.stdout[-500:] if result.stdout else "",  # Last 500 chars
-                    "stderr": result.stderr[-500:] if result.stderr else "",
-                }
-
-                if not passed:
-                    all_passed = False
-                    if not quiet:
-                        print(f"    ❌ {system_name} failed")
-                    if fail_fast:
-                        break
-                else:
-                    if not quiet:
-                        print(f"    ✅ {system_name} passed")
-
-            except Exception as e:
-                results[system_name] = {"passed": False, "error": str(e)}
-                all_passed = False
-                if not quiet:
-                    print(f"    ❌ {system_name} error: {e}")
-                if fail_fast:
-                    break
-
-        results["all_passed"] = all_passed
-        return results
-
+def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str, Any]:
+    """Run TRS property verification.
+    
+    Args:
+        level: Verification level ('basic', 'advanced', or 'full')
+        quiet: Whether to suppress output
+        fail_fast: Stop on first failure
+        
+    Returns:
+        Dictionary with results for each TRS system and overall status
+    """
+    try:
+        import subprocess  # noqa: F401 (imported for _run_single_trs_test)
     except ImportError:
-        return {"error": "pytest not available", "all_passed": False}
+        return {"error": "subprocess not available", "all_passed": False}
+
+    # Property-based test files for TRS verification
+    test_files = [
+        "tests/properties/test_metrics_normalization.py",
+        "tests/properties/test_filters_normalization.py",
+        "tests/properties/test_spdx_normalization.py",
+        "tests/properties/test_semver_normalization.py",
+        "tests/properties/test_rdf_normalization.py",
+    ]
+
+    results = {}
+    all_passed = True
+
+    for test_file in test_files:
+        if not Path(test_file).exists():
+            continue
+
+        system_name = Path(test_file).stem.replace("test_", "").replace("_normalization", "")
+
+        if not quiet:
+            print(f"  Testing {system_name.upper()} TRS...")
+
+        # Run test
+        result = _run_single_trs_test(test_file, level)
+        results[system_name] = result
+
+        # Format output and check status
+        passed = _format_test_result(system_name, result, quiet)
+        
+        if not passed:
+            all_passed = False
+            if fail_fast:
+                break
+
+    results["all_passed"] = all_passed
+    return results
 
 
 def _run_self_application(quiet: bool) -> Dict[str, Any]:
