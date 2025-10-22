@@ -320,6 +320,76 @@ repo:authorEmail a owl:DatatypeProperty ;
     rdfs:label "author email" ;
     rdfs:comment "Author's email address" .
 
+# Test classes
+# ============================================================================
+repo:TestSuite a owl:Class ;
+    rdfs:label "Test Suite" ;
+    rdfs:comment "A collection of tests (usually a test file or directory)" .
+
+repo:Test a owl:Class ;
+    rdfs:label "Test" ;
+    rdfs:comment "A test case or test function" .
+
+repo:TestClass a owl:Class ;
+    rdfs:subClassOf repo:Test ;
+    rdfs:label "Test Class" ;
+    rdfs:comment "A test class (e.g., TestFoo)" .
+
+repo:TestFunction a owl:Class ;
+    rdfs:subClassOf repo:Test ;
+    rdfs:label "Test Function" ;
+    rdfs:comment "A test function (e.g., test_bar)" .
+
+# Test properties
+# ============================================================================
+repo:testName a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Test ;
+    rdfs:range xsd:string ;
+    rdfs:label "test name" ;
+    rdfs:comment "Name of the test (e.g., 'test_foo', 'TestBar')" .
+
+repo:testNodeId a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Test ;
+    rdfs:range xsd:string ;
+    rdfs:label "test node ID" ;
+    rdfs:comment "Pytest node ID (e.g., 'tests/test_foo.py::test_bar')" .
+
+repo:testFile a owl:ObjectProperty ;
+    rdfs:domain repo:Test ;
+    rdfs:range repo:File ;
+    rdfs:label "test file" ;
+    rdfs:comment "File containing the test" .
+
+repo:hasTest a owl:ObjectProperty ;
+    rdfs:domain repo:TestSuite ;
+    rdfs:range repo:Test ;
+    rdfs:label "has test" ;
+    rdfs:comment "Test suite contains this test" .
+
+repo:parentTest a owl:ObjectProperty ;
+    rdfs:domain repo:Test ;
+    rdfs:range repo:Test ;
+    rdfs:label "parent test" ;
+    rdfs:comment "Parent test (e.g., test class for test function)" .
+
+repo:testCount a owl:DatatypeProperty ;
+    rdfs:domain repo:TestSuite ;
+    rdfs:range xsd:integer ;
+    rdfs:label "test count" ;
+    rdfs:comment "Total number of tests in suite" .
+
+repo:testClassCount a owl:DatatypeProperty ;
+    rdfs:domain repo:TestSuite ;
+    rdfs:range xsd:integer ;
+    rdfs:label "test class count" ;
+    rdfs:comment "Number of test classes" .
+
+repo:testFunctionCount a owl:DatatypeProperty ;
+    rdfs:domain repo:TestSuite ;
+    rdfs:range xsd:integer ;
+    rdfs:label "test function count" ;
+    rdfs:comment "Number of test functions" .
+
 # ============================================================================
 # PROV-O alignment (for traceability)
 # ============================================================================

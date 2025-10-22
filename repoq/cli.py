@@ -2016,6 +2016,7 @@ def twin_stats(
         ontologies = dt.ontologies_graph
         commits = dt.get_commits_rdf()  # All commits (no limit)
         files = dt.get_files_rdf()
+        tests = dt.get_tests_rdf()
 
         # Count types
         from repoq.core.digital_twin import REPO
@@ -2024,16 +2025,20 @@ def twin_stats(
         num_files = len(list(files.subjects(RDF.type, REPO.File))) + len(
             list(files.subjects(RDF.type, REPO.PythonFile))
         )
+        num_tests = len(list(tests.subjects(RDF.type, REPO.TestFunction))) + len(
+            list(tests.subjects(RDF.type, REPO.TestClass))
+        )
 
         # Format output
         stats_text = f"""
 [cyan]Static ABox:[/cyan]  {len(static):,} triples (.repoq/)
 [cyan]TBox:[/cyan]         {len(ontologies):,} triples (ontologies)
-[cyan]Dynamic ABox:[/cyan] {len(commits) + len(files):,} triples
+[cyan]Dynamic ABox:[/cyan] {len(commits) + len(files) + len(tests):,} triples
   - Commits:     {num_commits:,} ({len(commits):,} triples)
   - Files:       {num_files:,} ({len(files):,} triples)
+  - Tests:       {num_tests:,} ({len(tests):,} triples)
 
-[bold]Total:[/bold]        {len(static) + len(ontologies) + len(commits) + len(files):,} triples
+[bold]Total:[/bold]        {len(static) + len(ontologies) + len(commits) + len(files) + len(tests):,} triples
 """
 
         console.print(

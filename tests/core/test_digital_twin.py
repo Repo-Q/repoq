@@ -219,13 +219,73 @@ class TestDigitalTwinDynamicGeneration:
             assert "tests" not in path_str, f"Found test file: {path_str}"
             assert ".venv" not in path_str, f"Found .venv file: {path_str}"
 
-    def test_get_tests_rdf_empty(self):
-        """Should return empty graph (not implemented yet)."""
+    def test_get_tests_rdf_returns_graph(self):
+        """Should return Graph with tests."""
         dt = DigitalTwin()
         graph = dt.get_tests_rdf()
 
         assert isinstance(graph, Graph)
-        assert len(graph) == 0  # Not implemented yet
+        # Should have tests (our own tests!)
+        assert len(graph) > 0
+
+    def test_get_tests_rdf_has_test_suite(self):
+        """Should include repo:TestSuite."""
+        dt = DigitalTwin()
+        graph = dt.get_tests_rdf()
+
+        # Should have TestSuite
+        suites = list(graph.subjects(RDF.type, REPO.TestSuite))
+        assert len(suites) == 1, "Expected exactly one TestSuite"
+
+    def test_get_tests_rdf_has_test_triples(self):
+        """Should include repo:Test triples."""
+        dt = DigitalTwin()
+        graph = dt.get_tests_rdf()
+
+        # Should have Test instances
+        tests = list(graph.subjects(RDF.type, REPO.TestFunction)) + list(
+            graph.subjects(RDF.type, REPO.TestClass)
+        )
+        assert len(tests) > 0, "Expected test triples"
+
+    def test_get_tests_rdf_has_test_properties(self):
+        """Should include testName, testNodeId for each test."""
+        dt = DigitalTwin()
+        graph = dt.get_tests_rdf()
+
+        tests = list(graph.subjects(RDF.type, REPO.TestFunction))
+        if tests:
+            test = tests[0]
+
+            # Must have testName
+            names = list(graph.objects(test, REPO.testName))
+            assert len(names) == 1
+
+            # Must have testNodeId
+            node_ids = list(graph.objects(test, REPO.testNodeId))
+            assert len(node_ids) == 1
+            assert "::" in str(node_ids[0])  # Pytest format
+
+    def test_get_tests_rdf_counts_tests(self):
+        """TestSuite should have test counts."""
+        dt = DigitalTwin()
+        graph = dt.get_tests_rdf()
+
+        suites = list(graph.subjects(RDF.type, REPO.TestSuite))
+        suite = suites[0]
+
+        # Must have testCount
+        counts = list(graph.objects(suite, REPO.testCount))
+        assert len(counts) == 1
+        assert int(counts[0]) > 0
+
+    def test_get_tests_rdf_empty(self):
+        """Should return non-empty graph (now implemented)."""
+        dt = DigitalTwin()
+        graph = dt.get_tests_rdf()
+
+        assert isinstance(graph, Graph)
+        assert len(graph) > 0  # Now implemented
 
 
 class TestDigitalTwinCompleteGraph:

@@ -365,11 +365,126 @@ class DigitalTwin:
     def get_tests_rdf(self) -> Graph:
         """Generate RDF from test suite (pytest collection).
 
+        Uses pytest --collect-only to discover tests without running them.
+
         Returns:
-            Graph with test:Test, test:TestSuite triples
+            Graph with repo:Test, repo:TestSuite triples
         """
-        # TODO: Implement with pytest collection
         graph = Graph()
+        graph.bind("repo", REPO)
+
+        # Check if tests directory exists
+        tests_dir = self.workspace_root / "tests"
+        if not tests_dir.exists():
+            logger.info("No tests directory found, skipping test collection")
+            return graph
+
+        try:
+            import subprocess
+            import sys
+        except ImportError:
+            logger.warning("subprocess not available")
+            return graph
+
+        # Run pytest --collect-only to get test list
+        try:
+            result = subprocess.run(
+                [sys.executable, "-m", "pytest", str(tests_dir), "--collect-only", "-q"],
+                cwd=self.workspace_root,
+                capture_output=True,
+                text=True,
+                timeout=30,
+            )
+        except Exception as e:
+            logger.error(f"pytest collection failed: {e}")
+            return graph
+
+        # Parse output
+        lines = result.stdout.splitlines()
+
+        # Create TestSuite
+        suite_uri = URIRef("https://repoq.dev/resource/testsuite/main")
+        graph.add((suite_uri, RDF.type, REPO.TestSuite))
+
+        # Count tests
+        test_count = 0
+        test_class_count = 0
+        test_function_count = 0
+
+        # Process collected tests
+        for line in lines:
+            line = line.strip()
+
+            # Skip non-test lines
+            if not line or "::" not in line:
+                continue
+
+            # Node ID (e.g., "tests/test_foo.py::TestBar::test_baz")
+            node_id = line
+
+            # Skip pytest internal markers
+            if line.startswith("<"):
+                continue
+
+            test_count += 1
+
+            # Test URI
+            test_uri = URIRef(f"https://repoq.dev/resource/test/{node_id}")
+
+            # Determine test type
+            parts = node_id.split("::")
+            if len(parts) >= 2:
+                class_or_func = parts[1]
+                if class_or_func[0].isupper():
+                    # Test class
+                    graph.add((test_uri, RDF.type, REPO.TestClass))
+                    test_class_count += 1
+                else:
+                    # Test function
+                    graph.add((test_uri, RDF.type, REPO.TestFunction))
+                    test_function_count += 1
+            else:
+                # Top-level test function
+                graph.add((test_uri, RDF.type, REPO.TestFunction))
+                test_function_count += 1
+
+            # Test name (last part)
+            test_name = parts[-1] if "::" in node_id else node_id
+            graph.add((test_uri, REPO.testName, Literal(test_name)))
+
+            # Node ID
+            graph.add((test_uri, REPO.testNodeId, Literal(node_id)))
+
+            # Test file
+            file_path_str = parts[0] if "::" in node_id else node_id
+            try:
+                file_uri = URIRef(f"https://repoq.dev/resource/file/{file_path_str}")
+                graph.add((test_uri, REPO.testFile, file_uri))
+            except Exception as e:
+                logger.warning(f"Could not determine test file for {node_id}: {e}")
+
+            # Link to suite
+            graph.add((suite_uri, REPO.hasTest, test_uri))
+
+        # Suite statistics
+        if test_count > 0:
+            graph.add((suite_uri, REPO.testCount, Literal(test_count, datatype=XSD.integer)))
+            graph.add(
+                (suite_uri, REPO.testClassCount, Literal(test_class_count, datatype=XSD.integer))
+            )
+            graph.add(
+                (
+                    suite_uri,
+                    REPO.testFunctionCount,
+                    Literal(test_function_count, datatype=XSD.integer),
+                )
+            )
+
+            logger.info(
+                f"Generated {len(graph)} triples from {test_count} tests "
+                f"({test_class_count} classes, {test_function_count} functions)"
+            )
+
         return graph
 
     def get_complete_graph(self, include_ontologies: bool = False) -> Graph:

@@ -8,6 +8,20 @@ All notable changes to RepoQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.0.0-beta.3] - 2025-10-22
+
+**Digital Twin Complete: tests → RDF (10,781 triples total)**
+
+### Added
+
+- Test ontology: repo:Test, repo:TestSuite classes in repo.ttl
+- get_tests_rdf(): pytest collection → RDF (569 tests, 2,849 triples)
+- Tests for get_tests_rdf(): 5 test cases (30/30 passing total)
+
+### Changed
+
+- CLI twin stats: now shows tests count (569 tests)
+
 ## [v2.0.0-beta.2] - 2025-10-22
 
 **Digital Twin API: Dynamic RDF generation (commits, files, SPARQL)**
@@ -79,3 +93,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - VDAD meta-ontology (.repoq/ontologies/vdad.ttl, 400+ lines) (`49d6909`)
 - Extractor: Markdown → RDF (scripts/extract_vdad_rdf.py, 250+ lines) (`49d6909`)
+

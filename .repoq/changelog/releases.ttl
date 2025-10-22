@@ -8,6 +8,49 @@
 # RepoQ Releases (Changelog SSoT)
 # ============================================================================
 
+# v2.0.0-beta.3: Digital Twin Complete (tests included)
+# ============================================================================
+changelog:v2-0-0-beta-3 a changelog:Release ;
+    changelog:version "v2.0.0-beta.3" ;
+    changelog:date "2025-10-22"^^xsd:date ;
+    changelog:tag "v2.0.0-beta.3" ;
+    changelog:summary "Digital Twin Complete: tests → RDF (10,781 triples total)" ;
+
+    changelog:change [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "Test ontology: repo:Test, repo:TestSuite classes in repo.ttl" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 56 ;
+        changelog:traces <https://repoq.dev/adr/ADR-015>
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "get_tests_rdf(): pytest collection → RDF (569 tests, 2,849 triples)" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 120 ;
+        changelog:implements <https://repoq.dev/requirement/FR-11> ;
+        changelog:traces <https://repoq.dev/adr/ADR-015>
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "Tests for get_tests_rdf(): 5 test cases (30/30 passing total)" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 60 ;
+        changelog:testsAdded 5
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeChanged ;
+        changelog:description "CLI twin stats: now shows tests count (569 tests)" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 7 ;
+        changelog:linesRemoved 3
+    ] .
+
+
 # v2.0.0-beta.2: Digital Twin API (MILESTONE)
 # ============================================================================
 changelog:v2-0-0-beta-2 a changelog:Release ;
