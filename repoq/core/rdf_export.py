@@ -133,7 +133,10 @@ def export_ttl(
     enrich_meta: bool = True,
     enrich_test_coverage: bool = False,
     enrich_trs_rules: bool = False,
+    enrich_quality_recommendations: bool = False,
     coverage_path: str = "coverage.json",
+    top_k_recommendations: int = 10,
+    min_delta_q: float = 3.0,
 ) -> None:
     """Export Project to RDF Turtle format.
 
@@ -147,7 +150,10 @@ def export_ttl(
         enrich_meta: If True, enrich with meta-loop ontology triples
         enrich_test_coverage: If True, enrich with test coverage from pytest
         enrich_trs_rules: If True, enrich with TRS rules from normalize/
+        enrich_quality_recommendations: If True, enrich with quality:Recommendation triples
         coverage_path: Path to coverage.json file (default: "coverage.json")
+        top_k_recommendations: Number of top recommendations to generate (default: 10)
+        min_delta_q: Minimum ΔQ threshold for recommendations (default: 3.0)
 
     Raises:
         RuntimeError: If rdflib is not installed
@@ -198,6 +204,18 @@ def export_ttl(
             except Exception as e:
                 logger.warning(f"Failed to enrich with TRS rules: {e}")
 
+        # Enrich with quality recommendations
+        if enrich_quality_recommendations:
+            from .quality_recommendations import enrich_graph_with_quality_recommendations
+
+            try:
+                enrich_graph_with_quality_recommendations(
+                    g, project, top_k=top_k_recommendations, min_delta_q=min_delta_q
+                )
+                logger.info("Successfully enriched RDF with quality recommendations")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with quality recommendations: {e}")
+
         g.serialize(destination=ttl_path, format="turtle")
         logger.info(f"Successfully exported canonical RDF Turtle to {ttl_path}")
     except OSError as e:
@@ -216,7 +234,10 @@ def validate_shapes(
     enrich_meta: bool = True,
     enrich_test_coverage: bool = False,
     enrich_trs_rules: bool = False,
+    enrich_quality_recommendations: bool = False,
     coverage_path: str = "coverage.json",
+    top_k_recommendations: int = 10,
+    min_delta_q: float = 3.0,
 ) -> dict:
     """Validate Project RDF data against SHACL shapes.
 
@@ -231,7 +252,10 @@ def validate_shapes(
         enrich_meta: If True, enrich with meta-loop ontology triples before validation
         enrich_test_coverage: If True, enrich with test coverage from pytest
         enrich_trs_rules: If True, enrich with TRS rules from normalize/
+        enrich_quality_recommendations: If True, enrich with quality:Recommendation triples
         coverage_path: Path to coverage.json file (default: "coverage.json")
+        top_k_recommendations: Number of top recommendations to generate (default: 10)
+        min_delta_q: Minimum ΔQ threshold for recommendations (default: 3.0)
 
     Returns:
         Dictionary with keys:
@@ -253,7 +277,6 @@ def validate_shapes(
     try:
         from pyshacl import validate
         from rdflib import Graph
-        from rdflib.namespace import SH
     except ImportError as e:
         raise RuntimeError(
             "pyshacl and rdflib required for validation (pip install repoq[full])"
@@ -294,6 +317,18 @@ def validate_shapes(
                 logger.info("Successfully enriched RDF with TRS rules for validation")
             except Exception as e:
                 logger.warning(f"Failed to enrich with TRS rules: {e}")
+
+        # Enrich with quality recommendations
+        if enrich_quality_recommendations:
+            from .quality_recommendations import enrich_graph_with_quality_recommendations
+
+            try:
+                enrich_graph_with_quality_recommendations(
+                    data_graph, project, top_k=top_k_recommendations, min_delta_q=min_delta_q
+                )
+                logger.info("Successfully enriched RDF with quality recommendations for validation")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with quality recommendations: {e}")
 
         shapes_graph = Graph()
         import os
