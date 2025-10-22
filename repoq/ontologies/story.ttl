@@ -1,0 +1,285 @@
+@prefix story: <https://repoq.io/story#> .
+@prefix vdad: <https://repoq.io/vdad#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+# ============================================================================
+# RepoQ Story Ontology - Development Provenance & Traceability
+# ============================================================================
+# Purpose: Capture VDAD phase execution history with full traceability
+# Version: 1.0.0 (POC - Phase 1)
+# Authors: Field33 Engineering
+# License: MIT
+# ============================================================================
+
+<https://repoq.io/story> a owl:Ontology ;
+    dcterms:title "RepoQ Story Ontology" ;
+    dcterms:description "Ontology for capturing development story, provenance, and traceability in VDAD methodology" ;
+    dcterms:created "2025-01-15"^^xsd:date ;
+    dcterms:modified "2025-01-15"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment """
+    This ontology captures the 'story' of software development:
+    - VDAD phases execution (Phase 1-5)
+    - Git commits with semantic annotations
+    - Artifacts (code, tests, docs) and their relationships
+    - Requirements traceability (FR, NFR, Theorems)
+    - ADR implementation tracking
+    - Quality gates and metrics
+    """ .
+
+# ============================================================================
+# Core Classes
+# ============================================================================
+
+story:Phase a owl:Class ;
+    rdfs:label "Development Phase" ;
+    rdfs:comment "A VDAD phase (e.g., Phase 1: Workspace Foundation)" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty story:status ;
+        owl:hasValue story:StatusValue
+    ] .
+
+story:Artifact a owl:Class ;
+    rdfs:label "Artifact" ;
+    rdfs:comment "A produced artifact (code, test, doc)" ;
+    owl:disjointUnionOf (
+        story:Implementation
+        story:TestSuite
+        story:Documentation
+    ) .
+
+story:Implementation a owl:Class ;
+    rdfs:label "Implementation Artifact" ;
+    rdfs:subClassOf story:Artifact ;
+    rdfs:comment "Production code artifact" .
+
+story:TestSuite a owl:Class ;
+    rdfs:label "Test Suite Artifact" ;
+    rdfs:subClassOf story:Artifact ;
+    rdfs:comment "Test code artifact" .
+
+story:Documentation a owl:Class ;
+    rdfs:label "Documentation Artifact" ;
+    rdfs:subClassOf story:Artifact ;
+    rdfs:comment "Documentation artifact (MD, RST, etc.)" .
+
+story:Commit a owl:Class ;
+    rdfs:label "Git Commit" ;
+    rdfs:comment "A git commit with semantic annotations" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty story:sha ;
+        owl:cardinality 1
+    ] .
+
+story:Gate a owl:Class ;
+    rdfs:label "Quality Gate" ;
+    rdfs:comment "A quality gate check (soundness, performance, etc.)" ;
+    rdfs:subClassOf [
+        a owl:Restriction ;
+        owl:onProperty story:gateStatus ;
+        owl:hasValue story:GateStatusValue
+    ] .
+
+# ============================================================================
+# Properties - Phase
+# ============================================================================
+
+story:status a owl:DatatypeProperty ;
+    rdfs:label "status" ;
+    rdfs:domain story:Phase ;
+    rdfs:range story:StatusValue ;
+    rdfs:comment "Phase status: not-started, in-progress, completed" .
+
+story:startDate a owl:DatatypeProperty ;
+    rdfs:label "start date" ;
+    rdfs:domain story:Phase ;
+    rdfs:range xsd:dateTime ;
+    rdfs:comment "Phase start timestamp" .
+
+story:endDate a owl:DatatypeProperty ;
+    rdfs:label "end date" ;
+    rdfs:domain story:Phase ;
+    rdfs:range xsd:dateTime ;
+    rdfs:comment "Phase end timestamp" .
+
+story:duration a owl:DatatypeProperty ;
+    rdfs:label "duration" ;
+    rdfs:domain story:Phase ;
+    rdfs:range xsd:duration ;
+    rdfs:comment "Phase duration (ISO 8601 duration)" .
+
+story:author a owl:DatatypeProperty ;
+    rdfs:label "author" ;
+    rdfs:domain story:Phase ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Phase author/developer" .
+
+story:produces a owl:ObjectProperty ;
+    rdfs:label "produces" ;
+    rdfs:domain story:Phase ;
+    rdfs:range story:Artifact ;
+    rdfs:comment "Phase produces artifact" .
+
+story:hasCommit a owl:ObjectProperty ;
+    rdfs:label "has commit" ;
+    rdfs:domain story:Phase ;
+    rdfs:range story:Commit ;
+    rdfs:comment "Phase includes commit" .
+
+story:hasGate a owl:ObjectProperty ;
+    rdfs:label "has gate" ;
+    rdfs:domain story:Phase ;
+    rdfs:range story:Gate ;
+    rdfs:comment "Phase has quality gate" .
+
+# ============================================================================
+# Properties - Artifact
+# ============================================================================
+
+story:path a owl:DatatypeProperty ;
+    rdfs:label "file path" ;
+    rdfs:domain story:Artifact ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Relative file path in repository" .
+
+story:lines a owl:DatatypeProperty ;
+    rdfs:label "lines of code" ;
+    rdfs:domain story:Artifact ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Number of lines in artifact" .
+
+story:language a owl:DatatypeProperty ;
+    rdfs:label "programming language" ;
+    rdfs:domain story:Artifact ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Programming language (Python, Markdown, etc.)" .
+
+story:commit a owl:DatatypeProperty ;
+    rdfs:label "commit SHA" ;
+    rdfs:domain story:Artifact ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Git commit SHA (short form)" .
+
+story:testsTotal a owl:DatatypeProperty ;
+    rdfs:label "total tests" ;
+    rdfs:domain story:TestSuite ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Total number of tests in suite" .
+
+story:testsPassing a owl:DatatypeProperty ;
+    rdfs:label "passing tests" ;
+    rdfs:domain story:TestSuite ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Number of passing tests" .
+
+# ============================================================================
+# Properties - Commit
+# ============================================================================
+
+story:sha a owl:DatatypeProperty ;
+    rdfs:label "commit SHA" ;
+    rdfs:domain story:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Git commit SHA (full or short)" .
+
+story:message a owl:DatatypeProperty ;
+    rdfs:label "commit message" ;
+    rdfs:domain story:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Git commit message" .
+
+story:commitAuthor a owl:DatatypeProperty ;
+    rdfs:label "commit author" ;
+    rdfs:domain story:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Git commit author (name + email)" .
+
+story:commitDate a owl:DatatypeProperty ;
+    rdfs:label "commit date" ;
+    rdfs:domain story:Commit ;
+    rdfs:range xsd:dateTime ;
+    rdfs:comment "Git commit timestamp" .
+
+story:modifies a owl:DatatypeProperty ;
+    rdfs:label "modifies file" ;
+    rdfs:domain story:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:comment "File modified by commit" .
+
+# ============================================================================
+# Properties - Gate
+# ============================================================================
+
+story:gateName a owl:DatatypeProperty ;
+    rdfs:label "gate name" ;
+    rdfs:domain story:Gate ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Quality gate name (soundness, performance, etc.)" .
+
+story:gateStatus a owl:DatatypeProperty ;
+    rdfs:label "gate status" ;
+    rdfs:domain story:Gate ;
+    rdfs:range story:GateStatusValue ;
+    rdfs:comment "Gate status: passed, failed, skipped" .
+
+story:gateEvidence a owl:DatatypeProperty ;
+    rdfs:label "gate evidence" ;
+    rdfs:domain story:Gate ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Evidence for gate decision" .
+
+# ============================================================================
+# Properties - Traceability (VDAD links)
+# ============================================================================
+
+vdad:satisfies a owl:ObjectProperty ;
+    rdfs:label "satisfies requirement" ;
+    rdfs:domain [ owl:unionOf (story:Phase story:Artifact) ] ;
+    rdfs:range vdad:Requirement ;
+    rdfs:comment "Phase/Artifact satisfies VDAD requirement" .
+
+vdad:implements a owl:ObjectProperty ;
+    rdfs:label "implements ADR" ;
+    rdfs:domain [ owl:unionOf (story:Phase story:Artifact) ] ;
+    rdfs:range vdad:ArchitectureDecisionRecord ;
+    rdfs:comment "Phase/Artifact implements ADR" .
+
+vdad:verifies a owl:ObjectProperty ;
+    rdfs:label "verifies artifact" ;
+    rdfs:domain story:TestSuite ;
+    rdfs:range [ owl:unionOf (story:Implementation vdad:Requirement) ] ;
+    rdfs:comment "Test verifies implementation or requirement" .
+
+vdad:documents a owl:ObjectProperty ;
+    rdfs:label "documents phase" ;
+    rdfs:domain story:Documentation ;
+    rdfs:range story:Phase ;
+    rdfs:comment "Documentation documents phase" .
+
+# ============================================================================
+# Enumerations
+# ============================================================================
+
+story:StatusValue a rdfs:Datatype ;
+    rdfs:label "Phase Status" ;
+    owl:oneOf ("not-started" "in-progress" "completed" "blocked") .
+
+story:GateStatusValue a rdfs:Datatype ;
+    rdfs:label "Gate Status" ;
+    owl:oneOf ("passed" "failed" "skipped" "warning") .
+
+# ============================================================================
+# Individuals (for testing)
+# ============================================================================
+
+story:phase1-example a story:Phase ;
+    rdfs:label "Phase 1: Workspace Foundation" ;
+    story:status "completed" ;
+    story:author "Example Developer" ;
+    rdfs:comment "Example phase instance for ontology validation" .
