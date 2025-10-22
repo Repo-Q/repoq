@@ -134,6 +134,8 @@ def to_jsonld(
         "license": project.license,
         "repositoryURL": project.repository_url,
         "lastCommitDate": project.last_commit_date,
+        "analyzedAt": project.analyzed_at,
+        "repoqVersion": project.repoq_version,
         "ciConfigured": project.ci_configured,
         "modules": [],
         "files": [],

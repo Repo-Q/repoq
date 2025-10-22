@@ -19,6 +19,8 @@
     "programmingLanguages": "schema:programmingLanguage",
     "repositoryURL": "schema:codeRepository",
     "lastCommitDate": "dcterms:modified",
+    "analyzedAt": "prov:generatedAtTime",
+    "repoqVersion": "prov:wasGeneratedBy",
     "created": "dcterms:created",
     "modified": "dcterms:modified",
     "identifier": "dcterms:identifier",

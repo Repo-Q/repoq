@@ -20,6 +20,7 @@ import logging
 import os
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict
 
@@ -27,6 +28,7 @@ import typer
 from rich import print
 from rich.progress import Progress
 
+from . import __version__
 from .config import AnalyzeConfig, Thresholds, load_config
 from .core.model import Project
 from .core.repo_loader import is_url, prepare_repo
@@ -579,6 +581,11 @@ def _run_command(
 
     pid, name = _infer_project_id_name(repo)
     project = Project(id=pid, name=name, repository_url=pid if pid.startswith("http") else None)
+
+    # Set analysis metadata
+    project.analyzed_at = datetime.now(timezone.utc).isoformat()
+    project.repoq_version = __version__
+
     repo_dir, cleanup = prepare_repo(repo, depth=cfg.depth, branch=cfg.branch)
     try:
         with Progress() as progress:

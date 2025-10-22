@@ -322,6 +322,8 @@ class Project:
         license: SPDX license identifier (e.g., "MIT") (default: None)
         programming_languages: Dict mapping language to LOC count (default: {})
         last_commit_date: ISO 8601 timestamp of most recent commit (default: None)
+        analyzed_at: ISO 8601 timestamp when analysis was performed (default: None)
+        repoq_version: Version of RepoQ tool that performed the analysis (default: None)
         ci_configured: List of detected CI/CD systems (e.g., ["GitHub Actions"]) (default: [])
         modules: Dict of Module objects keyed by module ID (default: {})
         files: Dict of File objects keyed by file ID (default: {})
@@ -342,6 +344,8 @@ class Project:
     license: Optional[str] = None
     programming_languages: Dict[str, int] = field(default_factory=dict)  # language -> LOC
     last_commit_date: Optional[str] = None
+    analyzed_at: Optional[str] = None
+    repoq_version: Optional[str] = None
     ci_configured: List[str] = field(default_factory=list)
     modules: Dict[str, Module] = field(default_factory=dict)
     files: Dict[str, File] = field(default_factory=dict)
