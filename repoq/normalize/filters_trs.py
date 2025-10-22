@@ -277,11 +277,15 @@ class FilterExpression:
         return hash(self.to_canonical())
 
 
-def simplify_glob_patterns(patterns: List[str]) -> List[str]:
-    """Simplify list of glob patterns by removing redundant ones using advanced pattern analysis."""
-    if not patterns:
-        return []
-
+def _normalize_and_deduplicate(patterns: list[str]) -> list[str]:
+    """Normalize patterns and remove exact duplicates.
+    
+    Args:
+        patterns: List of raw glob patterns
+        
+    Returns:
+        List of normalized unique patterns (preserving order)
+    """
     # Normalize all patterns
     normalized = [GlobPattern(p).pattern for p in patterns]
 
@@ -292,34 +296,63 @@ def simplify_glob_patterns(patterns: List[str]) -> List[str]:
         if pattern not in seen:
             seen.add(pattern)
             unique_patterns.append(pattern)
+    
+    return unique_patterns
 
-    # Advanced redundancy removal using pattern subsumption analysis
-    simplified = []
-    for i, pattern1 in enumerate(unique_patterns):
+
+def _remove_redundant_patterns(patterns: list[str]) -> list[str]:
+    """Remove redundant patterns using subsumption analysis.
+    
+    Args:
+        patterns: List of patterns to analyze
+        
+    Returns:
+        List with redundant patterns removed (pattern1 removed if pattern2 subsumes it)
+    """
+    result = []
+    for i, pattern1 in enumerate(patterns):
         is_redundant = False
-        for j, pattern2 in enumerate(unique_patterns):
+        for j, pattern2 in enumerate(patterns):
             if i != j and _advanced_pattern_subsumes(pattern2, pattern1):
                 is_redundant = True
                 break
         if not is_redundant:
-            simplified.append(pattern1)
+            result.append(pattern1)
+    return result
 
-    # Further optimization: merge adjacent patterns
+
+def simplify_glob_patterns(patterns: List[str]) -> List[str]:
+    """Simplify list of glob patterns by removing redundant ones using advanced pattern analysis.
+    
+    Args:
+        patterns: List of glob patterns to simplify
+        
+    Returns:
+        Sorted list of simplified patterns with redundancies removed
+        
+    Algorithm:
+        1. Normalize and deduplicate
+        2. Remove redundant patterns (subsumption analysis)
+        3. Merge adjacent patterns
+        4. Re-normalize and final redundancy removal
+    """
+    if not patterns:
+        return []
+
+    # Step 1: Normalize and remove exact duplicates
+    unique_patterns = _normalize_and_deduplicate(patterns)
+
+    # Step 2: Remove redundant patterns (subsumption analysis)
+    simplified = _remove_redundant_patterns(unique_patterns)
+
+    # Step 3: Merge adjacent patterns
     simplified = _merge_adjacent_patterns(simplified)
 
-    # Re-normalize after merging (ensures **/** -> ** and similar)
+    # Step 4: Re-normalize after merging (ensures **/** -> ** and similar)
     simplified = [GlobPattern(p).pattern for p in simplified]
 
-    # Final redundancy removal (after merging may create new subsumptions)
-    final = []
-    for i, pattern1 in enumerate(simplified):
-        is_redundant = False
-        for j, pattern2 in enumerate(simplified):
-            if i != j and _advanced_pattern_subsumes(pattern2, pattern1):
-                is_redundant = True
-                break
-        if not is_redundant:
-            final.append(pattern1)
+    # Step 5: Final redundancy removal (merging may create new subsumptions)
+    final = _remove_redundant_patterns(simplified)
 
     return sorted(final)
 
