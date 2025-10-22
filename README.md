@@ -5,6 +5,7 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![CI](https://github.com/kirill-0440/repoq/workflows/CI/badge.svg)](https://github.com/kirill-0440/repoq/actions/workflows/ci.yml)
+[![SHACL](https://github.com/kirill-0440/repoq/workflows/SHACL%20Semantic%20Validation/badge.svg)](https://github.com/kirill-0440/repoq/actions/workflows/shacl-validation.yml)
 [![Tests](https://img.shields.io/badge/tests-229%20passing-brightgreen)](tests/)
 [![Coverage](https://img.shields.io/badge/coverage-63%25-yellow)](#phase-55-coverage)
 [![Docker](https://img.shields.io/badge/docker-161MB-blue)](https://hub.docker.com/r/kirill0440/repoq)
@@ -24,10 +25,12 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 - 📊 **Graphs**: DOT/SVG dependency visualization
 - 🔧 **Refactoring Plan**: Automated actionable tasks based on PCE algorithm
 - ⚙️ **Quality Gates**: CI/CD-ready quality comparison and admission predicates
+- ✅ **SHACL Validation**: Semantic constraint checking with CI/CD integration
+- 🔄 **Meta-Loop Ontologies**: Self-analysis with stratified reflection (meta, test, trs, quality, docs)
 
 **In Development:**
 
-- SHACL validation, Docker container, GitHub Actions
+- Test coverage RDF export, TRS rules extraction, ΔQ recommendations
 - Quality certificates, statistical coupling analysis
 
 ## Quick Start
