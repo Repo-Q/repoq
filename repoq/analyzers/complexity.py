@@ -33,18 +33,32 @@ class ComplexityAnalyzer(Analyzer):
 
     name = "complexity"
 
-    def run(self, project: Project, repo_dir: str, cfg) -> None:
-        """Execute complexity analysis on project files.
-
+    def _collect_file_paths(self, project: Project, repo_dir: str, cfg) -> list[str]:
+        """Collect file paths for analysis, excluding configured patterns.
+        
         Args:
-            project: Project model with files to analyze
-            repo_dir: Absolute path to repository root
-            cfg: Configuration with exclude patterns
-
-        Note:
-            Silently skips analysis if lizard or radon are not installed.
-            Errors in individual file analysis are logged but don't stop
-            the overall process.
+            project: Project with files to analyze
+            repo_dir: Repository root directory
+            cfg: Configuration with exclude_globs
+            
+        Returns:
+            List of absolute file paths to analyze
+        """
+        file_paths: List[str] = []
+        for f in project.files.values():
+            rel = f.path
+            if is_excluded(rel, cfg.exclude_globs):
+                continue
+            file_paths.append(str(Path(repo_dir) / rel))
+        return file_paths
+    
+    def _analyze_with_lizard(self, project: Project, repo_dir: str, file_paths: list[str]) -> None:
+        """Run Lizard analysis and update file complexity metrics.
+        
+        Args:
+            project: Project to update with complexity metrics
+            repo_dir: Repository root for path resolution
+            file_paths: List of absolute paths to analyze
         """
         try:
             import lizard  # type: ignore
@@ -54,13 +68,6 @@ class ComplexityAnalyzer(Analyzer):
         except Exception as e:
             logger.warning(f"Failed to import lizard: {e}")
             return
-
-        file_paths: List[str] = []
-        for f in project.files.values():
-            rel = f.path
-            if is_excluded(rel, cfg.exclude_globs):
-                continue
-            file_paths.append(str(Path(repo_dir) / rel))
 
         try:
             # Use threads=1 (minimum) to avoid "Number of processes must be at least 1" error
@@ -74,7 +81,7 @@ class ComplexityAnalyzer(Analyzer):
                         max_ccn = max(func.cyclomatic_complexity for func in r.function_list)
                         project.files[fid].complexity = float(max_ccn)
                         
-                        # NEW: Store per-function metrics for detailed analysis
+                        # Store per-function metrics for detailed analysis
                         from ..core.model import FunctionMetrics
                         
                         project.files[fid].functions = [
@@ -92,7 +99,14 @@ class ComplexityAnalyzer(Analyzer):
                         ]
         except Exception as e:
             logger.warning(f"Lizard analysis failed: {e}")
-
+    
+    def _analyze_with_radon(self, project: Project, repo_dir: str) -> None:
+        """Run Radon maintainability index analysis for Python files.
+        
+        Args:
+            project: Project to update with maintainability metrics
+            repo_dir: Repository root directory
+        """
         try:
             from radon.mi import mi_visit
         except ImportError:
@@ -117,3 +131,25 @@ class ComplexityAnalyzer(Analyzer):
             except Exception as e:
                 logger.debug(f"MI analysis failed for {f.path}: {e}")
                 continue
+
+    def run(self, project: Project, repo_dir: str, cfg) -> None:
+        """Execute complexity analysis on project files.
+
+        Args:
+            project: Project model with files to analyze
+            repo_dir: Absolute path to repository root
+            cfg: Configuration with exclude patterns
+
+        Note:
+            Silently skips analysis if lizard or radon are not installed.
+            Errors in individual file analysis are logged but don't stop
+            the overall process.
+        """
+        # Collect file paths to analyze
+        file_paths = self._collect_file_paths(project, repo_dir, cfg)
+        
+        # Run Lizard for cyclomatic complexity
+        self._analyze_with_lizard(project, repo_dir, file_paths)
+        
+        # Run Radon for maintainability index
+        self._analyze_with_radon(project, repo_dir)
