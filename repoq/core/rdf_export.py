@@ -131,6 +131,8 @@ def export_ttl(
     context_file: Optional[str] = None,
     field33_context: Optional[str] = None,
     enrich_meta: bool = True,
+    enrich_test_coverage: bool = False,
+    coverage_path: str = "coverage.json",
 ) -> None:
     """Export Project to RDF Turtle format.
 
@@ -142,6 +144,8 @@ def export_ttl(
         context_file: Optional JSON-LD context file
         field33_context: Optional Field33 context file
         enrich_meta: If True, enrich with meta-loop ontology triples
+        enrich_test_coverage: If True, enrich with test coverage from pytest
+        coverage_path: Path to coverage.json file (default: "coverage.json")
 
     Raises:
         RuntimeError: If rdflib is not installed
@@ -172,6 +176,16 @@ def export_ttl(
         if enrich_meta:
             _enrich_graph_with_meta_ontologies(g, project)
 
+        # Enrich with test coverage data
+        if enrich_test_coverage:
+            from .test_coverage import enrich_graph_with_test_coverage
+
+            try:
+                enrich_graph_with_test_coverage(g, project.id, coverage_path)
+                logger.info("Successfully enriched RDF with test coverage data")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with test coverage: {e}")
+
         g.serialize(destination=ttl_path, format="turtle")
         logger.info(f"Successfully exported canonical RDF Turtle to {ttl_path}")
     except OSError as e:
@@ -188,6 +202,8 @@ def validate_shapes(
     context_file: Optional[str] = None,
     field33_context: Optional[str] = None,
     enrich_meta: bool = True,
+    enrich_test_coverage: bool = False,
+    coverage_path: str = "coverage.json",
 ) -> dict:
     """Validate Project RDF data against SHACL shapes.
 
@@ -200,6 +216,8 @@ def validate_shapes(
         context_file: Optional JSON-LD context file
         field33_context: Optional Field33 context file
         enrich_meta: If True, enrich with meta-loop ontology triples before validation
+        enrich_test_coverage: If True, enrich with test coverage from pytest
+        coverage_path: Path to coverage.json file (default: "coverage.json")
 
     Returns:
         Dictionary with keys:
@@ -242,6 +260,16 @@ def validate_shapes(
         # Enrich with meta-loop ontologies before validation
         if enrich_meta:
             _enrich_graph_with_meta_ontologies(data_graph, project)
+
+        # Enrich with test coverage data
+        if enrich_test_coverage:
+            from .test_coverage import enrich_graph_with_test_coverage
+
+            try:
+                enrich_graph_with_test_coverage(data_graph, project.id, coverage_path)
+                logger.info("Successfully enriched RDF with test coverage for validation")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with test coverage: {e}")
 
         shapes_graph = Graph()
         import os

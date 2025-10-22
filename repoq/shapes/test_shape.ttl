@@ -21,13 +21,23 @@ test:TestCaseShape a sh:NodeShape ;
         sh:message "Test must have non-empty name"
     ] ;
 
+    # Every test must have file path
+    sh:property [
+        sh:path test:testFilePath ;
+        sh:datatype xsd:string ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:minLength 1 ;
+        sh:message "Test must have file path"
+    ] ;
+
     # Every test must have status
     sh:property [
         sh:path test:testStatus ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
-        sh:in ("passed" "failed" "skipped" "xfail") ;
-        sh:message "Test status must be: passed, failed, skipped, or xfail"
+        sh:in ("passed" "failed" "skipped" "xfail" "unknown") ;
+        sh:message "Test status must be: passed, failed, skipped, xfail, or unknown"
     ] ;
 
     # Duration must be non-negative
