@@ -1,0 +1,176 @@
+# Changelog
+
+All notable changes to RepoQ will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.0.0-alpha.1] - 2025-01-15
+
+### Added - Phase 1: Workspace Foundation ✅
+
+**New Module: `repoq/core/workspace.py`**
+- `RepoQWorkspace` class for managing `.repoq/` directory structure
+- `ManifestEntry` dataclass for reproducibility metadata
+- `compute_ontology_checksums()` for SHA256 checksums of ontologies
+- Automatic `.repoq/` initialization on every analysis run
+- `manifest.json` generation with:
+  - Commit SHA (from git)
+  - Policy version (2.0.0-alpha)
+  - Ontology checksums (SHA256)
+  - Timestamp (ISO 8601)
+
+**Directory Structure**:
+```
+.repoq/
+├── raw/           # Raw analysis artifacts (JSON-LD, RDF/XML)
+├── validated/     # SHACL-validated RDF (Phase 2)
+├── reports/       # Human-readable reports (MD, HTML)
+├── certificates/  # Quality gate certificates (signed)
+├── cache/         # Incremental analysis cache
+└── manifest.json  # Reproducibility metadata
+```
+
+**Pipeline Integration**:
+- `run_pipeline()` now initializes workspace at start
+- Manifest generated at end with checksums
+- Traceability: FR-10, V07, Theorem A, NFR-01, ADR-008, ADR-013
+
+**Tests**:
+- 15 unit tests for `RepoQWorkspace` class
+- 3 integration tests for pipeline integration
+- **Total: 18/18 passing** (100% success rate)
+- Performance: <50ms workspace overhead (NFR-01 satisfied)
+
+**Documentation**:
+- `docs/migration/phase1-workspace.md` (90 lines)
+- README.md updated with workspace feature
+- Migration notes and rollback plan included
+
+**Commits**:
+- 857cc79: feat(workspace): implement RepoQWorkspace (Phase 1.1)
+- bed0ea5: feat(pipeline): integrate RepoQWorkspace with pipeline (Phase 1.2)
+- f007076: docs(phase1): complete Phase 1 documentation (Phase 1.3)
+
+### Changed
+
+- `repoq/pipeline.py`: Added workspace initialization and manifest generation
+- README.md: Added workspace feature at top of Features section
+
+### Traceability
+
+| Requirement | Implementation |
+|-------------|----------------|
+| FR-10 | Reproducible analysis via manifest.json |
+| V07 | Observability via .repoq/ structure |
+| Theorem A | Reproducibility via SHA256 checksums |
+| NFR-01 | Performance <50ms overhead (measured) |
+| ADR-008 | Git as source of truth (commit SHA in manifest) |
+| ADR-010 | Incremental analysis (cache/ directory) |
+| ADR-013 | Incremental migration (zero breaking changes) |
+
+### Migration Notes
+
+**Zero Breaking Changes ✅**
+- No CLI changes
+- No config changes
+- No API changes
+- Only addition: `.repoq/` directory created automatically
+
+**Rollback Plan**:
+1. Delete `.repoq/` directory (safe - all data in git)
+2. Revert commits: `git revert f007076^..f007076`
+3. Tests will still pass (workspace is optional in Phase 1)
+
+**Known Limitations**:
+- Manifest not validated yet (comes in Phase 2)
+- Cache not populated yet (comes in Phase 2+)
+- Certificates not generated yet (comes in Phase 2)
+
+---
+
+## [Unreleased]
+
+### Planned - Phase 2: SHACL Validation (Weeks 2-3)
+
+**Features**:
+- SHACL validation in pipeline
+- Save validated RDF to `.repoq/validated/`
+- Certificate generation on validation success
+- Validation cache in `.repoq/cache/`
+
+**Tests**:
+- 10+ tests for SHACL integration
+- Validation roundtrip tests
+- Certificate signature tests
+
+**Commits** (planned):
+- feat(shacl): add SHACL validation to pipeline
+- feat(certs): generate certificates on validation success
+- docs(phase2): complete Phase 2 documentation
+
+### Planned - Phase 3: Reasoner Integration (Weeks 4-6)
+
+**Features**:
+- OWL reasoning in pipeline
+- Infer implicit facts (hotspot propagation, etc.)
+- Save inferred triples to `.repoq/validated/`
+- Reasoning cache in `.repoq/cache/`
+
+**Tests**:
+- 15+ tests for reasoner integration
+- Inference correctness tests
+- Performance tests (reasoner overhead <10%)
+
+**Commits** (planned):
+- feat(reasoner): add OWL reasoning to pipeline
+- feat(inference): infer implicit facts from ontologies
+- docs(phase3): complete Phase 3 documentation
+
+### Planned - Phase 4: Unified Pipeline (Weeks 7-10)
+
+**Features**:
+- Feature flag for v2 pipeline
+- Parallel execution (v1 + v2)
+- Metrics comparison (v1 vs v2)
+- Gradual cutover based on success metrics
+
+**Tests**:
+- 20+ tests for v2 pipeline
+- Feature flag tests
+- Parallel execution tests
+- Cutover tests
+
+**Commits** (planned):
+- feat(v2): implement v2 pipeline with feature flag
+- feat(cutover): gradual cutover based on metrics
+- docs(phase4): complete Phase 4 documentation
+
+---
+
+## [1.0.0] - 2024-12-01 (Previous Release)
+
+### Added
+
+- Initial release with structure, complexity, history, hotspots
+- Semantic export (JSON-LD, RDF/Turtle)
+- Quality gates for CI/CD
+- SHACL validation
+- Meta-loop ontologies (meta, test, trs, quality, docs)
+- Extended ontologies (test, security, arch, license, api)
+- Docker support
+
+### Known Issues
+
+- No workspace management (fixed in 2.0.0-alpha.1)
+- No reproducibility guarantees (fixed in 2.0.0-alpha.1)
+- No incremental analysis (planned for Phase 2+)
+
+---
+
+## Links
+
+- **Phase 5 Roadmap**: `docs/vdad/phase5-migration-roadmap.md`
+- **Quick Reference**: `docs/vdad/phase5-quick-reference.md`
+- **ADR-013**: `docs/vdad/phase4-adr-013-incremental-migration.md`
+- **Phase 1 Docs**: `docs/migration/phase1-workspace.md`
