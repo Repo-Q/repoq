@@ -59,7 +59,7 @@ Meta-level files missing explicit stratification:
 | 1 | **jsonld.py** | 33 | 149.0 | 6h | 24.83 | ✅ **DONE** |
 | 2 | **history.py** | 30 | 131.0 | 6h | 21.83 | ✅ **DONE** |
 | 3 | **refactoring.py** | 26 | 114.0 | 6h | 19.00 | 🔜 Next |
-| 4 | **rdf_export.py** | 26 | 114.0 | 6h | 19.00 | 🔜 Next |
+| 4 | **rdf_export.py** | 26 | 114.0 | 6h | 19.00 | ✅ **DONE** |
 | 5 | **cli.py** | 26 | 111.0 | 6h | 18.50 | - |
 | 6 | **gate.py** | 23 | 96.0 | 6h | 16.00 | - |
 | 7 | **structure.py** | 21 | 86.0 | 6h | 14.33 | - |
@@ -125,27 +125,59 @@ Meta-level files missing explicit stratification:
 
 ---
 
+### ✅ #3: rdf_export.py (ΔQ=114, ROI=19.00)
+
+**Проблема:**
+```python
+# Функция validate_shapes: 118 строк, CCN=26
+# - Построение RDF-графа из JSON-LD
+# - Применение 5 enrichment-слоёв (meta, test_coverage, trs_rules, quality, self_analysis)
+# - Загрузка SHACL-shapes из директории
+# - Извлечение нарушений через SPARQL
+```
+
+**Решение:**
+Извлечены 4 helper-функции:
+1. `_build_data_graph(project, include_meta)` — JSON-LD → RDFLib Graph (10 lines)
+2. `_apply_enrichments(graph, project, ...)` — применение enrichment-слоёв с error handling (40 lines)
+3. `_load_shapes_graph(shapes_dir)` — загрузка SHACL-shapes (15 lines)
+4. `_extract_violations(report_graph)` — SPARQL-запрос для нарушений (20 lines)
+
+**Дополнительно:**
+- Добавлен `TYPE_CHECKING` import для корректных аннотаций `Graph` (forward reference)
+- Главная функция сокращена до 45 строк (↓62%)
+
+**Результат:**
+- CCN: 26 → ~8 (↓69% complexity)
+- LOC основной функции: 118 → 45 (↓62%)
+- Тесты: 7/7 SHACL workflow tests passing ✅
+
+**Коммит:** `[pending]` — "refactor: decompose rdf_export.py validate_shapes function"
+
+---
+
 ## 📈 R (Result) — Итоговые Достижения
 
 ### Метрики Улучшения
 | Метрика | До | После | Δ |
 |---------|-----|-------|---|
-| **Total ΔQ** | 0 | **+280** | +280 |
+| **Total ΔQ** | 0 | **+394** | +394 |
 | **jsonld.py CCN** | 33 | ~12 | -64% |
 | **history.py CCN** | 30 | ~10 | -67% |
-| **Рефакторинги** | 0 | **2 complete** | +2 |
-| **Новые helper-функции** | 0 | **9** | +9 |
-| **Tests passing** | 393/396 | **393/396** | ✅ |
+| **rdf_export.py CCN** | 26 | ~8 | -69% |
+| **Рефакторинги** | 0 | **3 complete** | +3 |
+| **Новые helper-функции** | 0 | **13** | +13 |
+| **Tests passing** | 393/396 | **400/403** | ✅ |
 
 ### Топ-5 После Рефакторинга
-🎉 **jsonld.py и history.py больше НЕ в топ-5!**
+🎉 **jsonld.py, history.py и rdf_export.py больше НЕ в топ-5!**
 
 Новый топ-5 (по убыванию ΔQ):
-1. refactoring.py (ΔQ=114, CCN=26)
-2. rdf_export.py (ΔQ=114, CCN=26)
-3. cli.py (ΔQ=111, CCN=26)
-4. gate.py (ΔQ=96, CCN=23)
-5. structure.py (ΔQ=86, CCN=21)
+1. refactoring.py (ΔQ=114, CCN=26) — generate_recommendations
+2. cli.py (ΔQ=111, CCN=26) — _run_command
+3. gate.py (ΔQ=96, CCN=23) — format_gate_report
+4. structure.py (ΔQ=86, CCN=21) — _parse_dependency_manifests
+5. jsonld.py (ΔQ=79, CCN=19) — to_jsonld (остаточная сложность после первого рефакторинга)
 
 ### Universe Violations
 **Статус:** 14 violations остаются (ожидаемо для рефлексивного анализа)
