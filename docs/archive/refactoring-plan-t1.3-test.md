@@ -14,20 +14,24 @@
 ## Tasks
 
 ### Task #1: repoq/analyzers/history.py
+
 **Priority**: 🔴 CRITICAL
 **Expected ΔQ**: +153.0 points
 **Estimated effort**: 4-8 hours (complex refactoring)
 
 **Current metrics**:
+
 - Complexity: 35.0
 - LOC: 311
 - TODOs: 0
 - Issues: 1
 
 **Issues**:
+
 - High cyclomatic complexity (35.0)
 
 **Recommendations**:
+
 1. 🔴 Refactor function `_run_pydriller` (CCN=35, LOC=90, lines 89-203)
    → Expected ΔQ: +181.6 points (54% of file's potential)
    → Estimated effort: 3-4 hours
@@ -36,40 +40,48 @@
    → Estimated effort: 3-4 hours
 
 ### Task #2: repoq/core/jsonld.py
+
 **Priority**: 🔴 CRITICAL
 **Expected ΔQ**: +146.0 points
 **Estimated effort**: 4-8 hours (complex refactoring)
 
 **Current metrics**:
+
 - Complexity: 33.0
 - LOC: 396
 - TODOs: 0
 - Issues: 2
 
 **Issues**:
+
 - High cyclomatic complexity (33.0)
 
 **Recommendations**:
+
 1. 🔴 Refactor function `to_jsonld` (CCN=33, LOC=187, lines 68-336)
    → Expected ΔQ: +199.7 points (100% of file's potential)
    → Estimated effort: 3-4 hours
 
 ### Task #3: repoq/cli.py
+
 **Priority**: 🔴 CRITICAL
 **Expected ΔQ**: +108.0 points
 **Estimated effort**: 4-8 hours (complex refactoring)
 
 **Current metrics**:
+
 - Complexity: 26.0
 - LOC: 1535
 - TODOs: 0
 - Issues: 1
 
 **Issues**:
+
 - High cyclomatic complexity (26.0)
 - Large file size (1535 LOC)
 
 **Recommendations**:
+
 1. 🔴 Refactor function `_run_command` (CCN=26, LOC=122, lines 593-772)
    → Expected ΔQ: +249.2 points (51% of file's potential)
    → Estimated effort: 3-4 hours
@@ -91,6 +103,7 @@
 4. **Low priority**: Backlog for future iterations
 
 **Success criteria**:
+
 - ✅ Q-score ≥ 100.00
 - ✅ All critical tasks resolved
 - ✅ No regression in test coverage

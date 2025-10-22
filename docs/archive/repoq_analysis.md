@@ -7,17 +7,17 @@
 **CI**: GitHub Actions
 
 ## Языки (LOC)
+
 - Python: 18991
 
-
 ## Топ авторов (по коммитам)
-- kirill.n — 64 коммитов
 
+- kirill.n — 64 коммитов
 
 ## Hotspots
 
-
 ## TODO/FIXME/Deprecated
+
 - repo:file:tests/test_cli.py — Found repo:TodoComment markers in tests/test_cli.py
 - repo:file:tests/test_quality.py — Found repo:TodoComment markers in tests/test_quality.py
 - repo:file:tests/test_quality.py — Found repo:Deprecated markers in tests/test_quality.py
@@ -36,6 +36,6 @@
 - repo:file:repoq/reporting/markdown.py — Found repo:Deprecated markers in repoq/reporting/markdown.py
 - repo:file:repoq/ontologies/manager.py — Found repo:TodoComment markers in repoq/ontologies/manager.py
 
-
 ## Тесты (JUnit → OSLC QM)
+
 Всего результатов: 0
