@@ -62,6 +62,35 @@ def foaf_sha1(email: str) -> str:
 
 
 @dataclass
+class FunctionMetrics:
+    """Represents complexity and metrics for a single function.
+
+    Per-function metrics enable precise refactoring recommendations,
+    identifying specific functions that need attention rather than
+    just file-level aggregates.
+
+    Attributes:
+        name: Function name (e.g., "calculate_total", "MyClass.method")
+        cyclomatic_complexity: McCabe cyclomatic complexity (CCN)
+        lines_of_code: Function lines of code (nloc)
+        parameters: Number of parameters
+        start_line: Starting line number in file
+        end_line: Ending line number in file
+        token_count: Total token count (default: None)
+        max_nesting_depth: Maximum nesting depth (default: None)
+    """
+
+    name: str
+    cyclomatic_complexity: int
+    lines_of_code: int
+    parameters: int
+    start_line: int
+    end_line: int
+    token_count: Optional[int] = None
+    max_nesting_depth: Optional[int] = None
+
+
+@dataclass
 class Issue:
     """Represents a code quality issue, TODO, or defect found in the repository.
 
@@ -165,6 +194,7 @@ class File:
     hotness: Optional[float] = None
     checksum_algo: Optional[str] = None
     checksum_value: Optional[str] = None
+    functions: Optional[List[FunctionMetrics]] = None
 
 
 @dataclass

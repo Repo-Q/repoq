@@ -242,17 +242,44 @@ def generate_recommendations(file_data: dict) -> List[str]:
     loc = file_data.get("linesOfCode", 0) or 0
     todos = len(file_data.get("todos", [])) if isinstance(file_data.get("todos"), list) else 0
     issues = file_data.get("issues", [])
+    functions = file_data.get("functions", [])
 
-    # Complexity recommendations
-    if complexity >= 10:
-        recommendations.append(
-            f"🔴 **Critical**: Reduce cyclomatic complexity from {complexity} to <10 "
-            "(split into smaller functions)"
-        )
-    elif complexity >= 6:
-        recommendations.append(
-            f"🟡 Extract complex logic into helper functions (current: {complexity})"
-        )
+    # NEW: Per-function recommendations (if available)
+    if functions:
+        complex_funcs = [f for f in functions if f.get("cyclomaticComplexity", 0) >= 10]
+        if complex_funcs:
+            # Sort by complexity descending
+            complex_funcs.sort(key=lambda f: f.get("cyclomaticComplexity", 0), reverse=True)
+            
+            for func in complex_funcs[:3]:  # Top 3 most complex
+                fname = func.get("name", "unknown")
+                fccn = func.get("cyclomaticComplexity", 0)
+                flines = f"{func.get('startLine', '?')}-{func.get('endLine', '?')}"
+                
+                recommendations.append(
+                    f"🎯 Refactor function `{fname}` "
+                    f"(CCN={fccn}, lines {flines}) → split complex logic"
+                )
+        
+        # If functions available but none complex, note the file-level complexity
+        if not complex_funcs and complexity >= 10:
+            # File complexity high but no individual function >10
+            # This is unusual - likely aggregation issue
+            recommendations.append(
+                f"⚠️ File complexity={complexity} but no function >10 "
+                "(verify metrics or refactor distributed complexity)"
+            )
+    else:
+        # Fallback: File-level recommendations (old behavior)
+        if complexity >= 10:
+            recommendations.append(
+                f"🔴 **Critical**: Reduce cyclomatic complexity from {complexity} to <10 "
+                "(split into smaller functions)"
+            )
+        elif complexity >= 6:
+            recommendations.append(
+                f"🟡 Extract complex logic into helper functions (current: {complexity})"
+            )
 
     # LOC recommendations
     if loc > 500:

@@ -70,8 +70,26 @@ class ComplexityAnalyzer(Analyzer):
                 fid = f"repo:file:{rel}"
                 if fid in project.files:
                     if r.function_list:
+                        # Store max complexity for backward compatibility
                         max_ccn = max(func.cyclomatic_complexity for func in r.function_list)
                         project.files[fid].complexity = float(max_ccn)
+                        
+                        # NEW: Store per-function metrics for detailed analysis
+                        from ..core.model import FunctionMetrics
+                        
+                        project.files[fid].functions = [
+                            FunctionMetrics(
+                                name=func.name,
+                                cyclomatic_complexity=func.cyclomatic_complexity,
+                                lines_of_code=func.nloc,
+                                parameters=func.parameter_count,
+                                start_line=func.start_line,
+                                end_line=func.end_line,
+                                token_count=func.token_count,
+                                max_nesting_depth=getattr(func, 'max_nesting_depth', None),
+                            )
+                            for func in r.function_list
+                        ]
         except Exception as e:
             logger.warning(f"Lizard analysis failed: {e}")
 

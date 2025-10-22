@@ -186,6 +186,23 @@ def to_jsonld(
             "module": f.module,
             "hotness": f.hotness,
         }
+        
+        # NEW: Include per-function metrics if available
+        if f.functions:
+            file_node["functions"] = [
+                {
+                    "name": func.name,
+                    "cyclomaticComplexity": func.cyclomatic_complexity,
+                    "linesOfCode": func.lines_of_code,
+                    "parameters": func.parameters,
+                    "startLine": func.start_line,
+                    "endLine": func.end_line,
+                    "tokenCount": func.token_count,
+                    "maxNestingDepth": func.max_nesting_depth,
+                }
+                for func in f.functions
+            ]
+        
         if f.checksum_algo and f.checksum_value:
             file_node["checksum"] = {
                 "@type": "spdx:Checksum",
