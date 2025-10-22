@@ -23,6 +23,7 @@
 | ADR-010 | W3C Verifiable Credentials | ✅ Accepted | 2025-10-21 | Team Leads, DevOps |
 | ADR-011 | Python 3.11+ Only (No 3.8/3.9) | ✅ Accepted | 2025-10-21 | Developers, DevOps |
 | ADR-012 | GitHub Actions for CI/CD | ✅ Accepted | 2025-10-21 | DevOps, Team Leads |
+| ADR-013 | Incremental v2 Migration via Feature Flags | ✅ Accepted | 2025-10-22 | All Stakeholders |
 
 ---
 
@@ -36,12 +37,14 @@
 ### Context
 
 Phase 5 will introduce an optional AI agent for semantic analysis, explanations, and improvement suggestions. We need a framework to:
+
 1. Call LLMs (GPT-4, Claude, etc.) with structured prompts
 2. Parse LLM outputs into typed Python objects
 3. Handle retries, timeouts, and errors gracefully
 4. Avoid hallucination risks (unvalidated string outputs)
 
 **Alternatives Considered**:
+
 - **LangChain**: Feature-rich but overengineered for our use case (500+ classes, steep learning curve)
 - **Raw OpenAI API**: No type safety, manual prompt engineering, no retry logic
 - **BAML** (BoundaryML): Type-safe DSL, compiles to Python/TypeScript, built-in validation
@@ -49,6 +52,7 @@ Phase 5 will introduce an optional AI agent for semantic analysis, explanations,
 ### Decision
 
 **Use BAML (BoundaryML) for the AI agent** with the following functions:
+
 1. `AnalyzePRContext(diff: string, metrics: Metrics) -> PRContext`
 2. `GenerateExplanation(failure: GateFailure) -> Explanation`
 3. `SuggestImprovements(code: string, complexity: int) -> Suggestions`
@@ -65,17 +69,20 @@ Phase 5 will introduce an optional AI agent for semantic analysis, explanations,
 ### Consequences
 
 **Positive**:
+
 - ✅ Structured AI outputs (no free-form strings)
 - ✅ Easy to test (mock BAML client)
 - ✅ Version-controlled prompts (no hidden prompt injection)
 - ✅ Multi-provider support (OpenAI, Anthropic, local LLMs)
 
 **Negative**:
+
 - ❌ New dependency (BAML ~10MB, acceptable)
 - ❌ Learning curve for BAML DSL (~1 day)
 - ❌ Not as mature as LangChain (v0.x, but stable)
 
 **Risks**:
+
 - **R1**: BAML project abandoned → **Mitigation**: Can fall back to raw OpenAI API (BAML is thin wrapper)
 - **R2**: LLM API costs → **Mitigation**: Max 10 calls per analysis, explicit budget controls
 - **R3**: Hallucinations → **Mitigation**: Human-in-loop, experimental mode first
@@ -120,6 +127,7 @@ function AnalyzePRContext(diff: string, metrics: Metrics) -> PRContext {
 ### Context
 
 Ontology Intelligence requires an RDF triple store with SPARQL query support. Requirements:
+
 1. Store Code/C4/DDD ontologies (triples)
 2. SPARQL 1.1 queries (pattern detection)
 3. SHACL validation (shape checking)
@@ -127,6 +135,7 @@ Ontology Intelligence requires an RDF triple store with SPARQL query support. Re
 5. Reasonable performance (<1 sec per query for repos <10K files)
 
 **Alternatives Considered**:
+
 - **RDFLib**: Python-native, standards-compliant, mature (10+ years), but slower for large graphs
 - **Oxigraph**: Rust-based, 10-100x faster than RDFLib, Python bindings, but C++ build dependency
 - **Virtuoso**: High-performance, but external server (violates local-first principle)
@@ -135,6 +144,7 @@ Ontology Intelligence requires an RDF triple store with SPARQL query support. Re
 ### Decision
 
 **Use RDFLib by default, with Oxigraph as optional optimization**:
+
 1. **RDFLib** (default): No build dependencies, pure Python, sufficient for <10K files
 2. **Oxigraph** (opt-in): Install via `pip install repoq[oxigraph]` for large repos (>10K files)
 
@@ -149,15 +159,18 @@ Ontology Intelligence requires an RDF triple store with SPARQL query support. Re
 ### Consequences
 
 **Positive**:
+
 - ✅ Easy installation (pure Python by default)
 - ✅ Escape hatch for large repos (Oxigraph)
 - ✅ Standards-compliant (W3C RDF/SPARQL)
 
 **Negative**:
+
 - ❌ RDFLib slow for large repos (>10K files) → **Mitigation**: Recommend Oxigraph
 - ❌ Two code paths (RDFLib vs Oxigraph) → **Mitigation**: Abstract behind OntologyManager interface
 
 **Risks**:
+
 - **R1**: RDFLib performance degrades → **Mitigation**: Profile, optimize, or switch to Oxigraph
 - **R2**: Oxigraph Python bindings break → **Mitigation**: Fall back to RDFLib
 
@@ -224,12 +237,14 @@ def create_ontology_manager(use_oxigraph: bool = False):
 ### Context
 
 Any2Math (TRS-based AST normalization) uses Lean 4 for formal verification. Challenges:
+
 1. **Lean Runtime**: Large binary (~500MB), slow startup (~2 sec)
 2. **Memory**: Lean can consume 1-2 GB for large proofs
 3. **Isolation**: Don't want Lean crashes to kill RepoQ process
 4. **Optional**: Not all users need formal verification (overkill for small projects)
 
 **Alternatives Considered**:
+
 - **In-process**: Lean Python bindings (if they existed) → **Not available**
 - **Subprocess**: Call `lean verify_trs.lean` via `subprocess.run()` → **Clean isolation**
 - **HTTP Server**: Run Lean as separate service → **Overkill, adds network dependency**
@@ -238,6 +253,7 @@ Any2Math (TRS-based AST normalization) uses Lean 4 for formal verification. Chal
 ### Decision
 
 **Isolate Any2Math in subprocess with graceful fallback**:
+
 1. If Lean installed: Run `lean verify_trs.lean` as subprocess (optional validation)
 2. If Lean missing: Skip formal verification, trust TRS rules (warn user)
 3. Timeout: 30 seconds per normalization (kill subprocess if hangs)
@@ -253,15 +269,18 @@ Any2Math (TRS-based AST normalization) uses Lean 4 for formal verification. Chal
 ### Consequences
 
 **Positive**:
+
 - ✅ RepoQ remains lightweight (no mandatory Lean dependency)
 - ✅ Formal verification available for experts (opt-in)
 - ✅ Crash isolation (Lean bugs don't kill RepoQ)
 
 **Negative**:
+
 - ❌ Subprocess overhead (~2 sec Lean startup) → **Mitigation**: Cache results
 - ❌ Requires Lean installed for full verification → **Mitigation**: Document in README
 
 **Risks**:
+
 - **R1**: Subprocess hangs → **Mitigation**: 30 sec timeout + kill
 - **R2**: Lean not found → **Mitigation**: Graceful degradation (warn user)
 
@@ -333,12 +352,14 @@ def normalize_ast(code: str, verify: bool = False) -> str:
 ### Context
 
 Need a structured format for architecture documentation. Requirements:
+
 1. Comprehensive (covers context, design, quality, risks)
 2. Stakeholder-friendly (not just diagrams)
 3. Maintainable (template-based, not ad-hoc)
 4. Compatible with C4 diagrams
 
 **Alternatives Considered**:
+
 - **arc42**: Industry-standard template (12 sections), mature, widely adopted
 - **SAD (Software Architecture Document)**: IEEE 1471 standard, too formal/heavyweight
 - **Custom**: Ad-hoc docs, no structure, hard to maintain
@@ -346,6 +367,7 @@ Need a structured format for architecture documentation. Requirements:
 ### Decision
 
 **Use arc42 template for architecture documentation**:
+
 - Follow 12-section structure (Context, Solution Strategy, Building Blocks, etc.)
 - Integrate C4 diagrams into arc42 sections
 - Store in `docs/vdad/phase4-*.md` files (modular)
@@ -360,11 +382,13 @@ Need a structured format for architecture documentation. Requirements:
 ### Consequences
 
 **Positive**:
+
 - ✅ Structured documentation (easy to navigate)
 - ✅ Onboarding-friendly (new devs know where to look)
 - ✅ Review-friendly (stakeholders know what to expect)
 
 **Negative**:
+
 - ❌ 12 sections can be overwhelming → **Mitigation**: Split into modular files
 - ❌ Requires discipline to maintain → **Mitigation**: CI check for outdated docs
 
@@ -403,12 +427,14 @@ Need a structured format for architecture documentation. Requirements:
 ### Context
 
 Architecture diagrams needed for C4 model, data flows, deployment. Requirements:
+
 1. **Git-friendly**: Text-based (no binary .png/.svg files)
 2. **Reviewable**: Diffs visible in PRs
 3. **Maintainable**: Edit without specialized tools (no Visio/draw.io)
 4. **Rendering**: Works in GitHub, MkDocs, VS Code
 
 **Alternatives Considered**:
+
 - **PlantUML**: Mature, powerful, but requires Java (heavy dependency)
 - **Graphviz**: Low-level, hard to maintain (dot syntax)
 - **Mermaid**: JavaScript-based, GitHub-native, MkDocs plugin available
@@ -429,12 +455,14 @@ Architecture diagrams needed for C4 model, data flows, deployment. Requirements:
 ### Consequences
 
 **Positive**:
+
 - ✅ Zero build-time dependencies (Mermaid runs in browser)
 - ✅ Git-friendly (text diffs)
 - ✅ Easy to edit (any text editor)
 - ✅ GitHub/MkDocs rendering
 
 **Negative**:
+
 - ❌ Less flexible than PlantUML (fewer customization options) → **Acceptable tradeoff**
 - ❌ Layout sometimes suboptimal (auto-layout) → **Mitigation**: Manual hints (`UpdateLayoutConfig`)
 
@@ -443,6 +471,7 @@ Architecture diagrams needed for C4 model, data flows, deployment. Requirements:
 ### Implementation
 
 **MkDocs Configuration**:
+
 ```yaml
 # mkdocs.yml
 plugins:
@@ -457,6 +486,7 @@ markdown_extensions:
 ```
 
 **Example Diagram**:
+
 ````markdown
 ```mermaid
 graph LR
@@ -481,10 +511,12 @@ graph LR
 ### Context
 
 Self-application (RepoQ analyzing itself) risks paradoxes (Russell's Paradox, Liar's Paradox). Need a safety mechanism. **Theorem F** (from formal docs) requires:
+
 - **Strict ordering**: L_i can only analyze L_j if i > j
 - **Stratification**: Separate language levels to avoid self-reference
 
 **Alternatives Considered**:
+
 - **No stratification**: Allow RepoQ_0 to analyze itself → **Unsafe (paradoxes)**
 - **Two levels** (L_0, L_1): RepoQ_1 analyzes RepoQ_0 → **Insufficient for meta-meta checks**
 - **Three levels** (L_0, L_1, L_2): RepoQ_2 validates RepoQ_1 validates RepoQ_0 → **Goldilocks zone**
@@ -493,6 +525,7 @@ Self-application (RepoQ analyzing itself) risks paradoxes (Russell's Paradox, Li
 ### Decision
 
 **Use 3 stratification levels (L_0, L_1, L_2)**:
+
 - **L_0 (Object Level)**: User codebases (analyzed by RepoQ)
 - **L_1 (Meta Level)**: RepoQ's own codebase (self-analysis, dogfooding)
 - **L_2 (Meta-Meta Level)**: RepoQ's quality model validation (meta-check)
@@ -509,15 +542,18 @@ Self-application (RepoQ analyzing itself) risks paradoxes (Russell's Paradox, Li
 ### Consequences
 
 **Positive**:
+
 - ✅ Paradox-free self-application (Theorem F guarantee)
 - ✅ Dogfooding enabled (RepoQ analyzes itself at L_1)
 - ✅ Meta-validation (L_2 checks RepoQ's own quality model)
 
 **Negative**:
+
 - ❌ User confusion ("Why can't RepoQ analyze itself directly?") → **Mitigation**: Clear error messages
 - ❌ Extra command (`repoq meta-self --level 1`) → **Acceptable tradeoff**
 
 **Risks**:
+
 - **R1**: User tries to skip levels → **Mitigation**: Guard enforces strict ordering
 - **R2**: Infinite regress ("Who validates L_2?") → **Mitigation**: L_2 is axiomatic (trusted base)
 
@@ -572,12 +608,14 @@ guard.check(target_level=2)  # ✗ FAIL (cannot skip 0 → 2)
 ### Context
 
 Standard Q-score aggregation (mean/weighted average) allows **compensation**: One excellent module compensates for a bad module. This enables gaming:
+
 - Developer improves documentation quality (easy) to offset poor code quality (hard)
 - One refactored module "hides" ten legacy modules
 
 **Theorem C** (from formal docs) requires **no compensation**: All modules must meet threshold τ.
 
 **Alternatives Considered**:
+
 - **Mean aggregation**: `Q_total = Σ Q_i / n` → **Allows compensation**
 - **Weighted average**: `Q_total = Σ w_i * Q_i` → **Still allows compensation**
 - **Min aggregator (PCQ)**: `PCQ = min{Q_i}` → **No compensation, all modules ≥τ**
@@ -586,6 +624,7 @@ Standard Q-score aggregation (mean/weighted average) allows **compensation**: On
 ### Decision
 
 **Use PCQ min-aggregator (Zero-Allowance Gate)**:
+
 - **Formula**: `PCQ(S) = min{Q(M_i) for all modules i}`
 - **Admission**: `PCQ ≥ τ` (all modules must meet threshold)
 - **Witness**: If PCQ fails, generate PCE k-repair witness (k lowest modules)
@@ -600,15 +639,18 @@ Standard Q-score aggregation (mean/weighted average) allows **compensation**: On
 ### Consequences
 
 **Positive**:
+
 - ✅ Gaming-proof (no compensation possible)
 - ✅ Actionable feedback (PCE witness: "fix these 3 modules")
 - ✅ Encourages uniform quality (no "technical debt islands")
 
 **Negative**:
+
 - ❌ Strict (one bad module → gate fails) → **Mitigation**: Exemptions for legacy code
 - ❌ May discourage experimentation → **Mitigation**: Separate experimental branches
 
 **Risks**:
+
 - **R1**: Developers game exemptions → **Mitigation**: Exemptions require expiry dates + rationale
 - **R2**: PCQ too harsh for large codebases → **Mitigation**: Configurable τ (e.g., 0.7 for legacy, 0.9 for greenfield)
 
@@ -651,12 +693,14 @@ witness = generate_pce_witness(modules, policy, k=2)  # [db, auth]
 ### Context
 
 Analyzing large codebases is slow (complexity calculation, AST parsing, coverage). Need caching. Requirements:
+
 1. **Invalidation**: Re-analyze only if file content changes
 2. **Policy-Aware**: Re-analyze if quality policy changes (weights, thresholds)
 3. **Version-Aware**: Re-analyze if RepoQ version changes (new metrics)
 4. **Performance**: Cache lookup <10ms, no network calls
 
 **Alternatives Considered**:
+
 - **Timestamp-based**: `mtime` as cache key → **Unreliable (git checkout changes mtime)**
 - **Path-based**: File path as key → **Breaks on renames, no content tracking**
 - **SHA-based**: Git blob SHA as key → **Reliable, content-addressed**
@@ -665,6 +709,7 @@ Analyzing large codebases is slow (complexity calculation, AST parsing, coverage
 ### Decision
 
 **Use SHA-based incremental caching**:
+
 - **Cache Key**: `{file_sha}_{policy_version}_{repoq_version}`
 - **Storage**: Disk-backed LRU cache (`.repoq/cache/`)
 - **Eviction**: LRU, max 10K entries or 1GB disk space
@@ -681,16 +726,19 @@ Analyzing large codebases is slow (complexity calculation, AST parsing, coverage
 ### Consequences
 
 **Positive**:
+
 - ✅ Accurate invalidation (no false cache hits)
 - ✅ Fast incremental analysis (only changed files)
 - ✅ Handles renames correctly (content-addressed)
 - ✅ Works offline (no network)
 
 **Negative**:
+
 - ❌ Disk space usage (~100 KB per cached file) → **Mitigation**: LRU eviction, max 1GB
 - ❌ Policy change clears cache (re-analyze all) → **Mitigation**: Warn user, rare event
 
 **Risks**:
+
 - **R1**: Cache corruption → **Mitigation**: Checksum validation, fallback to re-analysis
 - **R2**: Cache grows unbounded → **Mitigation**: LRU eviction, max 10K entries
 
@@ -753,6 +801,7 @@ if metrics is None:
 ### Context
 
 Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platforms (CodeClimate, SonarCloud). Risks:
+
 1. **Data leakage**: Proprietary code sent to third parties
 2. **Compliance**: GDPR, HIPAA violations
 3. **Offline**: Cannot work without internet (airport, VPN issues)
@@ -761,6 +810,7 @@ Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platf
 ### Decision
 
 **Zero network calls in core analysis** (local-first):
+
 1. All metrics calculated locally (no SaaS APIs)
 2. RDF storage local (no external graph DB)
 3. Certificates stored locally (no external registry)
@@ -777,12 +827,14 @@ Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platf
 ### Consequences
 
 **Positive**:
+
 - ✅ Privacy-preserving (no data leakage)
 - ✅ Works offline (no internet required)
 - ✅ Fast (no network latency)
 - ✅ Trust (no black-box APIs)
 
 **Negative**:
+
 - ❌ No collaborative features (team dashboards) → **Mitigation**: Optional self-hosted registry
 - ❌ No cloud storage (certificates local) → **Mitigation**: Push to Git as artifacts
 
@@ -791,6 +843,7 @@ Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platf
 ### Implementation
 
 **CI Check (enforce zero network)**:
+
 ```bash
 # .github/workflows/ci.yml
 - name: Verify zero network calls
@@ -814,12 +867,14 @@ Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platf
 ### Context
 
 Quality certificates need to be:
+
 1. **Tamper-proof**: Cannot modify Q-score after issuance
 2. **Verifiable**: Third parties can verify authenticity
 3. **Standards-compliant**: Not a proprietary format
 4. **Portable**: Works with standard tools (JSON-LD, JWS)
 
 **Alternatives Considered**:
+
 - **Plain JSON**: No signature, easy to tamper
 - **JWT**: Non-standard for VCs, harder to extend
 - **W3C Verifiable Credentials**: Standard format (JSON-LD + ECDSA/Ed25519)
@@ -828,6 +883,7 @@ Quality certificates need to be:
 ### Decision
 
 **Use W3C Verifiable Credentials with ECDSA signatures**:
+
 - **Format**: JSON-LD (Linked Data context)
 - **Signature**: ECDSA secp256k1 (same as Bitcoin/Ethereum)
 - **Storage**: Local `.repoq/certificates/<commit_sha>.json`
@@ -844,22 +900,26 @@ Quality certificates need to be:
 ### Consequences
 
 **Positive**:
+
 - ✅ Tamper-proof (cryptographic signatures)
 - ✅ Standards-compliant (W3C)
 - ✅ Portable (JSON-LD works with many tools)
 - ✅ Future-proof (can add more claims)
 
 **Negative**:
+
 - ❌ Key management complexity (securely store private key) → **Mitigation**: Use env var or Git Secrets
 - ❌ Larger file size (JSON-LD verbose) → **Acceptable (<10 KB per cert)**
 
 **Risks**:
+
 - **R1**: Private key leaked → **Mitigation**: Rotate keys, revoke certificates
 - **R2**: JSON-LD context unavailable → **Mitigation**: Embed context in certificate
 
 ### Implementation
 
 **Example Certificate**:
+
 ```json
 {
   "@context": ["https://www.w3.org/2018/credentials/v1"],
@@ -898,6 +958,7 @@ Quality certificates need to be:
 ### Context
 
 Need to choose minimum Python version. Considerations:
+
 1. **Features**: 3.11+ has performance improvements (10-25% faster), ExceptionGroups, TypedDict improvements
 2. **Compatibility**: 3.8/3.9 still used in enterprise (RHEL 8, Ubuntu 20.04)
 3. **Maintenance**: Supporting old versions increases complexity
@@ -906,6 +967,7 @@ Need to choose minimum Python version. Considerations:
 ### Decision
 
 **Require Python 3.11+ (drop 3.8/3.9/3.10)**:
+
 - **Minimum version**: 3.11.0
 - **Recommended**: 3.12+ (for latest performance improvements)
 - **CI Matrix**: Test on 3.11, 3.12, 3.13
@@ -921,16 +983,19 @@ Need to choose minimum Python version. Considerations:
 ### Consequences
 
 **Positive**:
+
 - ✅ Faster performance (10-25% speedup for free)
 - ✅ Better type hints (TypedDict, Self type)
 - ✅ Simpler code (no compatibility shims)
 - ✅ Smaller maintenance burden
 
 **Negative**:
+
 - ❌ Excludes users on RHEL 8 (Python 3.6), Ubuntu 20.04 (Python 3.8) → **Mitigation**: Document upgrade path
 - ❌ May break CI for older projects → **Mitigation**: Clear error message in `setup.py`
 
 **Risks**:
+
 - **R1**: User complaints about old Python → **Mitigation**: Provide Docker image (includes Python 3.12)
 
 ### Implementation
@@ -962,12 +1027,14 @@ strategy:
 ### Context
 
 Need CI/CD pipeline for automated testing, quality gates, PyPI deployment. Requirements:
+
 1. **Free**: Open-source project (no budget for Jenkins/CircleCI)
 2. **Integrated**: Works with GitHub (where code is hosted)
 3. **Fast**: Parallel jobs, caching
 4. **Flexible**: Custom workflows (not just build/test)
 
 **Alternatives Considered**:
+
 - **GitHub Actions**: Free for OSS, native integration, 20K+ actions marketplace
 - **GitLab CI**: Good but requires GitLab (we use GitHub)
 - **CircleCI**: Free tier limited (1K min/month), less integration
@@ -976,6 +1043,7 @@ Need CI/CD pipeline for automated testing, quality gates, PyPI deployment. Requi
 ### Decision
 
 **Use GitHub Actions** with the following workflows:
+
 1. **CI**: Run tests, linters, coverage on every PR
 2. **Quality Gate**: Run `repoq gate` on PRs (block merge if fails)
 3. **Deployment**: Publish to PyPI on release tags
@@ -992,12 +1060,14 @@ Need CI/CD pipeline for automated testing, quality gates, PyPI deployment. Requi
 ### Consequences
 
 **Positive**:
+
 - ✅ Free for OSS (no cost)
 - ✅ Native integration (PR checks, protected branches)
 - ✅ Fast (parallel jobs, caching)
 - ✅ Large ecosystem (actions marketplace)
 
 **Negative**:
+
 - ❌ Vendor lock-in (GitHub-specific) → **Acceptable (we use GitHub)**
 - ❌ YAML complexity for complex workflows → **Mitigation**: Modular workflows
 
@@ -1006,6 +1076,7 @@ Need CI/CD pipeline for automated testing, quality gates, PyPI deployment. Requi
 ### Implementation
 
 **Quality Gate Workflow**:
+
 ```yaml
 # .github/workflows/quality-gate.yml
 name: Quality Gate
@@ -1048,9 +1119,108 @@ jobs:
 
 ---
 
+## ADR-013: Incremental v2 Migration via Feature Flags
+
+**Status**: ✅ Accepted  
+**Date**: 2025-10-22  
+**Stakeholders**: All (Developers, Team Leads, DevOps, Researchers, Maintainers)  
+**Related**: ADR-002 (RDFLib), ADR-003 (Subprocess), ADR-006 (Stratification), ADR-007 (PCQ)
+
+### Context
+
+RepoQ v2 architecture (C4 diagrams) specifies semantic-first pipeline (Extract→TTL→Reason→SHACL→Quality) but current implementation has 48/100 alignment. Need migration strategy that:
+
+1. Preserves all 6 formal theorems (A-F)
+2. Maintains 100% backward compatibility (NFR-12)
+3. Allows gradual adoption (developer choice)
+4. Delivers incremental value (each phase usable)
+
+**Gap Analysis**:
+
+- ❌ No `.repoq/raw/` (ABox-raw not saved)
+- ❌ No Reasoner (architecture invariants not checked)
+- ❌ SHACL not integrated (issues from Python code)
+- ❌ No manifest.json (no versioning/reproducibility)
+
+### Decision
+
+**Adopt 4-Phase Incremental Migration** (10 weeks, 240 hours):
+
+1. **Phase 1** (Weeks 1-2): `.repoq/` workspace + manifest.json → **V07 Reliability**
+2. **Phase 2** (Weeks 3-5): SHACL validation + PCQ/PCE → **V01 Transparency**, **V06 Fairness**
+3. **Phase 3** (Weeks 6-7): Reasoner + Any2Math → **V03 Correctness**, **V07 Reliability**
+4. **Phase 4** (Weeks 8-10): Unified pipeline + self-application → All 8 Tier 1 values
+
+**Feature Flags**:
+
+- `--shacl` (Phase 2, opt-in SHACL validation)
+- `--reasoning` (Phase 3, opt-in OWL2-RL reasoning)
+- `--normalize` (Phase 3, opt-in Any2Math normalization)
+- `--semantic` (Phase 4, all features enabled)
+
+**Default behavior**: Legacy pipeline (v1.x, backward compatible)
+
+### Rationale
+
+1. **Zero Breaking Changes**: Legacy pipeline preserved as `_run_legacy_pipeline()` (NFR-12)
+2. **Gradual Adoption**: Developers opt-in incrementally (`--shacl` → `--reasoning` → `--semantic`)
+3. **Incremental Value**: Each phase delivers usable features (SHACL violations, architecture checks)
+4. **Risk Mitigation**: Easy rollback (disable flag), continuous validation (200+ tests)
+5. **Formal Guarantees Preserved**: All theorems A-F remain valid (quality formula unchanged)
+
+### Alternatives Considered
+
+1. **Big-Bang Rewrite** (Score: 2/10):
+   - ❌ High risk, long cycle (3+ months), no incremental value
+
+2. **Parallel System** (Score: 4/10):
+   - ❌ Code duplication, 2x maintenance burden, eventual forced migration
+
+3. **Feature-Flag Incremental** (Score: 9/10):
+   - ✅ Selected for zero risk + incremental value
+
+### Consequences
+
+**Positive**:
+
+- ✅ Zero breaking changes (Γ_back invariant)
+- ✅ Gradual adoption (user choice)
+- ✅ Early value delivery (each phase)
+- ✅ Easy rollback (disable flag)
+- ✅ All 8 Tier 1 values addressed (V01-V08)
+- ✅ Formal guarantees preserved (Theorems A-F)
+
+**Negative**:
+
+- ⚠️ Temporary code complexity (dual paths until v3.0) → **Mitigation**: Clean abstraction, remove legacy in v3.0
+- ⚠️ Feature flag hygiene required → **Mitigation**: Limit to 4 flags, documented dependencies
+
+**Risks**:
+
+- **R1**: Adoption resistance (<30%) → **Mitigation**: ROI demos, training webinars
+- **R2**: Performance degradation (>30%) → **Mitigation**: Benchmarks at each phase, caching
+- **R3**: Complexity increase → **Mitigation**: Modularity, integration tests, ADRs
+
+### Implementation
+
+See **detailed 4-phase roadmap**: `docs/vdad/phase5-migration-roadmap.md`  
+See **full ADR document**: `docs/vdad/phase4-adr-013-incremental-migration.md`
+
+**Success Criteria**:
+
+- ✅ Alignment Score ≥90/100 (from 48/100 baseline)
+- ✅ Performance overhead <30% vs legacy
+- ✅ Adoption ≥30% (teams using ≥1 v2 feature)
+- ✅ Zero breaking changes (all v1.x tests passing)
+- ✅ 200+ tests passing across 4 phases
+
+**Status**: ⏸️ Planned (Phase 1 starts Week 1)
+
+---
+
 ## Success Criteria
 
-- ✅ **12 ADRs documented**: All key architectural decisions recorded
+- ✅ **13 ADRs documented**: All key architectural decisions recorded (including ADR-013 migration)
 - ✅ **Lightweight format**: Context, Decision, Rationale, Consequences (not heavyweight IEEE SAD)
 - ✅ **Stakeholder alignment**: Each ADR lists impacted stakeholders
 - ✅ **Alternatives considered**: Each ADR evaluates 2-4 alternatives
@@ -1066,9 +1236,11 @@ jobs:
 3. arc42 (2024). *Architecture Documentation Template*. [arc42.org](https://arc42.org/)
 4. RepoQ Project (2025). *Phase 3: Requirements*. `docs/vdad/phase3-requirements.md`
 5. RepoQ Project (2025). *Phase 4: Architecture Overview*. `docs/vdad/phase4-architecture-overview.md`
+6. RepoQ Project (2025). *Phase 5: Migration Roadmap*. `docs/vdad/phase5-migration-roadmap.md`
 
 ---
 
-**Document Status**: ✅ COMPLETE  
+**Document Status**: ✅ COMPLETE (13 ADRs)  
+**Last Updated**: 2025-10-22 (Added ADR-013 Incremental Migration)  
 **Review**: Pending (validate decisions with team)  
-**Next Steps**: NFR realization strategies, BAML agent spec in separate documents.
+**Next Steps**: Execute Phase 1 (Weeks 1-2), validate with Architecture Review Board.
