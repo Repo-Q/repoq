@@ -63,6 +63,9 @@ def _compute_complexity_metric(files: list) -> float:
     Returns:
         Normalized complexity score
     """
+    if not files:
+        return 0.0
+
     complexities = [f.complexity or 0.0 for f in files]
     max_cplx = max(complexities) if complexities else 1.0
     avg_cplx = sum(complexities) / len(files)
@@ -436,7 +439,7 @@ def generate_pce_witness(
         repair_candidates.extend(actions)
 
     # Sort by delta_q descending (highest impact first)
-    repair_candidates.sort(key=lambda x: x["delta_q"], reverse=True)
+    repair_candidates.sort(key=lambda x: float(x["delta_q"]), reverse=True)
 
     # Select top-k actions
     witness = repair_candidates[:k]
