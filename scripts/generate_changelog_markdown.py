@@ -15,7 +15,7 @@ from pathlib import Path
 from rdflib import RDF, Graph, Namespace
 
 # Namespaces
-CHANGELOG = Namespace("https://repoq.io/changelog#")
+CHANGELOG = Namespace("https://repoq.dev/ontology/changelog#")
 
 
 def generate_changelog_markdown(rdf_path: Path, output_path: Path) -> int:
@@ -50,9 +50,13 @@ def generate_changelog_markdown(rdf_path: Path, output_path: Path) -> int:
         changes = []
         for change_node in graph.objects(release_uri, CHANGELOG.change):
             change_type_uri = graph.value(change_node, CHANGELOG.changeType)
-            change_type = (
-                str(change_type_uri).split("#")[-1].capitalize() if change_type_uri else "Changed"
-            )
+            # Extract type: TypeAdded → Added, TypeRemoved → Removed, etc.
+            if change_type_uri:
+                type_str = str(change_type_uri).split("#")[-1]  # "TypeAdded"
+                change_type = type_str.replace("Type", "")  # "Added"
+            else:
+                change_type = "Changed"
+            
             description = str(graph.value(change_node, CHANGELOG.description, default=""))
             breaking = bool(graph.value(change_node, CHANGELOG.breakingChange, default=False))
             commit = str(graph.value(change_node, CHANGELOG.commit, default=""))
