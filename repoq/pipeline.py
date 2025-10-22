@@ -12,6 +12,8 @@ import logging
 from .analyzers.architecture import ArchitectureAnalyzer
 from .analyzers.ci_qm import CIQualityAnalyzer
 from .analyzers.complexity import ComplexityAnalyzer
+from .analyzers.doc_code_sync import DocCodeSyncAnalyzer
+from .analyzers.git_status import GitStatusAnalyzer
 from .analyzers.history import HistoryAnalyzer
 from .analyzers.hotspots import HotspotsAnalyzer
 from .analyzers.structure import StructureAnalyzer
@@ -49,10 +51,12 @@ def run_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig) -> None:
     """
     if cfg.mode in ("structure", "full"):
         StructureAnalyzer().run(project, repo_dir, cfg)
+        GitStatusAnalyzer().run(project, repo_dir, cfg)  # Git working directory status
         ComplexityAnalyzer().run(project, repo_dir, cfg)
         WeaknessAnalyzer().run(project, repo_dir, cfg)
         CIQualityAnalyzer().run(project, repo_dir, cfg)
         ArchitectureAnalyzer().run(project, repo_dir, cfg)  # Architecture analysis
+        DocCodeSyncAnalyzer().run(project, repo_dir, cfg)  # Documentation-code sync
     if cfg.mode in ("history", "full"):
         HistoryAnalyzer().run(project, repo_dir, cfg)
     if cfg.mode in ("full",):

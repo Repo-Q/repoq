@@ -615,14 +615,18 @@ def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, 
         from .analyzers.architecture import ArchitectureAnalyzer
         from .analyzers.ci_qm import CIQualityAnalyzer
         from .analyzers.complexity import ComplexityAnalyzer
+        from .analyzers.doc_code_sync import DocCodeSyncAnalyzer
+        from .analyzers.git_status import GitStatusAnalyzer
         from .analyzers.structure import StructureAnalyzer
         from .analyzers.weakness import WeaknessAnalyzer
 
         StructureAnalyzer().run(project, repo_dir, cfg)
+        GitStatusAnalyzer().run(project, repo_dir, cfg)  # Git status check
         ComplexityAnalyzer().run(project, repo_dir, cfg)
         WeaknessAnalyzer().run(project, repo_dir, cfg)
         CIQualityAnalyzer().run(project, repo_dir, cfg)
         ArchitectureAnalyzer().run(project, repo_dir, cfg)  # Architecture analysis
+        DocCodeSyncAnalyzer().run(project, repo_dir, cfg)  # Documentation sync
     progress.advance(task_id)
 
     if mode in ("history", "full"):
