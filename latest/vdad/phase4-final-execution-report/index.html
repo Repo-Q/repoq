@@ -2414,11 +2414,13 @@
 <h2 id="signature">Σ (Signature) — Язык и инварианты<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h2>
 <p><strong>Язык L</strong>: RepoQ quality analysis system (Python 3.9+)<br />
 <strong>Мета-язык M</strong>: Lean4/OML (формальная верификация)  </p>
-<p><strong>Целевые инварианты</strong>:
-- ✅ <strong>Soundness</strong>: SHA-based caching гарантирует детерминированные метрики
-- ✅ <strong>Reflexive completeness</strong>: Stratification guard (Theorem F: i &gt; j) предотвращает парадоксы
-- ✅ <strong>Confluence</strong>: Incremental analysis ≡ full scan (идентичные результаты)
-- ✅ <strong>Termination</strong>: Все алгоритмы с ограниченными циклами (O(n), O(Δn))</p>
+<p><strong>Целевые инварианты</strong>:</p>
+<ul>
+<li>✅ <strong>Soundness</strong>: SHA-based caching гарантирует детерминированные метрики</li>
+<li>✅ <strong>Reflexive completeness</strong>: Stratification guard (Theorem F: i &gt; j) предотвращает парадоксы</li>
+<li>✅ <strong>Confluence</strong>: Incremental analysis ≡ full scan (идентичные результаты)</li>
+<li>✅ <strong>Termination</strong>: Все алгоритмы с ограниченными циклами (O(n), O(Δn))</li>
+</ul>
 <hr />
 <h2 id="gates">Γ (Gates) — Проверки выполнимости<a class="headerlink" href="#gates" title="Permanent link">&para;</a></h2>
 <table>
@@ -2470,11 +2472,13 @@
 <hr />
 <h2 id="p-options">𝒫 (Options) — Выбранный вариант<a class="headerlink" href="#p-options" title="Permanent link">&para;</a></h2>
 <p><strong>Selected</strong>: Variant 3 (Staged Plan) из phase4-compliance-report.md</p>
-<p><strong>Rationale</strong>:
-- Минимизирует риск (70% вероятность успеха)
-- Фокус на критических компонентах (gate, meta-self, verify)
-- Параллельное развитие возможно (incremental + PCQ/PCE)
-- Быстрая time-to-market (7 недель → выполнено за 1 сессию)</p>
+<p><strong>Rationale</strong>:</p>
+<ul>
+<li>Минимизирует риск (70% вероятность успеха)</li>
+<li>Фокус на критических компонентах (gate, meta-self, verify)</li>
+<li>Параллельное развитие возможно (incremental + PCQ/PCE)</li>
+<li>Быстрая time-to-market (7 недель → выполнено за 1 сессию)</li>
+</ul>
 <hr />
 <h2 id="aggregation">Λ (Aggregation) — Оценка по критериям<a class="headerlink" href="#aggregation" title="Permanent link">&para;</a></h2>
 <table>
@@ -2539,12 +2543,14 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Worst-case risks handled</strong>:
-- ❌ Infinite loops → Mitigated: Bounded algorithms + resource limits
-- ❌ Non-joinable critical pairs → Mitigated: Orthogonal rules (no overlaps)
-- ❌ Search space explosion → Mitigated: Greedy k-repair (k≤8)
-- ❌ Self-reference paradox → Mitigated: Stratification guard (max_level=2)
-- ❌ Performance degradation → Mitigated: Incremental analysis (9x speedup)</p>
+<p><strong>Worst-case risks handled</strong>:</p>
+<ul>
+<li>❌ Infinite loops → Mitigated: Bounded algorithms + resource limits</li>
+<li>❌ Non-joinable critical pairs → Mitigated: Orthogonal rules (no overlaps)</li>
+<li>❌ Search space explosion → Mitigated: Greedy k-repair (k≤8)</li>
+<li>❌ Self-reference paradox → Mitigated: Stratification guard (max_level=2)</li>
+<li>❌ Performance degradation → Mitigated: Incremental analysis (9x speedup)</li>
+</ul>
 <hr />
 <h2 id="r-result">R (Result) — Законченные артефакты<a class="headerlink" href="#r-result" title="Permanent link">&para;</a></h2>
 <h3 id="1-core-components-5-files">1. Core Components (5 files)<a class="headerlink" href="#1-core-components-5-files" title="Permanent link">&para;</a></h3>
@@ -2563,15 +2569,19 @@
 </span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">file_path</span><span class="p">,</span> <span class="n">file_sha</span><span class="p">,</span> <span class="n">policy_version</span><span class="p">,</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">)</span>
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="k">return</span> <span class="n">metrics</span>
 </span></code></pre></div>
-<p><strong>Features</strong>:
-- Content-addressable: SHA256(file_content, policy_version)
-- Thread-safe: <code>threading.Lock</code> + <code>OrderedDict</code>
-- LRU eviction: max 10K entries
-- Disk persistence: JSON format (save/load)</p>
-<p><strong>Performance</strong>:
-- Cache hit: O(1) lookup
-- Cache miss: O(n) compute + O(1) store
-- Typical hit rate: 95% for incremental analysis</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Content-addressable: SHA256(file_content, policy_version)</li>
+<li>Thread-safe: <code>threading.Lock</code> + <code>OrderedDict</code></li>
+<li>LRU eviction: max 10K entries</li>
+<li>Disk persistence: JSON format (save/load)</li>
+</ul>
+<p><strong>Performance</strong>:</p>
+<ul>
+<li>Cache hit: O(1) lookup</li>
+<li>Cache miss: O(n) compute + O(1) store</li>
+<li>Typical hit rate: 95% for incremental analysis</li>
+</ul>
 <hr />
 <h4 id="12-incrementalanalyzer-repoqanalyzersincrementalpy-285-loc">1.2 IncrementalAnalyzer (<code>repoq/analyzers/incremental.py</code> - 285 LOC)<a class="headerlink" href="#12-incrementalanalyzer-repoqanalyzersincrementalpy-285-loc" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">IncrementalAnalyzer</span><span class="p">:</span>
@@ -2588,20 +2598,22 @@
 </span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="n">ratio</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">changes</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_all_python_files</span><span class="p">())</span>
 </span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>        <span class="k">return</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="n">threshold</span>  <span class="c1"># Use incremental if &lt;30% changed</span>
 </span></code></pre></div>
-<p><strong>Features</strong>:
-- Git diff parsing: ADDED, MODIFIED, DELETED, RENAMED, COPIED
-- Auto-mode selection: incremental if &lt;30% files changed
-- Cache integration: <code>analyze_with_cache()</code>
-- Complexity: O(Δn) instead of O(n)</p>
-<p><strong>Performance Benchmark</strong>:
+<p><strong>Features</strong>:</p>
+<ul>
+<li>Git diff parsing: ADDED, MODIFIED, DELETED, RENAMED, COPIED</li>
+<li>Auto-mode selection: incremental if &lt;30% files changed</li>
+<li>Cache integration: <code>analyze_with_cache()</code></li>
+<li>Complexity: O(Δn) instead of O(n)</li>
+</ul>
+<p><strong>Performance Benchmark</strong>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Scenario: 1K files, 50 changed (5% ratio)
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>- Full analysis: ~180 sec
 </span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>- Incremental:    ~20 sec
 </span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>- Speedup:        9x ✅
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h4 id="13-quality-module-repoqqualitypy-156-loc">1.3 Quality Module (<code>repoq/quality.py</code> - +156 LOC)<a class="headerlink" href="#13-quality-module-repoqqualitypy-156-loc" title="Permanent link">&para;</a></h4>
-<p><strong>PCQ MinAggregator</strong> (50 LOC):
+<p><strong>PCQ MinAggregator</strong> (50 LOC):</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_pcq</span><span class="p">(</span><span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">,</span> <span class="n">module_type</span><span class="o">=</span><span class="s2">&quot;directory&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
 </span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;PCQ(S) = min_{m∈modules} Q(m) - Gaming-resistant.&quot;&quot;&quot;</span>
 </span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">module_scores</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2610,8 +2622,8 @@
 </span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="n">metrics</span> <span class="o">=</span> <span class="n">compute_quality_score</span><span class="p">(</span><span class="n">module_project</span><span class="p">)</span>
 </span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="n">module_scores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">metrics</span><span class="o">.</span><span class="n">score</span><span class="p">)</span>
 </span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">module_scores</span><span class="p">)</span>  <span class="c1"># Prevents compensation gaming</span>
-</span></code></pre></div></p>
-<p><strong>PCE WitnessGenerator</strong> (70 LOC):
+</span></code></pre></div>
+<p><strong>PCE WitnessGenerator</strong> (70 LOC):</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_pce_witness</span><span class="p">(</span><span class="n">project</span><span class="p">:</span> <span class="n">Project</span><span class="p">,</span> <span class="n">target_score</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
 </span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Greedy k-repair algorithm.&quot;&quot;&quot;</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">repair_candidates</span> <span class="o">=</span> <span class="p">[]</span>
@@ -2626,10 +2638,10 @@
 </span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>            <span class="p">})</span>
 </span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">repair_candidates</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s2">&quot;delta_q&quot;</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="k">return</span> <span class="n">repair_candidates</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># Top-k by impact</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h4 id="14-gate-module-repoqgatepy-updated">1.4 Gate Module (<code>repoq/gate.py</code> - updated)<a class="headerlink" href="#14-gate-module-repoqgatepy-updated" title="Permanent link">&para;</a></h4>
-<p><strong>Full Admission Predicate</strong>:
+<p><strong>Full Admission Predicate</strong>:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nd">@dataclass</span>
 </span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">GateResult</span><span class="p">:</span>
 </span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">passed</span><span class="p">:</span> <span class="nb">bool</span>
@@ -2667,7 +2679,7 @@
 </span><span id="__span-5-35"><a id="__codelineno-5-35" name="__codelineno-5-35" href="#__codelineno-5-35"></a>
 </span><span id="__span-5-36"><a id="__codelineno-5-36" name="__codelineno-5-36" href="#__codelineno-5-36"></a>    <span class="k">return</span> <span class="n">GateResult</span><span class="p">(</span><span class="n">passed</span><span class="p">,</span> <span class="n">base_metrics</span><span class="p">,</span> <span class="n">head_metrics</span><span class="p">,</span> <span class="n">deltas</span><span class="p">,</span> <span class="n">violations</span><span class="p">,</span>
 </span><span id="__span-5-37"><a id="__codelineno-5-37" name="__codelineno-5-37" href="#__codelineno-5-37"></a>                     <span class="n">pcq_base</span><span class="p">,</span> <span class="n">pcq_head</span><span class="p">,</span> <span class="n">pce_witness</span><span class="p">)</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h4 id="15-w3c-vc-verification-repoqvc_verificationpy-350-loc">1.5 W3C VC Verification (<code>repoq/vc_verification.py</code> - 350 LOC)<a class="headerlink" href="#15-w3c-vc-verification-repoqvc_verificationpy-350-loc" title="Permanent link">&para;</a></h4>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">verify_vc</span><span class="p">(</span><span class="n">vc_path</span><span class="p">:</span> <span class="n">Path</span><span class="p">,</span> <span class="n">public_key_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VerificationResult</span><span class="p">:</span>
@@ -2699,12 +2711,14 @@
 </span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>
 </span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>    <span class="k">return</span> <span class="n">VerificationResult</span><span class="p">(</span><span class="n">valid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">issuer</span><span class="o">=</span><span class="n">vc</span><span class="p">[</span><span class="s2">&quot;issuer&quot;</span><span class="p">],</span> <span class="o">...</span><span class="p">)</span>
 </span></code></pre></div>
-<p><strong>Features</strong>:
-- W3C credentials/v1 context validation
-- ECDSA secp256k1 signature verification
-- JWS format parsing (base64url)
-- Expiration check (expirationDate)
-- Exit codes: 0=valid, 1=invalid, 2=error</p>
+<p><strong>Features</strong>:</p>
+<ul>
+<li>W3C credentials/v1 context validation</li>
+<li>ECDSA secp256k1 signature verification</li>
+<li>JWS format parsing (base64url)</li>
+<li>Expiration check (expirationDate)</li>
+<li>Exit codes: 0=valid, 1=invalid, 2=error</li>
+</ul>
 <hr />
 <h3 id="2-cli-commands-3-commands">2. CLI Commands (3 commands)<a class="headerlink" href="#2-cli-commands-3-commands" title="Permanent link">&para;</a></h3>
 <h4 id="21-repoq-gate-115-loc">2.1 <code>repoq gate</code> (115 LOC)<a class="headerlink" href="#21-repoq-gate-115-loc" title="Permanent link">&para;</a></h4>
@@ -2795,7 +2809,7 @@
 <li>✅ <code>test_verify_malformed_vc</code>: Rejects invalid VC structure</li>
 <li>✅ <code>test_verify_file_not_found</code>: Handles missing file</li>
 </ul>
-<p><strong>Test Results</strong>:
+<p><strong>Test Results</strong>:</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>===== test session starts =====
 </span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>collected 7 items
 </span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
@@ -2808,7 +2822,7 @@
 </span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>tests/e2e/test_verify.py::test_verify_file_not_found PASSED [100%]
 </span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>
 </span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>===== 7 passed in 0.24s =====
-</span></code></pre></div></p>
+</span></code></pre></div>
 <hr />
 <h3 id="4-documentation-2-reports">4. Documentation (2 reports)<a class="headerlink" href="#4-documentation-2-reports" title="Permanent link">&para;</a></h3>
 <h4 id="phase4-compliance-reportmd-60-pages">phase4-compliance-report.md (60+ pages)<a class="headerlink" href="#phase4-compliance-reportmd-60-pages" title="Permanent link">&para;</a></h4>
@@ -2830,7 +2844,7 @@
 </ul>
 <hr />
 <h2 id="code-statistics">Code Statistics<a class="headerlink" href="#code-statistics" title="Permanent link">&para;</a></h2>
-<p><strong>New Files</strong> (8):
+<p><strong>New Files</strong> (8):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>repoq/core/metric_cache.py          380 LOC
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>repoq/analyzers/incremental.py      285 LOC
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>repoq/vc_verification.py            350 LOC
@@ -2840,19 +2854,21 @@
 </span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>tests/e2e/__init__.py                 2 LOC
 </span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>docs/vdad/phase4-compliance-report.md       (60+ pages)
 </span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>docs/vdad/phase4-implementation-report.md   (450+ lines)
-</span></code></pre></div></p>
-<p><strong>Modified Files</strong> (4):
+</span></code></pre></div>
+<p><strong>Modified Files</strong> (4):</p>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>repoq/cli.py      +215 LOC (gate, meta-self, verify commands)
 </span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>repoq/quality.py  +156 LOC (PCQ, PCE functions)
 </span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>repoq/gate.py     +80 LOC (full admission predicate)
 </span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>pyproject.toml    +1 LOC (cryptography dependency)
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Total New Code</strong>: +1546 LOC (production) + tests + docs</p>
-<p><strong>Code Quality Metrics</strong>:
-- Average cyclomatic complexity: 3.6 (target &lt;10) ✅
-- Test coverage: 100% for new E2E tests ✅
-- Linter errors: 0 critical (4 minor in unused vars) ⚠️
-- Type errors: 0 in new code (19 pre-existing in other modules) ⚠️</p>
+<p><strong>Code Quality Metrics</strong>:</p>
+<ul>
+<li>Average cyclomatic complexity: 3.6 (target &lt;10) ✅</li>
+<li>Test coverage: 100% for new E2E tests ✅</li>
+<li>Linter errors: 0 critical (4 minor in unused vars) ⚠️</li>
+<li>Type errors: 0 in new code (19 pre-existing in other modules) ⚠️</li>
+</ul>
 <hr />
 <h2 id="performance-benchmarks">Performance Benchmarks<a class="headerlink" href="#performance-benchmarks" title="Permanent link">&para;</a></h2>
 <table>
@@ -2891,43 +2907,53 @@
 </tr>
 </tbody>
 </table>
-<p><strong>NFR-01 Validation</strong> (≤2 min for 1K files):
-- Full analysis: 180 sec (3 min) ❌
-- <strong>Incremental</strong>: 20 sec (0.33 min) ✅ <strong>Achieved</strong></p>
+<p><strong>NFR-01 Validation</strong> (≤2 min for 1K files):</p>
+<ul>
+<li>Full analysis: 180 sec (3 min) ❌</li>
+<li><strong>Incremental</strong>: 20 sec (0.33 min) ✅ <strong>Achieved</strong></li>
+</ul>
 <hr />
 <h2 id="architecture-compliance">Architecture Compliance<a class="headerlink" href="#architecture-compliance" title="Permanent link">&para;</a></h2>
 <h3 id="before-implementation">Before Implementation<a class="headerlink" href="#before-implementation" title="Permanent link">&para;</a></h3>
 <p><strong>52% compliance</strong> (16/31 requirements)</p>
-<p>✅ Implemented:
-- CLI Layer (basic)
-- Analysis Engine (complexity, history)
-- Quality Engine (Q-score)
-- RDF export (JSON-LD, Turtle)
-- Configuration (YAML)</p>
-<p>❌ Missing:
-- MetricCache
-- IncrementalAnalyzer
-- PCQ/PCE
-- gate/meta-self/verify commands
-- W3C VC validation
-- Stratification enforcement</p>
+<p>✅ Implemented:</p>
+<ul>
+<li>CLI Layer (basic)</li>
+<li>Analysis Engine (complexity, history)</li>
+<li>Quality Engine (Q-score)</li>
+<li>RDF export (JSON-LD, Turtle)</li>
+<li>Configuration (YAML)</li>
+</ul>
+<p>❌ Missing:</p>
+<ul>
+<li>MetricCache</li>
+<li>IncrementalAnalyzer</li>
+<li>PCQ/PCE</li>
+<li>gate/meta-self/verify commands</li>
+<li>W3C VC validation</li>
+<li>Stratification enforcement</li>
+</ul>
 <h3 id="after-implementation">After Implementation<a class="headerlink" href="#after-implementation" title="Permanent link">&para;</a></h3>
 <p><strong>85% compliance</strong> (26/31 requirements) ← <strong>+33 percentage points</strong></p>
-<p>✅ Now Implemented:
-- MetricCache (SHA-based + LRU)
-- IncrementalAnalyzer (O(Δn))
-- PCQ MinAggregator (gaming-resistant)
-- PCE WitnessGenerator (k-repair)
-- gate command (full predicate)
-- meta-self command (stratification)
-- verify command (W3C VC)
-- E2E tests (7 passing)</p>
-<p>⏸️ Still Missing (15% to 100%):
-- FR-03: W3C VC signing (certificate generation)
-- FR-10: StratificationGuard full integration
-- NFR-06: Horizontal scaling (distributed)
-- NFR-09: Plugin system
-- NFR-11: Formal proofs (Lean4)</p>
+<p>✅ Now Implemented:</p>
+<ul>
+<li>MetricCache (SHA-based + LRU)</li>
+<li>IncrementalAnalyzer (O(Δn))</li>
+<li>PCQ MinAggregator (gaming-resistant)</li>
+<li>PCE WitnessGenerator (k-repair)</li>
+<li>gate command (full predicate)</li>
+<li>meta-self command (stratification)</li>
+<li>verify command (W3C VC)</li>
+<li>E2E tests (7 passing)</li>
+</ul>
+<p>⏸️ Still Missing (15% to 100%):</p>
+<ul>
+<li>FR-03: W3C VC signing (certificate generation)</li>
+<li>FR-10: StratificationGuard full integration</li>
+<li>NFR-06: Horizontal scaling (distributed)</li>
+<li>NFR-09: Plugin system</li>
+<li>NFR-11: Formal proofs (Lean4)</li>
+</ul>
 <hr />
 <h2 id="git-commit-history">Git Commit History<a class="headerlink" href="#git-commit-history" title="Permanent link">&para;</a></h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>commit<span class="w"> </span>f6cefe9<span class="w"> </span><span class="o">(</span>HEAD<span class="w"> </span>-&gt;<span class="w"> </span>main<span class="o">)</span>
@@ -3037,16 +3063,18 @@
 <h2 id="conclusion">Conclusion<a class="headerlink" href="#conclusion" title="Permanent link">&para;</a></h2>
 <p><strong>Mission</strong>: ✅ <strong>ACCOMPLISHED</strong></p>
 <p>Все 9 критических задач Phase 4 выполнены за одну сессию (~3 часа), код закоммичен, тесты проходят. Достигнуто 85% соответствие архитектуре (целевой порог), превышен порог по качеству кода (92.5% по Λ-критериям).</p>
-<p><strong>Key Achievements</strong>:
-1. ✅ MetricCache: SHA-based caching with 9x speedup
-2. ✅ IncrementalAnalyzer: O(Δn) complexity (NFR-01 met)
-3. ✅ Full Admission Predicate: H ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)
-4. ✅ Gaming Resistance: PCQ min-aggregation
-5. ✅ Constructive Feedback: PCE k-repair witness
-6. ✅ Safe Self-Analysis: Stratification enforcement
-7. ✅ W3C VC Verification: ECDSA signature validation
-8. ✅ E2E Tests: 7/7 passing smoke tests
-9. ✅ Documentation: 2 comprehensive reports</p>
+<p><strong>Key Achievements</strong>:</p>
+<ol>
+<li>✅ MetricCache: SHA-based caching with 9x speedup</li>
+<li>✅ IncrementalAnalyzer: O(Δn) complexity (NFR-01 met)</li>
+<li>✅ Full Admission Predicate: H ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)</li>
+<li>✅ Gaming Resistance: PCQ min-aggregation</li>
+<li>✅ Constructive Feedback: PCE k-repair witness</li>
+<li>✅ Safe Self-Analysis: Stratification enforcement</li>
+<li>✅ W3C VC Verification: ECDSA signature validation</li>
+<li>✅ E2E Tests: 7/7 passing smoke tests</li>
+<li>✅ Documentation: 2 comprehensive reports</li>
+</ol>
 <p><strong>Γ-Gates</strong>: ALL GREEN (soundness, confluence, termination, stratification, performance, quality)</p>
 <p><strong>Production Readiness</strong>: ✅ Ready for deployment (Phase 4 scope)</p>
 <hr />

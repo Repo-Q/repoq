@@ -141,6 +141,18 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/dogfooding-meta-level/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/dogfooding-retrospective/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/improvement-roadmap/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
          <loc>https://repo-q.github.io/repoq/latest/vdad/phase1-domain-context/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
@@ -186,6 +198,22 @@
     </url>
     <url>
          <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-nfr-realization/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/refactor-plan-implementation/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/refactoring-progress/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/task2-cli-refactoring/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/task2-failure-analysis/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
 </urlset>
