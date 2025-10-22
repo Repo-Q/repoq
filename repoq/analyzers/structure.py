@@ -114,6 +114,161 @@ def _detect_spdx_license(repo_path: Path) -> Optional[str]:
     return None
 
 
+def _parse_pyproject_toml(repo_path: Path) -> List[DependencyEdge]:
+    """Parse pyproject.toml for Python dependencies.
+    
+    Args:
+        repo_path: Repository root path
+    
+    Returns:
+        List of DependencyEdge objects from pyproject.toml
+    """
+    dependencies = []
+    pyproject_file = repo_path / "pyproject.toml"
+    
+    if not pyproject_file.exists():
+        return dependencies
+    
+    try:
+        import tomllib
+
+        with open(pyproject_file, "rb") as fh:
+            data = tomllib.load(fh)
+
+        # Main dependencies
+        for dep in data.get("project", {}).get("dependencies", []):
+            dep_name, version_constraint = _parse_python_dep(dep)
+            if dep_name:
+                dependencies.append(
+                    DependencyEdge(
+                        source="project",
+                        target=f"pypi:{dep_name}",
+                        weight=1,
+                        type="runtime",
+                        version_constraint=normalize_semver(version_constraint)
+                        if version_constraint
+                        else None,
+                        original_constraint=version_constraint,
+                    )
+                )
+
+        # Optional dependencies
+        for group_deps in data.get("project", {}).get("optional-dependencies", {}).values():
+            for dep in group_deps:
+                dep_name, version_constraint = _parse_python_dep(dep)
+                if dep_name:
+                    dependencies.append(
+                        DependencyEdge(
+                            source="project",
+                            target=f"pypi:{dep_name}",
+                            weight=1,
+                            type="build",
+                            version_constraint=normalize_semver(version_constraint)
+                            if version_constraint
+                            else None,
+                            original_constraint=version_constraint,
+                        )
+                    )
+
+    except Exception as e:
+        logger.debug(f"Failed to parse pyproject.toml: {e}")
+    
+    return dependencies
+
+
+def _parse_requirements_txt(repo_path: Path) -> List[DependencyEdge]:
+    """Parse requirements.txt for Python dependencies.
+    
+    Args:
+        repo_path: Repository root path
+    
+    Returns:
+        List of DependencyEdge objects from requirements.txt
+    """
+    dependencies = []
+    requirements_file = repo_path / "requirements.txt"
+    
+    if not requirements_file.exists():
+        return dependencies
+    
+    try:
+        with open(requirements_file, "r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if line and not line.startswith("#"):
+                    dep_name, version_constraint = _parse_python_dep(line)
+                    if dep_name:
+                        dependencies.append(
+                            DependencyEdge(
+                                source="project",
+                                target=f"pypi:{dep_name}",
+                                weight=1,
+                                type="runtime",
+                                version_constraint=normalize_semver(version_constraint)
+                                if version_constraint
+                                else None,
+                                original_constraint=version_constraint,
+                            )
+                        )
+    except Exception as e:
+        logger.debug(f"Failed to parse requirements.txt: {e}")
+    
+    return dependencies
+
+
+def _parse_package_json(repo_path: Path) -> List[DependencyEdge]:
+    """Parse package.json for JavaScript/TypeScript dependencies.
+    
+    Args:
+        repo_path: Repository root path
+    
+    Returns:
+        List of DependencyEdge objects from package.json
+    """
+    dependencies = []
+    package_json = repo_path / "package.json"
+    
+    if not package_json.exists():
+        return dependencies
+    
+    try:
+        import json
+
+        with open(package_json, "r", encoding="utf-8") as fh:
+            data = json.load(fh)
+
+        # Dependencies
+        for dep_name, version_constraint in data.get("dependencies", {}).items():
+            dependencies.append(
+                DependencyEdge(
+                    source="project",
+                    target=f"npm:{dep_name}",
+                    weight=1,
+                    type="runtime",
+                    version_constraint=normalize_semver(version_constraint),
+                    original_constraint=version_constraint,
+                )
+            )
+
+        # Dev dependencies
+        for dep_name, version_constraint in data.get("devDependencies", {}).items():
+            dependencies.append(
+                DependencyEdge(
+                    source="project",
+                    target=f"npm:{dep_name}",
+                    weight=1,
+                    type="build",
+                    version_constraint=normalize_semver(version_constraint),
+                    original_constraint=version_constraint,
+                )
+            )
+
+    except Exception as e:
+        logger.debug(f"Failed to parse package.json: {e}")
+    
+    return dependencies
+
+
 def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
     """
     Parse dependency manifests (package.json, pyproject.toml, etc.) and extract
@@ -122,117 +277,12 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
     Returns list of DependencyEdge objects with version constraints.
     """
     dependencies = []
-
-    # Python: pyproject.toml
-    pyproject_file = repo_path / "pyproject.toml"
-    if pyproject_file.exists():
-        try:
-            import tomllib
-
-            with open(pyproject_file, "rb") as fh:
-                data = tomllib.load(fh)
-
-            # Main dependencies
-            for dep in data.get("project", {}).get("dependencies", []):
-                dep_name, version_constraint = _parse_python_dep(dep)
-                if dep_name:
-                    dependencies.append(
-                        DependencyEdge(
-                            source="project",
-                            target=f"pypi:{dep_name}",
-                            weight=1,
-                            type="runtime",
-                            version_constraint=normalize_semver(version_constraint)
-                            if version_constraint
-                            else None,
-                            original_constraint=version_constraint,
-                        )
-                    )
-
-            # Optional dependencies
-            for group_deps in data.get("project", {}).get("optional-dependencies", {}).values():
-                for dep in group_deps:
-                    dep_name, version_constraint = _parse_python_dep(dep)
-                    if dep_name:
-                        dependencies.append(
-                            DependencyEdge(
-                                source="project",
-                                target=f"pypi:{dep_name}",
-                                weight=1,
-                                type="build",
-                                version_constraint=normalize_semver(version_constraint)
-                                if version_constraint
-                                else None,
-                                original_constraint=version_constraint,
-                            )
-                        )
-
-        except Exception as e:
-            logger.debug(f"Failed to parse pyproject.toml: {e}")
-
-    # Python: requirements.txt
-    requirements_file = repo_path / "requirements.txt"
-    if requirements_file.exists():
-        try:
-            with open(requirements_file, "r", encoding="utf-8") as fh:
-                for line in fh:
-                    line = line.strip()
-                    if line and not line.startswith("#"):
-                        dep_name, version_constraint = _parse_python_dep(line)
-                        if dep_name:
-                            dependencies.append(
-                                DependencyEdge(
-                                    source="project",
-                                    target=f"pypi:{dep_name}",
-                                    weight=1,
-                                    type="runtime",
-                                    version_constraint=normalize_semver(version_constraint)
-                                    if version_constraint
-                                    else None,
-                                    original_constraint=version_constraint,
-                                )
-                            )
-        except Exception as e:
-            logger.debug(f"Failed to parse requirements.txt: {e}")
-
-    # JavaScript/TypeScript: package.json
-    package_json = repo_path / "package.json"
-    if package_json.exists():
-        try:
-            import json
-
-            with open(package_json, "r", encoding="utf-8") as fh:
-                data = json.load(fh)
-
-            # Dependencies
-            for dep_name, version_constraint in data.get("dependencies", {}).items():
-                dependencies.append(
-                    DependencyEdge(
-                        source="project",
-                        target=f"npm:{dep_name}",
-                        weight=1,
-                        type="runtime",
-                        version_constraint=normalize_semver(version_constraint),
-                        original_constraint=version_constraint,
-                    )
-                )
-
-            # Dev dependencies
-            for dep_name, version_constraint in data.get("devDependencies", {}).items():
-                dependencies.append(
-                    DependencyEdge(
-                        source="project",
-                        target=f"npm:{dep_name}",
-                        weight=1,
-                        type="build",
-                        version_constraint=normalize_semver(version_constraint),
-                        original_constraint=version_constraint,
-                    )
-                )
-
-        except Exception as e:
-            logger.debug(f"Failed to parse package.json: {e}")
-
+    
+    # Parse all manifest types
+    dependencies.extend(_parse_pyproject_toml(repo_path))
+    dependencies.extend(_parse_requirements_txt(repo_path))
+    dependencies.extend(_parse_package_json(repo_path))
+    
     return dependencies
 
 
