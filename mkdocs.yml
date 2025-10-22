@@ -25,7 +25,7 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
-  
+
   features:
     - navigation.instant
     - navigation.tracking
@@ -54,7 +54,7 @@ extra:
       link: https://github.com/Repo-Q/repoq
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/repoq/
-  
+
   version:
     provider: mike
     default: stable
@@ -148,6 +148,9 @@ nav:
     - RDF Export: architecture/rdf-export.md
     - BAML AI Agent: architecture/baml-agent.md
     - Analyzer Pipeline: architecture/analyzer-pipeline.md
+    - Architecture Analyzer: architecture/architecture-analyzer.md
+    - Git Status Analyzer: architecture/git-status-analyzer.md
+    - Doc-Code Sync Analyzer: architecture/doc-code-sync-analyzer.md
     - Stratification Guard: architecture/stratification-guard.md
   - Tutorials:
     - First Analysis: tutorials/01-first-analysis.md
