@@ -118,19 +118,17 @@ def _calculate_q_score(
 
 
 def _check_quality_constraints(
-    tests_coverage: float,
-    todos_count: int,
-    hotspots_count: int,
+    tests_coverage: float, todos_count: int, hotspots_count: int
 ) -> dict[str, bool]:
     """Check hard quality constraints.
     
     Args:
         tests_coverage: Test coverage ratio
-        todos_count: Number of TODOs
-        hotspots_count: Number of hotspots
+        todos_count: Total TODOs
+        hotspots_count: Total hotspots
         
     Returns:
-        Dictionary of constraint check results
+        Dict of constraint name → passed boolean
     """
     return {
         "tests_coverage_ge_80": tests_coverage >= 0.8,
@@ -139,7 +137,43 @@ def _check_quality_constraints(
     }
 
 
-def compute_quality_score(project: Project) -> QualityMetrics:
+def _calculate_architecture_adjustment(arch_model) -> float:
+    """Calculate architecture quality adjustment for Q-score.
+    
+    Bonuses/Penalties:
+    - +10 for clean architecture (no layering violations, no circular deps)
+    - -5 per layering violation (max -15)
+    - -5 per circular dependency (max -10)
+    
+    Args:
+        arch_model: ArchitectureModel from ArchitectureAnalyzer
+        
+    Returns:
+        Adjustment value (can be positive or negative)
+    """
+    adjustment = 0.0
+    
+    # Check for clean architecture
+    has_violations = len(arch_model.layering_violations) > 0
+    has_circular = len(arch_model.circular_dependencies) > 0
+    
+    if not has_violations and not has_circular:
+        # Bonus for clean architecture
+        adjustment += 10.0
+    else:
+        # Penalties for violations
+        # -5 per layering violation (max -15)
+        violation_penalty = min(len(arch_model.layering_violations) * 5.0, 15.0)
+        adjustment -= violation_penalty
+        
+        # -5 per circular dependency (max -10)
+        circular_penalty = min(len(arch_model.circular_dependencies) * 5.0, 10.0)
+        adjustment -= circular_penalty
+    
+    return adjustment
+
+
+def compute_quality_score(project: Project, arch_model=None) -> QualityMetrics:
     """Compute Q-metric for a project.
 
     Algorithm:
@@ -147,17 +181,22 @@ def compute_quality_score(project: Project) -> QualityMetrics:
         2. Count hotspots: files with hotness > 0.66
         3. Count TODOs: sum(file.issues with type TodoComment)
         4. Compute Q = 100 - 20×complexity - 30×(hotspots/20) - 10×(todos/10)
-        5. Check hard constraints
+        5. Apply architecture bonuses/penalties (if arch_model provided):
+           - +10 for clean architecture (no violations)
+           - -15 for each layering violation
+           - -10 for each circular dependency
+        6. Check hard constraints
 
     Args:
         project: Project model with files and analysis results
+        arch_model: Optional ArchitectureModel from ArchitectureAnalyzer
 
     Returns:
         QualityMetrics with score, components, and constraint status
 
     Example:
         >>> from repoq.core.model import Project, File
-        >>> p = Project(id="test", files={"f1": File(...)})
+        >>> p = Project(id="test", name="Test", files={"f1": File(...)})
         >>> metrics = compute_quality_score(p)
         >>> assert 0 <= metrics.score <= 100
     """
@@ -187,8 +226,13 @@ def compute_quality_score(project: Project) -> QualityMetrics:
     test_files = sum(1 for f in files if f.test_file)
     tests_coverage = test_files / len(files) if files else 0.0
 
-    # Calculate Q-score
+    # Calculate base Q-score
     score = _calculate_q_score(normalized_complexity, hotspots_count, todos_count)
+    
+    # Apply architecture bonuses/penalties (NEW!)
+    if arch_model:
+        arch_adjustment = _calculate_architecture_adjustment(arch_model)
+        score = max(0.0, min(100.0, score + arch_adjustment))
     
     # Grade and constraints
     grade = _compute_grade(score)

@@ -569,3 +569,98 @@ def export_architecture_rdf(graph, arch_model: ArchitectureModel, project_id: st
             comp_uri = URIRef(f"{project_id}/arch/component/{component.name}")
             graph.add((comp_uri, C4.belongsToContainer, container_uri))
 
+
+def generate_architecture_recommendations(
+    arch_model: ArchitectureModel, project_id: str
+) -> List[Dict[str, any]]:
+    """Generate refactoring recommendations based on architecture violations.
+
+    Creates recommendations for:
+    - Layering violations (move imports to correct layer)
+    - Circular dependencies (break cycles with dependency injection)
+    - High coupling (introduce interfaces, extract components)
+
+    Args:
+        arch_model: ArchitectureModel from analyzer
+        project_id: Project identifier
+
+    Returns:
+        List of recommendation dicts compatible with QualityRecommendation
+    """
+    recommendations = []
+    rec_id = 1
+
+    # 1. Recommendations for layering violations
+    for violation in arch_model.layering_violations:
+        delta_q = 15.0 if violation.severity == "high" else 8.0
+
+        recommendations.append(
+            {
+                "id": f"{project_id}/quality/arch_rec_{rec_id}",
+                "title": f"Fix layering violation in {violation.file}",
+                "description": (
+                    f"File {violation.file} imports {violation.imported_file}. "
+                    f"Violation: {violation.rule}. "
+                    "Move import to allowed layer or introduce facade pattern."
+                ),
+                "delta_q": delta_q,
+                "priority": "high" if violation.severity == "high" else "medium",
+                "target_file": violation.file,
+                "estimated_effort_hours": 2.0,
+                "category": "architecture",
+                "violation_type": "layering_violation",
+            }
+        )
+        rec_id += 1
+
+    # 2. Recommendations for circular dependencies
+    for circular in arch_model.circular_dependencies:
+        delta_q = 12.0 if circular.severity == "high" else 6.0
+
+        cycle_str = " → ".join(circular.cycle)
+        recommendations.append(
+            {
+                "id": f"{project_id}/quality/arch_rec_{rec_id}",
+                "title": f"Break circular dependency: {cycle_str}",
+                "description": (
+                    f"Circular dependency detected: {cycle_str}. "
+                    "Consider: (1) Dependency injection, (2) Extract interface, "
+                    "(3) Introduce events/observer pattern."
+                ),
+                "delta_q": delta_q,
+                "priority": "high" if circular.severity == "high" else "medium",
+                "target_file": circular.cycle[0] if circular.cycle else None,
+                "estimated_effort_hours": 3.0,
+                "category": "architecture",
+                "violation_type": "circular_dependency",
+            }
+        )
+        rec_id += 1
+
+    # 3. Recommendations for high coupling
+    for comp_name, instability in arch_model.metrics.instability.items():
+        if instability > 0.8:  # High instability = many outgoing dependencies
+            delta_q = 10.0
+
+            recommendations.append(
+                {
+                    "id": f"{project_id}/quality/arch_rec_{rec_id}",
+                    "title": f"Reduce coupling in {comp_name} component",
+                    "description": (
+                        f"Component {comp_name} has high instability (I={instability:.2f}). "
+                        "Consider: (1) Extract stable interfaces, (2) Apply dependency inversion, "
+                        "(3) Split into smaller components."
+                    ),
+                    "delta_q": delta_q,
+                    "priority": "medium",
+                    "target_file": None,
+                    "estimated_effort_hours": 4.0,
+                    "category": "architecture",
+                    "violation_type": "high_coupling",
+                }
+            )
+            rec_id += 1
+
+    return recommendations
+
+
