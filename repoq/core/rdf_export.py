@@ -134,9 +134,12 @@ def export_ttl(
     enrich_test_coverage: bool = False,
     enrich_trs_rules: bool = False,
     enrich_quality_recommendations: bool = False,
+    enrich_self_analysis: bool = False,
     coverage_path: str = "coverage.json",
     top_k_recommendations: int = 10,
     min_delta_q: float = 3.0,
+    stratification_level: int = 1,
+    analyzed_commit: Optional[str] = None,
 ) -> None:
     """Export Project to RDF Turtle format.
 
@@ -151,9 +154,12 @@ def export_ttl(
         enrich_test_coverage: If True, enrich with test coverage from pytest
         enrich_trs_rules: If True, enrich with TRS rules from normalize/
         enrich_quality_recommendations: If True, enrich with quality:Recommendation triples
+        enrich_self_analysis: If True, enrich with meta:SelfAnalysis validation
         coverage_path: Path to coverage.json file (default: "coverage.json")
         top_k_recommendations: Number of top recommendations to generate (default: 10)
         min_delta_q: Minimum ΔQ threshold for recommendations (default: 3.0)
+        stratification_level: Stratification level for self-analysis (default: 1, max: 2)
+        analyzed_commit: Git commit SHA being analyzed
 
     Raises:
         RuntimeError: If rdflib is not installed
@@ -216,6 +222,18 @@ def export_ttl(
             except Exception as e:
                 logger.warning(f"Failed to enrich with quality recommendations: {e}")
 
+        # Enrich with self-analysis validation
+        if enrich_self_analysis:
+            from .meta_validation import enrich_graph_with_self_analysis
+
+            try:
+                enrich_graph_with_self_analysis(
+                    g, project, stratification_level=stratification_level, analyzed_commit=analyzed_commit
+                )
+                logger.info("Successfully enriched RDF with self-analysis validation")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with self-analysis: {e}")
+
         g.serialize(destination=ttl_path, format="turtle")
         logger.info(f"Successfully exported canonical RDF Turtle to {ttl_path}")
     except OSError as e:
@@ -235,9 +253,12 @@ def validate_shapes(
     enrich_test_coverage: bool = False,
     enrich_trs_rules: bool = False,
     enrich_quality_recommendations: bool = False,
+    enrich_self_analysis: bool = False,
     coverage_path: str = "coverage.json",
     top_k_recommendations: int = 10,
     min_delta_q: float = 3.0,
+    stratification_level: int = 1,
+    analyzed_commit: Optional[str] = None,
 ) -> dict:
     """Validate Project RDF data against SHACL shapes.
 
@@ -253,9 +274,12 @@ def validate_shapes(
         enrich_test_coverage: If True, enrich with test coverage from pytest
         enrich_trs_rules: If True, enrich with TRS rules from normalize/
         enrich_quality_recommendations: If True, enrich with quality:Recommendation triples
+        enrich_self_analysis: If True, enrich with meta:SelfAnalysis validation
         coverage_path: Path to coverage.json file (default: "coverage.json")
         top_k_recommendations: Number of top recommendations to generate (default: 10)
         min_delta_q: Minimum ΔQ threshold for recommendations (default: 3.0)
+        stratification_level: Stratification level for self-analysis (default: 1, max: 2)
+        analyzed_commit: Git commit SHA being analyzed
 
     Returns:
         Dictionary with keys:
@@ -329,6 +353,18 @@ def validate_shapes(
                 logger.info("Successfully enriched RDF with quality recommendations for validation")
             except Exception as e:
                 logger.warning(f"Failed to enrich with quality recommendations: {e}")
+
+        # Enrich with self-analysis validation
+        if enrich_self_analysis:
+            from .meta_validation import enrich_graph_with_self_analysis
+
+            try:
+                enrich_graph_with_self_analysis(
+                    data_graph, project, stratification_level=stratification_level, analyzed_commit=analyzed_commit
+                )
+                logger.info("Successfully enriched RDF with self-analysis for validation")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with self-analysis: {e}")
 
         shapes_graph = Graph()
         import os
