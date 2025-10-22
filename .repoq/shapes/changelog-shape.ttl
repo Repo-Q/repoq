@@ -1,0 +1,204 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix changelog: <https://repoq.dev/ontology/changelog#> .
+
+# ============================================================================
+# SHACL Shapes for Changelog Ontology
+# ============================================================================
+# Purpose: Validate changelog/release data in .repoq/changelog/*.ttl
+# Author: URPKS Agent
+# Date: 2025-10-22
+# Version: 1.0.0
+# ============================================================================
+
+# Release Shape
+# ============================================================================
+changelog:ReleaseShape
+    a sh:NodeShape ;
+    sh:targetClass changelog:Release ;
+    sh:property [
+        sh:path changelog:version ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^v?[0-9]+\\.[0-9]+\\.[0-9]+(-[a-z0-9.]+)?$" ;
+        sh:message "version must match semver pattern (e.g., v2.0.0, 2.0.0-alpha.1)" ;
+    ] ;
+    sh:property [
+        sh:path changelog:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "Release must have a date" ;
+    ] ;
+    sh:property [
+        sh:path changelog:tag ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^v[0-9]+\\.[0-9]+\\.[0-9]+(-[a-z0-9.]+)?$" ;
+        sh:message "tag must match semver pattern with 'v' prefix (e.g., v2.0.0-alpha.1)" ;
+    ] ;
+    sh:property [
+        sh:path changelog:summary ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 10 ;
+        sh:message "Release summary should be at least 10 characters" ;
+    ] ;
+    sh:property [
+        sh:path changelog:change ;
+        sh:minCount 1 ;
+        sh:class changelog:Change ;
+        sh:message "Release must have at least one Change" ;
+    ] .
+
+# Change Shape
+# ============================================================================
+changelog:ChangeShape
+    a sh:NodeShape ;
+    sh:targetClass changelog:Change ;
+    sh:property [
+        sh:path changelog:changeType ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in (
+            changelog:TypeAdded
+            changelog:TypeChanged
+            changelog:TypeDeprecated
+            changelog:TypeRemoved
+            changelog:TypeFixed
+            changelog:TypeSecurity
+        ) ;
+        sh:message "changeType must be one of: added, changed, deprecated, removed, fixed, security" ;
+    ] ;
+    sh:property [
+        sh:path changelog:description ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 10 ;
+        sh:message "Change description must be at least 10 characters" ;
+    ] ;
+    sh:property [
+        sh:path changelog:breakingChange ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:boolean ;
+        sh:message "breakingChange must be boolean" ;
+    ] ;
+    sh:property [
+        sh:path changelog:commit ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^[0-9a-f]{7,40}$" ;
+        sh:message "commit must be valid git SHA (7-40 hex chars)" ;
+    ] ;
+    sh:property [
+        sh:path changelog:implements ;
+        sh:nodeKind sh:IRI ;
+        sh:message "implements should reference ADR/Requirement IRI" ;
+    ] ;
+    sh:property [
+        sh:path changelog:traces ;
+        sh:nodeKind sh:IRI ;
+        sh:message "traces should reference other traceability entities" ;
+    ] ;
+    sh:property [
+        sh:path changelog:testsAdded ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:message "testsAdded must be non-negative integer" ;
+    ] ;
+    sh:property [
+        sh:path changelog:linesAdded ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:message "linesAdded must be non-negative integer" ;
+    ] ;
+    sh:property [
+        sh:path changelog:linesRemoved ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:message "linesRemoved must be non-negative integer" ;
+    ] .
+
+# Cross-cutting constraints
+# ============================================================================
+
+# Rule: Breaking changes must be marked
+changelog:BreakingChangeTypeShape
+    a sh:NodeShape ;
+    sh:targetClass changelog:Change ;
+    sh:sparql [
+        sh:message "Changes with breakingChange=true should have changeType=removed or changed" ;
+        sh:prefixes changelog: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this changelog:breakingChange true .
+                $this changelog:changeType ?type .
+                FILTER(?type NOT IN (changelog:TypeRemoved, changelog:TypeChanged))
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Warning .
+
+# Rule: Security changes should be documented thoroughly
+changelog:SecurityChangeShape
+    a sh:NodeShape ;
+    sh:targetClass changelog:Change ;
+    sh:sparql [
+        sh:message "Security changes should have description longer than 30 chars" ;
+        sh:prefixes changelog: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this changelog:changeType changelog:TypeSecurity .
+                $this changelog:description ?desc .
+                FILTER(STRLEN(?desc) < 30)
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Warning .
+
+# Rule: Releases should have git tags
+changelog:ReleaseTagShape
+    a sh:NodeShape ;
+    sh:targetClass changelog:Release ;
+    sh:sparql [
+        sh:message "Release should have a git tag" ;
+        sh:prefixes changelog: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a changelog:Release .
+                FILTER NOT EXISTS { $this changelog:tag ?tag }
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Info .
+
+# Rule: Changes should trace to work items
+changelog:ChangeTraceabilityShape
+    a sh:NodeShape ;
+    sh:targetClass changelog:Change ;
+    sh:sparql [
+        sh:message "Changes should trace to ADR/requirements or have commit SHA" ;
+        sh:prefixes changelog: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this a changelog:Change .
+                FILTER NOT EXISTS {
+                    { $this changelog:implements ?adr }
+                    UNION { $this changelog:traces ?trace }
+                    UNION { $this changelog:commit ?sha }
+                }
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Info .

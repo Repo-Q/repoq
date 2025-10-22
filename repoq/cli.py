@@ -1665,5 +1665,170 @@ def _handle_refactor_plan_output(
                 console.print(f"  {emoji[priority]} {priority.capitalize()}: {count}")
 
 
+@app.command()
+def validate(
+    workspace: Path = typer.Option(
+        Path.cwd(),
+        "--workspace",
+        "-w",
+        help="Workspace root directory (default: current directory)",
+    ),
+    certify: bool = typer.Option(
+        True,
+        "--certify/--no-certify",
+        help="Generate validation certificate on success (default: True)",
+    ),
+    verbose: bool = typer.Option(
+        False,
+        "--verbose",
+        "-v",
+        help="Show detailed validation report",
+    ),
+) -> None:
+    """Validate .repoq/ digital twin data against SHACL shapes.
+
+    This command validates all RDF data in the .repoq/ directory against
+    the SHACL shapes defined in .repoq/shapes/. It checks for:
+
+    - Data integrity (required properties, cardinality)
+    - Pattern compliance (IDs, dates, versions)
+    - Cross-references validity
+    - Domain constraints
+
+    The validator produces three levels of feedback:
+    - Violations: Critical errors that must be fixed
+    - Warnings: Issues that should be addressed
+    - Info: Suggestions for improvement
+
+    If validation passes and --certify is enabled, a validation certificate
+    is generated in .repoq/certificates/ with timestamp and metrics.
+
+    Examples:
+        # Validate current workspace
+        $ repoq validate
+
+        # Validate specific workspace
+        $ repoq validate --workspace /path/to/project
+
+        # Validate without generating certificate
+        $ repoq validate --no-certify
+
+        # Show detailed report
+        $ repoq validate --verbose
+    """
+    from rich.console import Console
+    from rich.panel import Panel
+
+    from .core.validation import SHACLValidator
+
+    console = Console()
+
+    try:
+        # Check if .repoq exists
+        repoq_dir = workspace / ".repoq"
+        if not repoq_dir.exists():
+            console.print(f"[red]❌ .repoq/ directory not found in {workspace}[/red]")
+            console.print("[yellow]💡 Hint: Initialize with `repoq init` first[/yellow]")
+            raise typer.Exit(1)
+
+        # Create validator
+        validator = SHACLValidator(workspace)
+
+        # Run validation
+        console.print(f"[bold]🔍 Validating {repoq_dir}...[/bold]")
+
+        if certify:
+            result, cert_path = validator.validate_and_certify()
+        else:
+            result = validator.validate()
+            cert_path = None
+
+        # Display summary
+        if result.passed:
+            console.print()
+            console.print(
+                Panel.fit(
+                    f"[green bold]✅ VALIDATION PASSED[/green bold]\n\n"
+                    f"[green]All data conforms to SHACL shapes[/green]\n"
+                    f"Violations: {len(result.violations)}\n"
+                    f"Warnings: {len(result.warnings)}\n"
+                    f"Info: {len(result.info)}\n"
+                    f"Data triples: {len(result.data_graph)}\n"
+                    f"Shapes triples: {len(result.shapes_graph)}",
+                    title="Validation Result",
+                    border_style="green",
+                )
+            )
+
+            if cert_path:
+                console.print(
+                    f"\n[green]📜 Certificate: {cert_path.relative_to(workspace)}[/green]"
+                )
+
+        else:
+            console.print()
+            console.print(
+                Panel.fit(
+                    f"[red bold]❌ VALIDATION FAILED[/red bold]\n\n"
+                    f"[red]Data does not conform to SHACL shapes[/red]\n"
+                    f"Violations: {len(result.violations)}\n"
+                    f"Warnings: {len(result.warnings)}\n"
+                    f"Info: {len(result.info)}",
+                    title="Validation Result",
+                    border_style="red",
+                )
+            )
+
+        # Show violations
+        if result.violations:
+            console.print("\n[red bold]🚨 Violations (must fix):[/red bold]")
+            for i, v in enumerate(result.violations[:10], 1):  # Show first 10
+                console.print(f"\n[red]{i}. {v.message}[/red]")
+                if v.focus_node:
+                    console.print(f"   Node: {v.focus_node}")
+                if v.result_path:
+                    console.print(f"   Path: {v.result_path}")
+                if v.value:
+                    console.print(f"   Value: {v.value}")
+
+            if len(result.violations) > 10:
+                console.print(
+                    f"\n[yellow]... and {len(result.violations) - 10} more violations[/yellow]"
+                )
+
+        # Show warnings if verbose
+        if verbose and result.warnings:
+            console.print("\n[yellow bold]⚠️  Warnings (should fix):[/yellow bold]")
+            for i, w in enumerate(result.warnings[:10], 1):
+                console.print(f"\n[yellow]{i}. {w.message}[/yellow]")
+                if w.focus_node:
+                    console.print(f"   Node: {w.focus_node}")
+                if w.result_path:
+                    console.print(f"   Path: {w.result_path}")
+
+            if len(result.warnings) > 10:
+                console.print(f"\n[dim]... and {len(result.warnings) - 10} more warnings[/dim]")
+
+        # Show info if verbose
+        if verbose and result.info:
+            console.print("\n[cyan bold]💡 Info (nice to have):[/cyan bold]")
+            for i, info in enumerate(result.info[:10], 1):
+                console.print(f"\n[cyan]{i}. {info.message}[/cyan]")
+                if info.focus_node:
+                    console.print(f"   Node: {info.focus_node}")
+
+            if len(result.info) > 10:
+                console.print(f"\n[dim]... and {len(result.info) - 10} more info messages[/dim]")
+
+        # Exit with appropriate code
+        if not result.passed:
+            raise typer.Exit(1)
+
+    except Exception as e:
+        console.print(f"[bold red]❌ Validation failed with error: {e}[/bold red]")
+        logger.exception("Validation command failed")
+        raise typer.Exit(2)
+
+
 if __name__ == "__main__":
     app()

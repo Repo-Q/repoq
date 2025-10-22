@@ -1,0 +1,253 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix adr: <https://repoq.dev/ontology/adr#> .
+
+# ============================================================================
+# SHACL Shapes for ADR Ontology
+# ============================================================================
+# Purpose: Validate Architecture Decision Records in .repoq/adr/*.ttl
+# Author: URPKS Agent
+# Date: 2025-10-22
+# Version: 1.0.0
+# ============================================================================
+
+# ADR Shape
+# ============================================================================
+adr:ADRShape
+    a sh:NodeShape ;
+    sh:targetClass adr:ArchitectureDecisionRecord ;
+    sh:property [
+        sh:path adr:id ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^ADR-[0-9]{3,}$" ;
+        sh:message "ADR id must match pattern 'ADR-001', 'ADR-014', etc." ;
+    ] ;
+    sh:property [
+        sh:path adr:title ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 5 ;
+        sh:maxLength 100 ;
+        sh:message "ADR title must be 5-100 characters" ;
+    ] ;
+    sh:property [
+        sh:path adr:status ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in (adr:StatusProposed adr:StatusAccepted adr:StatusDeprecated adr:StatusSuperseded adr:StatusRejected) ;
+        sh:message "ADR status must be one of: proposed, accepted, deprecated, superseded, rejected" ;
+    ] ;
+    sh:property [
+        sh:path adr:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+        sh:message "ADR must have a decision date" ;
+    ] ;
+    sh:property [
+        sh:path adr:context ;
+        sh:minCount 1 ;
+        sh:class adr:Context ;
+        sh:message "ADR must have at least one Context (problem statement)" ;
+    ] ;
+    sh:property [
+        sh:path adr:decision ;
+        sh:minCount 1 ;
+        sh:class adr:Decision ;
+        sh:message "ADR must have at least one Decision" ;
+    ] ;
+    sh:property [
+        sh:path adr:consequence ;
+        sh:class adr:Consequence ;
+        sh:message "consequence must reference Consequence instances" ;
+    ] ;
+    sh:property [
+        sh:path adr:alternative ;
+        sh:class adr:Alternative ;
+        sh:message "alternative must reference Alternative instances" ;
+    ] ;
+    sh:property [
+        sh:path adr:supersedes ;
+        sh:class adr:ArchitectureDecisionRecord ;
+        sh:message "supersedes must reference another ADR" ;
+    ] ;
+    sh:property [
+        sh:path adr:relatedTo ;
+        sh:class adr:ArchitectureDecisionRecord ;
+        sh:message "relatedTo must reference another ADR" ;
+    ] ;
+    sh:property [
+        sh:path adr:implements ;
+        sh:nodeKind sh:IRI ;
+        sh:message "implements should reference Requirement/Value IRI" ;
+    ] ;
+    sh:property [
+        sh:path adr:traces ;
+        sh:nodeKind sh:IRI ;
+        sh:message "traces should reference other traceability entities" ;
+    ] .
+
+# Context Shape
+# ============================================================================
+adr:ContextShape
+    a sh:NodeShape ;
+    sh:targetClass adr:Context ;
+    sh:property [
+        sh:path adr:problem ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 20 ;
+        sh:message "Context must have a problem statement (min 20 chars)" ;
+    ] ;
+    sh:property [
+        sh:path adr:constraint ;
+        sh:datatype xsd:string ;
+        sh:message "constraint should be text" ;
+    ] .
+
+# Decision Shape
+# ============================================================================
+adr:DecisionShape
+    a sh:NodeShape ;
+    sh:targetClass adr:Decision ;
+    sh:property [
+        sh:path adr:description ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 20 ;
+        sh:message "Decision must have description (min 20 chars)" ;
+    ] ;
+    sh:property [
+        sh:path adr:rationale ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "rationale should explain why this decision was made" ;
+    ] .
+
+# Consequence Shape
+# ============================================================================
+adr:ConsequenceShape
+    a sh:NodeShape ;
+    sh:targetClass adr:Consequence ;
+    sh:property [
+        sh:path adr:description ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 10 ;
+        sh:message "Consequence must have description (min 10 chars)" ;
+    ] ;
+    sh:property [
+        sh:path adr:type ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in ("positive" "negative" "neutral") ;
+        sh:message "Consequence type must be 'positive', 'negative', or 'neutral'" ;
+    ] ;
+    sh:property [
+        sh:path adr:impact ;
+        sh:maxCount 1 ;
+        sh:in ("high" "medium" "low") ;
+        sh:message "Impact must be 'high', 'medium', or 'low'" ;
+    ] .
+
+# Alternative Shape
+# ============================================================================
+adr:AlternativeShape
+    a sh:NodeShape ;
+    sh:targetClass adr:Alternative ;
+    sh:property [
+        sh:path adr:description ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 10 ;
+        sh:message "Alternative must have description (min 10 chars)" ;
+    ] ;
+    sh:property [
+        sh:path adr:rationale ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 10 ;
+        sh:message "Alternative must have rationale explaining why it was rejected (min 10 chars)" ;
+    ] .
+
+# Cross-cutting constraints
+# ============================================================================
+
+# Rule: Superseded ADR must reference what supersedes it
+adr:SupersededADRShape
+    a sh:NodeShape ;
+    sh:targetClass adr:ArchitectureDecisionRecord ;
+    sh:sparql [
+        sh:message "ADR with status 'superseded' must use adr:supersedes property" ;
+        sh:prefixes adr: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this adr:status adr:StatusSuperseded .
+                FILTER NOT EXISTS { $this adr:supersedes ?other }
+            }
+        """ ;
+    ] .
+
+# Rule: Accepted ADR should have consequences
+adr:AcceptedADRConsequencesShape
+    a sh:NodeShape ;
+    sh:targetClass adr:ArchitectureDecisionRecord ;
+    sh:sparql [
+        sh:message "Accepted ADR should document consequences" ;
+        sh:prefixes adr: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this adr:status adr:StatusAccepted .
+                FILTER NOT EXISTS { $this adr:consequence ?cons }
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Warning .
+
+# Rule: ADR should consider alternatives
+adr:ADRAlternativesShape
+    a sh:NodeShape ;
+    sh:targetClass adr:ArchitectureDecisionRecord ;
+    sh:sparql [
+        sh:message "ADR should document alternatives considered" ;
+        sh:prefixes adr: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this adr:status adr:StatusAccepted .
+                FILTER NOT EXISTS { $this adr:alternative ?alt }
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Info .
+
+# Rule: ADR should trace to requirements
+adr:ADRTraceabilityShape
+    a sh:NodeShape ;
+    sh:targetClass adr:ArchitectureDecisionRecord ;
+    sh:sparql [
+        sh:message "ADR should trace to requirements/values via adr:implements or adr:traces" ;
+        sh:prefixes adr: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this adr:status adr:StatusAccepted .
+                FILTER NOT EXISTS {
+                    { $this adr:implements ?req } UNION { $this adr:traces ?trace }
+                }
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Warning .

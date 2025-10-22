@@ -1,0 +1,263 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix story: <https://repoq.dev/ontology/story#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+# ============================================================================
+# SHACL Shapes for Story Ontology
+# ============================================================================
+# Purpose: Validate development story provenance data in .repoq/story/*.ttl
+# Author: URPKS Agent
+# Date: 2025-10-22
+# Version: 1.0.0
+# ============================================================================
+
+# Phase Shape
+# ============================================================================
+story:PhaseShape
+    a sh:NodeShape ;
+    sh:targetClass story:Phase ;
+    sh:property [
+        sh:path story:phaseId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^phase[0-9]+(\\.[0-9]+)?$" ;
+        sh:message "phaseId must match pattern 'phase1' or 'phase1.5'" ;
+    ] ;
+    sh:property [
+        sh:path story:title ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 5 ;
+        sh:message "Phase must have a title (min 5 chars)" ;
+    ] ;
+    sh:property [
+        sh:path story:description ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+    ] ;
+    sh:property [
+        sh:path story:status ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in (story:StatusPlanned story:StatusInProgress story:StatusCompleted story:StatusBlocked) ;
+        sh:message "Phase status must be one of: planned, in-progress, completed, blocked" ;
+    ] ;
+    sh:property [
+        sh:path story:startDate ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+    ] ;
+    sh:property [
+        sh:path story:endDate ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:date ;
+    ] ;
+    sh:property [
+        sh:path story:satisfies ;
+        sh:nodeKind sh:IRI ;
+        sh:message "satisfies must reference a Requirement/Value IRI" ;
+    ] ;
+    sh:property [
+        sh:path story:produces ;
+        sh:class story:Artifact ;
+        sh:message "produces must reference Artifact instances" ;
+    ] ;
+    sh:property [
+        sh:path story:hasGate ;
+        sh:class story:Gate ;
+        sh:message "hasGate must reference Gate instances" ;
+    ] .
+
+# Artifact Shape
+# ============================================================================
+story:ArtifactShape
+    a sh:NodeShape ;
+    sh:targetClass story:Artifact ;
+    sh:property [
+        sh:path story:artifactId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Artifact must have unique artifactId" ;
+    ] ;
+    sh:property [
+        sh:path story:title ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Artifact must have a title" ;
+    ] ;
+    sh:property [
+        sh:path story:artifactType ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in (story:Implementation story:TestSuite story:Documentation) ;
+        sh:message "artifactType must be Implementation, TestSuite, or Documentation" ;
+    ] ;
+    sh:property [
+        sh:path story:filePath ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^[a-zA-Z0-9/_.-]+$" ;
+        sh:message "filePath must be a valid path" ;
+    ] ;
+    sh:property [
+        sh:path story:linesOfCode ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:integer ;
+        sh:minInclusive 0 ;
+        sh:message "linesOfCode must be non-negative integer" ;
+    ] ;
+    sh:property [
+        sh:path story:implements ;
+        sh:nodeKind sh:IRI ;
+        sh:message "implements must reference Requirement/ADR IRI" ;
+    ] ;
+    sh:property [
+        sh:path story:verifies ;
+        sh:class story:Artifact ;
+        sh:message "verifies must reference another Artifact" ;
+    ] ;
+    sh:property [
+        sh:path story:hasCommit ;
+        sh:class story:Commit ;
+        sh:minCount 1 ;
+        sh:message "Artifact must have at least one Commit" ;
+    ] .
+
+# Commit Shape
+# ============================================================================
+story:CommitShape
+    a sh:NodeShape ;
+    sh:targetClass story:Commit ;
+    sh:property [
+        sh:path story:sha ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^[0-9a-f]{7,40}$" ;
+        sh:message "sha must be valid git commit hash (7-40 hex chars)" ;
+    ] ;
+    sh:property [
+        sh:path story:message ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:minLength 5 ;
+        sh:message "Commit message must be at least 5 characters" ;
+    ] ;
+    sh:property [
+        sh:path story:author ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Commit must have author" ;
+    ] ;
+    sh:property [
+        sh:path story:date ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:dateTime ;
+        sh:message "Commit must have date" ;
+    ] ;
+    sh:property [
+        sh:path story:tag ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:pattern "^v[0-9]+\\.[0-9]+\\.[0-9]+(-[a-z0-9.]+)?$" ;
+        sh:message "tag must match semver pattern (e.g., v2.0.0-alpha.1)" ;
+    ] .
+
+# Gate Shape
+# ============================================================================
+story:GateShape
+    a sh:NodeShape ;
+    sh:targetClass story:Gate ;
+    sh:property [
+        sh:path story:gateId ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Gate must have unique gateId" ;
+    ] ;
+    sh:property [
+        sh:path story:name ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:string ;
+        sh:message "Gate must have a name" ;
+    ] ;
+    sh:property [
+        sh:path story:status ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in (story:GatePassed story:GateFailed story:GatePending) ;
+        sh:message "Gate status must be passed, failed, or pending" ;
+    ] ;
+    sh:property [
+        sh:path story:checkDate ;
+        sh:maxCount 1 ;
+        sh:datatype xsd:dateTime ;
+    ] ;
+    sh:property [
+        sh:path story:evidence ;
+        sh:datatype xsd:string ;
+        sh:message "evidence should be text description" ;
+    ] .
+
+# Cross-cutting constraints
+# ============================================================================
+
+# Rule: Completed Phase must have endDate
+story:CompletedPhaseDateShape
+    a sh:NodeShape ;
+    sh:targetClass story:Phase ;
+    sh:sparql [
+        sh:message "Completed phase must have endDate" ;
+        sh:prefixes story: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this story:status story:StatusCompleted .
+                FILTER NOT EXISTS { $this story:endDate ?date }
+            }
+        """ ;
+    ] .
+
+# Rule: TestSuite must verify something
+story:TestSuiteVerifiesShape
+    a sh:NodeShape ;
+    sh:targetClass story:Artifact ;
+    sh:sparql [
+        sh:message "TestSuite artifact must use story:verifies property" ;
+        sh:prefixes story: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this story:artifactType story:TestSuite .
+                FILTER NOT EXISTS { $this story:verifies ?artifact }
+            }
+        """ ;
+    ] .
+
+# Rule: Implementation must be implemented by something
+story:ImplementationTracesShape
+    a sh:NodeShape ;
+    sh:targetClass story:Artifact ;
+    sh:sparql [
+        sh:message "Implementation artifact should trace to Requirement/ADR via story:implements" ;
+        sh:prefixes story: ;
+        sh:select """
+            SELECT $this
+            WHERE {
+                $this story:artifactType story:Implementation .
+                FILTER NOT EXISTS { $this story:implements ?req }
+            }
+        """ ;
+    ] ;
+    sh:severity sh:Warning .
