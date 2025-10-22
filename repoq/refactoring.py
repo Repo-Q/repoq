@@ -230,14 +230,14 @@ def calculate_delta_q(file_data: dict) -> float:
 
 def _estimate_function_delta_q(func: dict, file_loc: int) -> float:
     """Estimate ΔQ improvement from refactoring a single function (T1.3).
-    
+
     Args:
         func: Function metrics dict with cyclomaticComplexity, linesOfCode, etc.
         file_loc: Total file LOC for file impact factor
-    
+
     Returns:
         Expected ΔQ improvement (0.0 if function doesn't need refactoring)
-    
+
     Formula:
         ΔQ = (CCN_delta × w_ccn + LOC_delta × w_loc) × file_factor
         where:
@@ -247,34 +247,34 @@ def _estimate_function_delta_q(func: dict, file_loc: int) -> float:
     """
     current_ccn = func.get("cyclomaticComplexity", 0)
     current_loc = func.get("linesOfCode", 0)
-    
+
     # Target thresholds
     target_ccn = 10.0
     target_loc = current_loc * 0.7  # Aim for 30% reduction
-    
+
     # Calculate deltas (only positive improvements)
     ccn_delta = max(0, current_ccn - target_ccn)
     loc_delta = max(0, current_loc - target_loc)
-    
+
     # Weights
     w_ccn = 5.0  # High weight for complexity reduction
     w_loc = 0.5  # Lower weight for LOC reduction
-    
+
     # File impact factor (larger files benefit more from extraction)
     file_factor = 1.0 + (file_loc / 1000.0)
-    
+
     # Calculate ΔQ
     delta_q = (ccn_delta * w_ccn + loc_delta * w_loc) * file_factor
-    
+
     return round(delta_q, 1)
 
 
 def _get_function_priority(delta_q: float) -> str:
     """Determine refactoring priority based on ΔQ (T1.3).
-    
+
     Args:
         delta_q: Expected ΔQ improvement
-    
+
     Returns:
         Priority level: "critical", "high", "medium", or "low"
     """
@@ -292,18 +292,18 @@ def _generate_function_recommendations(
     functions: List[dict], loc: int, complexity: float
 ) -> List[str]:
     """Generate per-function refactoring recommendations with ΔQ estimation.
-    
+
     Args:
         functions: List of function metrics dicts
         loc: Total file LOC for impact calculation
         complexity: File-level complexity for fallback validation
-    
+
     Returns:
         List of formatted recommendations for complex functions
     """
     recommendations = []
     complex_funcs = [f for f in functions if f.get("cyclomaticComplexity", 0) >= 10]
-    
+
     if not complex_funcs:
         # If file complexity high but no individual function >10
         if complexity >= 10:
@@ -312,17 +312,17 @@ def _generate_function_recommendations(
                 "(verify metrics or refactor distributed complexity)"
             )
         return recommendations
-    
+
     # Calculate ΔQ for each function
     file_delta_q_total = 0.0
     for func in complex_funcs:
         delta_q = _estimate_function_delta_q(func, loc)
         func["_delta_q"] = delta_q
         file_delta_q_total += delta_q
-    
+
     # Sort by ΔQ descending (highest impact first)
     complex_funcs.sort(key=lambda f: f.get("_delta_q", 0), reverse=True)
-    
+
     # Generate recommendations for top 3 highest impact functions
     for func in complex_funcs[:3]:
         fname = func.get("name", "unknown")
@@ -330,19 +330,16 @@ def _generate_function_recommendations(
         flines = f"{func.get('startLine', '?')}-{func.get('endLine', '?')}"
         floc = func.get("linesOfCode", 0)
         delta_q = func.get("_delta_q", 0.0)
-        
+
         # Calculate percentage of file's total potential
         pct = int((delta_q / file_delta_q_total * 100)) if file_delta_q_total > 0 else 0
-        
+
         # Priority indicator
         priority = _get_function_priority(delta_q)
-        priority_emoji = {
-            "critical": "🔴",
-            "high": "🟠", 
-            "medium": "🟡",
-            "low": "🟢"
-        }.get(priority, "⚪")
-        
+        priority_emoji = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}.get(
+            priority, "⚪"
+        )
+
         # Estimate effort
         if fccn >= 20:
             effort_str = "3-4 hours"
@@ -352,14 +349,14 @@ def _generate_function_recommendations(
             effort_str = "1-2 hours"
         else:
             effort_str = "30-60 min"
-        
+
         recommendations.append(
             f"{priority_emoji} Refactor function `{fname}` "
             f"(CCN={fccn}, LOC={floc}, lines {flines})\n"
             f"   → Expected ΔQ: +{delta_q:.1f} points ({pct}% of file's potential)\n"
             f"   → Estimated effort: {effort_str}"
         )
-    
+
     return recommendations
 
 
@@ -367,18 +364,18 @@ def _generate_file_level_recommendations(
     complexity: float, loc: int, todos: int, functions: List[dict]
 ) -> List[str]:
     """Generate file-level refactoring recommendations (fallback when no functions).
-    
+
     Args:
         complexity: File-level cyclomatic complexity
         loc: Lines of code
         todos: Number of TODO comments
         functions: List of function metrics (used to check if fallback needed)
-    
+
     Returns:
         List of file-level recommendations
     """
     recommendations = []
-    
+
     # Complexity recommendations (only if no per-function analysis)
     if not functions:
         if complexity >= 10:
@@ -390,33 +387,33 @@ def _generate_file_level_recommendations(
             recommendations.append(
                 f"🟡 Extract complex logic into helper functions (current: {complexity})"
             )
-    
+
     # LOC recommendations
     if loc > 500:
         recommendations.append(
             f"📏 Consider splitting file ({loc} LOC) into smaller modules (<300 LOC)"
         )
-    
+
     # TODO recommendations
     if todos >= 5:
         recommendations.append(f"📝 Resolve {todos} TODO comments (prioritize blocking issues)")
     elif todos > 0:
         recommendations.append(f"📝 Address {todos} TODO comment(s)")
-    
+
     return recommendations
 
 
 def _generate_issue_recommendations(issues: List) -> List[str]:
     """Generate issue-specific refactoring recommendations.
-    
+
     Args:
         issues: List of issue identifiers or dicts
-    
+
     Returns:
         List of issue-specific recommendations
     """
     recommendations = []
-    
+
     for issue in issues:
         if isinstance(issue, str):
             # Parse issue ID to get type
@@ -424,7 +421,7 @@ def _generate_issue_recommendations(issues: List) -> List[str]:
                 recommendations.append("🔥 Reduce change frequency (refactor to stabilize)")
             elif "complexity" in issue:
                 recommendations.append("🔧 Simplify control flow (reduce nested logic)")
-    
+
     return recommendations
 
 
@@ -443,24 +440,24 @@ def generate_recommendations(file_data: dict) -> List[str]:
     todos = len(file_data.get("todos", [])) if isinstance(file_data.get("todos"), list) else 0
     issues = file_data.get("issues", [])
     functions = file_data.get("functions", [])
-    
+
     # Generate recommendations from different analyzers
     recommendations = []
-    
+
     # 1. Per-function analysis (highest priority)
     if functions:
         recommendations.extend(_generate_function_recommendations(functions, loc, complexity))
-    
+
     # 2. File-level metrics (LOC, TODOs, complexity fallback)
     recommendations.extend(_generate_file_level_recommendations(complexity, loc, todos, functions))
-    
+
     # 3. Issue-specific recommendations
     recommendations.extend(_generate_issue_recommendations(issues))
-    
+
     # 4. Default if no recommendations generated
     if not recommendations:
         recommendations.append("✅ Maintain current quality (minor cleanup possible)")
-    
+
     return recommendations[:5]  # Limit to top 5
 
 
@@ -508,6 +505,129 @@ def assign_priority(delta_q: float, complexity: float) -> str:
         return "low"
 
 
+def _load_and_filter_files(
+    jsonld_path: Path,
+    min_delta_q: float,
+) -> tuple[list[dict], list[dict]]:
+    """Load JSON-LD data and filter files by minimum ΔQ.
+
+    Args:
+        jsonld_path: Path to JSON-LD quality analysis file
+        min_delta_q: Minimum ΔQ threshold for inclusion
+
+    Returns:
+        Tuple of (filtered file scores, all files for baseline calculation)
+    """
+    if not jsonld_path.exists():
+        raise FileNotFoundError(f"JSON-LD file not found: {jsonld_path}")
+
+    data = json.loads(jsonld_path.read_text(encoding="utf-8"))
+
+    # Extract files
+    files = data.get("files", [])
+    if not isinstance(files, list):
+        files = list(files.values()) if isinstance(files, dict) else []
+
+    # Calculate ΔQ for each file and filter
+    file_scores = []
+    for file_data in files:
+        delta_q = calculate_delta_q(file_data)
+
+        if delta_q >= min_delta_q:
+            file_scores.append(
+                {
+                    "path": file_data.get("path", file_data.get("fileName", "unknown")),
+                    "delta_q": delta_q,
+                    "data": file_data,
+                }
+            )
+
+    return file_scores, files
+
+
+def _build_refactoring_task(
+    task_id: int,
+    item: dict,
+) -> RefactoringTask:
+    """Build a single refactoring task from file score data.
+
+    Args:
+        task_id: Sequential task ID
+        item: Dict containing path, delta_q, and file data
+
+    Returns:
+        Complete RefactoringTask with metrics and recommendations
+    """
+    file_data = item["data"]
+    delta_q = item["delta_q"]
+    path = item["path"]
+
+    complexity = file_data.get("complexity", 0) or 0
+    loc = file_data.get("linesOfCode", 0) or 0
+    todos = len(file_data.get("todos", [])) if isinstance(file_data.get("todos"), list) else 0
+    issues = file_data.get("issues", [])
+
+    current_metrics = {
+        "Complexity": complexity,
+        "LOC": loc,
+        "TODOs": todos,
+        "Issues": len(issues) if isinstance(issues, list) else 0,
+    }
+
+    # Generate issues list
+    issue_descriptions = []
+    if complexity >= 6:
+        issue_descriptions.append(f"High cyclomatic complexity ({complexity})")
+    if todos > 0:
+        issue_descriptions.append(f"{todos} unresolved TODO(s)")
+    if loc > 500:
+        issue_descriptions.append(f"Large file size ({loc} LOC)")
+
+    recommendations = generate_recommendations(file_data)
+    effort = estimate_effort(delta_q, complexity, loc)
+    priority = assign_priority(delta_q, complexity)
+
+    return RefactoringTask(
+        id=task_id,
+        file_path=path,
+        priority=priority,
+        delta_q=delta_q,
+        current_metrics=current_metrics,
+        issues=issue_descriptions or ["No critical issues"],
+        recommendations=recommendations,
+        estimated_effort=effort,
+    )
+
+
+def _calculate_plan_metrics(
+    file_scores: list[dict],
+    all_files: list[dict],
+    total_delta_q: float,
+) -> tuple[float, float]:
+    """Calculate baseline and projected quality scores.
+
+    Args:
+        file_scores: Filtered file scores above threshold
+        all_files: All files for baseline estimation
+        total_delta_q: Sum of ΔQ from selected tasks
+
+    Returns:
+        Tuple of (baseline_q, projected_q)
+    """
+    # Try to extract baseline from data if available
+    baseline_q = 0.0
+    if not all_files:
+        baseline_q = 50.0  # Default neutral score
+
+    if baseline_q == 0.0:
+        # Estimate baseline from penalties
+        total_penalty = sum(item["delta_q"] for item in file_scores)
+        baseline_q = max(0, 100.0 - (total_penalty / len(all_files) * 10 if all_files else 0))
+
+    projected_q = min(100.0, baseline_q + total_delta_q)
+    return baseline_q, projected_q
+
+
 def generate_refactoring_plan(
     jsonld_path: str | Path,
     top_k: int = 10,
@@ -532,95 +652,26 @@ def generate_refactoring_plan(
         6. Generate recommendations and estimate effort
         7. Assign priorities
     """
-    # Load data
     jsonld_path = Path(jsonld_path)
-    if not jsonld_path.exists():
-        raise FileNotFoundError(f"JSON-LD file not found: {jsonld_path}")
 
-    data = json.loads(jsonld_path.read_text(encoding="utf-8"))
+    # Load and filter files by ΔQ threshold
+    file_scores, all_files = _load_and_filter_files(jsonld_path, min_delta_q)
 
-    # Extract files
-    files = data.get("files", [])
-    if not isinstance(files, list):
-        files = list(files.values()) if isinstance(files, dict) else []
-
-    # Calculate ΔQ for each file
-    file_scores = []
-    for file_data in files:
-        delta_q = calculate_delta_q(file_data)
-
-        if delta_q >= min_delta_q:
-            file_scores.append(
-                {
-                    "path": file_data.get("path", file_data.get("fileName", "unknown")),
-                    "delta_q": delta_q,
-                    "data": file_data,
-                }
-            )
-
-    # Sort by ΔQ descending (greedy selection)
+    # Sort by ΔQ descending (greedy selection) and select top-k
     file_scores.sort(key=lambda x: x["delta_q"], reverse=True)
-
-    # Select top-k
     selected = file_scores[:top_k]
 
-    # Generate tasks
+    # Generate tasks from selected files
     tasks = []
     total_delta_q = 0.0
 
     for i, item in enumerate(selected, 1):
-        file_data = item["data"]
-        delta_q = item["delta_q"]
-        path = item["path"]
-
-        complexity = file_data.get("complexity", 0) or 0
-        loc = file_data.get("linesOfCode", 0) or 0
-        todos = len(file_data.get("todos", [])) if isinstance(file_data.get("todos"), list) else 0
-        issues = file_data.get("issues", [])
-
-        current_metrics = {
-            "Complexity": complexity,
-            "LOC": loc,
-            "TODOs": todos,
-            "Issues": len(issues) if isinstance(issues, list) else 0,
-        }
-
-        # Generate issues list
-        issue_descriptions = []
-        if complexity >= 6:
-            issue_descriptions.append(f"High cyclomatic complexity ({complexity})")
-        if todos > 0:
-            issue_descriptions.append(f"{todos} unresolved TODO(s)")
-        if loc > 500:
-            issue_descriptions.append(f"Large file size ({loc} LOC)")
-
-        recommendations = generate_recommendations(file_data)
-        effort = estimate_effort(delta_q, complexity, loc)
-        priority = assign_priority(delta_q, complexity)
-
-        task = RefactoringTask(
-            id=i,
-            file_path=path,
-            priority=priority,
-            delta_q=delta_q,
-            current_metrics=current_metrics,
-            issues=issue_descriptions or ["No critical issues"],
-            recommendations=recommendations,
-            estimated_effort=effort,
-        )
-
+        task = _build_refactoring_task(i, item)
         tasks.append(task)
-        total_delta_q += delta_q
+        total_delta_q += item["delta_q"]
 
-    # Calculate baseline and projected Q-scores
-    # Try to extract from data if available, otherwise estimate
-    baseline_q = data.get("qualityScore", 0.0)
-    if baseline_q == 0.0:
-        # Estimate baseline from penalties
-        total_penalty = sum(f["delta_q"] for f in file_scores)
-        baseline_q = max(0, 100.0 - (total_penalty / len(files) * 10 if files else 0))
-
-    projected_q = min(100.0, baseline_q + total_delta_q)
+    # Calculate quality metrics
+    baseline_q, projected_q = _calculate_plan_metrics(file_scores, all_files, total_delta_q)
 
     return RefactoringPlan(
         tasks=tasks,
