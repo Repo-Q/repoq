@@ -1830,5 +1830,228 @@ def validate(
         raise typer.Exit(2)
 
 
+# ============================= Digital Twin Commands =============================
+
+
+twin_app = typer.Typer(
+    help="[bold]Digital Twin API[/bold] — Generate and query dynamic RDF from repository state"
+)
+
+
+@twin_app.command("query")
+def twin_query(
+    sparql: str = typer.Argument(..., help="SPARQL query to execute"),
+    workspace: Path = typer.Option(
+        Path.cwd(),
+        "--workspace",
+        "-w",
+        help="Repository root (default: current directory)",
+    ),
+    limit: int = typer.Option(100, "--limit", "-l", help="Max commits to include (0=all)"),
+    include_ontologies: bool = typer.Option(
+        False, "--ontologies", "-o", help="Include TBox (ontologies) in graph"
+    ),
+    format: str = typer.Option("table", "--format", "-f", help="Output format: table, json, csv"),
+) -> None:
+    """Execute SPARQL query against complete Digital Twin graph.
+
+    The graph includes:
+    - Static RDF: .repoq/ (story, adr, changelog)
+    - Dynamic RDF: Git commits, file tree, tests
+    - Optionally: TBox (ontologies)
+
+    Example:
+        repoq twin query "SELECT ?commit WHERE { ?commit a repo:Commit } LIMIT 5"
+    """
+    from rich.console import Console
+    from rich.table import Table
+
+    from repoq.core.digital_twin import DigitalTwin
+
+    console = Console()
+
+    try:
+        # Initialize Digital Twin
+        dt = DigitalTwin(workspace_root=workspace)
+
+        # Generate complete graph
+        with console.status("[bold blue]Generating Digital Twin graph...", spinner="dots"):
+            complete = dt.get_complete_graph(include_ontologies=include_ontologies)
+
+        console.print(f"[green]✓[/green] Graph ready: {len(complete):,} triples")
+
+        # Execute SPARQL query
+        with console.status("[bold blue]Executing SPARQL query...", spinner="dots"):
+            results = list(complete.query(sparql))
+
+        if not results:
+            console.print("[yellow]⚠️  Query returned no results[/yellow]")
+            return
+
+        # Format output
+        if format == "table":
+            # Rich table
+            table = Table(title=f"SPARQL Results ({len(results)} rows)")
+
+            # Add columns from first row
+            if results:
+                for var in results[0].labels:
+                    table.add_column(str(var), style="cyan")
+
+            # Add rows
+            for row in results:
+                table.add_row(*[str(row[var]) for var in row.labels])
+
+            console.print(table)
+
+        elif format == "json":
+            # JSON output
+            import json
+
+            output = []
+            for row in results:
+                output.append({str(var): str(row[var]) for var in row.labels})
+            console.print(json.dumps(output, indent=2))
+
+        elif format == "csv":
+            # CSV output
+            import csv
+            import sys
+
+            writer = csv.writer(sys.stdout)
+
+            # Header
+            if results:
+                writer.writerow([str(var) for var in results[0].labels])
+
+            # Rows
+            for row in results:
+                writer.writerow([str(row[var]) for var in row.labels])
+
+        else:
+            console.print(f"[red]❌ Unknown format: {format}[/red]")
+            raise typer.Exit(1)
+
+    except Exception as e:
+        console.print(f"[bold red]❌ Query failed: {e}[/bold red]")
+        logger.exception("twin query command failed")
+        raise typer.Exit(2)
+
+
+@twin_app.command("export")
+def twin_export(
+    output: Path = typer.Argument(..., help="Output file path (.ttl)"),
+    workspace: Path = typer.Option(
+        Path.cwd(),
+        "--workspace",
+        "-w",
+        help="Repository root (default: current directory)",
+    ),
+    include_ontologies: bool = typer.Option(
+        True, "--ontologies/--no-ontologies", help="Include TBox (ontologies)"
+    ),
+    format: str = typer.Option("turtle", "--format", "-f", help="RDF format: turtle, xml, json-ld"),
+) -> None:
+    """Export complete Digital Twin graph to file.
+
+    Example:
+        repoq twin export snapshot.ttl --ontologies
+    """
+    from rich.console import Console
+
+    from repoq.core.digital_twin import DigitalTwin
+
+    console = Console()
+
+    try:
+        # Initialize Digital Twin
+        dt = DigitalTwin(workspace_root=workspace)
+
+        # Export snapshot
+        with console.status(f"[bold blue]Exporting Digital Twin to {output}...", spinner="dots"):
+            dt.export_snapshot(
+                output_path=output,
+                include_ontologies=include_ontologies,
+                format=format,
+            )
+
+        console.print(f"[green]✓[/green] Exported to {output}")
+        console.print(f"   Format: {format}")
+        console.print(f"   Size: {output.stat().st_size:,} bytes")
+
+    except Exception as e:
+        console.print(f"[bold red]❌ Export failed: {e}[/bold red]")
+        logger.exception("twin export command failed")
+        raise typer.Exit(2)
+
+
+@twin_app.command("stats")
+def twin_stats(
+    workspace: Path = typer.Option(
+        Path.cwd(),
+        "--workspace",
+        "-w",
+        help="Repository root (default: current directory)",
+    ),
+) -> None:
+    """Show Digital Twin statistics.
+
+    Example:
+        repoq twin stats
+    """
+    from rdflib import RDF
+    from rich.console import Console
+    from rich.panel import Panel
+
+    from repoq.core.digital_twin import DigitalTwin
+
+    console = Console()
+
+    try:
+        # Initialize Digital Twin
+        dt = DigitalTwin(workspace_root=workspace)
+
+        # Get component graphs
+        static = dt.static_graph
+        ontologies = dt.ontologies_graph
+        commits = dt.get_commits_rdf()  # All commits (no limit)
+        files = dt.get_files_rdf()
+
+        # Count types
+        from repoq.core.digital_twin import REPO
+
+        num_commits = len(list(commits.subjects(RDF.type, REPO.Commit)))
+        num_files = len(list(files.subjects(RDF.type, REPO.File))) + len(
+            list(files.subjects(RDF.type, REPO.PythonFile))
+        )
+
+        # Format output
+        stats_text = f"""
+[cyan]Static ABox:[/cyan]  {len(static):,} triples (.repoq/)
+[cyan]TBox:[/cyan]         {len(ontologies):,} triples (ontologies)
+[cyan]Dynamic ABox:[/cyan] {len(commits) + len(files):,} triples
+  - Commits:     {num_commits:,} ({len(commits):,} triples)
+  - Files:       {num_files:,} ({len(files):,} triples)
+
+[bold]Total:[/bold]        {len(static) + len(ontologies) + len(commits) + len(files):,} triples
+"""
+
+        console.print(
+            Panel(
+                stats_text.strip(),
+                title="[bold]Digital Twin Statistics[/bold]",
+                border_style="blue",
+            )
+        )
+
+    except Exception as e:
+        console.print(f"[bold red]❌ Stats failed: {e}[/bold red]")
+        logger.exception("twin stats command failed")
+        raise typer.Exit(2)
+
+
+app.add_typer(twin_app, name="twin")
+
+
 if __name__ == "__main__":
     app()

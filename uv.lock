@@ -1884,6 +1884,7 @@ docs = [
 ]
 full = [
     { name = "cryptography" },
+    { name = "gitpython" },
     { name = "graphviz" },
     { name = "lizard" },
     { name = "orjson" },
@@ -1929,6 +1930,7 @@ docs = [
 requires-dist = [
     { name = "black", marker = "extra == 'dev'", specifier = ">=24.3" },
     { name = "cryptography", marker = "extra == 'full'", specifier = ">=42.0" },
+    { name = "gitpython", marker = "extra == 'full'", specifier = ">=3.1" },
     { name = "graphviz", marker = "extra == 'full'", specifier = ">=0.20" },
     { name = "jinja2", specifier = ">=3.1" },
     { name = "lizard", marker = "extra == 'full'", specifier = ">=1.17" },

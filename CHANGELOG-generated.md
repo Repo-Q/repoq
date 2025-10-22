@@ -8,6 +8,18 @@ All notable changes to RepoQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v2.0.0-beta.2] - 2025-10-22
+
+**Digital Twin API: Dynamic RDF generation (commits, files, SPARQL)**
+
+### Added
+
+- Repository ontology: .repoq/ontologies/repo.ttl (300+ lines)
+- Digital Twin module: repoq/core/digital_twin.py (300+ lines) with GitPython
+- Digital Twin tests: 25/25 passing (tests/core/test_digital_twin.py)
+- CLI commands: repoq twin query/export/stats (200+ lines)
+- GitPython dependency for Git operations (pyproject.toml)
+
 ## [v2.0.0-beta.1] - 2025-10-22
 
 **Phase 2: SHACL Validation Infrastructure**
@@ -67,4 +79,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - VDAD meta-ontology (.repoq/ontologies/vdad.ttl, 400+ lines) (`49d6909`)
 - Extractor: Markdown → RDF (scripts/extract_vdad_rdf.py, 250+ lines) (`49d6909`)
-

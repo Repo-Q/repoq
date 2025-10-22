@@ -1,0 +1,328 @@
+@prefix repo: <https://repoq.dev/ontology/repo#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+# ============================================================================
+# Repository Ontology (TBox)
+# ============================================================================
+# Purpose: Git repository structure, commits, files, branches
+# Author: URPKS Agent
+# Date: 2025-10-22
+# Version: 1.0.0
+# Implements: ADR-015 (Digital Twin Architecture)
+# ============================================================================
+
+<https://repoq.dev/ontology/repo> a owl:Ontology ;
+    rdfs:label "Repository Ontology" ;
+    rdfs:comment "Ontology for Git repositories, commits, files, and branches" ;
+    owl:versionInfo "1.0.0" .
+
+# ============================================================================
+# Classes
+# ============================================================================
+
+# Repository
+# ============================================================================
+repo:Repository a owl:Class ;
+    rdfs:label "Repository" ;
+    rdfs:comment "A Git repository" .
+
+repo:GitRepository a owl:Class ;
+    rdfs:subClassOf repo:Repository ;
+    rdfs:label "Git Repository" ;
+    rdfs:comment "A Git version control repository" .
+
+# Commit
+# ============================================================================
+repo:Commit a owl:Class ;
+    rdfs:label "Commit" ;
+    rdfs:comment "A Git commit (snapshot of repository state)" .
+
+# Branch
+# ============================================================================
+repo:Branch a owl:Class ;
+    rdfs:label "Branch" ;
+    rdfs:comment "A Git branch" .
+
+repo:Tag a owl:Class ;
+    rdfs:label "Tag" ;
+    rdfs:comment "A Git tag (named reference to a commit)" .
+
+# File
+# ============================================================================
+repo:File a owl:Class ;
+    rdfs:label "File" ;
+    rdfs:comment "A file in the repository" .
+
+repo:PythonFile a owl:Class ;
+    rdfs:subClassOf repo:File ;
+    rdfs:label "Python File" ;
+    rdfs:comment "A Python source file (.py)" .
+
+repo:TTLFile a owl:Class ;
+    rdfs:subClassOf repo:File ;
+    rdfs:label "TTL File" ;
+    rdfs:comment "A Turtle RDF file (.ttl)" .
+
+repo:MarkdownFile a owl:Class ;
+    rdfs:subClassOf repo:File ;
+    rdfs:label "Markdown File" ;
+    rdfs:comment "A Markdown documentation file (.md)" .
+
+# FileChange
+# ============================================================================
+repo:FileChange a owl:Class ;
+    rdfs:label "File Change" ;
+    rdfs:comment "A change to a file in a commit" .
+
+repo:Addition a owl:Class ;
+    rdfs:subClassOf repo:FileChange ;
+    rdfs:label "Addition" ;
+    rdfs:comment "File was added" .
+
+repo:Modification a owl:Class ;
+    rdfs:subClassOf repo:FileChange ;
+    rdfs:label "Modification" ;
+    rdfs:comment "File was modified" .
+
+repo:Deletion a owl:Class ;
+    rdfs:subClassOf repo:FileChange ;
+    rdfs:label "Deletion" ;
+    rdfs:comment "File was deleted" .
+
+repo:Rename a owl:Class ;
+    rdfs:subClassOf repo:FileChange ;
+    rdfs:label "Rename" ;
+    rdfs:comment "File was renamed" .
+
+# Author
+# ============================================================================
+repo:Author a owl:Class ;
+    rdfs:label "Author" ;
+    rdfs:comment "A commit author (person or bot)" .
+
+# ============================================================================
+# Properties
+# ============================================================================
+
+# Repository properties
+# ============================================================================
+repo:repositoryPath a owl:DatatypeProperty ;
+    rdfs:domain repo:Repository ;
+    rdfs:range xsd:string ;
+    rdfs:label "repository path" ;
+    rdfs:comment "Absolute path to repository root" .
+
+repo:repositoryUrl a owl:DatatypeProperty ;
+    rdfs:domain repo:Repository ;
+    rdfs:range xsd:anyURI ;
+    rdfs:label "repository URL" ;
+    rdfs:comment "Remote URL (e.g., GitHub)" .
+
+repo:defaultBranch a owl:ObjectProperty ;
+    rdfs:domain repo:Repository ;
+    rdfs:range repo:Branch ;
+    rdfs:label "default branch" ;
+    rdfs:comment "Default branch (usually 'main' or 'master')" .
+
+repo:hasCommit a owl:ObjectProperty ;
+    rdfs:domain repo:Repository ;
+    rdfs:range repo:Commit ;
+    rdfs:label "has commit" ;
+    rdfs:comment "Repository contains this commit" .
+
+repo:hasBranch a owl:ObjectProperty ;
+    rdfs:domain repo:Repository ;
+    rdfs:range repo:Branch ;
+    rdfs:label "has branch" ;
+    rdfs:comment "Repository contains this branch" .
+
+repo:hasTag a owl:ObjectProperty ;
+    rdfs:domain repo:Repository ;
+    rdfs:range repo:Tag ;
+    rdfs:label "has tag" ;
+    rdfs:comment "Repository contains this tag" .
+
+# Commit properties
+# ============================================================================
+repo:sha a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:label "SHA" ;
+    rdfs:comment "Git commit SHA-1 hash (40 hex chars)" .
+
+repo:shortSha a owl:DatatypeProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:label "short SHA" ;
+    rdfs:comment "Short commit SHA (7 hex chars)" .
+
+repo:message a owl:DatatypeProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:label "commit message" ;
+    rdfs:comment "Full commit message" .
+
+repo:subject a owl:DatatypeProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:label "commit subject" ;
+    rdfs:comment "First line of commit message" .
+
+repo:body a owl:DatatypeProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range xsd:string ;
+    rdfs:label "commit body" ;
+    rdfs:comment "Commit message body (after first line)" .
+
+repo:authoredDate a owl:DatatypeProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "authored date" ;
+    rdfs:comment "When commit was authored" .
+
+repo:committedDate a owl:DatatypeProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range xsd:dateTime ;
+    rdfs:label "committed date" ;
+    rdfs:comment "When commit was committed" .
+
+repo:author a owl:ObjectProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range repo:Author ;
+    rdfs:label "author" ;
+    rdfs:comment "Who authored the commit" .
+
+repo:committer a owl:ObjectProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range repo:Author ;
+    rdfs:label "committer" ;
+    rdfs:comment "Who committed the commit (may differ from author)" .
+
+repo:parent a owl:ObjectProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range repo:Commit ;
+    rdfs:label "parent" ;
+    rdfs:comment "Parent commit(s)" .
+
+repo:modifies a owl:ObjectProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range repo:File ;
+    rdfs:label "modifies" ;
+    rdfs:comment "Commit modifies this file" .
+
+repo:hasChange a owl:ObjectProperty ;
+    rdfs:domain repo:Commit ;
+    rdfs:range repo:FileChange ;
+    rdfs:label "has change" ;
+    rdfs:comment "Commit contains this file change" .
+
+# FileChange properties
+# ============================================================================
+repo:changesFile a owl:ObjectProperty ;
+    rdfs:domain repo:FileChange ;
+    rdfs:range repo:File ;
+    rdfs:label "changes file" ;
+    rdfs:comment "This change affects this file" .
+
+repo:linesAdded a owl:DatatypeProperty ;
+    rdfs:domain repo:FileChange ;
+    rdfs:range xsd:integer ;
+    rdfs:label "lines added" ;
+    rdfs:comment "Number of lines added" .
+
+repo:linesRemoved a owl:DatatypeProperty ;
+    rdfs:domain repo:FileChange ;
+    rdfs:range xsd:integer ;
+    rdfs:label "lines removed" ;
+    rdfs:comment "Number of lines removed" .
+
+# Branch properties
+# ============================================================================
+repo:branchName a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Branch ;
+    rdfs:range xsd:string ;
+    rdfs:label "branch name" ;
+    rdfs:comment "Name of the branch (e.g., 'main', 'develop')" .
+
+repo:head a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Branch ;
+    rdfs:range repo:Commit ;
+    rdfs:label "HEAD" ;
+    rdfs:comment "Current HEAD commit of the branch" .
+
+# Tag properties
+# ============================================================================
+repo:tagName a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Tag ;
+    rdfs:range xsd:string ;
+    rdfs:label "tag name" ;
+    rdfs:comment "Name of the tag (e.g., 'v2.0.0-beta.1')" .
+
+repo:pointsTo a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Tag ;
+    rdfs:range repo:Commit ;
+    rdfs:label "points to" ;
+    rdfs:comment "Commit that this tag points to" .
+
+repo:tagMessage a owl:DatatypeProperty ;
+    rdfs:domain repo:Tag ;
+    rdfs:range xsd:string ;
+    rdfs:label "tag message" ;
+    rdfs:comment "Annotated tag message" .
+
+# File properties
+# ============================================================================
+repo:filePath a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:File ;
+    rdfs:range xsd:string ;
+    rdfs:label "file path" ;
+    rdfs:comment "Relative path from repository root" .
+
+repo:fileName a owl:DatatypeProperty ;
+    rdfs:domain repo:File ;
+    rdfs:range xsd:string ;
+    rdfs:label "file name" ;
+    rdfs:comment "Name of the file (basename)" .
+
+repo:fileExtension a owl:DatatypeProperty ;
+    rdfs:domain repo:File ;
+    rdfs:range xsd:string ;
+    rdfs:label "file extension" ;
+    rdfs:comment "File extension (e.g., '.py', '.ttl')" .
+
+repo:fileSize a owl:DatatypeProperty ;
+    rdfs:domain repo:File ;
+    rdfs:range xsd:integer ;
+    rdfs:label "file size" ;
+    rdfs:comment "Size in bytes" .
+
+repo:linesOfCode a owl:DatatypeProperty ;
+    rdfs:domain repo:File ;
+    rdfs:range xsd:integer ;
+    rdfs:label "lines of code" ;
+    rdfs:comment "Total lines (including blanks/comments)" .
+
+# Author properties
+# ============================================================================
+repo:authorName a owl:DatatypeProperty ;
+    rdfs:domain repo:Author ;
+    rdfs:range xsd:string ;
+    rdfs:label "author name" ;
+    rdfs:comment "Author's display name" .
+
+repo:authorEmail a owl:DatatypeProperty ;
+    rdfs:domain repo:Author ;
+    rdfs:range xsd:string ;
+    rdfs:label "author email" ;
+    rdfs:comment "Author's email address" .
+
+# ============================================================================
+# PROV-O alignment (for traceability)
+# ============================================================================
+repo:Commit rdfs:subClassOf prov:Activity .
+repo:author rdfs:subPropertyOf prov:wasAssociatedWith .
+repo:modifies rdfs:subPropertyOf prov:used .

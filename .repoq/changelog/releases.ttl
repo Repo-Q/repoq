@@ -8,6 +8,58 @@
 # RepoQ Releases (Changelog SSoT)
 # ============================================================================
 
+# v2.0.0-beta.2: Digital Twin API (MILESTONE)
+# ============================================================================
+changelog:v2-0-0-beta-2 a changelog:Release ;
+    changelog:version "v2.0.0-beta.2" ;
+    changelog:date "2025-10-22"^^xsd:date ;
+    changelog:tag "v2.0.0-beta.2" ;
+    changelog:summary "Digital Twin API: Dynamic RDF generation (commits, files, SPARQL)" ;
+
+    changelog:change [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "Repository ontology: .repoq/ontologies/repo.ttl (300+ lines)" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 300 ;
+        changelog:implements <https://repoq.dev/requirement/FR-11> ;
+        changelog:traces <https://repoq.dev/adr/ADR-015>
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "Digital Twin module: repoq/core/digital_twin.py (300+ lines) with GitPython" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 300 ;
+        changelog:implements <https://repoq.dev/requirement/FR-11> ;
+        changelog:traces <https://repoq.dev/adr/ADR-015>
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "Digital Twin tests: 25/25 passing (tests/core/test_digital_twin.py)" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 450 ;
+        changelog:testsAdded 25
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "CLI commands: repoq twin query/export/stats (200+ lines)" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 200 ;
+        changelog:implements <https://repoq.dev/requirement/FR-11>
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:TypeAdded ;
+        changelog:description "GitPython dependency for Git operations (pyproject.toml)" ;
+        changelog:breakingChange false ;
+        changelog:linesAdded 1 ;
+        changelog:linesRemoved 0
+    ] .
+
+
 # v2.0.0-beta.1: Phase 2 SHACL Validation (MILESTONE)
 # ============================================================================
 changelog:v2-0-0-beta-1 a changelog:Release ;
