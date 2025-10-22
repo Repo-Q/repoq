@@ -77,20 +77,53 @@ repoq refactor-plan baseline.jsonld --format github -o issues.json
 - ⏱️ **Effort estimates** (15 min to 8 hours)
 - 📋 **Specific recommendations** (e.g., "split into smaller functions")
 - 📊 **Current metrics** (complexity, LOC, TODOs, issues)
+- 🆕 **Per-Function Recommendations** (NEW!): Identifies exact functions to refactor with line numbers
 
-Example task:
+### Per-Function Metrics (NEW in v0.4.0)
+
+RepoQ now captures **detailed per-function complexity metrics**, enabling targeted refactoring:
+
+**What's captured:**
+- Function name and cyclomatic complexity (CCN)
+- Lines of code (LOC), parameter count
+- Line range (start/end) for quick navigation
+- Token count and max nesting depth
+
+**Example output:**
 
 ```markdown
-### Task #1: repoq/analyzers/structure.py
+### Task #3: repoq/cli.py
 **Priority**: 🔴 CRITICAL
-**Expected ΔQ**: +218.0 points
+**Expected ΔQ**: +108.0 points
 **Estimated effort**: 4-8 hours
 
 **Issues**:
-- High cyclomatic complexity (48.0)
+- High cyclomatic complexity (26.0)
+- Large file (1535 LOC)
 
 **Recommendations**:
-1. Reduce complexity from 48.0 to <10 (split into smaller functions)
+1. 🎯 Refactor function `_run_command` (CCN=26, lines 593-772) → split complex logic
+2. 🎯 Refactor function `_run_trs_verification` (CCN=16, lines 775-843) → split complex logic
+3. 🎯 Refactor function `_handle_refactor_plan_output` (CCN=13, lines 1446-1530) → split complex logic
+4. 📏 Consider splitting file (1535 LOC) into smaller modules (<300 LOC)
+```
+
+**Benefits:**
+- ✅ Know **exactly which function** to refactor (no manual analysis needed!)
+- ✅ Jump directly to problematic code (line numbers provided)
+- ✅ Prioritized by complexity (top-3 most complex functions first)
+- ✅ Better ΔQ estimates (function-level granularity)
+
+**Old approach** (file-level only):
+```
+❌ "Reduce complexity from 26.0 to <10"  
+   (Which function? Where? Need to run lizard manually...)
+```
+
+**New approach** (per-function):
+```
+✅ "Refactor function `_run_command` (CCN=26, lines 593-772)"  
+   (Exact target, no guesswork!)
 ```
 
 ## CI/CD Integration
