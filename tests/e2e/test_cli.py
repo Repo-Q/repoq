@@ -86,8 +86,12 @@ class TestCLIAnalyzeE2E:
 
         # Verify test files were excluded
         data = json.loads(output.read_text())
-        files = data.get("repoq:hasFile", [])
-        test_files = [f for f in files if "test_" in f.get("repoq:path", "")]
+        # Files are stored under 'files' key (not 'repoq:hasFile')
+        files = data.get("files", data.get("repoq:hasFile", []))
+        # In the actual export, files is a dict, not a list
+        if isinstance(files, dict):
+            files = list(files.values())
+        test_files = [f for f in files if "test_" in str(f.get("path", f.get("repoq:path", "")))]
         assert len(test_files) == 0
 
     def test_analyze_current_directory(self, python_repo: Path, temp_dir: Path):
@@ -406,5 +410,9 @@ def test_self_analysis_e2e(temp_dir: Path):
     assert "repo:Project" in data["@type"]
 
     # Should have found significant number of files
-    files = data.get("repoq:hasFile", [])
+    # Files are stored under 'files' key (not 'repoq:hasFile')
+    files = data.get("files", data.get("repoq:hasFile", []))
+    # In the actual export, files is a dict keyed by file ID
+    if isinstance(files, dict):
+        files = list(files.values())
     assert len(files) > 10
