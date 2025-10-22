@@ -1,6 +1,13 @@
 """
 Integration tests for meta-loop self-validation.
 
+STRATIFICATION_LEVEL: 2 (testing meta-validation)
+
+This test module operates at level 2:
+- Level 0: Base repository (Project model)
+- Level 1: Self-validation (perform_self_analysis)
+- Level 2: Testing self-validation (this module)
+
 Tests end-to-end workflow: Project → Self-Analysis → RDF → SHACL validation.
 """
 

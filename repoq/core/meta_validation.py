@@ -1,8 +1,20 @@
 """
 Meta-loop self-validation module.
 
+STRATIFICATION_LEVEL: 1 (meta-analysis of base repository)
+
+This module operates at level 1 of the stratification hierarchy:
+- Level 0: Base repository analysis (files, metrics, issues)
+- Level 1: Meta-analysis (self-validation, circular dependencies, universe checks)
+- Level 2: Meta-meta operations (analyzing meta-analysis itself - PROHIBITED here)
+
 Implements safe self-analysis with stratification guards to prevent Russell's paradox.
 Checks circular dependencies, stratification consistency, and universe violations.
+
+Safety Invariants:
+- MAX_SAFE_LEVEL = 2 (hard limit to prevent infinite regress)
+- ValueError raised for level > 2
+- Read-only mode for all self-analysis operations
 """
 
 from __future__ import annotations

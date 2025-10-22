@@ -1,6 +1,13 @@
 """
 Integration tests for meta-loop ontology export.
 
+STRATIFICATION_LEVEL: 2 (testing meta-ontology export)
+
+This test module operates at level 2:
+- Level 0: Base repository data (Project, File entities)
+- Level 1: Meta-ontology enrichment (meta, test, trs triples)
+- Level 2: Testing ontology export (this module)
+
 Tests that RDF export includes meta, test, trs, quality, docs ontology triples.
 """
 

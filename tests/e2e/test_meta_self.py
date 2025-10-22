@@ -1,5 +1,12 @@
 """E2E tests for `repoq meta-self` command.
 
+STRATIFICATION_LEVEL: 2 (testing meta-analysis functionality)
+
+This test module operates at level 2:
+- Level 0: Base repository (production code)
+- Level 1: Meta-analysis (self-validation)
+- Level 2: Testing meta-analysis (this module)
+
 Smoke tests for self-analysis functionality.
 """
 

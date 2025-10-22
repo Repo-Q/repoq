@@ -1,5 +1,15 @@
 """OntologyManager: RDF triple management with SPARQL queries and pattern detection.
 
+STRATIFICATION_LEVEL: 1 (meta-level ontology operations)
+
+This module operates at level 1:
+- Level 0: Base repository entities (files, modules, classes)
+- Level 1: Ontology management (RDF triples, SPARQL queries, pattern detection)
+- Level 2: Meta-ontology (analyzing OntologyManager itself - ISOLATED)
+
+SAFETY NOTE: This manager MUST NOT analyze itself to prevent universe collision.
+If self-analysis is needed, use a separate wrapper at level 2.
+
 TDD Cycle 1 - GREEN + REFACTOR Phase.
 
 Design:

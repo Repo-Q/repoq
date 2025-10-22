@@ -1,6 +1,16 @@
 """
 TDD Cycle 1 - RED Phase: OntologyManager Tests
 
+STRATIFICATION_LEVEL: 2 (testing ontology manager)
+
+This test module operates at level 2:
+- Level 0: Base RDF triples (repository entities)
+- Level 1: OntologyManager operations (add/query triples)
+- Level 2: Testing OntologyManager (this module)
+
+SAFETY NOTE: These tests MUST NOT trigger self-analysis of OntologyManager
+to prevent universe collision. Tests operate on mock data only.
+
 Following Test-Driven Development:
 1. RED: Write failing tests (this file)
 2. GREEN: Minimal implementation to pass tests

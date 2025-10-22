@@ -1,6 +1,13 @@
 """
 Property-based tests for ontology consistency using Hypothesis.
 
+STRATIFICATION_LEVEL: 2 (property testing meta-ontology invariants)
+
+This test module operates at level 2:
+- Level 0: Base repository entities
+- Level 1: Ontology triples and constraints
+- Level 2: Property-based verification of ontology (this module)
+
 Tests invariants:
 1. Stratification: ∀level. level ∈ [0, 2] (Russell's paradox prevention)
 2. Coverage: ∀cov. cov ∈ [0, 100]

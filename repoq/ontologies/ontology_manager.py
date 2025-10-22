@@ -1,6 +1,17 @@
 """
 Ontology Plugin Manager for RepoQ
 
+STRATIFICATION_LEVEL: 1 (meta-level ontology plugin management)
+
+This module operates at level 1:
+- Level 0: Base repository analysis (files, dependencies, metrics)
+- Level 1: Ontology plugin execution and concept extraction
+- Level 2: Meta-analysis of ontology plugins themselves (ISOLATED)
+
+SAFETY CONSTRAINT: This manager analyzes repository code but MUST NOT
+analyze its own plugin loading mechanism to prevent universe collision.
+If self-analysis is needed, use external wrapper at level 2.
+
 Manages loading, configuration, and execution of ontology-based analysis plugins.
 Provides a framework for extending RepoQ with domain-specific knowledge systems.
 """

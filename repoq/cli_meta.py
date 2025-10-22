@@ -1,6 +1,13 @@
 """
 Meta-loop introspection and validation commands.
 
+STRATIFICATION_LEVEL: 2 (meta-meta operations on ontologies)
+
+This module operates at level 2 of the stratification hierarchy:
+- Level 0: Base repository analysis (files, metrics, issues)
+- Level 1: Meta-ontology enrichment (meta:SelfAnalysis)
+- Level 2: Meta-meta operations (validating ontologies themselves)
+
 Commands:
 - meta-inspect: Inspect meta-loop safety properties
 - validate-ontology: Validate ontology against SHACL shapes

@@ -1,6 +1,13 @@
 """
 Unit tests for meta_validation.py module.
 
+STRATIFICATION_LEVEL: 2 (unit testing meta-validation logic)
+
+This test module operates at level 2:
+- Level 0: Base repository files
+- Level 1: Meta-validation functions (detect_circular_dependencies, perform_self_analysis)
+- Level 2: Unit tests for meta-validation (this module)
+
 Tests self-analysis, circular dependency detection, stratification checks, and RDF export.
 """
 

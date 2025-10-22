@@ -1,6 +1,13 @@
 """
 TDD Cycle 3 - RED Phase: MetaLoop Integration Tests
 
+STRATIFICATION_LEVEL: 2 (testing meta-loop integration)
+
+This test module operates at level 2:
+- Level 0: Base ontology triples
+- Level 1: OntologyManager + StratificationGuard
+- Level 2: Integration tests of meta-loop (this module)
+
 Integration tests for:
 - OntologyManager + StratificationGuard
 - tmp/meta-loop artifacts (meta_context.jsonld, meta_loop.ttl)
