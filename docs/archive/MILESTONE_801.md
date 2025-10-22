@@ -25,6 +25,7 @@
 ## 🏆 Ключевые Достижения
 
 ### Метрики качества
+
 - **Суммарный ΔQ**: +801 баллов (**80% от цели +1000**)
 - **Средняя редукция CCN**: 68% (от -42% до -96%)
 - **Уменьшение LOC**: 637 строк основного кода
@@ -32,6 +33,7 @@
 - **Тестовое покрытие**: 100% (80/80 тестов)
 
 ### Рекордные достижения
+
 🏅 **Лучшая редукция CCN**: gate.py — 23→1 (96%)  
 🏅 **Вторая лучшая**: structure.py — 21→1 (95%)  
 🏅 **Максимальный ΔQ**: jsonld.py — +149 баллов  
@@ -40,6 +42,7 @@
 ### Прогрессия топ-5
 
 **Начало сессии (топ-6):**
+
 1. jsonld.py (CCN=33, ΔQ=149) ✅
 2. history.py (CCN=30, ΔQ=131) ✅
 3. refactoring.py (CCN=26, ΔQ=114) ✅
@@ -48,6 +51,7 @@
 6. gate.py (CCN=23, ΔQ=96) ✅
 
 **Промежуточное состояние:**
+
 1. gate.py (CCN=23) ✅ → рефакторен
 2. structure.py (CCN=21) ✅ → рефакторен
 3. jsonld.py (CCN=19, ΔQ=79)
@@ -55,6 +59,7 @@
 5. complexity.py (CCN=17)
 
 **Текущее состояние:**
+
 1. jsonld.py (CCN=19, ΔQ=79) — остаточная сложность
 2. refactoring.py (CCN=6, ΔQ=73) — возможен повторный рефакторинг
 3. math_expr.py (CCN=17, ΔQ=66)
@@ -68,16 +73,19 @@
 ## 📝 Новое достижение: structure.py (ΔQ=+86, CCN 21→1)
 
 **Проблема**: Функция `_parse_dependency_manifests` (130 строк, CCN=21) парсила 3 типа манифестов в одном блоке:
+
 - pyproject.toml (43 LOC) — main + optional dependencies
 - requirements.txt (24 LOC) — простой список
 - package.json (35 LOC) — dependencies + devDependencies
 
 **Решение**: Извлечены 3 helpers по типу манифеста:
+
 1. `_parse_pyproject_toml(repo_path)` — Python dependencies из pyproject.toml (60 lines)
 2. `_parse_requirements_txt(repo_path)` — Python dependencies из requirements.txt (30 lines)
 3. `_parse_package_json(repo_path)` — JS/TS dependencies из package.json (45 lines)
 
 **Главная функция после рефакторинга:**
+
 ```python
 def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
     dependencies = []
@@ -88,6 +96,7 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
 ```
 
 **Результат**:
+
 - CCN: 21 → 1 (**↓95%**)
 - LOC: 130 → 6 (**↓95%**)
 - Тесты: 14/14 structure tests ✅
@@ -102,13 +111,13 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
 
 | Файл | Helpers | Описание |
 |------|---------|----------|
-| jsonld.py | 5 | _merge_contexts, _build_project_metadata, _serialize_module, _serialize_file, _serialize_contributor |
+| jsonld.py | 5 | _merge_contexts, _build_project_metadata,_serialize_module,_serialize_file,_serialize_contributor |
 | history.py | 4 | _get_last_commit_date, _extract_authors, _populate_contributors, _process_commits |
-| refactoring.py | 3 | _generate_function_recommendations, _generate_file_level_recommendations, _generate_issue_recommendations |
-| rdf_export.py | 4 | _build_data_graph, _apply_enrichments, _load_shapes_graph, _extract_violations |
-| cli.py | 4 | _run_analysis_pipeline, _export_results, _run_shacl_validation, _check_fail_on_issues |
-| gate.py | 4 | _format_gate_header, _format_metrics_comparison, _format_deltas_section, _format_pcq_violations_witness |
-| structure.py | 3 | _parse_pyproject_toml, _parse_requirements_txt, _parse_package_json |
+| refactoring.py | 3 | _generate_function_recommendations,_generate_file_level_recommendations,_generate_issue_recommendations |
+| rdf_export.py | 4 | _build_data_graph,_apply_enrichments,_load_shapes_graph, _extract_violations |
+| cli.py | 4 | _run_analysis_pipeline,_export_results,_run_shacl_validation, _check_fail_on_issues |
+| gate.py | 4 | _format_gate_header,_format_metrics_comparison, _format_deltas_section,_format_pcq_violations_witness |
+| structure.py | 3 | _parse_pyproject_toml,_parse_requirements_txt, _parse_package_json |
 | **ИТОГО** | **27** | - |
 
 ### Редукция сложности
@@ -126,19 +135,23 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
 ## 🔄 Γ (Gates) — Валидация Инвариантов
 
 ### ✅ Soundness
+
 - Все 80/80 тестов проходят
 - Рефакторенные модули сохраняют детерминированное поведение
 - RDF-экспорт соответствует онтологиям
 
 ### ✅ Confluence
+
 - Нет циклических зависимостей (DFS check passed)
 - Git history линейна (7 commits, no conflicts)
 
 ### ✅ Termination
+
 - Анализ завершается за 0.6 секунд
 - Бюджеты: время < 30s ✅, память < 512MB ✅
 
 ### ⚠️ Reflexive Completeness
+
 - **Universe violations: 14 остаются** (ожидаемо для рефлексивного анализа)
 - Добавлены `STRATIFICATION_LEVEL` docstrings в 12 meta-level файлов ✅
 - ontology_manager.py требует изоляции уровня 2 (future work)
@@ -148,6 +161,7 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
 ## 📈 Паттерны и Инсайты
 
 ### Успешные техники
+
 1. **Декомпозиция по ответственности** — каждая helper-функция решает одну задачу
 2. **Early return patterns** — `if not exists: return []` упрощает логику
 3. **TYPE_CHECKING для forward references** — избегает circular imports
@@ -155,7 +169,9 @@ def _parse_dependency_manifests(repo_path: Path) -> List[DependencyEdge]:
 5. **Сохранение сигнатур** — главные функции остаются API-совместимыми
 
 ### Паттерн "Aggregator"
+
 Многие рефакторинги следуют паттерну:
+
 ```python
 def main_function(args):
     results = []
@@ -168,12 +184,14 @@ def main_function(args):
 Этот паттерн даёт CCN=1 и максимальную читаемость.
 
 ### Метрики как ориентиры
+
 - **CCN = 1** — идеальная простота (достигнута в gate.py, structure.py)
 - **CCN ≤ 10** — целевая сложность для большинства функций
 - **LOC ≤ 50** — оптимальный размер функции для поддержки
 - **ΔQ estimation** — приоритизация рефакторингов по ROI
 
 ### Рефлексивный цикл работает
+
 - RepoQ успешно применил собственные рекомендации к себе
 - Все топ-7 высокоприоритетных файлов были рефакторены
 - Система генерирует новые рекомендации после каждого цикла
@@ -184,11 +202,13 @@ def main_function(args):
 ## 🚀 Путь к +1000 ΔQ
 
 ### Текущий прогресс
+
 - **Достигнуто**: +801 ΔQ (80%)
 - **Осталось**: +199 ΔQ (20%)
 - **Следующие цели**: 2-3 рефакторинга
 
 ### Оставшиеся топ-5
+
 1. **jsonld.py** — ΔQ=79, CCN=19 (to_jsonld — возможен повторный рефакторинг)
 2. **refactoring.py** — ΔQ=73, CCN=6 (возможна дополнительная оптимизация)
 3. **math_expr.py** — ΔQ=66, CCN=17
@@ -196,6 +216,7 @@ def main_function(args):
 5. **weakness.py** — ΔQ=63, CCN=17
 
 ### Стратегия достижения +1000
+
 **Вариант 1**: jsonld.py (79) + math_expr.py (66) + complexity.py (63) = **+208** → **+1009 ΔQ** ✅
 
 **Вариант 2**: jsonld.py (79) + refactoring.py (73) + weakness.py (63) = **+215** → **+1016 ΔQ** ✅

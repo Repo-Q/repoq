@@ -7,7 +7,9 @@
 ## [Σ] SIGNATURE - Problem Space
 
 ### Context
+
 Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
+
 1. Enforce quality gates on every commit/PR
 2. Automate releases to PyPI, Docker Hub, GitHub
 3. Validate Docker builds and ensure size constraints
@@ -15,11 +17,13 @@ Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
 5. Implement PR quality validation with automated feedback
 
 ### Language & Meta-Language
+
 - **Language L:** GitHub Actions YAML workflows, Python scripts (coverage checks)
 - **Meta-language M:** CI/CD orchestration patterns, GitOps principles
 - **Target System:** Automated testing, releases, quality gates
 
 ### Invariants to Maintain
+
 - ✅ Coverage threshold: 60% minimum enforced
 - ✅ Docker size constraint: ≤200MB (baseline 161MB)
 - ✅ Multi-platform support: AMD64 + ARM64
@@ -31,6 +35,7 @@ Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
 ## [Γ] GATES - Pre-Implementation Validation
 
 ### Gate Checks (All PASSED)
+
 ✅ **Coverage Enforcement:** Can parse coverage.json, fail on threshold violation  
 ✅ **Docker Validation:** Build succeeds, CLI tests pass, size within limits  
 ✅ **Multi-Arch Support:** QEMU for ARM64, buildx for multi-platform  
@@ -39,6 +44,7 @@ Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
 ✅ **Regression Detection:** Coverage baseline tracking (±2% tolerance)  
 
 ### Risk Assessment
+
 | Risk | Mitigation | Status |
 |------|-----------|--------|
 | Coverage threshold too strict | Set to 60% (current baseline 63%) | ✅ |
@@ -54,16 +60,19 @@ Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
 ### Workflow Architecture Decisions
 
 #### **Option 1: Monolithic CI Workflow** (REJECTED)
+
 - **Pros:** Single file, easier to understand
 - **Cons:** Long execution time, difficult to debug, poor separation of concerns
 - **Score:** 0.4/1.0 (poor maintainability)
 
 #### **Option 2: Separate Workflows for CI/Release/PR** (SELECTED ✅)
+
 - **Pros:** Clear separation, parallel execution, targeted triggers
 - **Cons:** More files to maintain
 - **Score:** 0.85/1.0 (best balance)
 
 #### **Option 3: External CI Service (CircleCI/Travis)** (REJECTED)
+
 - **Pros:** Specialized features
 - **Cons:** Vendor lock-in, additional secrets management, GitHub Actions native integration better
 - **Score:** 0.5/1.0 (unnecessary complexity)
@@ -71,16 +80,19 @@ Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
 ### Technology Choices
 
 #### **PyPI Publishing:**
+
 - **Selected:** OIDC Trusted Publishing
 - **Alternative:** API tokens
 - **Rationale:** More secure (no secrets in repo), automatic rotation, GitHub-native
 
 #### **Docker Multi-Arch:**
+
 - **Selected:** QEMU + buildx
 - **Alternative:** Native runners for each arch
 - **Rationale:** Cost-effective, single workflow, GitHub-hosted runners
 
 #### **Coverage Enforcement:**
+
 - **Selected:** Python script parsing coverage.json
 - **Alternative:** Third-party actions (codecov/coveralls)
 - **Rationale:** No external dependencies, full control, faster
@@ -103,17 +115,20 @@ Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
 **Total Score:** **0.94/1.0** (Excellent)
 
 ### Coverage & Testing
+
 - **Test Count:** 229 tests (unchanged)
 - **Coverage:** 63% (Phase 5.5 baseline, now enforced)
 - **Threshold:** 60% minimum, 80% target
 - **Regression Tolerance:** ±2%
 
 ### Performance Metrics
+
 - **CI Execution Time:** ~4-5 minutes (Python 3.9-3.12 matrix)
 - **Docker Build Time:** ~2 minutes (with cache), ~8 minutes (cold)
 - **Release Pipeline:** ~15 minutes (full workflow with multi-arch)
 
 ### Automation Coverage
+
 - ✅ **100% Automated:**
   - Test execution (matrix: Python 3.9-3.12)
   - Coverage threshold enforcement
@@ -131,9 +146,11 @@ Phase 5.7 implements comprehensive CI/CD automation using GitHub Actions to:
 ### Artifacts Created
 
 #### **1. Enhanced `.github/workflows/ci.yml` (+40 lines)**
+
 **Purpose:** Continuous integration for all pushes/PRs
 
 **Changes:**
+
 ```yaml
 # Coverage threshold check (Phase 5.7)
 - name: Coverage threshold check
@@ -178,6 +195,7 @@ docker-build:
 ```
 
 **Gates Enforced:**
+
 - ✅ Coverage ≥60%
 - ✅ Docker build succeeds
 - ✅ CLI functional
@@ -186,9 +204,11 @@ docker-build:
 ---
 
 #### **2. New `.github/workflows/release.yml` (280+ lines)**
+
 **Purpose:** Automated releases to PyPI, Docker Hub, GitHub
 
 **Jobs:**
+
 1. **validate-tag:** Version format validation + pyproject.toml match
 2. **test:** Full test suite on Python 3.9-3.12
 3. **build-wheel:** Create wheel + sdist, run twine check
@@ -198,6 +218,7 @@ docker-build:
 7. **notify-success:** Post summary to GitHub
 
 **Key Features:**
+
 ```yaml
 # Version validation (Step 1)
 - name: Validate tag format
@@ -242,25 +263,30 @@ docker-build:
 ```
 
 **Security:**
+
 - ✅ PyPI: OIDC trusted publishing (no PYPI_API_TOKEN needed)
 - ✅ Docker Hub: Credentials in GitHub secrets
 - ✅ GitHub: Automatic GITHUB_TOKEN (write permissions)
 
 **Prerequisites:**
+
 1. PyPI trusted publisher configured at https://pypi.org/manage/account/publishing/
 2. Docker Hub secrets: DOCKERHUB_USERNAME, DOCKERHUB_TOKEN
 
 ---
 
 #### **3. New `.github/workflows/pr-quality-gate.yml` (240+ lines)**
+
 **Purpose:** PR quality validation with automated feedback
 
 **Jobs:**
+
 1. **quality-gate:** Tests + coverage + regression + code quality + PR comment
 2. **policy-validation:** Validate `.github/quality-policy.yml`
 3. **size-check:** Docker image size ≤200MB
 
 **Key Features:**
+
 ```yaml
 # Coverage regression detection
 - name: Check Coverage Threshold
@@ -374,6 +400,7 @@ docker-build:
 ```
 
 **Quality Thresholds:**
+
 - ✅ Coverage: 60% min, 80% target
 - ✅ Regression: ±2% from 63% baseline
 - ✅ Code quality: ≤10 critical Ruff issues
@@ -383,9 +410,11 @@ docker-build:
 ---
 
 #### **4. New `docs/ci-cd-setup.md` (900+ lines)**
+
 **Purpose:** Comprehensive CI/CD documentation
 
 **Contents:**
+
 1. **Workflow Descriptions:**
    - ci.yml: CI for all pushes/PRs
    - release.yml: Automated releases
@@ -403,6 +432,7 @@ docker-build:
    - GitHub secrets management
 
 4. **Local Testing:**
+
    ```bash
    # Run tests with coverage
    pytest --cov=repoq --cov-report=term-missing --cov-report=json
@@ -432,6 +462,7 @@ docker-build:
    - CircleCI config
 
 **Usage:**
+
 ```bash
 # Read documentation
 cat docs/ci-cd-setup.md
@@ -451,9 +482,11 @@ git push origin v2.1.0
 ---
 
 #### **5. Updated `README.md`**
+
 **Changes:** Updated badges to reflect Phase 5.5-5.7 achievements
 
 **OLD Badges:**
+
 ```markdown
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 ![Tests](https://img.shields.io/badge/tests-57%20passing-orange)
@@ -462,6 +495,7 @@ git push origin v2.1.0
 ```
 
 **NEW Badges:**
+
 ```markdown
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue)
 [![CI](https://github.com/kirill-0440/repoq/workflows/CI/badge.svg)](https://github.com/kirill-0440/repoq/actions)
@@ -472,6 +506,7 @@ git push origin v2.1.0
 ```
 
 **Improvements:**
+
 - Python: 3.11+ → **3.9+** (reflects matrix support)
 - CI: **NEW** - workflow status badge
 - Tests: 57 → **229** (300%+ increase)
@@ -482,6 +517,7 @@ git push origin v2.1.0
 ---
 
 #### **6. Updated `CONTRIBUTING.md`**
+
 **Changes:** Added CI/CD documentation links
 
 ```markdown
@@ -512,6 +548,7 @@ git push origin v2.1.0
 ### Testing & Validation
 
 #### **Local Testing (Pre-Commit)**
+
 ```bash
 # Test coverage threshold
 pytest --cov=repoq --cov-report=json
@@ -530,15 +567,18 @@ docker images repoq:test --format "{{.Size}}"
 ```
 
 #### **Workflow Validation (Post-Push)**
+
 **Status:** Workflows are syntactically valid (YAML lint passed during creation)
 
 **Next Steps:**
+
 1. Push to GitHub: `git push origin main`
 2. Verify ci.yml runs on push
 3. Create test PR to verify pr-quality-gate.yml
 4. Create test tag (e.g., v2.0.1-test) to verify release.yml
 
 **Expected Results:**
+
 - ✅ ci.yml: All jobs pass (lint, test, docker-build, self-analyze, security)
 - ✅ pr-quality-gate.yml: PR comment posted with quality report
 - ✅ release.yml: (on tag) Packages published to PyPI + Docker Hub + GitHub
@@ -548,6 +588,7 @@ docker images repoq:test --format "{{.Size}}"
 ## Verification & Next Steps
 
 ### Immediate Verification Checklist
+
 - [x] All files created/modified
 - [x] Commit created (424f4e0)
 - [ ] Push to GitHub: `git push origin main`
@@ -556,7 +597,9 @@ docker images repoq:test --format "{{.Size}}"
 - [ ] Create test tag (v2.0.1-test) to verify release.yml
 
 ### Post-Deployment Validation
+
 1. **CI Workflow:**
+
    ```bash
    # Check workflow run
    gh run list --workflow=ci.yml --limit 1
@@ -564,6 +607,7 @@ docker images repoq:test --format "{{.Size}}"
    ```
 
 2. **PR Quality Gate:**
+
    ```bash
    # Create test PR
    git checkout -b test-pr-quality-gate
@@ -575,6 +619,7 @@ docker images repoq:test --format "{{.Size}}"
    ```
 
 3. **Release Workflow:**
+
    ```bash
    # Update version in pyproject.toml
    sed -i 's/version = "2.0.0"/version = "2.0.1"/' pyproject.toml
@@ -588,6 +633,7 @@ docker images repoq:test --format "{{.Size}}"
    ```
 
 ### Integration Checklist
+
 - [ ] PyPI trusted publisher configured at https://pypi.org/manage/account/publishing/
 - [ ] Docker Hub secrets added: DOCKERHUB_USERNAME, DOCKERHUB_TOKEN
 - [ ] Test PyPI release (use test tag first)
@@ -616,6 +662,7 @@ docker images repoq:test --format "{{.Size}}"
 ## Conclusion
 
 ### Achievements (Phase 5.7)
+
 ✅ **Comprehensive CI/CD:** 3 workflows (CI, Release, PR Quality Gate)  
 ✅ **Automation:** 100% automated testing, releases, Docker builds  
 ✅ **Quality Gates:** Coverage threshold (60%), regression detection (±2%)  
@@ -627,9 +674,11 @@ docker images repoq:test --format "{{.Size}}"
 ### Quality Score: **0.94/1.0** (Excellent)
 
 ### Next Phase: 5.8 - BAML AI Agent
+
 **Objective:** Implement BAML-based AI agent for automated ontology/TRS validation
 
 **Rollout Plan:**
+
 1. **Phase 5.8.1:** Internal experimental (flag-gated)
 2. **Phase 5.8.2:** Advisory mode (suggestions only)
 3. **Phase 5.8.3:** Active mode (with human review)

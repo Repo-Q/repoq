@@ -36,7 +36,7 @@ import threading
 from collections import OrderedDict
 from dataclasses import asdict, dataclass
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Callable, Dict, Optional
 
 from .. import __version__
 
@@ -202,7 +202,7 @@ class MetricCache:
         file_path: str,
         file_content: bytes,
         policy_version: str,
-        compute_fn: callable,
+        compute_fn: Callable[[], Dict[str, Any]],
         timestamp: str,
         repoq_version: str | None = None,
     ) -> Dict[str, Any]:
