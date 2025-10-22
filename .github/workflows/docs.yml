@@ -1,0 +1,106 @@
+name: Documentation
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+      - '.github/workflows/docs.yml'
+      - 'repoq/**/*.py'  # Re-build API docs when code changes
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'mkdocs.yml'
+  workflow_dispatch:  # Allow manual trigger
+
+permissions:
+  contents: write  # For gh-pages deployment
+
+jobs:
+  build:
+    name: Build Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for git info
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.11"
+          enable-cache: true
+      
+      - name: Install dependencies
+        run: |
+          uv sync --frozen --all-extras
+      
+      - name: Configure Git for mike
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Build documentation (PR)
+        if: github.event_name == 'pull_request'
+        run: |
+          uv run mkdocs build --strict
+      
+      - name: Deploy documentation (main)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          # Deploy with mike for versioning
+          uv run mike deploy --push --update-aliases latest stable
+          uv run mike set-default --push stable
+      
+      - name: Upload artifact (PR preview)
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-preview
+          path: site/
+          retention-days: 7
+  
+  link-check:
+    name: Check Links
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "0.5.11"
+          enable-cache: true
+      
+      - name: Install dependencies
+        run: |
+          uv sync --frozen --all-extras
+      
+      - name: Build documentation
+        run: |
+          uv run mkdocs build --strict
+      
+      - name: Check links
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --base site --verbose --no-progress 'site/**/*.html'
+          fail: true

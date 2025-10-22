@@ -53,7 +53,8 @@ docs = [
   "mkdocs-autorefs>=0.5",
   "mkdocs-mermaid2-plugin>=1.1",
   "mkdocstrings[python]>=0.24",
-  "pymdown-extensions>=10.4"
+  "pymdown-extensions>=10.4",
+  "mike>=2.0"  # Documentation versioning
 ]
 
 [project.scripts]
@@ -78,7 +79,8 @@ docs = [
   "mkdocs-autorefs>=0.5",
   "mkdocs-mermaid2-plugin>=1.1",
   "mkdocstrings[python]>=0.24",
-  "pymdown-extensions>=10.4"
+  "pymdown-extensions>=10.4",
+  "mike>=2.0"  # Documentation versioning
 ]
 
 [tool.setuptools]

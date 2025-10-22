@@ -1,10 +1,10 @@
 site_name: RepoQ - Semantic Meta-Quality Loop
 site_description: Revolutionary repository quality analysis with ontological intelligence
 site_author: RepoQ Contributors
-site_url: https://kirill-0440.github.io/repoq
+site_url: https://repo-q.github.io/repoq
 
-repo_name: kirill-0440/repoq
-repo_url: https://github.com/kirill-0440/repoq
+repo_name: Repo-Q/repoq
+repo_url: https://github.com/Repo-Q/repoq
 edit_uri: edit/main/docs/
 
 copyright: Copyright &copy; 2025 RepoQ Contributors
@@ -51,7 +51,7 @@ theme:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/kirill-0440/repoq
+      link: https://github.com/Repo-Q/repoq
     - icon: fontawesome/brands/python
       link: https://pypi.org/project/repoq/
   
@@ -88,7 +88,7 @@ markdown_extensions:
   - pymdownx.keys
   - pymdownx.magiclink:
       repo_url_shorthand: true
-      user: kirill-0440
+      user: Repo-Q
       repo: repoq
   - pymdownx.mark
   - pymdownx.smartsymbols
