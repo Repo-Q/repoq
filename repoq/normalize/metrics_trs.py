@@ -216,34 +216,43 @@ class AggregationFunction(MetricTerm):
     def sort_key(self) -> Tuple[int, str]:
         return (4, f"{self.function_name}:{len(self.arguments)}")
 
+    def _apply_weights(self, values: list[float]) -> list[float]:
+        """Apply weights to evaluated values if weights are present.
+
+        Args:
+            values: List of evaluated argument values
+
+        Returns:
+            Weighted values if weights exist, otherwise original values
+        """
+        if self.weights is None:
+            return values
+        return [v * w for v, w in zip(values, self.weights)]
+
     def evaluate(self, context: Dict[str, float]) -> float:
         values = [arg.evaluate(context) for arg in self.arguments]
-
-        # Apply weights if present
-        if self.weights is not None:
-            values = [v * w for v, w in zip(values, self.weights)]
+        values = self._apply_weights(values)
 
         if not values:
             return 0.0
 
-        if self.function_name == "sum":
-            return sum(values)
-        elif self.function_name == "avg":
-            return sum(values) / len(values)
-        elif self.function_name == "max":
-            return max(values)
-        elif self.function_name == "min":
-            return min(values)
-        elif self.function_name == "count":
-            return float(len([v for v in values if v != 0]))
-        elif self.function_name == "median":
-            return statistics.median(values)
-        elif self.function_name == "std":
-            return statistics.stdev(values) if len(values) > 1 else 0.0
-        elif self.function_name == "variance":
-            return statistics.variance(values) if len(values) > 1 else 0.0
-        else:
+        # Dispatch table for aggregation functions
+        # Using lambdas to defer execution until function is selected
+        dispatch = {
+            "sum": lambda v: sum(v),
+            "avg": lambda v: sum(v) / len(v),
+            "max": lambda v: max(v),
+            "min": lambda v: min(v),
+            "count": lambda v: float(len([x for x in v if x != 0])),
+            "median": lambda v: statistics.median(v),
+            "std": lambda v: statistics.stdev(v) if len(v) > 1 else 0.0,
+            "variance": lambda v: statistics.variance(v) if len(v) > 1 else 0.0,
+        }
+
+        if self.function_name not in dispatch:
             raise ValueError(f"Unknown function: {self.function_name}")
+
+        return dispatch[self.function_name](values)
 
 
 class MetricExpression:
