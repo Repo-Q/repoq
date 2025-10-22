@@ -84,12 +84,12 @@ def _merge_contexts(
         ctx_user = _load_context(context_file)
         if isinstance(ctx_user, dict) and "@context" in ctx_user:
             base_context["@context"].update(ctx_user["@context"])
-    
+
     if field33_context:
         ctx_f33 = _load_context(field33_context)
         if isinstance(ctx_f33, dict) and "@context" in ctx_f33:
             base_context["@context"].update(ctx_f33["@context"])
-    
+
     return base_context
 
 
@@ -187,7 +187,7 @@ def _serialize_file(file) -> Dict[str, Any]:
         "module": file.module,
         "hotness": file.hotness,
     }
-    
+
     # Include per-function metrics if available
     if file.functions:
         file_node["functions"] = [
@@ -203,14 +203,14 @@ def _serialize_file(file) -> Dict[str, Any]:
             }
             for func in file.functions
         ]
-    
+
     if file.checksum_algo and file.checksum_value:
         file_node["checksum"] = {
             "@type": "spdx:Checksum",
             "algorithm": f"spdx:checksumAlgorithm_{file.checksum_algo}",
             "checksumValue": file.checksum_value,
         }
-    
+
     return file_node
 
 
@@ -276,6 +276,114 @@ def _oslc_pri(pri: Optional[str]) -> Optional[str]:
     return "http://open-services.net/ns/cm#PriorityLow"
 
 
+def _serialize_issues(project: Project) -> list[Dict[str, Any]]:
+    """Serialize issues to JSON-LD OSLC Change Requests.
+
+    Args:
+        project: Project containing issues to serialize
+
+    Returns:
+        List of issue nodes as OSLC CM Change Requests
+    """
+    issues = []
+    for i in project.issues.values():
+        node = {
+            "@id": i.id,
+            "@type": (
+                ["oslc_cm:ChangeRequest", i.type, "repo:Issue"]
+                if i.type != "oslc_cm:ChangeRequest"
+                else ["oslc_cm:ChangeRequest", "repo:Issue"]
+            ),
+            "file": i.file_id,
+            "dcterms:title": i.title or i.description,
+            "description": i.description,
+            "severity": {"@id": _oslc_sev(i.severity)},
+        }
+        pri = _oslc_pri(i.priority)
+        if pri:
+            node["priority"] = {"@id": pri}
+        if i.status:
+            node["status"] = i.status
+        issues.append(node)
+    return issues
+
+
+def _serialize_dependencies_and_coupling(
+    project: Project,
+) -> tuple[list[Dict[str, Any]], list[Dict[str, Any]]]:
+    """Serialize dependency edges and coupling relationships.
+
+    Args:
+        project: Project containing dependency/coupling data
+
+    Returns:
+        Tuple of (dependencies list, coupling list)
+    """
+    dependencies = [
+        {"source": e.source, "target": e.target, "weight": e.weight, "type": e.type}
+        for e in project.dependencies
+    ]
+    coupling = [{"a": c.a, "b": c.b, "weight": c.weight} for c in project.coupling]
+    return dependencies, coupling
+
+
+def _serialize_commits_and_versions(
+    project: Project,
+) -> tuple[list[Dict[str, Any]], list[Dict[str, Any]]]:
+    """Serialize commits as PROV-O Activities and version resources.
+
+    Args:
+        project: Project containing commit/version history
+
+    Returns:
+        Tuple of (commits list, versions list)
+    """
+    commits = [
+        {
+            "@id": c.id,
+            "@type": ["prov:Activity", "repo:Commit"],
+            "dcterms:description": c.message,
+            "endedAtTime": c.ended_at,
+            "wasAssociatedWith": {"@id": c.author_id} if c.author_id else None,
+        }
+        for c in project.commits
+    ]
+    versions = [
+        {
+            "@id": v.id,
+            "@type": ["oslc_config:VersionResource"],
+            "versionId": v.version_id,
+            "branch": v.branch,
+            "committer": {"@id": v.committer} if v.committer else None,
+            "committed": v.committed,
+        }
+        for v in project.versions
+    ]
+    return commits, versions
+
+
+def _serialize_tests(project: Project) -> list[Dict[str, Any]]:
+    """Serialize test results to OSLC QM test results.
+
+    Args:
+        project: Project containing test execution results
+
+    Returns:
+        List of test result nodes
+    """
+    return [
+        {
+            "@id": tr.id,
+            "@type": ["oslc_qm:TestResult"],
+            "reportsOnTestCase": {"@id": tr.testcase},
+            "status": tr.status,
+            "time": tr.time,
+            "description": tr.message,
+        }
+        for tr in project.tests_results
+    ]
+
+
 def to_jsonld(
     project: Project,
     context_file: Optional[str] = None,
@@ -318,96 +426,36 @@ def to_jsonld(
 
     if not project.name:
         logger.warning(f"Project {project.id} has no name set")
-    
+
     # Merge contexts
     ctx_base = _load_context(DEFAULT_CONTEXT_PATH) or {"@context": {}}
     context = _merge_contexts(ctx_base, context_file, field33_context)
-    
+
     # Build base metadata
     data = _build_project_metadata(project, context)
 
-    
-    # Serialize modules
+    # Serialize core entities
     for m in project.modules.values():
         data["modules"].append(_serialize_module(m))
 
-    # Serialize files
     for f in project.files.values():
         data["files"].append(_serialize_file(f))
 
-    # Serialize contributors
     for p in project.contributors.values():
         data["contributors"].append(_serialize_contributor(p))
 
-    # Serialize issues
-    for i in project.issues.values():
-        node = {
-            "@id": i.id,
-            "@type": (
-                ["oslc_cm:ChangeRequest", i.type, "repo:Issue"]
-                if i.type != "oslc_cm:ChangeRequest"
-                else ["oslc_cm:ChangeRequest", "repo:Issue"]
-            ),
-            "file": i.file_id,
-            "dcterms:title": i.title or i.description,
-            "description": i.description,
-            "severity": {"@id": _oslc_sev(i.severity)},
-        }
-        pri = _oslc_pri(i.priority)
-        if pri:
-            node["priority"] = {"@id": pri}
-        if i.status:
-            node["status"] = i.status
-        data["issues"].append(node)
+    # Serialize issues and relationships
+    data["issues"].extend(_serialize_issues(project))
 
-    for e in project.dependencies:
-        data["dependencies"].append(
-            {"source": e.source, "target": e.target, "weight": e.weight, "type": e.type}
-        )
+    deps, coupling = _serialize_dependencies_and_coupling(project)
+    data["dependencies"].extend(deps)
+    data["coupling"].extend(coupling)
 
-    for c in project.coupling:
-        data["coupling"].append(
-            {
-                "a": c.a,
-                "b": c.b,
-                "weight": c.weight,
-            }
-        )
+    commits, versions = _serialize_commits_and_versions(project)
+    data["commits"].extend(commits)
+    data["config"].extend(versions)
 
-    for c in project.commits:
-        data["commits"].append(
-            {
-                "@id": c.id,
-                "@type": ["prov:Activity", "repo:Commit"],
-                "dcterms:description": c.message,
-                "endedAtTime": c.ended_at,
-                "wasAssociatedWith": {"@id": c.author_id} if c.author_id else None,
-            }
-        )
-
-    for v in project.versions:
-        data["config"].append(
-            {
-                "@id": v.id,
-                "@type": ["oslc_config:VersionResource"],
-                "versionId": v.version_id,
-                "branch": v.branch,
-                "committer": {"@id": v.committer} if v.committer else None,
-                "committed": v.committed,
-            }
-        )
-
-    for tr in project.tests_results:
-        data["tests"].append(
-            {
-                "@id": tr.id,
-                "@type": ["oslc_qm:TestResult"],
-                "reportsOnTestCase": {"@id": tr.testcase},
-                "status": tr.status,
-                "time": tr.time,
-                "description": tr.message,
-            }
-        )
+    data["tests"].extend(_serialize_tests(project))
 
     return data
 

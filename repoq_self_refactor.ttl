@@ -15,7 +15,7 @@
 <https://github.com/kirill-0440/repoq/meta/self-analysis> a meta:SelfAnalysis ;
     meta:analyzesSelf <https://github.com/kirill-0440/repoq> ;
     meta:maxSafeLevel "2"^^xsd:nonNegativeInteger ;
-    meta:performedAt "2025-10-22T12:15:46.118601+00:00"^^xsd:dateTime ;
+    meta:performedAt "2025-10-22T12:21:14.578774+00:00"^^xsd:dateTime ;
     meta:readOnlyMode true ;
     meta:safetyChecksPassed false ;
     meta:selfReferenceDetected true ;
@@ -37,7 +37,7 @@
 
 <https://github.com/kirill-0440/repoq/meta/self_analysis> a meta:SelfAnalysis ;
     meta:analyzedProject <https://github.com/kirill-0440/repoq> ;
-    meta:performedAt "2025-10-22T12:15:46.095082+00:00"^^xsd:dateTime ;
+    meta:performedAt "2025-10-22T12:21:14.545089+00:00"^^xsd:dateTime ;
     meta:readOnlyMode true ;
     meta:safetyChecksPassed true ;
     meta:stratificationLevel "0"^^xsd:nonNegativeInteger .
@@ -166,11 +166,10 @@
         schema:SoftwareSourceCode,
         codemeta:SoftwareSourceCode,
         okn_sd:Software ;
-    dcterms:modified "2025-10-22T14:15:19+02:00" ;
-    prov:generatedAtTime "2025-10-22T12:15:45.383759+00:00" ;
+    dcterms:modified "2025-10-22T14:19:09+02:00" ;
+    prov:generatedAtTime "2025-10-22T12:21:13.847169+00:00" ;
     prov:wasGeneratedBy "2.0.0" ;
     schema:codeRepository "https://github.com/kirill-0440/repoq" ;
     schema:description "Repository Quality Analysis with Semantic Web Export" ;
     schema:name "RepoQ" ;
     schema:programmingLanguage "Python" .
-
