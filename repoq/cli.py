@@ -362,6 +362,87 @@ def full(
     )
 
 
+@app.command(name="analyze")
+def analyze(
+    repo: str = typer.Argument(".", help="Path to local repository or URL (default: current directory)"),
+    output: str = typer.Option("quality.jsonld", "-o", "--output", help="JSON-LD output path"),
+    md: str = typer.Option("quality.md", "--md", help="Generate Markdown report"),
+    since: str = typer.Option(None, "--since", help="Time range (e.g., '1 year ago', '2023-01-01')"),
+    include_ext: str = typer.Option(None, "--extensions", help="Comma-separated extensions: py,js,java"),
+    exclude: str = typer.Option(None, "--exclude", help="Glob patterns to exclude (comma-separated)"),
+    max_files: int = typer.Option(None, "--max-files", help="Limit number of files to analyze"),
+    graphs: str = typer.Option(None, "--graphs", help="Directory for DOT/SVG graphs"),
+    ttl: str = typer.Option(None, "--ttl", help="Export RDF Turtle to file"),
+    validate_shapes_flag: bool = typer.Option(False, "--validate-shapes", help="Validate SHACL/ResourceShapes"),
+    shapes_dir: str = typer.Option(None, "--shapes-dir", help="Custom shapes directory"),
+    context_file: str = typer.Option(None, "--context-file", help="Additional JSON-LD context"),
+    field33_context: str = typer.Option(None, "--field33-context", help="Field33 context extension"),
+    fail_on_issues: str = typer.Option(None, "--fail-on-issues", help="Exit with error on issues: low|medium|high"),
+    hash_algo: str = typer.Option(None, "--hash", help="File checksum algorithm: sha1|sha256"),
+):
+    """Analyze repository quality (comprehensive analysis).
+
+    This is the main command for analyzing a repository. It performs a complete
+    analysis including structure, complexity, history, and hotspots.
+
+    This command is an alias for 'full' with a more intuitive name.
+
+    Args:
+        repo: Local path or Git URL to analyze (default: current directory)
+        output: JSON-LD output file path (default: quality.jsonld)
+        md: Markdown report path (default: quality.md)
+        since: Time range for history (e.g., "1 year ago", "2023-01-01")
+        include_ext: Comma-separated file extensions to include
+        exclude: Comma-separated glob patterns to exclude
+        max_files: Limit maximum files to analyze
+        graphs: Directory to save DOT/SVG dependency graphs
+        ttl: Export RDF Turtle to file
+        validate_shapes_flag: Validate output against SHACL/ResourceShapes
+        shapes_dir: Custom shapes directory (defaults to built-in)
+        context_file: Additional JSON-LD context file
+        field33_context: Field33-specific context extension
+        fail_on_issues: Exit with error if issues found at severity level
+        hash_algo: File checksum algorithm (sha1 or sha256)
+
+    Examples:
+        # Analyze current directory
+        $ repoq analyze
+
+        # Analyze specific repository
+        $ repoq analyze ./my-repo
+
+        # Analyze with custom output
+        $ repoq analyze . --output results.jsonld --md report.md
+
+        # Analyze remote repository
+        $ repoq analyze https://github.com/user/repo.git
+
+        # Analyze with filters
+        $ repoq analyze . --extensions py,js --exclude "tests/**,docs/**"
+
+        # Analyze with quality gate
+        $ repoq analyze . --fail-on-issues high
+    """
+    _run_command(
+        repo,
+        mode="full",
+        output=output,
+        md=md,
+        since=since,
+        include_ext=include_ext,
+        exclude=exclude,
+        max_files=max_files,
+        graphs=graphs,
+        ttl=ttl,
+        validate_shapes_flag=validate_shapes_flag,
+        shapes_dir=shapes_dir,
+        context_file=context_file,
+        field33_context=field33_context,
+        fail_on_issues=fail_on_issues,
+        hash_algo=hash_algo,
+    )
+
+
 @app.command()
 def diff(
     old: str = typer.Argument(...),
