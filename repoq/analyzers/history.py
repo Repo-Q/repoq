@@ -15,7 +15,7 @@ from __future__ import annotations
 import logging
 import subprocess
 from collections import defaultdict
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
 
 from ..core.model import (
     Commit,
@@ -86,8 +86,147 @@ class HistoryAnalyzer(Analyzer):
             logger.warning(f"PyDriller analysis failed: {e}, falling back to Git CLI")
             self._run_git(project, repo_dir, cfg)
 
+    def _process_commit_metadata(self, commit, project: Project) -> str:
+        """Process commit metadata and update project (T1.1 refactoring).
+
+        Returns:
+            Person ID for the commit author
+        """
+        # Update last commit date
+        if project.last_commit_date is None or (
+            commit.author_date and commit.author_date.isoformat() > project.last_commit_date
+        ):
+            project.last_commit_date = (
+                commit.author_date.isoformat() if commit.author_date else project.last_commit_date
+            )
+
+        # Get or create author
+        name = commit.author.name or "Unknown"
+        email = commit.author.email or ""
+        pid = f"repo:person:{hash_email(email) or name.replace(' ', '_')}"
+        person = project.contributors.get(pid)
+        if not person:
+            person = Person(
+                id=pid,
+                name=name,
+                email=email,
+                email_hash=hash_email(email),
+                foaf_mbox_sha1sum=foaf_sha1(email) if email else "",
+            )
+            project.contributors[pid] = person
+        person.commits += 1
+
+        # Add commit record
+        cid = f"repo:commit:{commit.hash}"
+        project.commits.append(
+            Commit(
+                id=cid,
+                message=commit.msg or "",
+                author_id=pid,
+                ended_at=commit.author_date.isoformat() if commit.author_date else None,
+            )
+        )
+
+        # Add version record
+        project.versions.append(
+            VersionResource(
+                id=f"repo:version:{commit.hash}",
+                version_id=commit.hash,
+                branch=getattr(commit, "branches", None) and ",".join(commit.branches) or None,
+                committer=pid,
+                committed=commit.author_date.isoformat() if commit.author_date else None,
+            )
+        )
+
+        return pid
+
+    def _process_modifications(
+        self,
+        modifications,
+        project: Project,
+        cfg,
+        author_id: str,
+        file_author_lines: Dict[str, Dict[str, int]],
+    ) -> List[str]:
+        """Process file modifications from a commit (T1.1 refactoring).
+
+        Returns:
+            List of file IDs modified in this commit
+        """
+        files_in_commit = []
+
+        for m in modifications:
+            path = m.new_path or m.old_path
+            if not path:
+                continue
+            if is_excluded(path, cfg.exclude_globs):
+                continue
+
+            fid = f"repo:file:{path}"
+            f = project.files.get(fid)
+            if not f:
+                continue
+
+            # Update file metrics
+            additions = m.added or 0
+            deletions = m.removed or 0
+            f.code_churn += additions + deletions
+            f.commits_count += 1
+            f.last_modified = (
+                m.change_date.isoformat()
+                if hasattr(m, "change_date") and m.change_date
+                else f.last_modified
+            )
+
+            # Track authorship
+            file_author_lines[fid][author_id] = file_author_lines[fid].get(author_id, 0) + max(
+                additions, 0
+            )
+            files_in_commit.append(fid)
+
+        return files_in_commit
+
+    def _update_coupling(
+        self, files_in_commit: List[str], file_coupling: Dict[Tuple[str, str], int]
+    ) -> None:
+        """Update temporal coupling for files changed together (T1.1 refactoring)."""
+        for i in range(len(files_in_commit)):
+            for j in range(i + 1, len(files_in_commit)):
+                a, b = sorted([files_in_commit[i], files_in_commit[j]])
+                file_coupling[(a, b)] += 1
+
+    def _aggregate_ownership_stats(
+        self,
+        project: Project,
+        cfg,
+        file_author_lines: Dict[str, Dict[str, int]],
+        file_coupling: Dict[Tuple[str, str], int],
+    ) -> None:
+        """Aggregate ownership and coupling statistics (T1.1 refactoring)."""
+        # Calculate ownership
+        for fid, counter in file_author_lines.items():
+            total = sum(counter.values())
+            if total <= 0:
+                continue
+
+            pid_owner, lines = max(counter.items(), key=lambda kv: kv[1])
+
+            # Assign contributions
+            f = project.files.get(fid)
+            if f:
+                f.contributors = {pid: {"linesAdded": int(val)} for pid, val in counter.items()}
+
+            # Assign ownership if threshold met
+            if total > 0 and (lines / total) >= cfg.thresholds.ownership_owner_threshold:
+                if pid_owner in project.contributors:
+                    project.contributors[pid_owner].owns.append(fid)
+
+        # Add coupling edges
+        for (a, b), w in file_coupling.items():
+            project.coupling.append(CouplingEdge(a=a, b=b, weight=w))
+
     def _run_pydriller(self, project: Project, repo_dir: str, cfg) -> None:
-        """Analyze history using PyDriller library for detailed metrics.
+        """Analyze history using PyDriller library for detailed metrics (T1.1 refactored).
 
         Args:
             project: Project model to populate
@@ -103,51 +242,10 @@ class HistoryAnalyzer(Analyzer):
         file_author_lines: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
         file_coupling: Dict[Tuple[str, str], int] = defaultdict(int)
 
+        # Traverse commits and populate data structures
         for commit in Repository(path_to_repo=repo_dir, only_no_merge=True).traverse_commits():
-            if project.last_commit_date is None or (
-                commit.author_date and commit.author_date.isoformat() > project.last_commit_date
-            ):
-                project.last_commit_date = (
-                    commit.author_date.isoformat()
-                    if commit.author_date
-                    else project.last_commit_date
-                )
-
-            name = commit.author.name or "Unknown"
-            email = commit.author.email or ""
-            pid = f"repo:person:{hash_email(email) or name.replace(' ', '_')}"
-            person = project.contributors.get(pid)
-            if not person:
-                person = Person(
-                    id=pid,
-                    name=name,
-                    email=email,
-                    email_hash=hash_email(email),
-                    foaf_mbox_sha1sum=foaf_sha1(email) if email else "",
-                )
-                project.contributors[pid] = person
-            person.commits += 1
-
-            cid = f"repo:commit:{commit.hash}"
-            project.commits.append(
-                Commit(
-                    id=cid,
-                    message=commit.msg or "",
-                    author_id=pid,
-                    ended_at=commit.author_date.isoformat() if commit.author_date else None,
-                )
-            )
-            project.versions.append(
-                VersionResource(
-                    id=f"repo:version:{commit.hash}",
-                    version_id=commit.hash,
-                    branch=getattr(commit, "branches", None) and ",".join(commit.branches) or None,
-                    committer=pid,
-                    committed=commit.author_date.isoformat() if commit.author_date else None,
-                )
-            )
-
-            files_in_commit = []
+            # Process commit metadata (dates, contributors, versions)
+            author_id = self._process_commit_metadata(commit, project)
 
             # Handle different PyDriller API versions
             try:
@@ -159,48 +257,16 @@ class HistoryAnalyzer(Analyzer):
                 self._run_git(project, repo_dir, cfg)
                 return
 
-            for m in modifications:
-                path = m.new_path or m.old_path
-                if not path:
-                    continue
-                if is_excluded(path, cfg.exclude_globs):
-                    continue
-                fid = f"repo:file:{path}"
-                f = project.files.get(fid)
-                if not f:
-                    continue
-                additions = m.added or 0
-                deletions = m.removed or 0
-                f.code_churn += additions + deletions
-                f.commits_count += 1
-                f.last_modified = (
-                    commit.author_date.isoformat() if commit.author_date else f.last_modified
-                )
+            # Process file modifications
+            files_in_commit = self._process_modifications(
+                modifications, project, cfg, author_id, file_author_lines
+            )
 
-                file_author_lines[fid][pid] = file_author_lines[fid].get(pid, 0) + max(additions, 0)
-                files_in_commit.append(fid)
+            # Update temporal coupling
+            self._update_coupling(files_in_commit, file_coupling)
 
-            for i in range(len(files_in_commit)):
-                for j in range(i + 1, len(files_in_commit)):
-                    a, b = sorted([files_in_commit[i], files_in_commit[j]])
-                    file_coupling[(a, b)] += 1
-
-        # ownership + coupling
-        for fid, counter in file_author_lines.items():
-            total = sum(counter.values())
-            if total <= 0:
-                continue
-            pid_owner, lines = max(counter.items(), key=lambda kv: kv[1])
-            # assign contributions
-            f = project.files.get(fid)
-            if f:
-                f.contributors = {pid: {"linesAdded": int(val)} for pid, val in counter.items()}
-            if total > 0 and (lines / total) >= (cfg.thresholds.ownership_owner_threshold):
-                if pid_owner in project.contributors:
-                    project.contributors[pid_owner].owns.append(fid)
-
-        for (a, b), w in file_coupling.items():
-            project.coupling.append(CouplingEdge(a=a, b=b, weight=w))
+        # Aggregate ownership and coupling statistics
+        self._aggregate_ownership_stats(project, cfg, file_author_lines, file_coupling)
 
     def _run_git(self, project: Project, repo_dir: str, cfg) -> None:
         last = _run(["git", "log", "-1", "--date=iso-strict", "--pretty=%cI"], cwd=repo_dir).strip()
