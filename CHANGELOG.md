@@ -5,6 +5,97 @@ All notable changes to RepoQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-alpha.2] - 2025-01-15
+
+### Added - Phase 1.5: Story Provenance (POC) ✅
+
+**New Ontology: `repoq/ontologies/story.ttl`**
+- Story ontology (300+ lines) with PROV-O-inspired semantics
+- Classes: `Phase`, `Artifact`, `Commit`, `Gate`
+- Properties: `satisfies`, `implements`, `verifies` (VDAD traceability)
+- Enumerations: `StatusValue`, `GateStatusValue`
+
+**New Module: `repoq/core/story.py`**
+- `generate_phase_story()`: Generate RDF graph from PhaseInfo
+- `extract_requirements()`: Parse FR-XX, V-XX, ADR-XXX from text (regex)
+- `get_git_commit_info()`: Extract git metadata (SHA, author, date, files)
+- `save_story()`: Serialize graph to Turtle (.ttl)
+
+**Generated Artifact: `.repoq/story/phase1.ttl`**
+- Phase 1 story with 152 triples
+- 4 commits (857cc79, bed0ea5, f007076, 3e9de12)
+- 5 artifacts (workspace.py, tests, docs)
+- 7 gates (soundness, confluence, termination, etc.)
+- Full traceability: FR-10, V07, Theorem A, NFR-01, ADR-008/010/013
+
+**Tests**:
+- 16 new tests for story generation (100% passing)
+- Test classes:
+  - `TestRequirementExtraction` (8 tests)
+  - `TestGitCommitInfo` (2 tests)
+  - `TestPhaseStoryGeneration` (4 tests)
+  - `TestStorySaving` (2 tests)
+
+**Scripts**:
+- `scripts/generate_phase1_story.py`: Generate Phase 1 story from metadata
+
+**Total Test Count**: 494 tests (476 existing + 18 workspace + 16 story - 16 overlaps)
+
+### Changed
+
+- `.gitignore`: Exclude `.repoq/*` but include `.repoq/story/*.ttl` (provenance tracking)
+
+### Traceability
+
+| Requirement | Implementation |
+|-------------|----------------|
+| FR-10 | Full provenance via story.ttl (commits + artifacts + requirements) |
+| V07 | Transparent development history in RDF format |
+| Theorem A | Story complements manifest.json for reproducibility |
+| ADR-013 | Story tracks incremental migration phases |
+
+### Use Cases
+
+**1. Audit Trail**:
+```sparql
+# Query: Which commits satisfy FR-10?
+SELECT ?commit ?message WHERE {
+  ?commit story:satisfies vdad:fr-10 ;
+          story:message ?message .
+}
+```
+
+**2. Impact Analysis**:
+```sparql
+# Query: Which artifacts depend on workspace.py?
+SELECT ?artifact WHERE {
+  ?artifact vdad:verifies <artifacts/repoq-core-workspace.py> .
+}
+```
+
+**3. Requirements Coverage**:
+```sparql
+# Query: Which requirements are satisfied in Phase 1?
+SELECT ?req WHERE {
+  <phases/phase1> vdad:satisfies ?req .
+}
+```
+
+### Migration Notes
+
+**POC Status**:
+- ✅ Story generation works (16/16 tests passing)
+- ✅ Phase 1 story artifact committed (152 triples)
+- ⏸️ Pipeline integration deferred to Phase 2+ (manual generation for now)
+- ⏸️ SPARQL endpoint deferred to Phase 5
+
+**Known Limitations**:
+- Manual story generation (run `python scripts/generate_phase1_story.py`)
+- No automatic story updates on commit (git hooks deferred)
+- No validation against story ontology (pyshacl integration in Phase 2)
+
+---
+
 ## [2.0.0-alpha.1] - 2025-01-15
 
 ### Added - Phase 1: Workspace Foundation ✅
