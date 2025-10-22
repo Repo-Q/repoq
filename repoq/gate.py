@@ -20,6 +20,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from .config import AnalyzeConfig
+from .core.certificate_store import CertificateStore
 from .core.model import Project
 from .quality import (
     QualityMetrics,
@@ -43,6 +44,7 @@ class GateResult:
         pcq_base: Per-Component Quality for BASE (min aggregation)
         pcq_head: Per-Component Quality for HEAD (min aggregation)
         pce_witness: PCE k-repair witness (if gate failed)
+        certificate_path: Path to W3C VC certificate (if generated)
     """
 
     passed: bool
@@ -53,6 +55,7 @@ class GateResult:
     pcq_base: float | None = None
     pcq_head: float | None = None
     pce_witness: list[dict] | None = None
+    certificate_path: Path | None = None
 
 
 def run_quality_gate(
@@ -63,6 +66,8 @@ def run_quality_gate(
     epsilon: float = 0.3,
     tau: float = 0.8,
     enable_pcq: bool = True,
+    enable_certificate: bool = True,
+    policy_version: str = "v1.0",
 ) -> GateResult:
     """Run Quality Gate comparing BASE vs HEAD.
 
@@ -150,6 +155,34 @@ def run_quality_gate(
         target_score = base_metrics.score + epsilon  # Minimal improvement target
         pce_witness = generate_pce_witness(head_project, target_score, k=8)
 
+    # 9. Generate W3C Verifiable Credential (audit trail)
+    certificate_path = None
+    if enable_certificate:
+        try:
+            cert_store = CertificateStore(cert_dir=repo_path / ".repoq" / "certificates")
+
+            # Get HEAD commit SHA
+            head_sha = _get_commit_sha(repo_path, head_ref)
+
+            # Generate and sign certificate
+            cert = cert_store.generate_certificate(
+                commit_sha=head_sha,
+                metrics=head_metrics,
+                policy_version=policy_version,
+            )
+            signed_cert = cert_store.sign_certificate(cert)
+            certificate_path = cert_store.save_certificate(signed_cert, commit_sha=head_sha)
+
+            import logging
+
+            logger = logging.getLogger(__name__)
+            logger.info(f"Generated W3C VC certificate: {certificate_path}")
+        except Exception as e:
+            import logging
+
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Failed to generate certificate: {e}")
+
     return GateResult(
         passed=passed,
         base_metrics=base_metrics,
@@ -159,6 +192,7 @@ def run_quality_gate(
         pcq_base=pcq_base,
         pcq_head=pcq_head,
         pce_witness=pce_witness,
+        certificate_path=certificate_path,
     )
 
 
@@ -216,7 +250,43 @@ def _checkout_ref(repo_path: Path, ref: str, target_path: Path) -> None:
         subprocess.CalledProcessError: If git command fails
     """
     # Use git worktree for safe parallel checkout
-    subprocess.run(
+
+
+def _get_commit_sha(repo_path: Path, ref: str) -> str:
+    """Get full commit SHA for a given Git reference.
+
+    Args:
+        repo_path: Path to Git repository
+        ref: Git reference (branch, tag, SHA, or "." for HEAD)
+
+    Returns:
+        Full commit SHA (40 hex chars)
+
+    Raises:
+        subprocess.CalledProcessError: If git command fails
+    """
+    if ref == ".":
+        ref = "HEAD"
+
+    result = subprocess.run(  # nosec B603 B607
+        ["git", "rev-parse", ref],
+        cwd=repo_path,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return result.stdout.strip()
+
+
+def _checkout_ref_impl(repo_path: Path, ref: str, target_path: Path) -> None:
+    """Implementation of checkout using git worktree.
+
+    Args:
+        repo_path: Path to source Git repository
+        ref: Git reference (branch, tag, SHA)
+        target_path: Destination path for checkout
+    """
+    subprocess.run(  # nosec B603 B607
         ["git", "worktree", "add", "--detach", str(target_path), ref],
         cwd=repo_path,
         check=True,
@@ -233,7 +303,7 @@ def _cleanup_worktree(repo_path: Path, worktree_path: Path) -> None:
         worktree_path: Path to worktree to remove
     """
     try:
-        subprocess.run(
+        subprocess.run(  # nosec B603 B607
             ["git", "worktree", "remove", "--force", str(worktree_path)],
             cwd=repo_path,
             check=True,
@@ -247,16 +317,16 @@ def _cleanup_worktree(repo_path: Path, worktree_path: Path) -> None:
 
 def _format_gate_header(passed: bool) -> list[str]:
     """Format gate report header with status.
-    
+
     Args:
         passed: True if gate passed
-    
+
     Returns:
         List of formatted header lines
     """
     status = "PASS ✓" if passed else "FAIL ✗"
     status_color = "green" if passed else "red"
-    
+
     return [
         "=" * 60,
         f"[bold {status_color}]Quality Gate: {status}[/bold {status_color}]",
@@ -267,135 +337,147 @@ def _format_gate_header(passed: bool) -> list[str]:
 
 def _format_metrics_comparison(result: GateResult) -> list[str]:
     """Format BASE and HEAD metrics comparison section.
-    
+
     Args:
         result: GateResult with base and head metrics
-    
+
     Returns:
         List of formatted comparison lines
     """
     lines = ["[bold]📊 Metrics Comparison[/bold]", ""]
-    
+
     # BASE metrics
     pcq_base_str = f", PCQ={result.pcq_base:.1f}" if result.pcq_base is not None else ""
-    lines.extend([
-        f"  BASE: Q={result.base_metrics.score:.1f} "
-        f"({result.base_metrics.grade}){pcq_base_str}",
-        f"        Complexity={result.base_metrics.complexity:.2f}, "
-        f"Hotspots={result.base_metrics.hotspots}, "
-        f"TODOs={result.base_metrics.todos}",
-        f"        Coverage={result.base_metrics.tests_coverage:.1%}",
-        "",
-    ])
-    
+    lines.extend(
+        [
+            f"  BASE: Q={result.base_metrics.score:.1f} "
+            f"({result.base_metrics.grade}){pcq_base_str}",
+            f"        Complexity={result.base_metrics.complexity:.2f}, "
+            f"Hotspots={result.base_metrics.hotspots}, "
+            f"TODOs={result.base_metrics.todos}",
+            f"        Coverage={result.base_metrics.tests_coverage:.1%}",
+            "",
+        ]
+    )
+
     # HEAD metrics
     pcq_head_str = f", PCQ={result.pcq_head:.1f}" if result.pcq_head is not None else ""
-    lines.extend([
-        f"  HEAD: Q={result.head_metrics.score:.1f} "
-        f"({result.head_metrics.grade}){pcq_head_str}",
-        f"        Complexity={result.head_metrics.complexity:.2f}, "
-        f"Hotspots={result.head_metrics.hotspots}, "
-        f"TODOs={result.head_metrics.todos}",
-        f"        Coverage={result.head_metrics.tests_coverage:.1%}",
-        "",
-    ])
-    
+    lines.extend(
+        [
+            f"  HEAD: Q={result.head_metrics.score:.1f} "
+            f"({result.head_metrics.grade}){pcq_head_str}",
+            f"        Complexity={result.head_metrics.complexity:.2f}, "
+            f"Hotspots={result.head_metrics.hotspots}, "
+            f"TODOs={result.head_metrics.todos}",
+            f"        Coverage={result.head_metrics.tests_coverage:.1%}",
+            "",
+        ]
+    )
+
     return lines
 
 
 def _format_deltas_section(result: GateResult) -> list[str]:
     """Format deltas (HEAD - BASE) section with emoji indicators.
-    
+
     Args:
         result: GateResult with computed deltas
-    
+
     Returns:
         List of formatted delta lines
     """
     lines = ["[bold]📈 Deltas (HEAD - BASE)[/bold]", ""]
-    
+
     # ΔQ
     delta_q = result.deltas["score_delta"]
     delta_q_str = f"+{delta_q:.2f}" if delta_q >= 0 else f"{delta_q:.2f}"
     delta_q_emoji = "✓" if delta_q >= 0 else "✗"
     lines.append(f"  ΔQ: {delta_q_str} points {delta_q_emoji}")
-    
+
     # ΔComplexity (lower is better)
     delta_cplx = result.deltas["complexity_delta"]
     delta_cplx_str = f"+{delta_cplx:.2f}" if delta_cplx >= 0 else f"{delta_cplx:.2f}"
     delta_cplx_emoji = "✗" if delta_cplx > 0 else "✓"
     lines.append(f"  ΔComplexity: {delta_cplx_str} {delta_cplx_emoji}")
-    
+
     # ΔHotspots (lower is better)
     delta_hotspots = result.deltas["hotspots_delta"]
     delta_hotspots_str = f"+{delta_hotspots}" if delta_hotspots >= 0 else f"{delta_hotspots}"
     delta_hotspots_emoji = "✗" if delta_hotspots > 0 else "✓"
     lines.append(f"  ΔHotspots: {delta_hotspots_str} {delta_hotspots_emoji}")
-    
+
     # ΔTODOs (lower is better)
     delta_todos = result.deltas["todos_delta"]
     delta_todos_str = f"+{delta_todos}" if delta_todos >= 0 else f"{delta_todos}"
     delta_todos_emoji = "✗" if delta_todos > 0 else "✓"
     lines.append(f"  ΔTODOs: {delta_todos_str} {delta_todos_emoji}")
-    
+
     lines.append("")
     return lines
 
 
 def _format_pcq_violations_witness(result: GateResult) -> list[str]:
     """Format PCQ details, violations, and PCE witness sections.
-    
+
     Args:
         result: GateResult with optional PCQ, violations, and witness
-    
+
     Returns:
         List of formatted lines for these sections
     """
     lines = []
-    
+
     # PCQ details (if enabled)
     if result.pcq_base is not None and result.pcq_head is not None:
         delta_pcq = result.pcq_head - result.pcq_base
         delta_pcq_str = f"+{delta_pcq:.2f}" if delta_pcq >= 0 else f"{delta_pcq:.2f}"
         delta_pcq_emoji = "✓" if delta_pcq >= 0 else "✗"
-        
-        lines.extend([
-            "[bold]🛡️  Gaming Protection (PCQ Min-Aggregation)[/bold]",
-            "",
-            f"  ΔPCQ: {delta_pcq_str} points {delta_pcq_emoji}",
-            "  PCQ enforces minimum quality across all modules",
-            "  (prevents hiding complexity in one module)",
-            "",
-        ])
-    
+
+        lines.extend(
+            [
+                "[bold]🛡️  Gaming Protection (PCQ Min-Aggregation)[/bold]",
+                "",
+                f"  ΔPCQ: {delta_pcq_str} points {delta_pcq_emoji}",
+                "  PCQ enforces minimum quality across all modules",
+                "  (prevents hiding complexity in one module)",
+                "",
+            ]
+        )
+
     # Violations
     if result.violations:
-        lines.extend([
-            "[bold red]❌ Constraint Violations[/bold red]",
-            "",
-        ])
+        lines.extend(
+            [
+                "[bold red]❌ Constraint Violations[/bold red]",
+                "",
+            ]
+        )
         for i, violation in enumerate(result.violations, 1):
             lines.append(f"  {i}. {violation}")
         lines.append("")
-    
+
     # PCE witness (if available)
     if result.pce_witness and len(result.pce_witness) > 0:
-        lines.extend([
-            "[bold yellow]💡 Constructive Feedback (PCE k-Repair Witness)[/bold yellow]",
-            "",
-            "  Top files to fix (by impact):",
-            "",
-        ])
-        
+        lines.extend(
+            [
+                "[bold yellow]💡 Constructive Feedback (PCE k-Repair Witness)[/bold yellow]",
+                "",
+                "  Top files to fix (by impact):",
+                "",
+            ]
+        )
+
         for i, action in enumerate(result.pce_witness[:5], 1):  # Show top 5
             priority_emoji = "🔴" if action["priority"] == "high" else "🟡"
-            lines.extend([
-                f"  {i}. {priority_emoji} {action['file']}",
-                f"     Action: {action['action']}",
-                f"     Expected ΔQ: +{action['delta_q']:.2f} points",
-                "",
-            ])
-    
+            lines.extend(
+                [
+                    f"  {i}. {priority_emoji} {action['file']}",
+                    f"     Action: {action['action']}",
+                    f"     Expected ΔQ: +{action['delta_q']:.2f} points",
+                    "",
+                ]
+            )
+
     return lines
 
 
@@ -419,20 +501,20 @@ def format_gate_report(result: GateResult) -> str:
         ΔQ: +2.5 points ✓
     """
     lines = []
-    
+
     # 1. Header
     lines.extend(_format_gate_header(result.passed))
-    
+
     # 2. Metrics comparison
     lines.extend(_format_metrics_comparison(result))
-    
+
     # 3. Deltas
     lines.extend(_format_deltas_section(result))
-    
+
     # 4. PCQ, violations, and witness
     lines.extend(_format_pcq_violations_witness(result))
-    
+
     # 5. Footer
     lines.append("=" * 60)
-    
+
     return "\n".join(lines)
