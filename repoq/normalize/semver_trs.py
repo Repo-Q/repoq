@@ -46,14 +46,14 @@ Confluence:
     Critical pairs resolved by canonical interval representation.
 """
 
-from dataclasses import dataclass
-from typing import List, Optional, Union, Tuple
-import re
 import hashlib
 import logging
+import re
+from dataclasses import dataclass
 from functools import total_ordering
+from typing import List, Optional, Union
 
-from .base import Term, Rule, RewriteSystem
+from .base import Term
 
 logger = logging.getLogger(__name__)
 

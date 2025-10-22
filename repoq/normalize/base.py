@@ -21,10 +21,10 @@ Classes:
     RewriteSystem: Orchestrates rules with termination checking
 """
 
+import logging
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import Any, Callable, Generic, List, Optional, TypeVar
-import logging
+from typing import Callable, Generic, List, Optional, TypeVar
 
 logger = logging.getLogger(__name__)
 

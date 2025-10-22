@@ -11,34 +11,38 @@
 # baml-cli is available with the baml package.
 
 import typing
-import typing_extensions
 from enum import Enum
 
+import typing_extensions
+from pydantic import BaseModel
 
-from pydantic import BaseModel, ConfigDict
+CheckT = typing_extensions.TypeVar("CheckT")
+CheckName = typing_extensions.TypeVar("CheckName", bound=str)
 
-
-import baml_py
-
-CheckT = typing_extensions.TypeVar('CheckT')
-CheckName = typing_extensions.TypeVar('CheckName', bound=str)
 
 class Check(BaseModel):
     name: str
     expression: str
     status: str
+
+
 class Checked(BaseModel, typing.Generic[CheckT, CheckName]):
     value: CheckT
     checks: typing.Dict[CheckName, Check]
 
+
 def get_checks(checks: typing.Dict[CheckName, Check]) -> typing.List[Check]:
     return list(checks.values())
 
+
 def all_succeeded(checks: typing.Dict[CheckName, Check]) -> bool:
     return all(check.status == "succeeded" for check in get_checks(checks))
+
+
 # #########################################################################
 # Generated enums (3)
 # #########################################################################
+
 
 class ConfluenceStatus(str, Enum):
     CONFLUENT = "CONFLUENT"
@@ -46,11 +50,13 @@ class ConfluenceStatus(str, Enum):
     UNKNOWN = "UNKNOWN"
     LOCALLY_CONFLUENT = "LOCALLY_CONFLUENT"
 
+
 class TerminationStatus(str, Enum):
     TERMINATING = "TERMINATING"
     NON_TERMINATING = "NON_TERMINATING"
     UNKNOWN = "UNKNOWN"
     POTENTIALLY_DIVERGENT = "POTENTIALLY_DIVERGENT"
+
 
 class ValidationSeverity(str, Enum):
     ERROR = "ERROR"
@@ -58,9 +64,11 @@ class ValidationSeverity(str, Enum):
     INFO = "INFO"
     SUGGESTION = "SUGGESTION"
 
+
 # #########################################################################
 # Generated classes (6)
 # #########################################################################
+
 
 class CriticalPair(BaseModel):
     left_term: str
@@ -69,11 +77,13 @@ class CriticalPair(BaseModel):
     joinable: bool
     explanation: str
 
+
 class OntologyIssue(BaseModel):
     type: str
     location: str
     description: str
     suggested_fix: typing.Optional[str] = None
+
 
 class OntologyValidationResult(BaseModel):
     ontology_uri: str
@@ -83,6 +93,7 @@ class OntologyValidationResult(BaseModel):
     suggested_improvements: typing.List[str]
     confidence: float
 
+
 class StratificationAnalysis(BaseModel):
     current_level: int
     max_safe_level: int
@@ -90,6 +101,7 @@ class StratificationAnalysis(BaseModel):
     universe_violations: typing.List[str]
     safe_to_proceed: bool
     explanation: str
+
 
 class TRSValidationResult(BaseModel):
     rule_id: str
@@ -101,11 +113,13 @@ class TRSValidationResult(BaseModel):
     suggestions: typing.List[str]
     confidence: float
 
+
 class TerminationProof(BaseModel):
     method: str
     measure: typing.Optional[str] = None
     well_founded: bool
     explanation: str
+
 
 # #########################################################################
 # Generated type aliases (0)

@@ -9,7 +9,9 @@ Tests verify mathematical properties of Q-metric computation:
 
 from __future__ import annotations
 
-from hypothesis import given, strategies as st
+from hypothesis import given
+from hypothesis import strategies as st
+
 from repoq.core.model import File, Issue, Project
 from repoq.quality import compute_quality_score
 
@@ -30,9 +32,7 @@ from repoq.quality import compute_quality_score
                 st.builds(
                     Issue,
                     id=st.text(min_size=1),
-                    type=st.sampled_from(
-                        ["repo:TodoComment", "repo:Deprecated", "repo:Warning"]
-                    ),
+                    type=st.sampled_from(["repo:TodoComment", "repo:Deprecated", "repo:Warning"]),
                     file_id=st.none(),
                     description=st.text(min_size=1),
                 ),
@@ -177,9 +177,7 @@ def test_monotonicity_hotspots(files):
         )
         for f in files
     ]
-    high_project = Project(
-        id="high", name="high", files={f.id: f for f in high_hot_files}
-    )
+    high_project = Project(id="high", name="high", files={f.id: f for f in high_hot_files})
 
     low_metrics = compute_quality_score(low_project)
     high_metrics = compute_quality_score(high_project)

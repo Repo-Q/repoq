@@ -19,31 +19,26 @@ Integration points:
 - history.py: Stable aggregation order for temporal metrics
 """
 
-import re
 import ast
-import operator
-from typing import Any, Dict, List, Set, Union, Tuple, Optional, Callable
-from dataclasses import dataclass
-from decimal import Decimal, ROUND_HALF_UP, InvalidOperation
-import math
+import re
 import statistics
+from dataclasses import dataclass
+from decimal import ROUND_HALF_UP, Decimal, InvalidOperation
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 # SymPy for symbolic mathematics
 from sympy import (
-    symbols,
-    simplify,
-    expand,
-    factor,
-    collect,
-    cancel,
     Add,
     Mul,
-    Pow,
     Number,
-    Symbol,
-    sympify,
+    Pow,
+    cancel,
+    collect,
+    expand,
+    factor,
     nsimplify,
-    S as SymPyS,  # SymPy singleton objects
+    simplify,
+    symbols,
 )
 from sympy.core.expr import Expr as SymPyExpr
 from sympy.core.function import Function as SymPyFunction
@@ -88,7 +83,7 @@ class MetricConstant(MetricTerm):
             elif abs_value < Decimal("1E-50") and abs_value != 0:
                 # Small numbers: use engineering notation to prevent precision loss
                 return f"small:{self.value.to_eng_string()}"
-            
+
             # Normal range: apply quantization safely
             normalized = self.value.quantize(Decimal("0.000001"), rounding=ROUND_HALF_UP)
             if normalized == normalized.to_integral_value():
@@ -542,23 +537,23 @@ def _is_canonical_form(metric_str: str) -> bool:
     """Check if string is already in canonical form."""
     if not metric_str:
         return True
-    
+
     # Simple numeric constants
-    if re.match(r'^-?\d+(\.\d+)?$', metric_str):
+    if re.match(r"^-?\d+(\.\d+)?$", metric_str):
         return True
-    
+
     # Variable references
-    if re.match(r'^var:\w+$', metric_str):
+    if re.match(r"^var:\w+$", metric_str):
         return True
-    
+
     # Large/small number forms
-    if metric_str.startswith(('large:', 'small:')):
+    if metric_str.startswith(("large:", "small:")):
         return True
-    
+
     # Complex expressions with operators
-    if metric_str.startswith(('+', '*', '/', 'avg', 'max', 'min', 'sum')):
+    if metric_str.startswith(("+", "*", "/", "avg", "max", "min", "sum")):
         return True
-    
+
     return False
 
 
@@ -588,11 +583,11 @@ def canonicalize_metric(
         if isinstance(metric_spec, str):
             if not metric_spec.strip():
                 return ""  # Handle empty strings
-            
+
             # IDEMPOTENCE FIX: Check if already in canonical form
             if _is_canonical_form(metric_spec):
                 return metric_spec
-            
+
             term = parse_metric_expression(metric_spec)
             expression = MetricExpression(term)
             return expression.to_canonical()
@@ -613,7 +608,7 @@ def canonicalize_metric(
         else:
             raise TypeError(f"Unsupported metric type: {type(metric_spec)}")
 
-    except Exception as e:
+    except Exception:
         # SOUNDNESS FIX: Return stable representation for invalid input
         return f"error:{str(metric_spec)[:50]}"
 

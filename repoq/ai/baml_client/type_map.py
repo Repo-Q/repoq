@@ -10,35 +10,22 @@
 # BAML files and re-generate this code using: baml-cli generate
 # baml-cli is available with the baml package.
 
-from . import types
-from . import stream_types
-
+from . import stream_types, types
 
 type_map = {
-
     "types.CriticalPair": types.CriticalPair,
     "stream_types.CriticalPair": stream_types.CriticalPair,
-
     "types.OntologyIssue": types.OntologyIssue,
     "stream_types.OntologyIssue": stream_types.OntologyIssue,
-
     "types.OntologyValidationResult": types.OntologyValidationResult,
     "stream_types.OntologyValidationResult": stream_types.OntologyValidationResult,
-
     "types.StratificationAnalysis": types.StratificationAnalysis,
     "stream_types.StratificationAnalysis": stream_types.StratificationAnalysis,
-
     "types.TRSValidationResult": types.TRSValidationResult,
     "stream_types.TRSValidationResult": stream_types.TRSValidationResult,
-
     "types.TerminationProof": types.TerminationProof,
     "stream_types.TerminationProof": stream_types.TerminationProof,
-
-
     "types.ConfluenceStatus": types.ConfluenceStatus,
-
     "types.TerminationStatus": types.TerminationStatus,
-
     "types.ValidationSeverity": types.ValidationSeverity,
-
 }

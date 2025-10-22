@@ -2,7 +2,7 @@
 # See https://pre-commit.com for more information
 
 default_language_version:
-  python: python3.11
+  python: python3.13
 
 repos:
   # Ruff - Fast Python linter and formatter
@@ -85,15 +85,6 @@ repos:
         pass_filenames: false
         always_run: true
         stages: [pre-commit]
-
-  # Validate pyproject.toml
-  - repo: https://github.com/python-poetry/poetry
-    rev: 1.8.0
-    hooks:
-      - id: poetry-check
-        args: [--lock]
-        always_run: true
-        files: ^(pyproject\.toml|uv\.lock)$
 
   # Markdown linting
   - repo: https://github.com/igorshubovych/markdownlint-cli

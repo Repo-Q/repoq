@@ -13,9 +13,9 @@ import json
 import logging
 from typing import Optional
 
+from ..normalize.rdf_trs import canonicalize_rdf
 from .jsonld import to_jsonld
 from .model import Project
-from ..normalize.rdf_trs import canonicalize_rdf
 
 logger = logging.getLogger(__name__)
 

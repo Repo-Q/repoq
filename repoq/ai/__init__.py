@@ -16,11 +16,11 @@ This module provides AI-powered validation and analysis capabilities:
 """
 
 from repoq.ai.baml_agent import (
-    BAMLAgent,
     AgentConfig,
     AgentPhase,
-    get_agent,
+    BAMLAgent,
     configure_agent,
+    get_agent,
 )
 
 __all__ = [

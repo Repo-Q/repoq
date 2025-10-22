@@ -16,13 +16,13 @@ import logging
 import os
 from collections import defaultdict
 from pathlib import Path
-from typing import Dict, List, Optional, Any
+from typing import Dict, List, Optional
 
 from ..core.deps import js_imports, python_imports
 from ..core.model import DependencyEdge, File, Module, Project
-from ..normalize.spdx_trs import normalize_spdx
-from ..normalize.semver_trs import normalize_semver
 from ..core.utils import checksum_file, guess_language, is_excluded
+from ..normalize.semver_trs import normalize_semver
+from ..normalize.spdx_trs import normalize_spdx
 from .base import Analyzer
 
 logger = logging.getLogger(__name__)

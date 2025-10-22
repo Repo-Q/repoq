@@ -11,12 +11,10 @@
 # baml-cli is available with the baml package.
 
 import typing
-import typing_extensions
-
-import baml_py
 
 from . import stream_types, types
-from .runtime import DoNotUseDirectlyCallManager, BamlCallOptions
+from .runtime import BamlCallOptions, DoNotUseDirectlyCallManager
+
 
 class LlmResponseParser:
     __options: DoNotUseDirectlyCallManager
@@ -25,36 +23,55 @@ class LlmResponseParser:
         self.__options = options
 
     def AnalyzeStratification(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> types.StratificationAnalysis:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="AnalyzeStratification", llm_response=llm_response, mode="request")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="AnalyzeStratification", llm_response=llm_response, mode="request"
+        )
         return typing.cast(types.StratificationAnalysis, result)
 
     def CheckCriticalPairs(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> typing.List["types.CriticalPair"]:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="CheckCriticalPairs", llm_response=llm_response, mode="request")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="CheckCriticalPairs", llm_response=llm_response, mode="request"
+        )
         return typing.cast(typing.List["types.CriticalPair"], result)
 
     def ReviewPullRequest(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> types.ValidationSeverity:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ReviewPullRequest", llm_response=llm_response, mode="request")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="ReviewPullRequest", llm_response=llm_response, mode="request"
+        )
         return typing.cast(types.ValidationSeverity, result)
 
     def ValidateOntology(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> types.OntologyValidationResult:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ValidateOntology", llm_response=llm_response, mode="request")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="ValidateOntology", llm_response=llm_response, mode="request"
+        )
         return typing.cast(types.OntologyValidationResult, result)
 
     def ValidateTRSRule(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> types.TRSValidationResult:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ValidateTRSRule", llm_response=llm_response, mode="request")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="ValidateTRSRule", llm_response=llm_response, mode="request"
+        )
         return typing.cast(types.TRSValidationResult, result)
 
-    
 
 class LlmStreamParser:
     __options: DoNotUseDirectlyCallManager
@@ -63,33 +80,51 @@ class LlmStreamParser:
         self.__options = options
 
     def AnalyzeStratification(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> stream_types.StratificationAnalysis:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="AnalyzeStratification", llm_response=llm_response, mode="stream")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="AnalyzeStratification", llm_response=llm_response, mode="stream"
+        )
         return typing.cast(stream_types.StratificationAnalysis, result)
 
     def CheckCriticalPairs(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> typing.List["stream_types.CriticalPair"]:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="CheckCriticalPairs", llm_response=llm_response, mode="stream")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="CheckCriticalPairs", llm_response=llm_response, mode="stream"
+        )
         return typing.cast(typing.List["stream_types.CriticalPair"], result)
 
     def ReviewPullRequest(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> types.ValidationSeverity:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ReviewPullRequest", llm_response=llm_response, mode="stream")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="ReviewPullRequest", llm_response=llm_response, mode="stream"
+        )
         return typing.cast(types.ValidationSeverity, result)
 
     def ValidateOntology(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> stream_types.OntologyValidationResult:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ValidateOntology", llm_response=llm_response, mode="stream")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="ValidateOntology", llm_response=llm_response, mode="stream"
+        )
         return typing.cast(stream_types.OntologyValidationResult, result)
 
     def ValidateTRSRule(
-        self, llm_response: str, baml_options: BamlCallOptions = {},
+        self,
+        llm_response: str,
+        baml_options: BamlCallOptions = {},
     ) -> stream_types.TRSValidationResult:
-        result = self.__options.merge_options(baml_options).parse_response(function_name="ValidateTRSRule", llm_response=llm_response, mode="stream")
+        result = self.__options.merge_options(baml_options).parse_response(
+            function_name="ValidateTRSRule", llm_response=llm_response, mode="stream"
+        )
         return typing.cast(stream_types.TRSValidationResult, result)
-
-    

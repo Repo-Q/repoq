@@ -11,7 +11,7 @@ import os
 import shutil
 import tempfile
 from pathlib import Path
-from typing import Generator, Dict, Any
+from typing import Any, Dict, Generator
 
 import pytest
 
@@ -31,7 +31,7 @@ def sample_repos_dir() -> Path:
 @pytest.fixture
 def temp_dir() -> Generator[Path, None, None]:
     """Create a temporary directory for test output.
-    
+
     Yields:
         Path to temporary directory (cleaned up after test)
     """
@@ -46,63 +46,63 @@ def temp_dir() -> Generator[Path, None, None]:
 @pytest.fixture
 def git_repo(temp_dir: Path) -> Path:
     """Create a minimal git repository for testing.
-    
+
     Returns:
         Path to git repository root
     """
     repo_dir = temp_dir / "test_repo"
     repo_dir.mkdir(parents=True, exist_ok=True)
-    
+
     # Initialize git repo
     os.system(f"cd {repo_dir} && git init -q")
     os.system(f"cd {repo_dir} && git config user.email 'test@example.com'")
     os.system(f"cd {repo_dir} && git config user.name 'Test User'")
-    
+
     # Create sample files
     (repo_dir / "README.md").write_text("# Test Repository\n")
     (repo_dir / "main.py").write_text(
         'def hello():\n    """Say hello."""\n    print("Hello, World!")\n'
     )
-    
+
     # Initial commit
     os.system(f"cd {repo_dir} && git add . && git commit -q -m 'Initial commit'")
-    
+
     return repo_dir
 
 
 @pytest.fixture
 def python_repo(git_repo: Path) -> Path:
     """Create a Python repository with realistic structure.
-    
+
     Returns:
         Path to Python project root
     """
     # Create package structure
     pkg_dir = git_repo / "mypackage"
     pkg_dir.mkdir(exist_ok=True)
-    
+
     (pkg_dir / "__init__.py").write_text('"""My Package."""\n__version__ = "1.0.0"\n')
-    
+
     (pkg_dir / "core.py").write_text("""
 \"\"\"Core module.\"\"\"
 
 class DataProcessor:
     \"\"\"Process data with various methods.\"\"\"
-    
+
     def __init__(self, name: str):
         self.name = name
-    
+
     def process(self, data: list) -> dict:
         \"\"\"Process input data.\"\"\"
         if not data:
             raise ValueError("Data cannot be empty")
         return {"name": self.name, "count": len(data)}
-    
+
     def validate(self, item: any) -> bool:
         \"\"\"Validate item.\"\"\"
         return item is not None
 """)
-    
+
     (pkg_dir / "utils.py").write_text("""
 \"\"\"Utility functions.\"\"\"
 
@@ -114,12 +114,12 @@ def format_output(data: dict) -> str:
     \"\"\"Format data as string.\"\"\"
     return str(data)
 """)
-    
+
     # Create tests
     tests_dir = git_repo / "tests"
     tests_dir.mkdir(exist_ok=True)
     (tests_dir / "__init__.py").write_text("")
-    
+
     (tests_dir / "test_core.py").write_text("""
 import pytest
 from mypackage.core import DataProcessor
@@ -133,10 +133,10 @@ def test_process_data():
     result = p.process([1, 2, 3])
     assert result["count"] == 3
 """)
-    
+
     # Commit changes
     os.system(f"cd {git_repo} && git add . && git commit -q -m 'Add package structure'")
-    
+
     return git_repo
 
 
@@ -164,7 +164,12 @@ def mock_project_data() -> Dict[str, Any]:
         "files": [
             {"path": "src/main.py", "name": "main.py", "lines": 100, "language": "Python"},
             {"path": "src/utils.py", "name": "utils.py", "lines": 50, "language": "Python"},
-            {"path": "tests/test_main.py", "name": "test_main.py", "lines": 80, "language": "Python"},
+            {
+                "path": "tests/test_main.py",
+                "name": "test_main.py",
+                "lines": 80,
+                "language": "Python",
+            },
         ],
         "analyzers": {
             "structure": {

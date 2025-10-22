@@ -14,12 +14,10 @@ Usage:
 
 from __future__ import annotations
 
-import os
 import subprocess
 import tempfile
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 from .config import AnalyzeConfig
 from .core.model import Project
@@ -29,7 +27,7 @@ from .quality import QualityMetrics, compare_metrics, compute_quality_score
 @dataclass
 class GateResult:
     """Result of Quality Gate check.
-    
+
     Attributes:
         passed: True if all hard constraints passed
         base_metrics: QualityMetrics for BASE revision
@@ -52,7 +50,7 @@ def run_quality_gate(
     strict: bool = True,
 ) -> GateResult:
     """Run Quality Gate comparing BASE vs HEAD.
-    
+
     Algorithm:
         1. Checkout BASE revision to temp directory
         2. Run analysis pipeline on BASE
@@ -60,20 +58,20 @@ def run_quality_gate(
         4. Compute Q-metrics for both
         5. Check hard constraints on HEAD
         6. Return GateResult with pass/fail status
-    
+
     Args:
         repo_path: Path to Git repository
         base_ref: Git reference for baseline (e.g., "main", "origin/main", SHA)
         head_ref: Git reference for current (default "." = working tree)
         strict: If True, fail on any constraint violation; if False, warn only
-        
+
     Returns:
         GateResult with metrics, deltas, and gate status
-        
+
     Raises:
         subprocess.CalledProcessError: If git checkout fails
         FileNotFoundError: If repository not found
-        
+
     Example:
         >>> result = run_quality_gate(Path("."), "main", ".")
         >>> if not result.passed:
@@ -102,15 +100,11 @@ def run_quality_gate(
     # 4. Check hard constraints on HEAD
     violations = []
     if not head_metrics.constraints_passed["tests_coverage_ge_80"]:
-        violations.append(
-            f"Tests coverage {head_metrics.tests_coverage:.1%} < 80% (required)"
-        )
+        violations.append(f"Tests coverage {head_metrics.tests_coverage:.1%} < 80% (required)")
     if not head_metrics.constraints_passed["todos_le_100"]:
         violations.append(f"TODOs count {head_metrics.todos} > 100 (max allowed)")
     if not head_metrics.constraints_passed["hotspots_le_20"]:
-        violations.append(
-            f"Hotspots count {head_metrics.hotspots} > 20 (max allowed)"
-        )
+        violations.append(f"Hotspots count {head_metrics.hotspots} > 20 (max allowed)")
 
     # 5. Additional delta checks (score degradation)
     if deltas["score_delta"] < -5.0:
@@ -131,11 +125,11 @@ def run_quality_gate(
 
 def _analyze_repo(repo_path: Path, ref: str) -> Project:
     """Analyze a repository at given path/ref.
-    
+
     Args:
         repo_path: Path to repository
         ref: Git reference being analyzed (for project ID)
-        
+
     Returns:
         Project with completed analysis
     """
@@ -148,14 +142,14 @@ def _analyze_repo(repo_path: Path, ref: str) -> Project:
 
     # Run analysis pipeline (structure + complexity + weaknesses)
     cfg = AnalyzeConfig(mode="structure")
-    
+
     from .analyzers.ci_qm import CIQualityAnalyzer
     from .analyzers.complexity import ComplexityAnalyzer
     from .analyzers.structure import StructureAnalyzer
     from .analyzers.weakness import WeaknessAnalyzer
 
     repo_dir = str(repo_path)
-    
+
     try:
         StructureAnalyzer().run(project, repo_dir, cfg)
         ComplexityAnalyzer().run(project, repo_dir, cfg)
@@ -164,6 +158,7 @@ def _analyze_repo(repo_path: Path, ref: str) -> Project:
     except Exception as e:
         # Log error but continue with partial results
         import logging
+
         logger = logging.getLogger(__name__)
         logger.warning(f"Analysis error for {ref}: {e}")
 
@@ -172,12 +167,12 @@ def _analyze_repo(repo_path: Path, ref: str) -> Project:
 
 def _checkout_ref(repo_path: Path, ref: str, target_path: Path) -> None:
     """Checkout a Git reference to target directory using worktree.
-    
+
     Args:
         repo_path: Path to source Git repository
         ref: Git reference (branch, tag, SHA)
         target_path: Destination path for checkout
-        
+
     Raises:
         subprocess.CalledProcessError: If git command fails
     """
@@ -193,7 +188,7 @@ def _checkout_ref(repo_path: Path, ref: str, target_path: Path) -> None:
 
 def _cleanup_worktree(repo_path: Path, worktree_path: Path) -> None:
     """Clean up git worktree.
-    
+
     Args:
         repo_path: Path to source Git repository
         worktree_path: Path to worktree to remove
@@ -213,13 +208,13 @@ def _cleanup_worktree(repo_path: Path, worktree_path: Path) -> None:
 
 def format_gate_report(result: GateResult) -> str:
     """Format GateResult as human-readable report.
-    
+
     Args:
         result: GateResult from run_quality_gate
-        
+
     Returns:
         Multi-line formatted report string
-        
+
     Example:
         >>> report = format_gate_report(result)
         >>> print(report)

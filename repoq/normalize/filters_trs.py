@@ -18,18 +18,18 @@ Integration points:
 - hotspots.py: Normalized scoring predicates
 """
 
-import re
 import fnmatch
-import itertools
-from typing import Any, Dict, List, Set, Union, Tuple, Optional
+import re
 from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Tuple, Union
+
+import tree_sitter_python as tspython
 
 # Advanced dependencies for formal logic and parsing
-from sympy import symbols, to_dnf, to_cnf, And, Or, Not as SymNot, simplify
-from sympy.logic.boolalg import BooleanFunction, BooleanAtom
-import sympy.logic.boolalg as sympy_logic
+from sympy import And, Or, simplify, symbols, to_cnf, to_dnf
+from sympy import Not as SymNot
+from sympy.logic.boolalg import BooleanFunction
 from tree_sitter import Language, Parser
-import tree_sitter_python as tspython
 
 
 @dataclass(frozen=True)
@@ -306,10 +306,10 @@ def simplify_glob_patterns(patterns: List[str]) -> List[str]:
 
     # Further optimization: merge adjacent patterns
     simplified = _merge_adjacent_patterns(simplified)
-    
+
     # Re-normalize after merging (ensures **/** -> ** and similar)
     simplified = [GlobPattern(p).pattern for p in simplified]
-    
+
     # Final redundancy removal (after merging may create new subsumptions)
     final = []
     for i, pattern1 in enumerate(simplified):
@@ -356,17 +356,18 @@ def _glob_to_regex(pattern: str) -> str:
     # First handle character classes [abc] before escaping
     # Replace [...] with a placeholder to protect them
     import uuid
+
     placeholders = {}
-    
+
     def replace_char_class(match):
         placeholder = f"__PLACEHOLDER_{uuid.uuid4().hex}__"
         char_class = match.group(0)
         placeholders[placeholder] = char_class
         return placeholder
-    
+
     # Protect character classes
-    pattern_protected = re.sub(r'\[([^\]]+)\]', replace_char_class, pattern)
-    
+    pattern_protected = re.sub(r"\[([^\]]+)\]", replace_char_class, pattern)
+
     # Escape special regex characters except glob wildcards
     escaped = re.escape(pattern_protected)
 
@@ -390,15 +391,15 @@ def _regex_subsumes(general_regex: str, specific_regex: str) -> bool:
     # Remove anchors for easier analysis
     general_clean = general_regex.strip("^$")
     specific_clean = specific_regex.strip("^$")
-    
+
     # Special case: .* (from **) subsumes everything
     if general_clean == ".*":
         return True
-    
+
     # Pattern prefix matching: src/.* should subsume src/module/[^/]*\.py
     if general_clean.endswith(".*") and specific_clean.startswith(general_clean[:-2]):
         return True
-    
+
     # Simple heuristics for common cases
     general_wildcards = general_regex.count(".*") + general_regex.count("[^/]*")
     specific_wildcards = specific_regex.count(".*") + specific_regex.count("[^/]*")
@@ -692,7 +693,9 @@ def canonicalize_filter(filter_spec: Union[str, Dict[str, Any], FilterExpression
 
         # CONFLUENCE FIX: Skip advanced parsing for simple glob patterns
         # Simple glob patterns should go directly to GlobPattern for consistency
-        if re.match(r'^[*?[\].\w/\\-]+$', filter_spec) and ('*' in filter_spec or '?' in filter_spec):
+        if re.match(r"^[*?[\].\w/\\-]+$", filter_spec) and (
+            "*" in filter_spec or "?" in filter_spec
+        ):
             return f"glob:{filter_spec}"
 
         # Try advanced parsing for complex expressions only
@@ -705,7 +708,7 @@ def canonicalize_filter(filter_spec: Union[str, Dict[str, Any], FilterExpression
             pass
 
         # Fallback: treat as glob pattern - ensure confluence
-        # Remove any function wrapper that might have been added  
+        # Remove any function wrapper that might have been added
         if filter_spec.startswith("glob_pattern('") and filter_spec.endswith("')"):
             # Extract pattern from function call: glob_pattern('*.py') -> *.py
             pattern = filter_spec[14:-2]  # Remove glob_pattern('...')

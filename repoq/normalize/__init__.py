@@ -29,31 +29,31 @@ Example:
     'Apache-2.0 OR MIT'  # Canonical order
 """
 
-from .base import Term, Rule, RewriteSystem
-from .spdx_trs import normalize_spdx, SPDXTerm
-from .semver_trs import normalize_semver, SemVerTerm
-from .rdf_trs import canonicalize_rdf, RDFTerm
+from .base import RewriteSystem, Rule, Term
 from .filters_trs import (
+    FileProperty,
+    FilterExpression,
+    GlobPattern,
+    LogicalFilter,
     canonicalize_filter,
     canonicalize_filter_advanced,
     check_filter_equivalence,
     simplify_glob_patterns,
-    FilterExpression,
-    GlobPattern,
-    FileProperty,
-    LogicalFilter,
 )
 from .metrics_trs import (
-    canonicalize_metric,
-    optimize_metric_expression,
-    normalize_weights,
-    MetricExpression,
-    MetricConstant,
-    MetricVariable,
-    ArithmeticOperation,
     AggregationFunction,
+    ArithmeticOperation,
+    MetricConstant,
+    MetricExpression,
+    MetricVariable,
+    canonicalize_metric,
+    normalize_weights,
+    optimize_metric_expression,
     parse_metric_expression,
 )
+from .rdf_trs import RDFTerm, canonicalize_rdf
+from .semver_trs import SemVerTerm, normalize_semver
+from .spdx_trs import SPDXTerm, normalize_spdx
 
 __all__ = [
     # Base classes

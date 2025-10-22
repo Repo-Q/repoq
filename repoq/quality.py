@@ -17,15 +17,15 @@ Hard constraints (fail-fast):
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Dict, List, Optional
+from typing import Dict
 
-from .core.model import File, Project
+from .core.model import Project
 
 
 @dataclass
 class QualityMetrics:
     """Aggregated quality metrics for a project revision.
-    
+
     Attributes:
         score: Overall quality score Q ∈ [0, 100]
         complexity: Normalized complexity score ∈ [0, 5]
@@ -56,20 +56,20 @@ class QualityMetrics:
 
 def compute_quality_score(project: Project) -> QualityMetrics:
     """Compute Q-metric for a project.
-    
+
     Algorithm:
         1. Normalize complexity: avg(file.complexity) / max(file.complexity) * 5
         2. Count hotspots: files with hotness > 0.66
         3. Count TODOs: sum(file.issues with type TodoComment)
         4. Compute Q = 100 - 20×complexity - 30×(hotspots/20) - 10×(todos/10)
         5. Check hard constraints
-    
+
     Args:
         project: Project model with files and analysis results
-        
+
     Returns:
         QualityMetrics with score, components, and constraint status
-        
+
     Example:
         >>> from repoq.core.model import Project, File
         >>> p = Project(id="test", files={"f1": File(...)})
@@ -105,10 +105,7 @@ def compute_quality_score(project: Project) -> QualityMetrics:
 
     # 3. Count TODOs
     todos_count = sum(
-        1
-        for f in files
-        for issue in getattr(f, "issues", [])
-        if "todo" in issue.type.lower()
+        1 for f in files for issue in getattr(f, "issues", []) if "todo" in issue.type.lower()
     )
 
     # 4. Tests coverage (heuristic: test_files / total_files)
@@ -151,10 +148,10 @@ def compute_quality_score(project: Project) -> QualityMetrics:
 
 def _compute_grade(score: float) -> str:
     """Map score to letter grade.
-    
+
     Args:
         score: Quality score ∈ [0, 100]
-        
+
     Returns:
         Letter grade A-F
     """
@@ -174,15 +171,15 @@ def _compute_grade(score: float) -> str:
 
 def compare_metrics(base: QualityMetrics, head: QualityMetrics) -> Dict[str, float]:
     """Compare two QualityMetrics (BASE vs HEAD).
-    
+
     Args:
         base: Baseline metrics (e.g., from main branch)
         head: Current metrics (e.g., from PR branch)
-        
+
     Returns:
         Dict with deltas: {"score_delta": ..., "complexity_delta": ..., ...}
         Positive delta = improvement (for score), negative = degradation
-        
+
     Example:
         >>> base = QualityMetrics(score=85, ...)
         >>> head = QualityMetrics(score=90, ...)

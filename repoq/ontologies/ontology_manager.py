@@ -8,31 +8,24 @@ Provides a framework for extending RepoQ with domain-specific knowledge systems.
 import importlib.util
 import json
 import logging
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Union
 from abc import ABC, abstractmethod
 from enum import Enum
+from pathlib import Path
 
 # Type imports for forward references
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, List, Optional
 
 if TYPE_CHECKING:
-    from ..core.model import Project, File, Module, DependencyEdge
+    from ..core.model import DependencyEdge, File, Module, Project
 
 logger = logging.getLogger(__name__)
 
-from abc import ABC, abstractmethod
-from typing import Dict, List, Set, Optional, Any, Union, Type
-from pathlib import Path
-import json
 import logging
 from dataclasses import dataclass
-from enum import Enum
-import importlib.util
 
 try:
     import rdflib
-    from rdflib import Graph, Namespace, RDF, RDFS, OWL
+    from rdflib import OWL, RDF, RDFS, Graph, Namespace
     from rdflib.plugins.stores.memory import Memory
 
     HAS_RDFLIB = True

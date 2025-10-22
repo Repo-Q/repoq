@@ -21,7 +21,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-from typing import Dict, Any
+from typing import Any, Dict
 
 import typer
 from rich import print
@@ -364,20 +364,34 @@ def full(
 
 @app.command(name="analyze")
 def analyze(
-    repo: str = typer.Argument(".", help="Path to local repository or URL (default: current directory)"),
+    repo: str = typer.Argument(
+        ".", help="Path to local repository or URL (default: current directory)"
+    ),
     output: str = typer.Option("quality.jsonld", "-o", "--output", help="JSON-LD output path"),
     md: str = typer.Option("quality.md", "--md", help="Generate Markdown report"),
-    since: str = typer.Option(None, "--since", help="Time range (e.g., '1 year ago', '2023-01-01')"),
-    include_ext: str = typer.Option(None, "--extensions", help="Comma-separated extensions: py,js,java"),
-    exclude: str = typer.Option(None, "--exclude", help="Glob patterns to exclude (comma-separated)"),
+    since: str = typer.Option(
+        None, "--since", help="Time range (e.g., '1 year ago', '2023-01-01')"
+    ),
+    include_ext: str = typer.Option(
+        None, "--extensions", help="Comma-separated extensions: py,js,java"
+    ),
+    exclude: str = typer.Option(
+        None, "--exclude", help="Glob patterns to exclude (comma-separated)"
+    ),
     max_files: int = typer.Option(None, "--max-files", help="Limit number of files to analyze"),
     graphs: str = typer.Option(None, "--graphs", help="Directory for DOT/SVG graphs"),
     ttl: str = typer.Option(None, "--ttl", help="Export RDF Turtle to file"),
-    validate_shapes_flag: bool = typer.Option(False, "--validate-shapes", help="Validate SHACL/ResourceShapes"),
+    validate_shapes_flag: bool = typer.Option(
+        False, "--validate-shapes", help="Validate SHACL/ResourceShapes"
+    ),
     shapes_dir: str = typer.Option(None, "--shapes-dir", help="Custom shapes directory"),
     context_file: str = typer.Option(None, "--context-file", help="Additional JSON-LD context"),
-    field33_context: str = typer.Option(None, "--field33-context", help="Field33 context extension"),
-    fail_on_issues: str = typer.Option(None, "--fail-on-issues", help="Exit with error on issues: low|medium|high"),
+    field33_context: str = typer.Option(
+        None, "--field33-context", help="Field33 context extension"
+    ),
+    fail_on_issues: str = typer.Option(
+        None, "--fail-on-issues", help="Exit with error on issues: low|medium|high"
+    ),
     hash_algo: str = typer.Option(None, "--hash", help="File checksum algorithm: sha1|sha256"),
 ):
     """Analyze repository quality (comprehensive analysis).
@@ -659,65 +673,58 @@ def _run_command(
 @app.command()
 def verify(
     mode: str = typer.Option(
-        "trs", "--mode", 
-        help="Verification mode: 'trs' (TRS properties), 'self' (self-application), 'all' (both)"
+        "trs",
+        "--mode",
+        help="Verification mode: 'trs' (TRS properties), 'self' (self-application), 'all' (both)",
     ),
     level: str = typer.Option(
-        "standard", "--level",
-        help="Verification level: 'basic', 'standard', 'advanced'"
+        "standard", "--level", help="Verification level: 'basic', 'standard', 'advanced'"
     ),
     output: str = typer.Option(
-        None, "-o", "--output",
-        help="Save verification results to JSON file"
+        None, "-o", "--output", help="Save verification results to JSON file"
     ),
-    quiet: bool = typer.Option(
-        False, "--quiet", "-q",
-        help="Suppress output except errors"
-    ),
-    fail_fast: bool = typer.Option(
-        True, "--fail-fast",
-        help="Stop on first verification failure"
-    )
+    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress output except errors"),
+    fail_fast: bool = typer.Option(True, "--fail-fast", help="Stop on first verification failure"),
 ):
     """
     🔍 Verify TRS mathematical properties and system soundness.
-    
+
     This command verifies the mathematical correctness of RepoQ's Term Rewriting Systems (TRS):
-    - Idempotence: f(f(x)) = f(x) 
+    - Idempotence: f(f(x)) = f(x)
     - Confluence: equivalent inputs produce identical outputs
     - Termination: all rewriting chains halt
     - Soundness: semantic meaning preserved
-    
+
     Examples:
         repoq verify --mode trs --level standard
         repoq verify --mode self --output verification.json
         repoq verify --mode all --quiet
     """
     import time
-    
+
     if not quiet:
         print("[bold blue]🔍 RepoQ TRS Verification[/bold blue]")
         print(f"Mode: {mode}, Level: {level}")
         print()
-    
+
     all_results = {}
     exit_code = 0
-    
+
     try:
         # TRS Property Verification
         if mode in ["trs", "all"]:
             if not quiet:
                 print("[bold]📋 TRS Property Verification[/bold]")
-            
+
             start_time = time.time()
             trs_results = _run_trs_verification(level, quiet, fail_fast)
             verification_time = time.time() - start_time
-            
+
             all_results["trs_verification"] = trs_results
-            
+
             if not quiet:
                 _print_trs_summary(trs_results, verification_time)
-            
+
             # Check if verification passed
             if not trs_results.get("all_passed", False):
                 exit_code = 1
@@ -725,44 +732,44 @@ def verify(
                     if not quiet:
                         print("❌ TRS verification failed, skipping self-application")
                     return exit_code
-        
+
         # Self-Application Analysis
         if mode in ["self", "all"]:
             if not quiet:
                 print("\n[bold]🔄 Self-Application Analysis[/bold]")
-            
+
             start_time = time.time()
             self_results = _run_self_application(quiet)
             self_time = time.time() - start_time
-            
+
             all_results["self_application"] = self_results
-            
+
             if not quiet:
                 _print_self_summary(self_results, self_time)
-            
+
             # Check if self-application passed
             if not self_results.get("success", False):
                 exit_code = 1
-        
+
         # Save results
         if output:
             output_path = Path(output)
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            
-            with open(output_path, 'w') as f:
+
+            with open(output_path, "w") as f:
                 json.dump(all_results, f, indent=2, default=str)
-            
+
             if not quiet:
                 print(f"\n📁 Results saved to: {output_path}")
-        
+
     except Exception as e:
         print(f"❌ Verification error: {e}")
         exit_code = 1
-    
+
     if not quiet:
         status = "✅ SUCCESS" if exit_code == 0 else "❌ FAILURE"
         print(f"\n{status}")
-    
+
     if exit_code != 0:
         raise typer.Exit(exit_code)
 
@@ -770,36 +777,25 @@ def verify(
 @app.command()
 def gate(
     repo: str = typer.Argument(
-        ".",
-        help="Path to repository to analyze (default: current directory)"
+        ".", help="Path to repository to analyze (default: current directory)"
     ),
     base: str = typer.Option(
-        "main",
-        "--base", "-b",
-        help="Baseline Git reference (branch, tag, SHA) for comparison"
+        "main", "--base", "-b", help="Baseline Git reference (branch, tag, SHA) for comparison"
     ),
     head: str = typer.Option(
-        ".",
-        "--head", "-h",
-        help="Current Git reference (default: . = working tree)"
+        ".", "--head", "-h", help="Current Git reference (default: . = working tree)"
     ),
     strict: bool = typer.Option(
         True,
         "--strict/--no-strict",
-        help="Fail on any constraint violation (strict) or warn only (no-strict)"
+        help="Fail on any constraint violation (strict) or warn only (no-strict)",
     ),
-    output: str = typer.Option(
-        None, "-o", "--output",
-        help="Save gate results to JSON file"
-    ),
-    quiet: bool = typer.Option(
-        False, "--quiet", "-q",
-        help="Suppress output except final status"
-    ),
+    output: str = typer.Option(None, "-o", "--output", help="Save gate results to JSON file"),
+    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress output except final status"),
 ):
     """
     🚦 Quality Gate: Compare BASE vs HEAD metrics.
-    
+
     This command implements the Quality Gate MVP:
     - Analyzes BASE revision (e.g., main branch)
     - Analyzes HEAD revision (current working tree)
@@ -810,24 +806,24 @@ def gate(
         • Hotspots count ≤ 20
         • Score delta ≤ -5.0
     - Returns exit code 0 (PASS) or 1 (FAIL)
-    
+
     Examples:
         repoq gate --base main --head .
         repoq gate --base origin/main --no-strict
         repoq gate . --base v1.0.0 --output gate-results.json
     """
     import time
-    
+
     repo_path = Path(repo).resolve()
-    
+
     if not repo_path.exists():
         print(f"❌ Repository not found: {repo_path}")
         raise typer.Exit(code=1)
-    
+
     if not (repo_path / ".git").exists():
         print(f"❌ Not a git repository: {repo_path}")
         raise typer.Exit(code=1)
-    
+
     if not quiet:
         print("[bold blue]🚦 RepoQ Quality Gate[/bold blue]")
         print(f"Repository: {repo_path}")
@@ -835,10 +831,10 @@ def gate(
         print(f"HEAD: {head}")
         print(f"Mode: {'strict' if strict else 'lenient'}")
         print()
-    
+
     try:
         start_time = time.time()
-        
+
         # Run quality gate
         result = run_quality_gate(
             repo_path=repo_path,
@@ -846,21 +842,21 @@ def gate(
             head_ref=head,
             strict=strict,
         )
-        
+
         gate_time = time.time() - start_time
-        
+
         # Print report
         if not quiet:
             report = format_gate_report(result)
             print(report)
             print()
             print(f"⏱️  Gate execution time: {gate_time:.2f}s")
-        
+
         # Save results if requested
         if output:
             output_path = Path(output)
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            
+
             with output_path.open("w", encoding="utf-8") as f:
                 json.dump(
                     {
@@ -888,20 +884,20 @@ def gate(
                     f,
                     indent=2,
                 )
-            
+
             if not quiet:
                 print(f"💾 Results saved to: {output}")
-        
+
         # Exit with appropriate code
         exit_code = 0 if result.passed else 1
-        
+
         if not quiet:
             status = "✅ Quality Gate PASSED" if result.passed else "❌ Quality Gate FAILED"
             print()
             print(f"[bold]{'green' if result.passed else 'red'}]{status}[/bold]")
-        
+
         raise typer.Exit(code=exit_code)
-        
+
     except subprocess.CalledProcessError as e:
         print(f"❌ Git command failed: {e.stderr if hasattr(e, 'stderr') else str(e)}")
         raise typer.Exit(code=2)
@@ -909,6 +905,7 @@ def gate(
         print(f"❌ Gate execution failed: {e}")
         if not quiet:
             import traceback
+
             traceback.print_exc()
         raise typer.Exit(code=2)
 
@@ -917,30 +914,31 @@ def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str,
     """Run TRS property verification."""
     # Import here to avoid circular dependencies
     try:
-        import pytest
         import subprocess
-        
+
+        import pytest
+
         # Run property-based tests for TRS verification
         test_files = [
             "tests/properties/test_metrics_normalization.py",
-            "tests/properties/test_filters_normalization.py", 
+            "tests/properties/test_filters_normalization.py",
             "tests/properties/test_spdx_normalization.py",
             "tests/properties/test_semver_normalization.py",
-            "tests/properties/test_rdf_normalization.py"
+            "tests/properties/test_rdf_normalization.py",
         ]
-        
+
         results = {}
         all_passed = True
-        
+
         for test_file in test_files:
             if not Path(test_file).exists():
                 continue
-                
+
             system_name = Path(test_file).stem.replace("test_", "").replace("_normalization", "")
-            
+
             if not quiet:
                 print(f"  Testing {system_name.upper()} TRS...")
-            
+
             # Run pytest for this file
             python_exe = sys.executable  # Use current Python interpreter
             cmd = [python_exe, "-m", "pytest", test_file, "-v", "--tb=short"]
@@ -948,18 +946,18 @@ def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str,
                 cmd.append("-k 'not test_advanced'")
             elif level == "advanced":
                 cmd.extend(["--hypothesis-max-examples=1000"])
-            
+
             try:
                 result = subprocess.run(cmd, capture_output=True, text=True, cwd=Path.cwd())
-                
+
                 passed = result.returncode == 0
                 results[system_name] = {
                     "passed": passed,
                     "exit_code": result.returncode,
                     "stdout": result.stdout[-500:] if result.stdout else "",  # Last 500 chars
-                    "stderr": result.stderr[-500:] if result.stderr else ""
+                    "stderr": result.stderr[-500:] if result.stderr else "",
                 }
-                
+
                 if not passed:
                     all_passed = False
                     if not quiet:
@@ -969,7 +967,7 @@ def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str,
                 else:
                     if not quiet:
                         print(f"    ✅ {system_name} passed")
-                        
+
             except Exception as e:
                 results[system_name] = {"passed": False, "error": str(e)}
                 all_passed = False
@@ -977,10 +975,10 @@ def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str,
                     print(f"    ❌ {system_name} error: {e}")
                 if fail_fast:
                     break
-        
+
         results["all_passed"] = all_passed
         return results
-        
+
     except ImportError:
         return {"error": "pytest not available", "all_passed": False}
 
@@ -990,40 +988,36 @@ def _run_self_application(quiet: bool) -> Dict[str, Any]:
     try:
         if not quiet:
             print("  Analyzing RepoQ codebase with RepoQ...")
-        
+
         # Simple self-application: verify imports and basic functionality
         from .analyzers.structure import StructureAnalyzer
         from .core.model import Project
-        
+
         # Create minimal project
-        project = Project(
-            id="repoq-self",
-            name="repoq", 
-            description="Self-application test"
-        )
-        
+        project = Project(id="repoq-self", name="repoq", description="Self-application test")
+
         # Try basic structure analysis
         analyzer = StructureAnalyzer()
         repo_dir = str(Path.cwd())
-        
+
         # Test with minimal config - just check if we can analyze a few Python files
         python_files = list(Path("repoq").glob("*.py"))[:5]  # First 5 files only
-        
+
         if python_files:
             # Basic validation - can we read and process files?
             total_files = len(python_files)
             success = total_files > 0
-            
+
             return {
                 "success": success,
                 "files_found": total_files,
                 "sample_files": [str(f) for f in python_files],
                 "import_test": True,
-                "basic_analysis": True
+                "basic_analysis": True,
             }
         else:
             return {"success": False, "error": "No Python files found"}
-        
+
     except Exception as e:
         return {"success": False, "error": str(e)}
 
@@ -1031,20 +1025,20 @@ def _run_self_application(quiet: bool) -> Dict[str, Any]:
 def _print_trs_summary(results: Dict[str, Any], verification_time: float) -> None:
     """Print TRS verification summary."""
     print(f"⏱️  Verification time: {verification_time:.2f}s")
-    
+
     all_passed = results.get("all_passed", False)
     status = "✅ PASS" if all_passed else "❌ FAIL"
     print(f"📊 Overall status: {status}")
-    
+
     for system_name, system_results in results.items():
         if system_name in ["all_passed"]:
             continue
-            
+
         if isinstance(system_results, dict):
             passed = system_results.get("passed", False)
             status = "✅" if passed else "❌"
             print(f"  {status} {system_name.upper()}")
-            
+
             if not passed and "error" in system_results:
                 print(f"    Error: {system_results['error']}")
 
@@ -1052,21 +1046,21 @@ def _print_trs_summary(results: Dict[str, Any], verification_time: float) -> Non
 def _print_self_summary(results: Dict[str, Any], self_time: float) -> None:
     """Print self-application summary."""
     print(f"⏱️  Analysis time: {self_time:.2f}s")
-    
+
     success = results.get("success", False)
     status = "✅ SUCCESS" if success else "❌ FAILURE"
     print(f"📊 Status: {status}")
-    
+
     if success:
         files = results.get("files_found", 0)
         sample_files = results.get("sample_files", [])
-        
+
         print(f"  📁 Python files found: {files}")
-        print(f"  ✅ Import test: passed")
-        print(f"  ✅ Basic analysis: passed")
+        print("  ✅ Import test: passed")
+        print("  ✅ Basic analysis: passed")
         if sample_files:
             print(f"  � Sample files: {', '.join(sample_files[:3])}")
-    
+
     if "error" in results:
         print(f"  ❌ Error: {results['error']}")
 

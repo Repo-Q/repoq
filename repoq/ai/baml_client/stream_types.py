@@ -11,20 +11,24 @@
 # baml-cli is available with the baml package.
 
 import typing
-import typing_extensions
-from pydantic import BaseModel, ConfigDict
 
-import baml_py
+import typing_extensions
+from pydantic import BaseModel
 
 from . import types
 
-StreamStateValueT = typing.TypeVar('StreamStateValueT')
+StreamStateValueT = typing.TypeVar("StreamStateValueT")
+
+
 class StreamState(BaseModel, typing.Generic[StreamStateValueT]):
     value: StreamStateValueT
     state: typing_extensions.Literal["Pending", "Incomplete", "Complete"]
+
+
 # #########################################################################
 # Generated classes (6)
 # #########################################################################
+
 
 class CriticalPair(BaseModel):
     left_term: typing.Optional[str] = None
@@ -33,11 +37,13 @@ class CriticalPair(BaseModel):
     joinable: typing.Optional[bool] = None
     explanation: typing.Optional[str] = None
 
+
 class OntologyIssue(BaseModel):
     type: typing.Optional[str] = None
     location: typing.Optional[str] = None
     description: typing.Optional[str] = None
     suggested_fix: typing.Optional[str] = None
+
 
 class OntologyValidationResult(BaseModel):
     ontology_uri: typing.Optional[str] = None
@@ -47,6 +53,7 @@ class OntologyValidationResult(BaseModel):
     suggested_improvements: typing.List[str]
     confidence: typing.Optional[float] = None
 
+
 class StratificationAnalysis(BaseModel):
     current_level: typing.Optional[int] = None
     max_safe_level: typing.Optional[int] = None
@@ -54,6 +61,7 @@ class StratificationAnalysis(BaseModel):
     universe_violations: typing.List[str]
     safe_to_proceed: typing.Optional[bool] = None
     explanation: typing.Optional[str] = None
+
 
 class TRSValidationResult(BaseModel):
     rule_id: typing.Optional[str] = None
@@ -65,11 +73,13 @@ class TRSValidationResult(BaseModel):
     suggestions: typing.List[str]
     confidence: typing.Optional[float] = None
 
+
 class TerminationProof(BaseModel):
     method: typing.Optional[str] = None
     measure: typing.Optional[str] = None
     well_founded: typing.Optional[bool] = None
     explanation: typing.Optional[str] = None
+
 
 # #########################################################################
 # Generated type aliases (0)

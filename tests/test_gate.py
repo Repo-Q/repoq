@@ -6,13 +6,9 @@ Tests the full gate workflow:
 3. Verify metrics, deltas, and constraint checking
 """
 
-import tempfile
-from pathlib import Path
-
 import pytest
 
-from repoq.core.model import File, Issue, Project
-from repoq.gate import GateResult, run_quality_gate
+from repoq.gate import GateResult
 from repoq.quality import QualityMetrics
 
 
@@ -309,4 +305,3 @@ class TestFormatGateReport:
         assert "+0.2" in report or "+0.20" in report  # complexity delta
         assert "+1" in report  # hotspots delta
         assert "+2" in report  # todos delta (appears multiple times, but at least once in deltas)
-

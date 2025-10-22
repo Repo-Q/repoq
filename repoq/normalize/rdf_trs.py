@@ -30,15 +30,14 @@ Confluence:
     Content-based blank node hashing ensures unique canonical representation.
 """
 
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Set, Tuple, Union
 import hashlib
 import json
 import logging
-import re
 from collections import OrderedDict
+from dataclasses import dataclass
+from typing import Any, Dict, List, Optional, Set, Tuple, Union
 
-from .base import Term, Rule, RewriteSystem
+from .base import Term
 
 logger = logging.getLogger(__name__)
 

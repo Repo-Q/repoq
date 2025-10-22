@@ -11,13 +11,13 @@
 # baml-cli is available with the baml package.
 
 import typing
-import typing_extensions
+
 import baml_py
 
-from . import stream_types, types, type_builder
-from .parser import LlmResponseParser, LlmStreamParser
-from .runtime import DoNotUseDirectlyCallManager, BamlCallOptions
+from . import stream_types, type_builder, types
 from .globals import DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME as __runtime__
+from .parser import LlmResponseParser, LlmStreamParser
+from .runtime import BamlCallOptions, DoNotUseDirectlyCallManager
 
 
 class BamlAsyncClient:
@@ -36,10 +36,13 @@ class BamlAsyncClient:
         self.__llm_response_parser = LlmResponseParser(options)
         self.__llm_stream_parser = LlmStreamParser(options)
 
-    def with_options(self,
+    def with_options(
+        self,
         tb: typing.Optional[type_builder.TypeBuilder] = None,
         client_registry: typing.Optional[baml_py.baml_py.ClientRegistry] = None,
-        collector: typing.Optional[typing.Union[baml_py.baml_py.Collector, typing.List[baml_py.baml_py.Collector]]] = None,
+        collector: typing.Optional[
+            typing.Union[baml_py.baml_py.Collector, typing.List[baml_py.baml_py.Collector]]
+        ] = None,
         env: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None,
         tags: typing.Optional[typing.Dict[str, str]] = None,
         on_tick: typing.Optional[typing.Callable[[str, baml_py.baml_py.FunctionLog], None]] = None,
@@ -61,100 +64,189 @@ class BamlAsyncClient:
 
     @property
     def stream(self):
-      return self.__stream_client
+        return self.__stream_client
 
     @property
     def request(self):
-      return self.__http_request
+        return self.__http_request
 
     @property
     def stream_request(self):
-      return self.__http_stream_request
+        return self.__http_stream_request
 
     @property
     def parse(self):
-      return self.__llm_response_parser
+        return self.__llm_response_parser
 
     @property
     def parse_stream(self):
-      return self.__llm_stream_parser
-    
-    async def AnalyzeStratification(self, current_code: str,meta_operations: typing.List[str],self_analysis_depth: int,
+        return self.__llm_stream_parser
+
+    async def AnalyzeStratification(
+        self,
+        current_code: str,
+        meta_operations: typing.List[str],
+        self_analysis_depth: int,
         baml_options: BamlCallOptions = {},
     ) -> types.StratificationAnalysis:
         # Check if on_tick is provided
-        if 'on_tick' in baml_options:
+        if "on_tick" in baml_options:
             # Use streaming internally when on_tick is provided
-            stream = self.stream.AnalyzeStratification(current_code=current_code,meta_operations=meta_operations,self_analysis_depth=self_analysis_depth,
-                baml_options=baml_options)
+            stream = self.stream.AnalyzeStratification(
+                current_code=current_code,
+                meta_operations=meta_operations,
+                self_analysis_depth=self_analysis_depth,
+                baml_options=baml_options,
+            )
             return await stream.get_final_response()
         else:
             # Original non-streaming code
-            result = await self.__options.merge_options(baml_options).call_function_async(function_name="AnalyzeStratification", args={
-                "current_code": current_code,"meta_operations": meta_operations,"self_analysis_depth": self_analysis_depth,
-            })
-            return typing.cast(types.StratificationAnalysis, result.cast_to(types, types, stream_types, False, __runtime__))
-    async def CheckCriticalPairs(self, rule1: str,rule2: str,overlap_analysis: str,
+            result = await self.__options.merge_options(baml_options).call_function_async(
+                function_name="AnalyzeStratification",
+                args={
+                    "current_code": current_code,
+                    "meta_operations": meta_operations,
+                    "self_analysis_depth": self_analysis_depth,
+                },
+            )
+            return typing.cast(
+                types.StratificationAnalysis,
+                result.cast_to(types, types, stream_types, False, __runtime__),
+            )
+
+    async def CheckCriticalPairs(
+        self,
+        rule1: str,
+        rule2: str,
+        overlap_analysis: str,
         baml_options: BamlCallOptions = {},
     ) -> typing.List["types.CriticalPair"]:
         # Check if on_tick is provided
-        if 'on_tick' in baml_options:
+        if "on_tick" in baml_options:
             # Use streaming internally when on_tick is provided
-            stream = self.stream.CheckCriticalPairs(rule1=rule1,rule2=rule2,overlap_analysis=overlap_analysis,
-                baml_options=baml_options)
+            stream = self.stream.CheckCriticalPairs(
+                rule1=rule1,
+                rule2=rule2,
+                overlap_analysis=overlap_analysis,
+                baml_options=baml_options,
+            )
             return await stream.get_final_response()
         else:
             # Original non-streaming code
-            result = await self.__options.merge_options(baml_options).call_function_async(function_name="CheckCriticalPairs", args={
-                "rule1": rule1,"rule2": rule2,"overlap_analysis": overlap_analysis,
-            })
-            return typing.cast(typing.List["types.CriticalPair"], result.cast_to(types, types, stream_types, False, __runtime__))
-    async def ReviewPullRequest(self, diff: str,file_paths: typing.List[str],pr_description: str,quality_policy: str,
+            result = await self.__options.merge_options(baml_options).call_function_async(
+                function_name="CheckCriticalPairs",
+                args={
+                    "rule1": rule1,
+                    "rule2": rule2,
+                    "overlap_analysis": overlap_analysis,
+                },
+            )
+            return typing.cast(
+                typing.List["types.CriticalPair"],
+                result.cast_to(types, types, stream_types, False, __runtime__),
+            )
+
+    async def ReviewPullRequest(
+        self,
+        diff: str,
+        file_paths: typing.List[str],
+        pr_description: str,
+        quality_policy: str,
         baml_options: BamlCallOptions = {},
     ) -> types.ValidationSeverity:
         # Check if on_tick is provided
-        if 'on_tick' in baml_options:
+        if "on_tick" in baml_options:
             # Use streaming internally when on_tick is provided
-            stream = self.stream.ReviewPullRequest(diff=diff,file_paths=file_paths,pr_description=pr_description,quality_policy=quality_policy,
-                baml_options=baml_options)
+            stream = self.stream.ReviewPullRequest(
+                diff=diff,
+                file_paths=file_paths,
+                pr_description=pr_description,
+                quality_policy=quality_policy,
+                baml_options=baml_options,
+            )
             return await stream.get_final_response()
         else:
             # Original non-streaming code
-            result = await self.__options.merge_options(baml_options).call_function_async(function_name="ReviewPullRequest", args={
-                "diff": diff,"file_paths": file_paths,"pr_description": pr_description,"quality_policy": quality_policy,
-            })
-            return typing.cast(types.ValidationSeverity, result.cast_to(types, types, stream_types, False, __runtime__))
-    async def ValidateOntology(self, ontology_turtle: str,ontology_context: str,shacl_shapes: typing.Optional[str] = None,
+            result = await self.__options.merge_options(baml_options).call_function_async(
+                function_name="ReviewPullRequest",
+                args={
+                    "diff": diff,
+                    "file_paths": file_paths,
+                    "pr_description": pr_description,
+                    "quality_policy": quality_policy,
+                },
+            )
+            return typing.cast(
+                types.ValidationSeverity,
+                result.cast_to(types, types, stream_types, False, __runtime__),
+            )
+
+    async def ValidateOntology(
+        self,
+        ontology_turtle: str,
+        ontology_context: str,
+        shacl_shapes: typing.Optional[str] = None,
         baml_options: BamlCallOptions = {},
     ) -> types.OntologyValidationResult:
         # Check if on_tick is provided
-        if 'on_tick' in baml_options:
+        if "on_tick" in baml_options:
             # Use streaming internally when on_tick is provided
-            stream = self.stream.ValidateOntology(ontology_turtle=ontology_turtle,ontology_context=ontology_context,shacl_shapes=shacl_shapes,
-                baml_options=baml_options)
+            stream = self.stream.ValidateOntology(
+                ontology_turtle=ontology_turtle,
+                ontology_context=ontology_context,
+                shacl_shapes=shacl_shapes,
+                baml_options=baml_options,
+            )
             return await stream.get_final_response()
         else:
             # Original non-streaming code
-            result = await self.__options.merge_options(baml_options).call_function_async(function_name="ValidateOntology", args={
-                "ontology_turtle": ontology_turtle,"ontology_context": ontology_context,"shacl_shapes": shacl_shapes,
-            })
-            return typing.cast(types.OntologyValidationResult, result.cast_to(types, types, stream_types, False, __runtime__))
-    async def ValidateTRSRule(self, rule_lhs: str,rule_rhs: str,existing_rules: typing.List[str],context: str,
+            result = await self.__options.merge_options(baml_options).call_function_async(
+                function_name="ValidateOntology",
+                args={
+                    "ontology_turtle": ontology_turtle,
+                    "ontology_context": ontology_context,
+                    "shacl_shapes": shacl_shapes,
+                },
+            )
+            return typing.cast(
+                types.OntologyValidationResult,
+                result.cast_to(types, types, stream_types, False, __runtime__),
+            )
+
+    async def ValidateTRSRule(
+        self,
+        rule_lhs: str,
+        rule_rhs: str,
+        existing_rules: typing.List[str],
+        context: str,
         baml_options: BamlCallOptions = {},
     ) -> types.TRSValidationResult:
         # Check if on_tick is provided
-        if 'on_tick' in baml_options:
+        if "on_tick" in baml_options:
             # Use streaming internally when on_tick is provided
-            stream = self.stream.ValidateTRSRule(rule_lhs=rule_lhs,rule_rhs=rule_rhs,existing_rules=existing_rules,context=context,
-                baml_options=baml_options)
+            stream = self.stream.ValidateTRSRule(
+                rule_lhs=rule_lhs,
+                rule_rhs=rule_rhs,
+                existing_rules=existing_rules,
+                context=context,
+                baml_options=baml_options,
+            )
             return await stream.get_final_response()
         else:
             # Original non-streaming code
-            result = await self.__options.merge_options(baml_options).call_function_async(function_name="ValidateTRSRule", args={
-                "rule_lhs": rule_lhs,"rule_rhs": rule_rhs,"existing_rules": existing_rules,"context": context,
-            })
-            return typing.cast(types.TRSValidationResult, result.cast_to(types, types, stream_types, False, __runtime__))
-    
+            result = await self.__options.merge_options(baml_options).call_function_async(
+                function_name="ValidateTRSRule",
+                args={
+                    "rule_lhs": rule_lhs,
+                    "rule_rhs": rule_rhs,
+                    "existing_rules": existing_rules,
+                    "context": context,
+                },
+            )
+            return typing.cast(
+                types.TRSValidationResult,
+                result.cast_to(types, types, stream_types, False, __runtime__),
+            )
 
 
 class BamlStreamClient:
@@ -163,67 +255,155 @@ class BamlStreamClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    def AnalyzeStratification(self, current_code: str,meta_operations: typing.List[str],self_analysis_depth: int,
+    def AnalyzeStratification(
+        self,
+        current_code: str,
+        meta_operations: typing.List[str],
+        self_analysis_depth: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlStream[stream_types.StratificationAnalysis, types.StratificationAnalysis]:
-        ctx, result = self.__options.merge_options(baml_options).create_async_stream(function_name="AnalyzeStratification", args={
-            "current_code": current_code,"meta_operations": meta_operations,"self_analysis_depth": self_analysis_depth,
-        })
-        return baml_py.BamlStream[stream_types.StratificationAnalysis, types.StratificationAnalysis](
-          result,
-          lambda x: typing.cast(stream_types.StratificationAnalysis, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.StratificationAnalysis, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
+        ctx, result = self.__options.merge_options(baml_options).create_async_stream(
+            function_name="AnalyzeStratification",
+            args={
+                "current_code": current_code,
+                "meta_operations": meta_operations,
+                "self_analysis_depth": self_analysis_depth,
+            },
         )
-    def CheckCriticalPairs(self, rule1: str,rule2: str,overlap_analysis: str,
+        return baml_py.BamlStream[
+            stream_types.StratificationAnalysis, types.StratificationAnalysis
+        ](
+            result,
+            lambda x: typing.cast(
+                stream_types.StratificationAnalysis,
+                x.cast_to(types, types, stream_types, True, __runtime__),
+            ),
+            lambda x: typing.cast(
+                types.StratificationAnalysis,
+                x.cast_to(types, types, stream_types, False, __runtime__),
+            ),
+            ctx,
+        )
+
+    def CheckCriticalPairs(
+        self,
+        rule1: str,
+        rule2: str,
+        overlap_analysis: str,
         baml_options: BamlCallOptions = {},
-    ) -> baml_py.BamlStream[typing.List["stream_types.CriticalPair"], typing.List["types.CriticalPair"]]:
-        ctx, result = self.__options.merge_options(baml_options).create_async_stream(function_name="CheckCriticalPairs", args={
-            "rule1": rule1,"rule2": rule2,"overlap_analysis": overlap_analysis,
-        })
-        return baml_py.BamlStream[typing.List["stream_types.CriticalPair"], typing.List["types.CriticalPair"]](
-          result,
-          lambda x: typing.cast(typing.List["stream_types.CriticalPair"], x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(typing.List["types.CriticalPair"], x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
+    ) -> baml_py.BamlStream[
+        typing.List["stream_types.CriticalPair"], typing.List["types.CriticalPair"]
+    ]:
+        ctx, result = self.__options.merge_options(baml_options).create_async_stream(
+            function_name="CheckCriticalPairs",
+            args={
+                "rule1": rule1,
+                "rule2": rule2,
+                "overlap_analysis": overlap_analysis,
+            },
         )
-    def ReviewPullRequest(self, diff: str,file_paths: typing.List[str],pr_description: str,quality_policy: str,
+        return baml_py.BamlStream[
+            typing.List["stream_types.CriticalPair"], typing.List["types.CriticalPair"]
+        ](
+            result,
+            lambda x: typing.cast(
+                typing.List["stream_types.CriticalPair"],
+                x.cast_to(types, types, stream_types, True, __runtime__),
+            ),
+            lambda x: typing.cast(
+                typing.List["types.CriticalPair"],
+                x.cast_to(types, types, stream_types, False, __runtime__),
+            ),
+            ctx,
+        )
+
+    def ReviewPullRequest(
+        self,
+        diff: str,
+        file_paths: typing.List[str],
+        pr_description: str,
+        quality_policy: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlStream[types.ValidationSeverity, types.ValidationSeverity]:
-        ctx, result = self.__options.merge_options(baml_options).create_async_stream(function_name="ReviewPullRequest", args={
-            "diff": diff,"file_paths": file_paths,"pr_description": pr_description,"quality_policy": quality_policy,
-        })
-        return baml_py.BamlStream[types.ValidationSeverity, types.ValidationSeverity](
-          result,
-          lambda x: typing.cast(types.ValidationSeverity, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.ValidationSeverity, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
+        ctx, result = self.__options.merge_options(baml_options).create_async_stream(
+            function_name="ReviewPullRequest",
+            args={
+                "diff": diff,
+                "file_paths": file_paths,
+                "pr_description": pr_description,
+                "quality_policy": quality_policy,
+            },
         )
-    def ValidateOntology(self, ontology_turtle: str,ontology_context: str,shacl_shapes: typing.Optional[str] = None,
+        return baml_py.BamlStream[types.ValidationSeverity, types.ValidationSeverity](
+            result,
+            lambda x: typing.cast(
+                types.ValidationSeverity, x.cast_to(types, types, stream_types, True, __runtime__)
+            ),
+            lambda x: typing.cast(
+                types.ValidationSeverity, x.cast_to(types, types, stream_types, False, __runtime__)
+            ),
+            ctx,
+        )
+
+    def ValidateOntology(
+        self,
+        ontology_turtle: str,
+        ontology_context: str,
+        shacl_shapes: typing.Optional[str] = None,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlStream[stream_types.OntologyValidationResult, types.OntologyValidationResult]:
-        ctx, result = self.__options.merge_options(baml_options).create_async_stream(function_name="ValidateOntology", args={
-            "ontology_turtle": ontology_turtle,"ontology_context": ontology_context,"shacl_shapes": shacl_shapes,
-        })
-        return baml_py.BamlStream[stream_types.OntologyValidationResult, types.OntologyValidationResult](
-          result,
-          lambda x: typing.cast(stream_types.OntologyValidationResult, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.OntologyValidationResult, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
+        ctx, result = self.__options.merge_options(baml_options).create_async_stream(
+            function_name="ValidateOntology",
+            args={
+                "ontology_turtle": ontology_turtle,
+                "ontology_context": ontology_context,
+                "shacl_shapes": shacl_shapes,
+            },
         )
-    def ValidateTRSRule(self, rule_lhs: str,rule_rhs: str,existing_rules: typing.List[str],context: str,
+        return baml_py.BamlStream[
+            stream_types.OntologyValidationResult, types.OntologyValidationResult
+        ](
+            result,
+            lambda x: typing.cast(
+                stream_types.OntologyValidationResult,
+                x.cast_to(types, types, stream_types, True, __runtime__),
+            ),
+            lambda x: typing.cast(
+                types.OntologyValidationResult,
+                x.cast_to(types, types, stream_types, False, __runtime__),
+            ),
+            ctx,
+        )
+
+    def ValidateTRSRule(
+        self,
+        rule_lhs: str,
+        rule_rhs: str,
+        existing_rules: typing.List[str],
+        context: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.BamlStream[stream_types.TRSValidationResult, types.TRSValidationResult]:
-        ctx, result = self.__options.merge_options(baml_options).create_async_stream(function_name="ValidateTRSRule", args={
-            "rule_lhs": rule_lhs,"rule_rhs": rule_rhs,"existing_rules": existing_rules,"context": context,
-        })
-        return baml_py.BamlStream[stream_types.TRSValidationResult, types.TRSValidationResult](
-          result,
-          lambda x: typing.cast(stream_types.TRSValidationResult, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.TRSValidationResult, x.cast_to(types, types, stream_types, False, __runtime__)),
-          ctx,
+        ctx, result = self.__options.merge_options(baml_options).create_async_stream(
+            function_name="ValidateTRSRule",
+            args={
+                "rule_lhs": rule_lhs,
+                "rule_rhs": rule_rhs,
+                "existing_rules": existing_rules,
+                "context": context,
+            },
         )
-    
+        return baml_py.BamlStream[stream_types.TRSValidationResult, types.TRSValidationResult](
+            result,
+            lambda x: typing.cast(
+                stream_types.TRSValidationResult,
+                x.cast_to(types, types, stream_types, True, __runtime__),
+            ),
+            lambda x: typing.cast(
+                types.TRSValidationResult, x.cast_to(types, types, stream_types, False, __runtime__)
+            ),
+            ctx,
+        )
+
 
 class BamlHttpRequestClient:
     __options: DoNotUseDirectlyCallManager
@@ -231,42 +411,100 @@ class BamlHttpRequestClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    async def AnalyzeStratification(self, current_code: str,meta_operations: typing.List[str],self_analysis_depth: int,
+    async def AnalyzeStratification(
+        self,
+        current_code: str,
+        meta_operations: typing.List[str],
+        self_analysis_depth: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="AnalyzeStratification", args={
-            "current_code": current_code,"meta_operations": meta_operations,"self_analysis_depth": self_analysis_depth,
-        }, mode="request")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="AnalyzeStratification",
+            args={
+                "current_code": current_code,
+                "meta_operations": meta_operations,
+                "self_analysis_depth": self_analysis_depth,
+            },
+            mode="request",
+        )
         return result
-    async def CheckCriticalPairs(self, rule1: str,rule2: str,overlap_analysis: str,
+
+    async def CheckCriticalPairs(
+        self,
+        rule1: str,
+        rule2: str,
+        overlap_analysis: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="CheckCriticalPairs", args={
-            "rule1": rule1,"rule2": rule2,"overlap_analysis": overlap_analysis,
-        }, mode="request")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="CheckCriticalPairs",
+            args={
+                "rule1": rule1,
+                "rule2": rule2,
+                "overlap_analysis": overlap_analysis,
+            },
+            mode="request",
+        )
         return result
-    async def ReviewPullRequest(self, diff: str,file_paths: typing.List[str],pr_description: str,quality_policy: str,
+
+    async def ReviewPullRequest(
+        self,
+        diff: str,
+        file_paths: typing.List[str],
+        pr_description: str,
+        quality_policy: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ReviewPullRequest", args={
-            "diff": diff,"file_paths": file_paths,"pr_description": pr_description,"quality_policy": quality_policy,
-        }, mode="request")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="ReviewPullRequest",
+            args={
+                "diff": diff,
+                "file_paths": file_paths,
+                "pr_description": pr_description,
+                "quality_policy": quality_policy,
+            },
+            mode="request",
+        )
         return result
-    async def ValidateOntology(self, ontology_turtle: str,ontology_context: str,shacl_shapes: typing.Optional[str] = None,
+
+    async def ValidateOntology(
+        self,
+        ontology_turtle: str,
+        ontology_context: str,
+        shacl_shapes: typing.Optional[str] = None,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ValidateOntology", args={
-            "ontology_turtle": ontology_turtle,"ontology_context": ontology_context,"shacl_shapes": shacl_shapes,
-        }, mode="request")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="ValidateOntology",
+            args={
+                "ontology_turtle": ontology_turtle,
+                "ontology_context": ontology_context,
+                "shacl_shapes": shacl_shapes,
+            },
+            mode="request",
+        )
         return result
-    async def ValidateTRSRule(self, rule_lhs: str,rule_rhs: str,existing_rules: typing.List[str],context: str,
+
+    async def ValidateTRSRule(
+        self,
+        rule_lhs: str,
+        rule_rhs: str,
+        existing_rules: typing.List[str],
+        context: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ValidateTRSRule", args={
-            "rule_lhs": rule_lhs,"rule_rhs": rule_rhs,"existing_rules": existing_rules,"context": context,
-        }, mode="request")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="ValidateTRSRule",
+            args={
+                "rule_lhs": rule_lhs,
+                "rule_rhs": rule_rhs,
+                "existing_rules": existing_rules,
+                "context": context,
+            },
+            mode="request",
+        )
         return result
-    
+
 
 class BamlHttpStreamRequestClient:
     __options: DoNotUseDirectlyCallManager
@@ -274,41 +512,99 @@ class BamlHttpStreamRequestClient:
     def __init__(self, options: DoNotUseDirectlyCallManager):
         self.__options = options
 
-    async def AnalyzeStratification(self, current_code: str,meta_operations: typing.List[str],self_analysis_depth: int,
+    async def AnalyzeStratification(
+        self,
+        current_code: str,
+        meta_operations: typing.List[str],
+        self_analysis_depth: int,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="AnalyzeStratification", args={
-            "current_code": current_code,"meta_operations": meta_operations,"self_analysis_depth": self_analysis_depth,
-        }, mode="stream")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="AnalyzeStratification",
+            args={
+                "current_code": current_code,
+                "meta_operations": meta_operations,
+                "self_analysis_depth": self_analysis_depth,
+            },
+            mode="stream",
+        )
         return result
-    async def CheckCriticalPairs(self, rule1: str,rule2: str,overlap_analysis: str,
+
+    async def CheckCriticalPairs(
+        self,
+        rule1: str,
+        rule2: str,
+        overlap_analysis: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="CheckCriticalPairs", args={
-            "rule1": rule1,"rule2": rule2,"overlap_analysis": overlap_analysis,
-        }, mode="stream")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="CheckCriticalPairs",
+            args={
+                "rule1": rule1,
+                "rule2": rule2,
+                "overlap_analysis": overlap_analysis,
+            },
+            mode="stream",
+        )
         return result
-    async def ReviewPullRequest(self, diff: str,file_paths: typing.List[str],pr_description: str,quality_policy: str,
+
+    async def ReviewPullRequest(
+        self,
+        diff: str,
+        file_paths: typing.List[str],
+        pr_description: str,
+        quality_policy: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ReviewPullRequest", args={
-            "diff": diff,"file_paths": file_paths,"pr_description": pr_description,"quality_policy": quality_policy,
-        }, mode="stream")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="ReviewPullRequest",
+            args={
+                "diff": diff,
+                "file_paths": file_paths,
+                "pr_description": pr_description,
+                "quality_policy": quality_policy,
+            },
+            mode="stream",
+        )
         return result
-    async def ValidateOntology(self, ontology_turtle: str,ontology_context: str,shacl_shapes: typing.Optional[str] = None,
+
+    async def ValidateOntology(
+        self,
+        ontology_turtle: str,
+        ontology_context: str,
+        shacl_shapes: typing.Optional[str] = None,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ValidateOntology", args={
-            "ontology_turtle": ontology_turtle,"ontology_context": ontology_context,"shacl_shapes": shacl_shapes,
-        }, mode="stream")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="ValidateOntology",
+            args={
+                "ontology_turtle": ontology_turtle,
+                "ontology_context": ontology_context,
+                "shacl_shapes": shacl_shapes,
+            },
+            mode="stream",
+        )
         return result
-    async def ValidateTRSRule(self, rule_lhs: str,rule_rhs: str,existing_rules: typing.List[str],context: str,
+
+    async def ValidateTRSRule(
+        self,
+        rule_lhs: str,
+        rule_rhs: str,
+        existing_rules: typing.List[str],
+        context: str,
         baml_options: BamlCallOptions = {},
     ) -> baml_py.baml_py.HTTPRequest:
-        result = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ValidateTRSRule", args={
-            "rule_lhs": rule_lhs,"rule_rhs": rule_rhs,"existing_rules": existing_rules,"context": context,
-        }, mode="stream")
+        result = await self.__options.merge_options(baml_options).create_http_request_async(
+            function_name="ValidateTRSRule",
+            args={
+                "rule_lhs": rule_lhs,
+                "rule_rhs": rule_rhs,
+                "existing_rules": existing_rules,
+                "context": context,
+            },
+            mode="stream",
+        )
         return result
-    
+
 
 b = BamlAsyncClient(DoNotUseDirectlyCallManager({}))

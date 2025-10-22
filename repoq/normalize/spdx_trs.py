@@ -37,12 +37,12 @@ Confluence:
     Critical pairs are joinable (verified by check_critical_pairs()).
 """
 
-from dataclasses import dataclass
-from typing import List, Optional, Union
 import hashlib
 import logging
+from dataclasses import dataclass
+from typing import List, Optional, Union
 
-from .base import Term, Rule, RewriteSystem
+from .base import Term
 
 logger = logging.getLogger(__name__)
 
