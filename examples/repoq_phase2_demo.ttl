@@ -1,0 +1,2889 @@
+@prefix codemeta: <https://w3id.org/codemeta#> .
+@prefix docs: <http://example.org/vocab/docs#> .
+@prefix meta: <http://example.org/vocab/meta#> .
+@prefix okn_sd: <https://w3id.org/okn/o/sd#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix schema: <https://schema.org/> .
+@prefix test: <http://example.org/vocab/test#> .
+@prefix trs: <http://example.org/vocab/trs#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+repo:repoq-demo a repo:Project,
+        prov:Entity,
+        schema:SoftwareSourceCode,
+        codemeta:SoftwareSourceCode,
+        okn_sd:Software ;
+    schema:codeRepository "https://github.com/Repo-Q/repoq" ;
+    schema:name "RepoQ Phase 2 Demo" ;
+    schema:programmingLanguage "Python" .
+
+<repo:repoq-demo/docs/coverage> a docs:Coverage ;
+    docs:coveragePercentage 100.0 .
+
+<repo:repoq-demo/meta/self-analysis> a meta:SelfAnalysis ;
+    meta:analyzedCommit "HEAD" ;
+    meta:analyzesSelf <repo:repoq-demo> ;
+    meta:maxSafeLevel "2"^^xsd:nonNegativeInteger ;
+    meta:performedAt "2025-10-22T10:50:14.094552+00:00"^^xsd:dateTime ;
+    meta:readOnlyMode true ;
+    meta:safetyChecksPassed true ;
+    meta:selfReferenceDetected true ;
+    meta:stratificationLevel "1"^^xsd:nonNegativeInteger .
+
+<repo:repoq-demo/meta/self_analysis> a meta:SelfAnalysis ;
+    meta:analyzedProject <repo:repoq-demo> ;
+    meta:performedAt "2025-10-22T10:50:13.197922+00:00"^^xsd:dateTime ;
+    meta:readOnlyMode true ;
+    meta:safetyChecksPassed true ;
+    meta:stratificationLevel "0"^^xsd:nonNegativeInteger .
+
+<repo:repoq-demo/quality/complexity_gate> a quality:ComplexityGate ;
+    quality:actualValue 13.5 ;
+    quality:gateStatus "passed" ;
+    quality:threshold 15.0 .
+
+<repo:repoq-demo/quality/recommendation_1> a quality:Recommendation ;
+    quality:deltaQ 50.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription "Issues: High cyclomatic complexity (15.0) | Recommendations: 🔴 **Critical**: Reduce cyclomatic complexity from 15.0 to <10 (split into smaller functions)" ;
+    quality:recommendationTitle "Refactor rdf_export.py" ;
+    quality:targetsFile <repo:repoq-demo/repoq/core/rdf_export.py> .
+
+<repo:repoq-demo/quality/recommendation_2> a quality:Recommendation ;
+    quality:deltaQ 35.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription "Issues: High cyclomatic complexity (12.0) | Recommendations: 🔴 **Critical**: Reduce cyclomatic complexity from 12.0 to <10 (split into smaller functions)" ;
+    quality:recommendationTitle "Refactor meta_validation.py" ;
+    quality:targetsFile <repo:repoq-demo/repoq/core/meta_validation.py> .
+
+<repo:repoq-demo/test/coverage> a test:Coverage ;
+    test:coveragePercentage 13.151411787000189 ;
+    test:coveredLines 694 ;
+    test:totalLines 5277 .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_analyzer_initialization> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_analyzer_initialization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_complexity_values_are_numeric> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_complexity_values_are_numeric" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_computes_maintainability_index> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_computes_maintainability_index" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_detects_cyclomatic_complexity> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_detects_cyclomatic_complexity" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_handles_empty_python_file> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_handles_empty_python_file" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_handles_malformed_python_file> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_handles_malformed_python_file" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_handles_missing_lizard_gracefully> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_handles_missing_lizard_gracefully" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_handles_missing_radon_gracefully> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_handles_missing_radon_gracefully" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_idempotent_execution> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_idempotent_execution" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_max_complexity_across_functions> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_max_complexity_across_functions" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_respects_exclude_globs> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_respects_exclude_globs" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_run_on_empty_project> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_run_on_empty_project" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_complexity.py/TestComplexityAnalyzer/test_skips_non_python_for_maintainability> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_complexity.py" ;
+    test:testName "test_skips_non_python_for_maintainability" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_analyzer_initialization> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_analyzer_initialization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_computes_lines_of_code> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_computes_lines_of_code" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_creates_modules> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_creates_modules" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_detects_programming_languages> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_detects_programming_languages" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_detects_python_files> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_detects_python_files" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_detects_test_files> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_detects_test_files" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_file_id_uniqueness> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_file_id_uniqueness" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_handles_empty_directory> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_handles_empty_directory" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_idempotent_execution> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_idempotent_execution" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_module_id_uniqueness> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_module_id_uniqueness" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_respects_exclude_globs> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_respects_exclude_globs" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_respects_extension_filter> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_respects_extension_filter" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_respects_max_files_limit> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_respects_max_files_limit" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/analyzers/test_structure.py/TestStructureAnalyzer/test_run_on_empty_project> a test:TestCase ;
+    test:testClass "TestStructureAnalyzer" ;
+    test:testFilePath "tests/analyzers/test_structure.py" ;
+    test:testName "test_run_on_empty_project" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzer" .
+
+<test:tests/e2e/test_cli.py//test_self_analysis_e2e> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_self_analysis_e2e" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "self_analysis_e2e" .
+
+<test:tests/e2e/test_cli.py/TestCLIAnalyzeE2E/test_analyze_current_directory> a test:TestCase ;
+    test:testClass "TestCLIAnalyzeE2E" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_analyze_current_directory" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIAnalyzeE2E" .
+
+<test:tests/e2e/test_cli.py/TestCLIAnalyzeE2E/test_analyze_local_repo> a test:TestCase ;
+    test:testClass "TestCLIAnalyzeE2E" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_analyze_local_repo" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIAnalyzeE2E" .
+
+<test:tests/e2e/test_cli.py/TestCLIAnalyzeE2E/test_analyze_with_exclusions> a test:TestCase ;
+    test:testClass "TestCLIAnalyzeE2E" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_analyze_with_exclusions" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIAnalyzeE2E" .
+
+<test:tests/e2e/test_cli.py/TestCLIErrorHandling/test_invalid_repository_path> a test:TestCase ;
+    test:testClass "TestCLIErrorHandling" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_invalid_repository_path" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIErrorHandling" .
+
+<test:tests/e2e/test_cli.py/TestCLIErrorHandling/test_missing_required_argument> a test:TestCase ;
+    test:testClass "TestCLIErrorHandling" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_missing_required_argument" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIErrorHandling" .
+
+<test:tests/e2e/test_cli.py/TestCLIFullWorkflow/test_analysis_with_quality_gate> a test:TestCase ;
+    test:testClass "TestCLIFullWorkflow" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_analysis_with_quality_gate" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIFullWorkflow" .
+
+<test:tests/e2e/test_cli.py/TestCLIFullWorkflow/test_baseline_comparison_workflow> a test:TestCase ;
+    test:testClass "TestCLIFullWorkflow" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_baseline_comparison_workflow" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIFullWorkflow" .
+
+<test:tests/e2e/test_cli.py/TestCLIFullWorkflow/test_full_analysis_workflow> a test:TestCase ;
+    test:testClass "TestCLIFullWorkflow" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_full_analysis_workflow" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIFullWorkflow" .
+
+<test:tests/e2e/test_cli.py/TestCLIHistoryE2E/test_history_analysis> a test:TestCase ;
+    test:testClass "TestCLIHistoryE2E" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_history_analysis" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIHistoryE2E" .
+
+<test:tests/e2e/test_cli.py/TestCLIStructureE2E/test_structure_analysis> a test:TestCase ;
+    test:testClass "TestCLIStructureE2E" ;
+    test:testFilePath "tests/e2e/test_cli.py" ;
+    test:testName "test_structure_analysis" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLIStructureE2E" .
+
+<test:tests/e2e/test_gate.py//test_gate_help> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_gate.py" ;
+    test:testName "test_gate_help" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "gate_help" .
+
+<test:tests/e2e/test_gate.py//test_gate_with_mock_implementation> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_gate.py" ;
+    test:testName "test_gate_with_mock_implementation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "gate_with_mock_implementation" .
+
+<test:tests/e2e/test_meta_self.py//test_meta_self_basic_structure> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_meta_self.py" ;
+    test:testName "test_meta_self_basic_structure" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "meta_self_basic_structure" .
+
+<test:tests/e2e/test_meta_self.py//test_meta_self_help> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_meta_self.py" ;
+    test:testName "test_meta_self_help" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "meta_self_help" .
+
+<test:tests/e2e/test_refactor_plan.py//test_refactor_plan_help> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_refactor_plan.py" ;
+    test:testName "test_refactor_plan_help" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "refactor_plan_help" .
+
+<test:tests/e2e/test_refactor_plan.py//test_refactor_plan_missing_file> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_refactor_plan.py" ;
+    test:testName "test_refactor_plan_missing_file" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "refactor_plan_missing_file" .
+
+<test:tests/e2e/test_refactor_plan.py//test_refactor_plan_with_baseline> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_refactor_plan.py" ;
+    test:testName "test_refactor_plan_with_baseline" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "refactor_plan_with_baseline" .
+
+<test:tests/e2e/test_verify.py//test_verify_file_not_found> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_verify.py" ;
+    test:testName "test_verify_file_not_found" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "verify_file_not_found" .
+
+<test:tests/e2e/test_verify.py//test_verify_help> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_verify.py" ;
+    test:testName "test_verify_help" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "verify_help" .
+
+<test:tests/e2e/test_verify.py//test_verify_malformed_vc> a test:TestCase ;
+    test:testFilePath "tests/e2e/test_verify.py" ;
+    test:testName "test_verify_malformed_vc" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "verify_malformed_vc" .
+
+<test:tests/integration/test_analyzers.py//test_analyze_self> a test:TestCase ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_analyze_self" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "analyze_self" .
+
+<test:tests/integration/test_analyzers.py/TestComplexityAnalyzerIntegration/test_analyze_complexity> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_analyze_complexity" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestComplexityAnalyzerIntegration/test_complexity_values_reasonable> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_complexity_values_reasonable" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestFullAnalysisPipeline/test_analysis_with_real_metrics> a test:TestCase ;
+    test:testClass "TestFullAnalysisPipeline" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_analysis_with_real_metrics" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FullAnalysisPipeline" .
+
+<test:tests/integration/test_analyzers.py/TestFullAnalysisPipeline/test_full_analysis_workflow> a test:TestCase ;
+    test:testClass "TestFullAnalysisPipeline" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_full_analysis_workflow" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FullAnalysisPipeline" .
+
+<test:tests/integration/test_analyzers.py/TestHistoryAnalyzerIntegration/test_analyze_git_history> a test:TestCase ;
+    test:testClass "TestHistoryAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_analyze_git_history" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "HistoryAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestHistoryAnalyzerIntegration/test_history_with_file_churn> a test:TestCase ;
+    test:testClass "TestHistoryAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_history_with_file_churn" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "HistoryAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestHotspotsAnalyzerIntegration/test_hotspot_scores_normalized> a test:TestCase ;
+    test:testClass "TestHotspotsAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_hotspot_scores_normalized" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "HotspotsAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestHotspotsAnalyzerIntegration/test_identify_hotspots> a test:TestCase ;
+    test:testClass "TestHotspotsAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_identify_hotspots" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "HotspotsAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestStructureAnalyzerIntegration/test_analyze_python_repo> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_analyze_python_repo" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestStructureAnalyzerIntegration/test_analyze_with_exclusions> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_analyze_with_exclusions" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerIntegration" .
+
+<test:tests/integration/test_analyzers.py/TestStructureAnalyzerIntegration/test_analyze_with_extensions_filter> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerIntegration" ;
+    test:testFilePath "tests/integration/test_analyzers.py" ;
+    test:testName "test_analyze_with_extensions_filter" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerIntegration" .
+
+<test:tests/integration/test_coverage_export.py//test_coverage_export_to_rdf> a test:TestCase ;
+    test:testFilePath "tests/integration/test_coverage_export.py" ;
+    test:testName "test_coverage_export_to_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "coverage_export_to_rdf" .
+
+<test:tests/integration/test_coverage_export.py//test_coverage_triples_structure> a test:TestCase ;
+    test:testFilePath "tests/integration/test_coverage_export.py" ;
+    test:testName "test_coverage_triples_structure" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "coverage_triples_structure" .
+
+<test:tests/integration/test_coverage_export.py//test_real_coverage_export> a test:TestCase ;
+    test:testFilePath "tests/integration/test_coverage_export.py" ;
+    test:testName "test_real_coverage_export" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "real_coverage_export" .
+
+<test:tests/integration/test_coverage_export.py//test_shacl_validation_with_test_coverage> a test:TestCase ;
+    test:testFilePath "tests/integration/test_coverage_export.py" ;
+    test:testName "test_shacl_validation_with_test_coverage" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "shacl_validation_with_test_coverage" .
+
+<test:tests/integration/test_coverage_export.py//test_testcase_triples_structure> a test:TestCase ;
+    test:testFilePath "tests/integration/test_coverage_export.py" ;
+    test:testName "test_testcase_triples_structure" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "testcase_triples_structure" .
+
+<test:tests/integration/test_coverage_export.py//test_tested_concept_extraction> a test:TestCase ;
+    test:testFilePath "tests/integration/test_coverage_export.py" ;
+    test:testName "test_tested_concept_extraction" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "tested_concept_extraction" .
+
+<test:tests/integration/test_meta_ontology_export.py//test_rdf_export_includes_docs_coverage> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_ontology_export.py" ;
+    test:testName "test_rdf_export_includes_docs_coverage" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "rdf_export_includes_docs_coverage" .
+
+<test:tests/integration/test_meta_ontology_export.py//test_rdf_export_includes_meta_ontology> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_ontology_export.py" ;
+    test:testName "test_rdf_export_includes_meta_ontology" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "rdf_export_includes_meta_ontology" .
+
+<test:tests/integration/test_meta_ontology_export.py//test_rdf_export_includes_quality_gate> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_ontology_export.py" ;
+    test:testName "test_rdf_export_includes_quality_gate" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "rdf_export_includes_quality_gate" .
+
+<test:tests/integration/test_meta_ontology_export.py//test_shacl_validation_with_meta_ontologies> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_ontology_export.py" ;
+    test:testName "test_shacl_validation_with_meta_ontologies" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "shacl_validation_with_meta_ontologies" .
+
+<test:tests/integration/test_meta_validation_export.py//test_enrich_graph_with_self_analysis> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_enrich_graph_with_self_analysis" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "enrich_graph_with_self_analysis" .
+
+<test:tests/integration/test_meta_validation_export.py//test_export_self_analysis_to_rdf> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_export_self_analysis_to_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_self_analysis_to_rdf" .
+
+<test:tests/integration/test_meta_validation_export.py//test_read_only_mode_always_true> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_read_only_mode_always_true" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "read_only_mode_always_true" .
+
+<test:tests/integration/test_meta_validation_export.py//test_self_analysis_detects_repoq> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_self_analysis_detects_repoq" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "self_analysis_detects_repoq" .
+
+<test:tests/integration/test_meta_validation_export.py//test_self_analysis_safety_checks> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_self_analysis_safety_checks" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "self_analysis_safety_checks" .
+
+<test:tests/integration/test_meta_validation_export.py//test_self_analysis_timestamps> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_self_analysis_timestamps" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "self_analysis_timestamps" .
+
+<test:tests/integration/test_meta_validation_export.py//test_self_analysis_with_circular_dependency> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_self_analysis_with_circular_dependency" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "self_analysis_with_circular_dependency" .
+
+<test:tests/integration/test_meta_validation_export.py//test_self_analysis_with_commit_sha> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_self_analysis_with_commit_sha" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "self_analysis_with_commit_sha" .
+
+<test:tests/integration/test_meta_validation_export.py//test_shacl_validation_with_self_analysis> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_shacl_validation_with_self_analysis" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "shacl_validation_with_self_analysis" .
+
+<test:tests/integration/test_meta_validation_export.py//test_stratification_level_0_allowed> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_stratification_level_0_allowed" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "stratification_level_0_allowed" .
+
+<test:tests/integration/test_meta_validation_export.py//test_stratification_level_2_allowed> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_stratification_level_2_allowed" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "stratification_level_2_allowed" .
+
+<test:tests/integration/test_meta_validation_export.py//test_stratification_level_max_constraint> a test:TestCase ;
+    test:testFilePath "tests/integration/test_meta_validation_export.py" ;
+    test:testName "test_stratification_level_max_constraint" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "stratification_level_max_constraint" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_enrich_graph_with_recommendations> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_enrich_graph_with_recommendations" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "enrich_graph_with_recommendations" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_export_recommendations_to_rdf> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_export_recommendations_to_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_recommendations_to_rdf" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_generate_recommendations_integration> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_generate_recommendations_integration" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "generate_recommendations_integration" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_min_delta_q_threshold> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_min_delta_q_threshold" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "min_delta_q_threshold" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_recommendation_properties_completeness> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_recommendation_properties_completeness" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "recommendation_properties_completeness" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_recommendations_link_to_files> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_recommendations_link_to_files" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "recommendations_link_to_files" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_shacl_validation_with_recommendations> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_shacl_validation_with_recommendations" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "shacl_validation_with_recommendations" .
+
+<test:tests/integration/test_quality_recommendations_export.py//test_top_k_recommendations_limit> a test:TestCase ;
+    test:testFilePath "tests/integration/test_quality_recommendations_export.py" ;
+    test:testName "test_top_k_recommendations_limit" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "top_k_recommendations_limit" .
+
+<test:tests/integration/test_shacl_workflow.py//test_workflow_docs_coverage_computation> a test:TestCase ;
+    test:testFilePath "tests/integration/test_shacl_workflow.py" ;
+    test:testName "test_workflow_docs_coverage_computation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "workflow_docs_coverage_computation" .
+
+<test:tests/integration/test_shacl_workflow.py//test_workflow_meta_loop_safety> a test:TestCase ;
+    test:testFilePath "tests/integration/test_shacl_workflow.py" ;
+    test:testName "test_workflow_meta_loop_safety" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "workflow_meta_loop_safety" .
+
+<test:tests/integration/test_shacl_workflow.py//test_workflow_quality_gate_computation> a test:TestCase ;
+    test:testFilePath "tests/integration/test_shacl_workflow.py" ;
+    test:testName "test_workflow_quality_gate_computation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "workflow_quality_gate_computation" .
+
+<test:tests/integration/test_shacl_workflow.py//test_workflow_rdf_export_step> a test:TestCase ;
+    test:testFilePath "tests/integration/test_shacl_workflow.py" ;
+    test:testName "test_workflow_rdf_export_step" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "workflow_rdf_export_step" .
+
+<test:tests/integration/test_shacl_workflow.py//test_workflow_self_application> a test:TestCase ;
+    test:testFilePath "tests/integration/test_shacl_workflow.py" ;
+    test:testName "test_workflow_self_application" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "workflow_self_application" .
+
+<test:tests/integration/test_shacl_workflow.py//test_workflow_shacl_validation_step> a test:TestCase ;
+    test:testFilePath "tests/integration/test_shacl_workflow.py" ;
+    test:testName "test_workflow_shacl_validation_step" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "workflow_shacl_validation_step" .
+
+<test:tests/integration/test_shacl_workflow.py//test_workflow_validation_report_format> a test:TestCase ;
+    test:testFilePath "tests/integration/test_shacl_workflow.py" ;
+    test:testName "test_workflow_validation_report_format" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "workflow_validation_report_format" .
+
+<test:tests/integration/test_trs_export.py//test_confluence_proven_metadata> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_confluence_proven_metadata" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "confluence_proven_metadata" .
+
+<test:tests/integration/test_trs_export.py//test_integration_with_full_export_pipeline> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_integration_with_full_export_pipeline" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "integration_with_full_export_pipeline" .
+
+<test:tests/integration/test_trs_export.py//test_multiple_trs_systems_exported> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_multiple_trs_systems_exported" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "multiple_trs_systems_exported" .
+
+<test:tests/integration/test_trs_export.py//test_shacl_validation_with_trs_rules> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_shacl_validation_with_trs_rules" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "shacl_validation_with_trs_rules" .
+
+<test:tests/integration/test_trs_export.py//test_spdx_idempotence_rule_in_rdf> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_spdx_idempotence_rule_in_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "spdx_idempotence_rule_in_rdf" .
+
+<test:tests/integration/test_trs_export.py//test_trs_rules_export_to_rdf> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_trs_rules_export_to_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_rules_export_to_rdf" .
+
+<test:tests/integration/test_trs_export.py//test_trs_rules_triples_structure> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_trs_rules_triples_structure" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_rules_triples_structure" .
+
+<test:tests/integration/test_trs_export.py//test_trs_system_triples_structure> a test:TestCase ;
+    test:testFilePath "tests/integration/test_trs_export.py" ;
+    test:testName "test_trs_system_triples_structure" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_system_triples_structure" .
+
+<test:tests/properties/test_analyzers_properties.py/TestComplexityAnalyzerProperties/test_complexity_non_negative> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzerProperties" ;
+    test:testFilePath "tests/properties/test_analyzers_properties.py" ;
+    test:testName "test_complexity_non_negative" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzerProperties" .
+
+<test:tests/properties/test_analyzers_properties.py/TestComplexityAnalyzerProperties/test_maintainability_bounded> a test:TestCase ;
+    test:testClass "TestComplexityAnalyzerProperties" ;
+    test:testFilePath "tests/properties/test_analyzers_properties.py" ;
+    test:testName "test_maintainability_bounded" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ComplexityAnalyzerProperties" .
+
+<test:tests/properties/test_analyzers_properties.py/TestStructureAnalyzerProperties/test_extension_filter_correct> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerProperties" ;
+    test:testFilePath "tests/properties/test_analyzers_properties.py" ;
+    test:testName "test_extension_filter_correct" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerProperties" .
+
+<test:tests/properties/test_analyzers_properties.py/TestStructureAnalyzerProperties/test_idempotent_analysis> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerProperties" ;
+    test:testFilePath "tests/properties/test_analyzers_properties.py" ;
+    test:testName "test_idempotent_analysis" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerProperties" .
+
+<test:tests/properties/test_analyzers_properties.py/TestStructureAnalyzerProperties/test_language_consistency> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerProperties" ;
+    test:testFilePath "tests/properties/test_analyzers_properties.py" ;
+    test:testName "test_language_consistency" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerProperties" .
+
+<test:tests/properties/test_analyzers_properties.py/TestStructureAnalyzerProperties/test_loc_always_non_negative> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerProperties" ;
+    test:testFilePath "tests/properties/test_analyzers_properties.py" ;
+    test:testName "test_loc_always_non_negative" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerProperties" .
+
+<test:tests/properties/test_analyzers_properties.py/TestStructureAnalyzerProperties/test_max_files_honored> a test:TestCase ;
+    test:testClass "TestStructureAnalyzerProperties" ;
+    test:testFilePath "tests/properties/test_analyzers_properties.py" ;
+    test:testName "test_max_files_honored" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StructureAnalyzerProperties" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_advanced_canonicalization_forms> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_advanced_canonicalization_forms" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_advanced_glob_simplification> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_advanced_glob_simplification" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_logical_equivalence> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_logical_equivalence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_pattern_subsumption> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_pattern_subsumption" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_regex_conversion> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_regex_conversion" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_sympy_cnf_conversion> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_sympy_cnf_conversion" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_sympy_dnf_conversion> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_sympy_dnf_conversion" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestAdvancedFeatures/test_tree_sitter_parsing> a test:TestCase ;
+    test:testClass "TestAdvancedFeatures" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_tree_sitter_parsing" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AdvancedFeatures" .
+
+<test:tests/properties/test_filters_normalization.py/TestCanonicalization/test_dict_input> a test:TestCase ;
+    test:testClass "TestCanonicalization" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_dict_input" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Canonicalization" .
+
+<test:tests/properties/test_filters_normalization.py/TestCanonicalization/test_invalid_input_type> a test:TestCase ;
+    test:testClass "TestCanonicalization" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_invalid_input_type" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Canonicalization" .
+
+<test:tests/properties/test_filters_normalization.py/TestCanonicalization/test_string_input> a test:TestCase ;
+    test:testClass "TestCanonicalization" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_string_input" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Canonicalization" .
+
+<test:tests/properties/test_filters_normalization.py/TestFilterExpressions/test_dnf_conversion_simple> a test:TestCase ;
+    test:testClass "TestFilterExpressions" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_dnf_conversion_simple" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FilterExpressions" .
+
+<test:tests/properties/test_filters_normalization.py/TestFilterExpressions/test_dnf_distribution> a test:TestCase ;
+    test:testClass "TestFilterExpressions" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_dnf_distribution" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FilterExpressions" .
+
+<test:tests/properties/test_filters_normalization.py/TestFilterExpressions/test_double_negation_elimination> a test:TestCase ;
+    test:testClass "TestFilterExpressions" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_double_negation_elimination" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FilterExpressions" .
+
+<test:tests/properties/test_filters_normalization.py/TestFilterTerms/test_file_property_canonical_form> a test:TestCase ;
+    test:testClass "TestFilterTerms" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_file_property_canonical_form" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FilterTerms" .
+
+<test:tests/properties/test_filters_normalization.py/TestFilterTerms/test_glob_pattern_normalization> a test:TestCase ;
+    test:testClass "TestFilterTerms" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_glob_pattern_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FilterTerms" .
+
+<test:tests/properties/test_filters_normalization.py/TestFilterTerms/test_logical_filter_operand_sorting> a test:TestCase ;
+    test:testClass "TestFilterTerms" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_logical_filter_operand_sorting" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FilterTerms" .
+
+<test:tests/properties/test_filters_normalization.py/TestGlobSimplification/test_duplicate_removal> a test:TestCase ;
+    test:testClass "TestGlobSimplification" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_duplicate_removal" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "GlobSimplification" .
+
+<test:tests/properties/test_filters_normalization.py/TestGlobSimplification/test_empty_pattern_list> a test:TestCase ;
+    test:testClass "TestGlobSimplification" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_empty_pattern_list" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "GlobSimplification" .
+
+<test:tests/properties/test_filters_normalization.py/TestGlobSimplification/test_redundancy_removal> a test:TestCase ;
+    test:testClass "TestGlobSimplification" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_redundancy_removal" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "GlobSimplification" .
+
+<test:tests/properties/test_filters_normalization.py/TestIntegration/test_backward_compatibility> a test:TestCase ;
+    test:testClass "TestIntegration" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_backward_compatibility" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Integration" .
+
+<test:tests/properties/test_filters_normalization.py/TestIntegration/test_complex_real_world_filter> a test:TestCase ;
+    test:testClass "TestIntegration" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_complex_real_world_filter" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Integration" .
+
+<test:tests/properties/test_filters_normalization.py/TestPropertyBasedTesting/test_determinism> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_determinism" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_filters_normalization.py/TestPropertyBasedTesting/test_glob_simplification_idempotence> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_glob_simplification_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_filters_normalization.py/TestPropertyBasedTesting/test_glob_simplification_reduces_size> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_glob_simplification_reduces_size" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_filters_normalization.py/TestPropertyBasedTesting/test_idempotence_complex_filters> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_idempotence_complex_filters" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_filters_normalization.py/TestPropertyBasedTesting/test_idempotence_simple_filters> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_filters_normalization.py" ;
+    test:testName "test_idempotence_simple_filters" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_metrics_normalization.py/TestCanonicalization/test_dict_input> a test:TestCase ;
+    test:testClass "TestCanonicalization" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_dict_input" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Canonicalization" .
+
+<test:tests/properties/test_metrics_normalization.py/TestCanonicalization/test_expression_input> a test:TestCase ;
+    test:testClass "TestCanonicalization" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_expression_input" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Canonicalization" .
+
+<test:tests/properties/test_metrics_normalization.py/TestCanonicalization/test_string_input> a test:TestCase ;
+    test:testClass "TestCanonicalization" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_string_input" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Canonicalization" .
+
+<test:tests/properties/test_metrics_normalization.py/TestIntegration/test_backward_compatibility> a test:TestCase ;
+    test:testClass "TestIntegration" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_backward_compatibility" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Integration" .
+
+<test:tests/properties/test_metrics_normalization.py/TestIntegration/test_evaluation_consistency> a test:TestCase ;
+    test:testClass "TestIntegration" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_evaluation_consistency" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Integration" .
+
+<test:tests/properties/test_metrics_normalization.py/TestIntegration/test_real_world_metrics> a test:TestCase ;
+    test:testClass "TestIntegration" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_real_world_metrics" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Integration" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricExpressions/test_distributive_property> a test:TestCase ;
+    test:testClass "TestMetricExpressions" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_distributive_property" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricExpressions" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricExpressions/test_expression_evaluation> a test:TestCase ;
+    test:testClass "TestMetricExpressions" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_expression_evaluation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricExpressions" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricExpressions/test_simple_algebraic_simplification> a test:TestCase ;
+    test:testClass "TestMetricExpressions" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_simple_algebraic_simplification" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricExpressions" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricExpressions/test_substitution> a test:TestCase ;
+    test:testClass "TestMetricExpressions" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_substitution" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricExpressions" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricTerms/test_aggregation_function_evaluation> a test:TestCase ;
+    test:testClass "TestMetricTerms" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_aggregation_function_evaluation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricTerms" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricTerms/test_aggregation_function_sorting> a test:TestCase ;
+    test:testClass "TestMetricTerms" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_aggregation_function_sorting" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricTerms" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricTerms/test_arithmetic_operation_commutativity> a test:TestCase ;
+    test:testClass "TestMetricTerms" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_arithmetic_operation_commutativity" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricTerms" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricTerms/test_arithmetic_operation_evaluation> a test:TestCase ;
+    test:testClass "TestMetricTerms" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_arithmetic_operation_evaluation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricTerms" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricTerms/test_metric_constant_normalization> a test:TestCase ;
+    test:testClass "TestMetricTerms" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_metric_constant_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricTerms" .
+
+<test:tests/properties/test_metrics_normalization.py/TestMetricTerms/test_metric_variable_canonical_form> a test:TestCase ;
+    test:testClass "TestMetricTerms" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_metric_variable_canonical_form" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetricTerms" .
+
+<test:tests/properties/test_metrics_normalization.py/TestOptimization/test_optimization_levels> a test:TestCase ;
+    test:testClass "TestOptimization" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_optimization_levels" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Optimization" .
+
+<test:tests/properties/test_metrics_normalization.py/TestParsing/test_arithmetic_parsing> a test:TestCase ;
+    test:testClass "TestParsing" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_arithmetic_parsing" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Parsing" .
+
+<test:tests/properties/test_metrics_normalization.py/TestParsing/test_complex_parsing> a test:TestCase ;
+    test:testClass "TestParsing" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_complex_parsing" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Parsing" .
+
+<test:tests/properties/test_metrics_normalization.py/TestParsing/test_function_parsing> a test:TestCase ;
+    test:testClass "TestParsing" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_function_parsing" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "Parsing" .
+
+<test:tests/properties/test_metrics_normalization.py/TestPropertyBasedTesting/test_aggregation_idempotence> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_aggregation_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_metrics_normalization.py/TestPropertyBasedTesting/test_arithmetic_idempotence> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_arithmetic_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_metrics_normalization.py/TestPropertyBasedTesting/test_constant_idempotence> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_constant_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_metrics_normalization.py/TestPropertyBasedTesting/test_variable_idempotence> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_variable_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_metrics_normalization.py/TestPropertyBasedTesting/test_weight_normalization> a test:TestCase ;
+    test:testClass "TestPropertyBasedTesting" ;
+    test:testFilePath "tests/properties/test_metrics_normalization.py" ;
+    test:testName "test_weight_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PropertyBasedTesting" .
+
+<test:tests/properties/test_rdf_normalization.py/TestJSONLDIntegration/test_blank_node_jsonld> a test:TestCase ;
+    test:testClass "TestJSONLDIntegration" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_blank_node_jsonld" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "JSONLDIntegration" .
+
+<test:tests/properties/test_rdf_normalization.py/TestJSONLDIntegration/test_nested_objects> a test:TestCase ;
+    test:testClass "TestJSONLDIntegration" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_nested_objects" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "JSONLDIntegration" .
+
+<test:tests/properties/test_rdf_normalization.py/TestJSONLDIntegration/test_simple_jsonld_canonicalization> a test:TestCase ;
+    test:testClass "TestJSONLDIntegration" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_simple_jsonld_canonicalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "JSONLDIntegration" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_blank_node_canonicalization> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_blank_node_canonicalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_blank_node_hash_consistency> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_blank_node_hash_consistency" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_deterministic_output> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_deterministic_output" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_graph_idempotence> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_graph_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_hash_consistency> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_hash_consistency" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_jsonld_idempotence> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_jsonld_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_property_ordering> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_property_ordering" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_triple_ordering> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_triple_ordering" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFNormalizationProperties/test_triple_sorting_consistency> a test:TestCase ;
+    test:testClass "TestRDFNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_triple_sorting_consistency" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFNormalizationProperties" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFRewriteSystem/test_graph_normalization> a test:TestCase ;
+    test:testClass "TestRDFRewriteSystem" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_graph_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFRewriteSystem" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFRewriteSystem/test_rewrite_system_basic> a test:TestCase ;
+    test:testClass "TestRDFRewriteSystem" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_rewrite_system_basic" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFRewriteSystem" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFTerms/test_blank_node_creation> a test:TestCase ;
+    test:testClass "TestRDFTerms" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_blank_node_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFTerms" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFTerms/test_graph_creation> a test:TestCase ;
+    test:testClass "TestRDFTerms" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_graph_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFTerms" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFTerms/test_iri_creation> a test:TestCase ;
+    test:testClass "TestRDFTerms" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_iri_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFTerms" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFTerms/test_literal_creation> a test:TestCase ;
+    test:testClass "TestRDFTerms" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_literal_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFTerms" .
+
+<test:tests/properties/test_rdf_normalization.py/TestRDFTerms/test_triple_creation> a test:TestCase ;
+    test:testClass "TestRDFTerms" ;
+    test:testFilePath "tests/properties/test_rdf_normalization.py" ;
+    test:testName "test_triple_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RDFTerms" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_caret_range_semantics> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_caret_range_semantics" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_empty_intersection> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_empty_intersection" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_exact_version_normalization> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_exact_version_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_idempotence> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_intersection_commutativity> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_intersection_commutativity" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_interval_operations> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_interval_operations" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_normalize_preserves_semantics> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_normalize_preserves_semantics" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_tilde_range_semantics> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_tilde_range_semantics" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_union_commutativity> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_union_commutativity" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerNormalizationProperties/test_universal_range> a test:TestCase ;
+    test:testClass "TestSemVerNormalizationProperties" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_universal_range" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerNormalizationProperties" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerParsing/test_parse_caret_ranges> a test:TestCase ;
+    test:testClass "TestSemVerParsing" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_parse_caret_ranges" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerParsing" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerParsing/test_parse_comparison_operators> a test:TestCase ;
+    test:testClass "TestSemVerParsing" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_parse_comparison_operators" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerParsing" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerParsing/test_parse_compound_ranges> a test:TestCase ;
+    test:testClass "TestSemVerParsing" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_parse_compound_ranges" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerParsing" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerParsing/test_parse_exact_version> a test:TestCase ;
+    test:testClass "TestSemVerParsing" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_parse_exact_version" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerParsing" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerParsing/test_parse_tilde_ranges> a test:TestCase ;
+    test:testClass "TestSemVerParsing" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_parse_tilde_ranges" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerParsing" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerParsing/test_parse_union_ranges> a test:TestCase ;
+    test:testClass "TestSemVerParsing" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_parse_union_ranges" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerParsing" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerParsing/test_parse_wildcard_ranges> a test:TestCase ;
+    test:testClass "TestSemVerParsing" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_parse_wildcard_ranges" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerParsing" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerRewriteSystem/test_empty_interval_normalization> a test:TestCase ;
+    test:testClass "TestSemVerRewriteSystem" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_empty_interval_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerRewriteSystem" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerRewriteSystem/test_rewrite_system_basic> a test:TestCase ;
+    test:testClass "TestSemVerRewriteSystem" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_rewrite_system_basic" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerRewriteSystem" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerRewriteSystem/test_union_normalization> a test:TestCase ;
+    test:testClass "TestSemVerRewriteSystem" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_union_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerRewriteSystem" .
+
+<test:tests/properties/test_semver_normalization.py/TestSemVerRewriteSystem/test_universal_interval_normalization> a test:TestCase ;
+    test:testClass "TestSemVerRewriteSystem" ;
+    test:testFilePath "tests/properties/test_semver_normalization.py" ;
+    test:testName "test_universal_interval_normalization" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SemVerRewriteSystem" .
+
+<test:tests/properties/test_spdx_normalization.py/TestRewriteSystem/test_cache> a test:TestCase ;
+    test:testClass "TestRewriteSystem" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_cache" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RewriteSystem" .
+
+<test:tests/properties/test_spdx_normalization.py/TestRewriteSystem/test_critical_pairs> a test:TestCase ;
+    test:testClass "TestRewriteSystem" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_critical_pairs" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RewriteSystem" .
+
+<test:tests/properties/test_spdx_normalization.py/TestRewriteSystem/test_size_measure> a test:TestCase ;
+    test:testClass "TestRewriteSystem" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_size_measure" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RewriteSystem" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXConcreteExamples/test_complex_absorption> a test:TestCase ;
+    test:testClass "TestSPDXConcreteExamples" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_complex_absorption" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXConcreteExamples" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXConcreteExamples/test_flattening> a test:TestCase ;
+    test:testClass "TestSPDXConcreteExamples" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_flattening" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXConcreteExamples" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXConcreteExamples/test_simple_and> a test:TestCase ;
+    test:testClass "TestSPDXConcreteExamples" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_simple_and" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXConcreteExamples" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXConcreteExamples/test_simple_or> a test:TestCase ;
+    test:testClass "TestSPDXConcreteExamples" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_simple_or" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXConcreteExamples" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_absorption> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_absorption" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_and_commutative> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_and_commutative" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_idempotence> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_idempotence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_idempotence_and> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_idempotence_and" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_idempotence_or> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_idempotence_or" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_or_commutative> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_or_commutative" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_size_monotonic> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_size_monotonic" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_sorting> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_sorting" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/properties/test_spdx_normalization.py/TestSPDXProperties/test_terminates> a test:TestCase ;
+    test:testClass "TestSPDXProperties" ;
+    test:testFilePath "tests/properties/test_spdx_normalization.py" ;
+    test:testName "test_terminates" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SPDXProperties" .
+
+<test:tests/property/test_ontology_consistency.py//test_coverage_percentage_bounds> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_coverage_percentage_bounds" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "coverage_percentage_bounds" .
+
+<test:tests/property/test_ontology_consistency.py//test_coverage_percentage_exceeds_max> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_coverage_percentage_exceeds_max" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "coverage_percentage_exceeds_max" .
+
+<test:tests/property/test_ontology_consistency.py//test_critical_pair_joinability> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_critical_pair_joinability" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "critical_pair_joinability" .
+
+<test:tests/property/test_ontology_consistency.py//test_property_test_generation_bounds> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_property_test_generation_bounds" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "property_test_generation_bounds" .
+
+<test:tests/property/test_ontology_consistency.py//test_quality_delta_q_non_negative> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_quality_delta_q_non_negative" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "quality_delta_q_non_negative" .
+
+<test:tests/property/test_ontology_consistency.py//test_quality_gate_blocking> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_quality_gate_blocking" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "quality_gate_blocking" .
+
+<test:tests/property/test_ontology_consistency.py//test_quote_increases_level> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_quote_increases_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "quote_increases_level" .
+
+<test:tests/property/test_ontology_consistency.py//test_readonly_mode_required> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_readonly_mode_required" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "readonly_mode_required" .
+
+<test:tests/property/test_ontology_consistency.py//test_stratification_level_bounds> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_stratification_level_bounds" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "stratification_level_bounds" .
+
+<test:tests/property/test_ontology_consistency.py//test_stratification_level_exceeds_max> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_stratification_level_exceeds_max" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "stratification_level_exceeds_max" .
+
+<test:tests/property/test_ontology_consistency.py//test_test_status_values> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_test_status_values" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "test_status_values" .
+
+<test:tests/property/test_ontology_consistency.py//test_trs_soundness_required> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_trs_soundness_required" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_soundness_required" .
+
+<test:tests/property/test_ontology_consistency.py//test_unquote_decreases_level> a test:TestCase ;
+    test:testFilePath "tests/property/test_ontology_consistency.py" ;
+    test:testName "test_unquote_decreases_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "unquote_decreases_level" .
+
+<test:tests/property/test_shacl_validation.py//test_docs_coverage_warning> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_docs_coverage_warning" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "docs_coverage_warning" .
+
+<test:tests/property/test_shacl_validation.py//test_docs_shacl_validation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_docs_shacl_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "docs_shacl_validation" .
+
+<test:tests/property/test_shacl_validation.py//test_meta_readonly_violation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_meta_readonly_violation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "meta_readonly_violation" .
+
+<test:tests/property/test_shacl_validation.py//test_meta_shacl_validation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_meta_shacl_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "meta_shacl_validation" .
+
+<test:tests/property/test_shacl_validation.py//test_meta_stratification_violation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_meta_stratification_violation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "meta_stratification_violation" .
+
+<test:tests/property/test_shacl_validation.py//test_quality_shacl_validation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_quality_shacl_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "quality_shacl_validation" .
+
+<test:tests/property/test_shacl_validation.py//test_test_coverage_violation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_test_coverage_violation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "test_coverage_violation" .
+
+<test:tests/property/test_shacl_validation.py//test_test_shacl_validation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_test_shacl_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "test_shacl_validation" .
+
+<test:tests/property/test_shacl_validation.py//test_trs_joinability_violation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_trs_joinability_violation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_joinability_violation" .
+
+<test:tests/property/test_shacl_validation.py//test_trs_shacl_validation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_trs_shacl_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_shacl_validation" .
+
+<test:tests/property/test_shacl_validation.py//test_trs_soundness_violation> a test:TestCase ;
+    test:testFilePath "tests/property/test_shacl_validation.py" ;
+    test:testName "test_trs_soundness_violation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_soundness_violation" .
+
+<test:tests/test_baml_agent.py//test_agent_config_defaults> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_agent_config_defaults" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "agent_config_defaults" .
+
+<test:tests/test_baml_agent.py//test_agent_config_phases> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_agent_config_phases" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "agent_config_phases" .
+
+<test:tests/test_baml_agent.py//test_agent_config_validation> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_agent_config_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "agent_config_validation" .
+
+<test:tests/test_baml_agent.py//test_analyze_stratification_blocking> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_analyze_stratification_blocking" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "analyze_stratification_blocking" .
+
+<test:tests/test_baml_agent.py//test_baml_agent_disabled> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_baml_agent_disabled" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "baml_agent_disabled" .
+
+<test:tests/test_baml_agent.py//test_baml_agent_invalid_config> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_baml_agent_invalid_config" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "baml_agent_invalid_config" .
+
+<test:tests/test_baml_agent.py//test_baml_agent_missing_client> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_baml_agent_missing_client" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "baml_agent_missing_client" .
+
+<test:tests/test_baml_agent.py//test_configure_agent> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_configure_agent" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "configure_agent" .
+
+<test:tests/test_baml_agent.py//test_get_agent_singleton> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_get_agent_singleton" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "get_agent_singleton" .
+
+<test:tests/test_baml_agent.py//test_phase_rollout_progression> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_phase_rollout_progression" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "phase_rollout_progression" .
+
+<test:tests/test_baml_agent.py//test_validate_ontology_active_blocking> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_validate_ontology_active_blocking" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "validate_ontology_active_blocking" .
+
+<test:tests/test_baml_agent.py//test_validate_trs_rule_active_blocking> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_validate_trs_rule_active_blocking" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "validate_trs_rule_active_blocking" .
+
+<test:tests/test_baml_agent.py//test_validate_trs_rule_advisory> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_validate_trs_rule_advisory" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "validate_trs_rule_advisory" .
+
+<test:tests/test_baml_agent.py//test_validate_trs_rule_disabled> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_validate_trs_rule_disabled" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "validate_trs_rule_disabled" .
+
+<test:tests/test_baml_agent.py//test_validate_trs_rule_exception> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_validate_trs_rule_exception" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "validate_trs_rule_exception" .
+
+<test:tests/test_baml_agent.py//test_validate_trs_rule_experimental> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_validate_trs_rule_experimental" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "validate_trs_rule_experimental" .
+
+<test:tests/test_baml_agent.py//test_validate_trs_rule_low_confidence> a test:TestCase ;
+    test:testFilePath "tests/test_baml_agent.py" ;
+    test:testName "test_validate_trs_rule_low_confidence" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "validate_trs_rule_low_confidence" .
+
+<test:tests/test_gate.py//test_gate_result_dataclass> a test:TestCase ;
+    test:testFilePath "tests/test_gate.py" ;
+    test:testName "test_gate_result_dataclass" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "gate_result_dataclass" .
+
+<test:tests/test_gate.py//test_quality_metrics_validation> a test:TestCase ;
+    test:testFilePath "tests/test_gate.py" ;
+    test:testName "test_quality_metrics_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "quality_metrics_validation" .
+
+<test:tests/test_gate.py/TestFormatGateReport/test_format_failed_gate_with_violations> a test:TestCase ;
+    test:testClass "TestFormatGateReport" ;
+    test:testFilePath "tests/test_gate.py" ;
+    test:testName "test_format_failed_gate_with_violations" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FormatGateReport" .
+
+<test:tests/test_gate.py/TestFormatGateReport/test_format_passed_gate> a test:TestCase ;
+    test:testClass "TestFormatGateReport" ;
+    test:testFilePath "tests/test_gate.py" ;
+    test:testName "test_format_passed_gate" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FormatGateReport" .
+
+<test:tests/test_gate.py/TestFormatGateReport/test_format_report_includes_deltas_section> a test:TestCase ;
+    test:testClass "TestFormatGateReport" ;
+    test:testFilePath "tests/test_gate.py" ;
+    test:testName "test_format_report_includes_deltas_section" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "FormatGateReport" .
+
+<test:tests/test_meta_loop_integration.py/TestMetaContextIntegration/test_load_meta_context> a test:TestCase ;
+    test:testClass "TestMetaContextIntegration" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_load_meta_context" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetaContextIntegration" .
+
+<test:tests/test_meta_loop_integration.py/TestMetaContextIntegration/test_self_analysis_level_constraint> a test:TestCase ;
+    test:testClass "TestMetaContextIntegration" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_self_analysis_level_constraint" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetaContextIntegration" .
+
+<test:tests/test_meta_loop_integration.py/TestMetaLoopCLIIntegration/test_meta_self_command> a test:TestCase ;
+    test:testClass "TestMetaLoopCLIIntegration" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_meta_self_command" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetaLoopCLIIntegration" .
+
+<test:tests/test_meta_loop_integration.py/TestMetaLoopCLIIntegration/test_trs_verify_command> a test:TestCase ;
+    test:testClass "TestMetaLoopCLIIntegration" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_trs_verify_command" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "MetaLoopCLIIntegration" .
+
+<test:tests/test_meta_loop_integration.py/TestOntologyManagerHelperMethods/test_add_triple_with_guard> a test:TestCase ;
+    test:testClass "TestOntologyManagerHelperMethods" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_add_triple_with_guard" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerHelperMethods" .
+
+<test:tests/test_meta_loop_integration.py/TestOntologyManagerHelperMethods/test_add_triple_with_guard_rejects_unsafe> a test:TestCase ;
+    test:testClass "TestOntologyManagerHelperMethods" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_add_triple_with_guard_rejects_unsafe" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerHelperMethods" .
+
+<test:tests/test_meta_loop_integration.py/TestOntologyManagerHelperMethods/test_count_method> a test:TestCase ;
+    test:testClass "TestOntologyManagerHelperMethods" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_count_method" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerHelperMethods" .
+
+<test:tests/test_meta_loop_integration.py/TestOntologyManagerWithGuard/test_add_triple_with_level_metadata> a test:TestCase ;
+    test:testClass "TestOntologyManagerWithGuard" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_add_triple_with_level_metadata" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerWithGuard" .
+
+<test:tests/test_meta_loop_integration.py/TestOntologyManagerWithGuard/test_guard_prevents_unsafe_ontology_transitions> a test:TestCase ;
+    test:testClass "TestOntologyManagerWithGuard" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_guard_prevents_unsafe_ontology_transitions" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerWithGuard" .
+
+<test:tests/test_meta_loop_integration.py/TestOntologyManagerWithGuard/test_stratified_pattern_detection> a test:TestCase ;
+    test:testClass "TestOntologyManagerWithGuard" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_stratified_pattern_detection" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerWithGuard" .
+
+<test:tests/test_meta_loop_integration.py/TestQuoteUnquoteWithRDF/test_quote_rdf_triple> a test:TestCase ;
+    test:testClass "TestQuoteUnquoteWithRDF" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_quote_rdf_triple" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QuoteUnquoteWithRDF" .
+
+<test:tests/test_meta_loop_integration.py/TestQuoteUnquoteWithRDF/test_unquote_rdf_triple> a test:TestCase ;
+    test:testClass "TestQuoteUnquoteWithRDF" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_unquote_rdf_triple" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QuoteUnquoteWithRDF" .
+
+<test:tests/test_meta_loop_integration.py/TestSHACLValidationWithStratification/test_validate_self_analysis_invalid_level> a test:TestCase ;
+    test:testClass "TestSHACLValidationWithStratification" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_validate_self_analysis_invalid_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SHACLValidationWithStratification" .
+
+<test:tests/test_meta_loop_integration.py/TestSHACLValidationWithStratification/test_validate_self_analysis_request> a test:TestCase ;
+    test:testClass "TestSHACLValidationWithStratification" ;
+    test:testFilePath "tests/test_meta_loop_integration.py" ;
+    test:testName "test_validate_self_analysis_request" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "SHACLValidationWithStratification" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerBackend/test_default_backend_is_rdflib> a test:TestCase ;
+    test:testClass "TestOntologyManagerBackend" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_default_backend_is_rdflib" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerBackend" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerBackend/test_explicit_rdflib_backend> a test:TestCase ;
+    test:testClass "TestOntologyManagerBackend" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_explicit_rdflib_backend" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerBackend" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerBackend/test_oxigraph_backend> a test:TestCase ;
+    test:testClass "TestOntologyManagerBackend" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_oxigraph_backend" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerBackend" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerBasics/test_add_multiple_triples> a test:TestCase ;
+    test:testClass "TestOntologyManagerBasics" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_add_multiple_triples" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerBasics" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerBasics/test_add_single_triple> a test:TestCase ;
+    test:testClass "TestOntologyManagerBasics" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_add_single_triple" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerBasics" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerIntegration/test_integration_with_analysis_pipeline> a test:TestCase ;
+    test:testClass "TestOntologyManagerIntegration" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_integration_with_analysis_pipeline" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerIntegration" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerPatternDetection/test_detect_layered_architecture> a test:TestCase ;
+    test:testClass "TestOntologyManagerPatternDetection" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_detect_layered_architecture" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerPatternDetection" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerPatternDetection/test_detect_mvc_pattern> a test:TestCase ;
+    test:testClass "TestOntologyManagerPatternDetection" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_detect_mvc_pattern" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerPatternDetection" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerPersistence/test_load_from_file> a test:TestCase ;
+    test:testClass "TestOntologyManagerPersistence" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_load_from_file" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerPersistence" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerPersistence/test_save_to_file> a test:TestCase ;
+    test:testClass "TestOntologyManagerPersistence" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_save_to_file" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerPersistence" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerSPARQL/test_sparql_filter> a test:TestCase ;
+    test:testClass "TestOntologyManagerSPARQL" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_sparql_filter" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerSPARQL" .
+
+<test:tests/test_ontology_manager.py/TestOntologyManagerSPARQL/test_sparql_pattern_matching> a test:TestCase ;
+    test:testClass "TestOntologyManagerSPARQL" ;
+    test:testFilePath "tests/test_ontology_manager.py" ;
+    test:testName "test_sparql_pattern_matching" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "OntologyManagerSPARQL" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_ci_qm_analyzer_runs> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_ci_qm_analyzer_runs" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_full_mode> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_full_mode" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_handles_empty_repo> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_handles_empty_repo" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_history_mode> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_history_mode" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_idempotent> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_idempotent" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_respects_exclude_globs> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_respects_exclude_globs" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_respects_max_files> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_respects_max_files" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_runs_complexity_analyzer> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_runs_complexity_analyzer" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_runs_hotspots_analyzer_in_full_mode> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_runs_hotspots_analyzer_in_full_mode" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_runs_weakness_analyzer> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_runs_weakness_analyzer" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_structure_mode> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_structure_mode" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_pipeline.py/TestRunPipeline/test_pipeline_with_extension_filter> a test:TestCase ;
+    test:testClass "TestRunPipeline" ;
+    test:testFilePath "tests/test_pipeline.py" ;
+    test:testName "test_pipeline_with_extension_filter" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "RunPipeline" .
+
+<test:tests/test_quality.py//test_empty_project> a test:TestCase ;
+    test:testFilePath "tests/test_quality.py" ;
+    test:testName "test_empty_project" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "empty_project" .
+
+<test:tests/test_quality.py//test_failing_constraints> a test:TestCase ;
+    test:testFilePath "tests/test_quality.py" ;
+    test:testName "test_failing_constraints" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "failing_constraints" .
+
+<test:tests/test_quality.py//test_monotonicity_complexity> a test:TestCase ;
+    test:testFilePath "tests/test_quality.py" ;
+    test:testName "test_monotonicity_complexity" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "monotonicity_complexity" .
+
+<test:tests/test_quality.py//test_monotonicity_hotspots> a test:TestCase ;
+    test:testFilePath "tests/test_quality.py" ;
+    test:testName "test_monotonicity_hotspots" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "monotonicity_hotspots" .
+
+<test:tests/test_quality.py//test_perfect_project> a test:TestCase ;
+    test:testFilePath "tests/test_quality.py" ;
+    test:testName "test_perfect_project" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "perfect_project" .
+
+<test:tests/test_quality.py//test_score_bounded> a test:TestCase ;
+    test:testFilePath "tests/test_quality.py" ;
+    test:testName "test_score_bounded" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "score_bounded" .
+
+<test:tests/test_quality_policy.py/TestGitHubPolicyFileGeneration/test_generate_default_policy_file> a test:TestCase ;
+    test:testClass "TestGitHubPolicyFileGeneration" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_generate_default_policy_file" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "GitHubPolicyFileGeneration" .
+
+<test:tests/test_quality_policy.py/TestGitHubPolicyFileGeneration/test_validate_schema_compliance> a test:TestCase ;
+    test:testClass "TestGitHubPolicyFileGeneration" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_validate_schema_compliance" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "GitHubPolicyFileGeneration" .
+
+<test:tests/test_quality_policy.py/TestPolicyLoaderIntegration/test_fallback_to_default_policy> a test:TestCase ;
+    test:testClass "TestPolicyLoaderIntegration" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_fallback_to_default_policy" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PolicyLoaderIntegration" .
+
+<test:tests/test_quality_policy.py/TestPolicyLoaderIntegration/test_load_from_github_directory> a test:TestCase ;
+    test:testClass "TestPolicyLoaderIntegration" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_load_from_github_directory" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "PolicyLoaderIntegration" .
+
+<test:tests/test_quality_policy.py/TestQualityPolicyGates/test_confluence_gate_configuration> a test:TestCase ;
+    test:testClass "TestQualityPolicyGates" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_confluence_gate_configuration" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityPolicyGates" .
+
+<test:tests/test_quality_policy.py/TestQualityPolicyGates/test_soundness_gate_configuration> a test:TestCase ;
+    test:testClass "TestQualityPolicyGates" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_soundness_gate_configuration" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityPolicyGates" .
+
+<test:tests/test_quality_policy.py/TestQualityPolicyGates/test_termination_gate_configuration> a test:TestCase ;
+    test:testClass "TestQualityPolicyGates" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_termination_gate_configuration" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityPolicyGates" .
+
+<test:tests/test_quality_policy.py/TestQualityPolicyParser/test_default_values_applied> a test:TestCase ;
+    test:testClass "TestQualityPolicyParser" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_default_values_applied" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityPolicyParser" .
+
+<test:tests/test_quality_policy.py/TestQualityPolicyParser/test_parse_invalid_yaml_syntax> a test:TestCase ;
+    test:testClass "TestQualityPolicyParser" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_parse_invalid_yaml_syntax" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityPolicyParser" .
+
+<test:tests/test_quality_policy.py/TestQualityPolicyParser/test_parse_missing_required_fields> a test:TestCase ;
+    test:testClass "TestQualityPolicyParser" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_parse_missing_required_fields" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityPolicyParser" .
+
+<test:tests/test_quality_policy.py/TestQualityPolicyParser/test_parse_valid_policy> a test:TestCase ;
+    test:testClass "TestQualityPolicyParser" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_parse_valid_policy" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityPolicyParser" .
+
+<test:tests/test_quality_policy.py/TestQualityThresholds/test_test_coverage_threshold> a test:TestCase ;
+    test:testClass "TestQualityThresholds" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_test_coverage_threshold" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityThresholds" .
+
+<test:tests/test_quality_policy.py/TestQualityThresholds/test_threshold_validation> a test:TestCase ;
+    test:testClass "TestQualityThresholds" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_threshold_validation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "QualityThresholds" .
+
+<test:tests/test_quality_policy.py/TestStratificationPolicyIntegration/test_self_analysis_level_constraint> a test:TestCase ;
+    test:testClass "TestStratificationPolicyIntegration" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_self_analysis_level_constraint" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationPolicyIntegration" .
+
+<test:tests/test_quality_policy.py/TestStratificationPolicyIntegration/test_stratification_policy_max_level> a test:TestCase ;
+    test:testClass "TestStratificationPolicyIntegration" ;
+    test:testFilePath "tests/test_quality_policy.py" ;
+    test:testName "test_stratification_policy_max_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationPolicyIntegration" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardBasics/test_level_0_to_level_1_allowed> a test:TestCase ;
+    test:testClass "TestStratificationGuardBasics" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_level_0_to_level_1_allowed" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardBasics" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardBasics/test_level_1_to_level_0_forbidden> a test:TestCase ;
+    test:testClass "TestStratificationGuardBasics" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_level_1_to_level_0_forbidden" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardBasics" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardBasics/test_level_1_to_level_2_allowed> a test:TestCase ;
+    test:testClass "TestStratificationGuardBasics" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_level_1_to_level_2_allowed" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardBasics" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardBasics/test_same_level_transition_forbidden> a test:TestCase ;
+    test:testClass "TestStratificationGuardBasics" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_same_level_transition_forbidden" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardBasics" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardBasics/test_skip_level_allowed> a test:TestCase ;
+    test:testClass "TestStratificationGuardBasics" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_skip_level_allowed" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardBasics" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardIntegration/test_integration_with_ontology_manager> a test:TestCase ;
+    test:testClass "TestStratificationGuardIntegration" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_integration_with_ontology_manager" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardIntegration" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardLevelTracking/test_get_current_level> a test:TestCase ;
+    test:testClass "TestStratificationGuardLevelTracking" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_get_current_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardLevelTracking" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardLevelTracking/test_pop_level> a test:TestCase ;
+    test:testClass "TestStratificationGuardLevelTracking" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_pop_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardLevelTracking" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardLevelTracking/test_pop_level_below_zero_forbidden> a test:TestCase ;
+    test:testClass "TestStratificationGuardLevelTracking" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_pop_level_below_zero_forbidden" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardLevelTracking" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardLevelTracking/test_push_level> a test:TestCase ;
+    test:testClass "TestStratificationGuardLevelTracking" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_push_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardLevelTracking" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardMetaEval/test_meta_eval_at_higher_level> a test:TestCase ;
+    test:testClass "TestStratificationGuardMetaEval" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_meta_eval_at_higher_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardMetaEval" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardMetaEval/test_meta_eval_detects_cycle> a test:TestCase ;
+    test:testClass "TestStratificationGuardMetaEval" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_meta_eval_detects_cycle" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardMetaEval" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardMetaEval/test_meta_eval_max_depth_limit> a test:TestCase ;
+    test:testClass "TestStratificationGuardMetaEval" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_meta_eval_max_depth_limit" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardMetaEval" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardQuoteUnquote/test_quote_increases_level> a test:TestCase ;
+    test:testClass "TestStratificationGuardQuoteUnquote" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_quote_increases_level" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardQuoteUnquote" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardQuoteUnquote/test_unquote_below_zero_forbidden> a test:TestCase ;
+    test:testClass "TestStratificationGuardQuoteUnquote" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_unquote_below_zero_forbidden" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardQuoteUnquote" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardQuoteUnquote/test_unquote_decreases_level_safely> a test:TestCase ;
+    test:testClass "TestStratificationGuardQuoteUnquote" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_unquote_decreases_level_safely" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardQuoteUnquote" .
+
+<test:tests/test_stratification_guard.py/TestStratificationGuardQuoteUnquote/test_unquote_to_higher_level_forbidden> a test:TestCase ;
+    test:testClass "TestStratificationGuardQuoteUnquote" ;
+    test:testFilePath "tests/test_stratification_guard.py" ;
+    test:testName "test_unquote_to_higher_level_forbidden" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "StratificationGuardQuoteUnquote" .
+
+<test:tests/unit/test_meta_validation.py//test_check_stratification_consistency_exceeds_max> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_check_stratification_consistency_exceeds_max" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "check_stratification_consistency_exceeds_max" .
+
+<test:tests/unit/test_meta_validation.py//test_check_stratification_consistency_no_violations> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_check_stratification_consistency_no_violations" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "check_stratification_consistency_no_violations" .
+
+<test:tests/unit/test_meta_validation.py//test_detect_circular_dependencies_none> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_detect_circular_dependencies_none" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "detect_circular_dependencies_none" .
+
+<test:tests/unit/test_meta_validation.py//test_detect_circular_dependencies_simple_cycle> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_detect_circular_dependencies_simple_cycle" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "detect_circular_dependencies_simple_cycle" .
+
+<test:tests/unit/test_meta_validation.py//test_detect_universe_violations> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_detect_universe_violations" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "detect_universe_violations" .
+
+<test:tests/unit/test_meta_validation.py//test_export_self_analysis_rdf> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_export_self_analysis_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_self_analysis_rdf" .
+
+<test:tests/unit/test_meta_validation.py//test_export_self_analysis_with_commit_sha> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_export_self_analysis_with_commit_sha" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_self_analysis_with_commit_sha" .
+
+<test:tests/unit/test_meta_validation.py//test_export_self_analysis_with_violations> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_export_self_analysis_with_violations" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_self_analysis_with_violations" .
+
+<test:tests/unit/test_meta_validation.py//test_file_path_to_module> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_file_path_to_module" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "file_path_to_module" .
+
+<test:tests/unit/test_meta_validation.py//test_perform_self_analysis_non_self> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_perform_self_analysis_non_self" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "perform_self_analysis_non_self" .
+
+<test:tests/unit/test_meta_validation.py//test_perform_self_analysis_self_referential> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_perform_self_analysis_self_referential" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "perform_self_analysis_self_referential" .
+
+<test:tests/unit/test_meta_validation.py//test_perform_self_analysis_stratification_guard> a test:TestCase ;
+    test:testFilePath "tests/unit/test_meta_validation.py" ;
+    test:testName "test_perform_self_analysis_stratification_guard" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "perform_self_analysis_stratification_guard" .
+
+<test:tests/unit/test_quality_recommendations.py//test_convert_refactoring_task_to_recommendation> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_convert_refactoring_task_to_recommendation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "convert_refactoring_task_to_recommendation" .
+
+<test:tests/unit/test_quality_recommendations.py//test_delta_q_non_negative> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_delta_q_non_negative" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "delta_q_non_negative" .
+
+<test:tests/unit/test_quality_recommendations.py//test_export_recommendations_priority_values> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_export_recommendations_priority_values" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_recommendations_priority_values" .
+
+<test:tests/unit/test_quality_recommendations.py//test_export_recommendations_rdf> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_export_recommendations_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_recommendations_rdf" .
+
+<test:tests/unit/test_quality_recommendations.py//test_generate_recommendations_from_project_empty> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_generate_recommendations_from_project_empty" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "generate_recommendations_from_project_empty" .
+
+<test:tests/unit/test_quality_recommendations.py//test_parse_effort_hours_fallback> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_parse_effort_hours_fallback" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "parse_effort_hours_fallback" .
+
+<test:tests/unit/test_quality_recommendations.py//test_parse_effort_hours_minutes> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_parse_effort_hours_minutes" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "parse_effort_hours_minutes" .
+
+<test:tests/unit/test_quality_recommendations.py//test_parse_effort_hours_range> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_parse_effort_hours_range" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "parse_effort_hours_range" .
+
+<test:tests/unit/test_quality_recommendations.py//test_parse_effort_hours_single_hour> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_parse_effort_hours_single_hour" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "parse_effort_hours_single_hour" .
+
+<test:tests/unit/test_quality_recommendations.py//test_project_to_refactoring_input> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_project_to_refactoring_input" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "project_to_refactoring_input" .
+
+<test:tests/unit/test_quality_recommendations.py//test_recommendation_sorting_by_delta_q> a test:TestCase ;
+    test:testFilePath "tests/unit/test_quality_recommendations.py" ;
+    test:testName "test_recommendation_sorting_by_delta_q" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "recommendation_sorting_by_delta_q" .
+
+<test:tests/unit/test_smoke.py//test_critical_imports> a test:TestCase ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_critical_imports" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "critical_imports" .
+
+<test:tests/unit/test_smoke.py//test_ontology_manager_import> a test:TestCase ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_ontology_manager_import" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ontology_manager_import" .
+
+<test:tests/unit/test_smoke.py//test_repo_loader_import> a test:TestCase ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_repo_loader_import" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "repo_loader_import" .
+
+<test:tests/unit/test_smoke.py/TestAnalyzersSmoke/test_complexity_analyzer_import> a test:TestCase ;
+    test:testClass "TestAnalyzersSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_complexity_analyzer_import" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AnalyzersSmoke" .
+
+<test:tests/unit/test_smoke.py/TestAnalyzersSmoke/test_history_analyzer_import> a test:TestCase ;
+    test:testClass "TestAnalyzersSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_history_analyzer_import" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AnalyzersSmoke" .
+
+<test:tests/unit/test_smoke.py/TestAnalyzersSmoke/test_hotspots_analyzer_import> a test:TestCase ;
+    test:testClass "TestAnalyzersSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_hotspots_analyzer_import" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AnalyzersSmoke" .
+
+<test:tests/unit/test_smoke.py/TestAnalyzersSmoke/test_structure_analyzer_import> a test:TestCase ;
+    test:testClass "TestAnalyzersSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_structure_analyzer_import" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AnalyzersSmoke" .
+
+<test:tests/unit/test_smoke.py/TestAnalyzersSmoke/test_weakness_analyzer_import> a test:TestCase ;
+    test:testClass "TestAnalyzersSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_weakness_analyzer_import" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "AnalyzersSmoke" .
+
+<test:tests/unit/test_smoke.py/TestCLISmoke/test_analyze_command_exists> a test:TestCase ;
+    test:testClass "TestCLISmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_analyze_command_exists" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLISmoke" .
+
+<test:tests/unit/test_smoke.py/TestCLISmoke/test_cli_help> a test:TestCase ;
+    test:testClass "TestCLISmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_cli_help" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLISmoke" .
+
+<test:tests/unit/test_smoke.py/TestCLISmoke/test_cli_version> a test:TestCase ;
+    test:testClass "TestCLISmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_cli_version" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLISmoke" .
+
+<test:tests/unit/test_smoke.py/TestCLISmoke/test_diff_command_exists> a test:TestCase ;
+    test:testClass "TestCLISmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_diff_command_exists" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLISmoke" .
+
+<test:tests/unit/test_smoke.py/TestCLISmoke/test_gate_command_exists> a test:TestCase ;
+    test:testClass "TestCLISmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_gate_command_exists" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLISmoke" .
+
+<test:tests/unit/test_smoke.py/TestCLISmoke/test_history_command_exists> a test:TestCase ;
+    test:testClass "TestCLISmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_history_command_exists" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLISmoke" .
+
+<test:tests/unit/test_smoke.py/TestCLISmoke/test_structure_command_exists> a test:TestCase ;
+    test:testClass "TestCLISmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_structure_command_exists" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CLISmoke" .
+
+<test:tests/unit/test_smoke.py/TestConfigSmoke/test_analyze_config_creation> a test:TestCase ;
+    test:testClass "TestConfigSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_analyze_config_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ConfigSmoke" .
+
+<test:tests/unit/test_smoke.py/TestConfigSmoke/test_config_loading> a test:TestCase ;
+    test:testClass "TestConfigSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_config_loading" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ConfigSmoke" .
+
+<test:tests/unit/test_smoke.py/TestCoreModelSmoke/test_filenode_creation> a test:TestCase ;
+    test:testClass "TestCoreModelSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_filenode_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CoreModelSmoke" .
+
+<test:tests/unit/test_smoke.py/TestCoreModelSmoke/test_project_add_file> a test:TestCase ;
+    test:testClass "TestCoreModelSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_project_add_file" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CoreModelSmoke" .
+
+<test:tests/unit/test_smoke.py/TestCoreModelSmoke/test_project_creation> a test:TestCase ;
+    test:testClass "TestCoreModelSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_project_creation" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "CoreModelSmoke" .
+
+<test:tests/unit/test_smoke.py/TestExportersSmoke/test_jsonld_export> a test:TestCase ;
+    test:testClass "TestExportersSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_jsonld_export" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ExportersSmoke" .
+
+<test:tests/unit/test_smoke.py/TestExportersSmoke/test_markdown_export> a test:TestCase ;
+    test:testClass "TestExportersSmoke" ;
+    test:testFilePath "tests/unit/test_smoke.py" ;
+    test:testName "test_markdown_export" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "ExportersSmoke" .
+
+<test:tests/unit/test_test_coverage.py//test_enrich_graph_with_actual_coverage> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_enrich_graph_with_actual_coverage" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "enrich_graph_with_actual_coverage" .
+
+<test:tests/unit/test_test_coverage.py//test_enrich_graph_with_test_coverage> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_enrich_graph_with_test_coverage" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "enrich_graph_with_test_coverage" .
+
+<test:tests/unit/test_test_coverage.py//test_export_test_coverage_rdf> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_export_test_coverage_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_test_coverage_rdf" .
+
+<test:tests/unit/test_test_coverage.py//test_extract_tested_concept_from_class> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_extract_tested_concept_from_class" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "extract_tested_concept_from_class" .
+
+<test:tests/unit/test_test_coverage.py//test_extract_tested_concept_from_function> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_extract_tested_concept_from_function" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "extract_tested_concept_from_function" .
+
+<test:tests/unit/test_test_coverage.py//test_extract_tested_concept_none> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_extract_tested_concept_none" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "extract_tested_concept_none" .
+
+<test:tests/unit/test_test_coverage.py//test_integration_with_rdf_export> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_integration_with_rdf_export" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "integration_with_rdf_export" .
+
+<test:tests/unit/test_test_coverage.py//test_parse_coverage_json> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_parse_coverage_json" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "parse_coverage_json" .
+
+<test:tests/unit/test_test_coverage.py//test_parse_coverage_json_not_found> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_parse_coverage_json_not_found" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "parse_coverage_json_not_found" .
+
+<test:tests/unit/test_test_coverage.py//test_parse_pytest_collection> a test:TestCase ;
+    test:testFilePath "tests/unit/test_test_coverage.py" ;
+    test:testName "test_parse_pytest_collection" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "parse_pytest_collection" .
+
+<test:tests/unit/test_trs_rules.py//test_enrich_graph_with_trs_rules> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_enrich_graph_with_trs_rules" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "enrich_graph_with_trs_rules" .
+
+<test:tests/unit/test_trs_rules.py//test_export_trs_systems_rdf> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_export_trs_systems_rdf" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "export_trs_systems_rdf" .
+
+<test:tests/unit/test_trs_rules.py//test_extract_rules_from_rdf_module> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_extract_rules_from_rdf_module" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "extract_rules_from_rdf_module" .
+
+<test:tests/unit/test_trs_rules.py//test_extract_rules_from_spdx_module> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_extract_rules_from_spdx_module" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "extract_rules_from_spdx_module" .
+
+<test:tests/unit/test_trs_rules.py//test_extract_trs_systems> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_extract_trs_systems" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "extract_trs_systems" .
+
+<test:tests/unit/test_trs_rules.py//test_integration_with_rdf_export> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_integration_with_rdf_export" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "integration_with_rdf_export" .
+
+<test:tests/unit/test_trs_rules.py//test_rule_extraction_regex_robustness> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_rule_extraction_regex_robustness" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "rule_extraction_regex_robustness" .
+
+<test:tests/unit/test_trs_rules.py//test_spdx_idempotence_rule_extraction> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_spdx_idempotence_rule_extraction" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "spdx_idempotence_rule_extraction" .
+
+<test:tests/unit/test_trs_rules.py//test_trs_rule_structure> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_trs_rule_structure" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_rule_structure" .
+
+<test:tests/unit/test_trs_rules.py//test_trs_system_verification_metadata> a test:TestCase ;
+    test:testFilePath "tests/unit/test_trs_rules.py" ;
+    test:testName "test_trs_system_verification_metadata" ;
+    test:testStatus "unknown" ;
+    test:testedConcept "trs_system_verification_metadata" .
+
+<trs:semver_trs/rule_1> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "A ∩ A" ;
+    trs:rightHandSide "A" ;
+    trs:ruleDescription "idempotence" ;
+    trs:ruleName "semver_trs_rule_1" .
+
+<trs:semver_trs/rule_10> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "[0,∞) ∩ A" ;
+    trs:rightHandSide "A, [0,∞) ∪ A → [0,∞)" ;
+    trs:ruleDescription "universal/identity" ;
+    trs:ruleName "semver_trs_rule_10" .
+
+<trs:semver_trs/rule_2> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "A ∪ A" ;
+    trs:rightHandSide "A" ;
+    trs:ruleDescription "idempotence" ;
+    trs:ruleName "semver_trs_rule_2" .
+
+<trs:semver_trs/rule_3> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "A ∩ B" ;
+    trs:rightHandSide "B ∩ A" ;
+    trs:ruleDescription "commutativity" ;
+    trs:ruleName "semver_trs_rule_3" .
+
+<trs:semver_trs/rule_4> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "A ∪ B" ;
+    trs:rightHandSide "B ∪ A" ;
+    trs:ruleDescription "commutativity" ;
+    trs:ruleName "semver_trs_rule_4" .
+
+<trs:semver_trs/rule_5> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "A ∩ (B ∪ C)" ;
+    trs:rightHandSide "(A ∩ B) ∪" ;
+    trs:ruleDescription "A ∩ C" ;
+    trs:ruleName "semver_trs_rule_5" .
+
+<trs:semver_trs/rule_6> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "A ∪ (B ∩ C)" ;
+    trs:rightHandSide "(A ∪ B) ∩" ;
+    trs:ruleDescription "A ∪ C" ;
+    trs:ruleName "semver_trs_rule_6" .
+
+<trs:semver_trs/rule_9> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:semver_trs> ;
+    trs:leftHandSide "∅ ∩ A" ;
+    trs:rightHandSide "∅, ∅ ∪ A → A" ;
+    trs:ruleDescription "identity" ;
+    trs:ruleName "semver_trs_rule_9" .
+
+<trs:spdx_trs/rule_1> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "A OR A" ;
+    trs:rightHandSide "A" ;
+    trs:ruleDescription "idempotence" ;
+    trs:ruleName "spdx_trs_rule_1" .
+
+<trs:spdx_trs/rule_2> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "A AND A" ;
+    trs:rightHandSide "A" ;
+    trs:ruleDescription "idempotence" ;
+    trs:ruleName "spdx_trs_rule_2" .
+
+<trs:spdx_trs/rule_3> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "A OR B" ;
+    trs:rightHandSide "sort([A, B])" ;
+    trs:ruleDescription "commutativity" ;
+    trs:ruleName "spdx_trs_rule_3" .
+
+<trs:spdx_trs/rule_4> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "A AND B" ;
+    trs:rightHandSide "sort([A, B])" ;
+    trs:ruleDescription "commutativity" ;
+    trs:ruleName "spdx_trs_rule_4" .
+
+<trs:spdx_trs/rule_5> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "A OR (A AND B)" ;
+    trs:rightHandSide "A" ;
+    trs:ruleDescription "absorption" ;
+    trs:ruleName "spdx_trs_rule_5" .
+
+<trs:spdx_trs/rule_6> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "(A AND B) OR A" ;
+    trs:rightHandSide "A" ;
+    trs:ruleDescription "absorption symmetric" ;
+    trs:ruleName "spdx_trs_rule_6" .
+
+<trs:spdx_trs/rule_7> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "(A AND B) AND C" ;
+    trs:rightHandSide "A AND" ;
+    trs:ruleDescription "B AND C" ;
+    trs:ruleName "spdx_trs_rule_7" .
+
+<trs:spdx_trs/rule_8> a trs:Rule ;
+    trs:inSystem <repo:repoq-demo/trs:spdx_trs> ;
+    trs:leftHandSide "(A OR B) OR C" ;
+    trs:rightHandSide "A OR" ;
+    trs:ruleDescription "B OR C" ;
+    trs:ruleName "spdx_trs_rule_8" .
+
+<repo:repoq-demo/trs:semver_trs> a trs:RewriteSystem ;
+    trs:confluenceProven false ;
+    trs:criticalPairsCount "0"^^xsd:nonNegativeInteger ;
+    trs:soundnessProven true ;
+    trs:systemName "Semver Trs" ;
+    trs:terminationProven true .
+
+<repo:repoq-demo/trs:spdx_trs> a trs:RewriteSystem ;
+    trs:confluenceProven true ;
+    trs:criticalPairsCount "0"^^xsd:nonNegativeInteger ;
+    trs:soundnessProven true ;
+    trs:systemName "Spdx Trs" ;
+    trs:terminationProven true .

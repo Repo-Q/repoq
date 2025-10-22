@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![CI](https://github.com/kirill-0440/repoq/workflows/CI/badge.svg)](https://github.com/kirill-0440/repoq/actions/workflows/ci.yml)
 [![SHACL](https://github.com/kirill-0440/repoq/workflows/SHACL%20Semantic%20Validation/badge.svg)](https://github.com/kirill-0440/repoq/actions/workflows/shacl-validation.yml)
-[![Tests](https://img.shields.io/badge/tests-229%20passing-brightgreen)](tests/)
-[![Coverage](https://img.shields.io/badge/coverage-63%25-yellow)](#phase-55-coverage)
+[![Tests](https://img.shields.io/badge/tests-407%20passing-brightgreen)](tests/)
+[![Coverage](https://img.shields.io/badge/coverage-70%25-yellowgreen)](tests/)
 [![Docker](https://img.shields.io/badge/docker-161MB-blue)](https://hub.docker.com/r/kirill0440/repoq)
 [![Status](https://img.shields.io/badge/status-beta-orange)](https://github.com/kirill-0440/repoq)
 
@@ -27,11 +27,15 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 - ⚙️ **Quality Gates**: CI/CD-ready quality comparison and admission predicates
 - ✅ **SHACL Validation**: Semantic constraint checking with CI/CD integration
 - 🔄 **Meta-Loop Ontologies**: Self-analysis with stratified reflection (meta, test, trs, quality, docs)
+- 🧪 **Test Coverage Export**: pytest coverage → RDF/Turtle (test:TestCase, test:Coverage)
+- 🔀 **TRS Rules Extraction**: Normalization rules → RDF/Turtle (trs:Rule, trs:RewriteSystem)
+- 📈 **Quality Recommendations**: ΔQ-based prioritization → RDF/Turtle (quality:Recommendation)
+- 🔁 **Self-Validation**: Meta-loop closure with circular dependency detection (meta:SelfAnalysis)
 
 **In Development:**
 
-- Test coverage RDF export, TRS rules extraction, ΔQ recommendations
 - Quality certificates, statistical coupling analysis
+- SPARQL query endpoint, GraphViz RDF visualization
 
 ## Quick Start
 
@@ -87,6 +91,7 @@ repoq refactor-plan baseline.jsonld --format github -o issues.json
 RepoQ now captures **detailed per-function complexity metrics**, enabling targeted refactoring:
 
 **What's captured:**
+
 - Function name and cyclomatic complexity (CCN)
 - Lines of code (LOC), parameter count
 - Line range (start/end) for quick navigation
@@ -112,21 +117,69 @@ RepoQ now captures **detailed per-function complexity metrics**, enabling target
 ```
 
 **Benefits:**
+
 - ✅ Know **exactly which function** to refactor (no manual analysis needed!)
 - ✅ Jump directly to problematic code (line numbers provided)
 - ✅ Prioritized by complexity (top-3 most complex functions first)
 - ✅ Better ΔQ estimates (function-level granularity)
 
 **Old approach** (file-level only):
-```
+
+```text
 ❌ "Reduce complexity from 26.0 to <10"  
    (Which function? Where? Need to run lizard manually...)
 ```
 
 **New approach** (per-function):
-```
+
+```text
 ✅ "Refactor function `_run_command` (CCN=26, lines 593-772)"  
    (Exact target, no guesswork!)
+```
+
+## Semantic Web Export (Phase 2)
+
+RepoQ generates **rich RDF/Turtle data** with 6 semantic enrichment layers:
+
+```bash
+# Export with all enrichment layers
+repoq analyze . --ttl-output analysis.ttl \
+  --enrich-meta \
+  --enrich-test-coverage \
+  --enrich-trs-rules \
+  --enrich-quality-recommendations \
+  --enrich-self-analysis
+
+# SHACL validation against ontologies
+python -c "
+from repoq.core.rdf_export import validate_shapes
+result = validate_shapes(project, 'repoq/shapes/')
+print(f'Conforms: {result[\"conforms\"]}')
+"
+```
+
+**Enrichment Layers:**
+
+1. **Meta-Ontology** (`meta:SelfAnalysis`): Stratified self-analysis with Russell's paradox guards
+2. **Test Coverage** (`test:TestCase`, `test:Coverage`): pytest coverage → RDF triples
+3. **TRS Rules** (`trs:Rule`, `trs:RewriteSystem`): Normalization rules with confluence tracking
+4. **Quality Recommendations** (`quality:Recommendation`): ΔQ-based refactoring priorities
+5. **Self-Validation** (`meta:SelfAnalysis`): Circular dependency detection, universe violations
+6. **Base Analysis** (`repo:Project`, `repo:File`): Structure, complexity, dependencies
+
+**SPARQL Query Example:**
+
+```sparql
+# Find top-5 recommendations by ΔQ
+SELECT ?rec ?file ?deltaQ ?priority
+WHERE {
+  ?rec a quality:Recommendation ;
+       quality:deltaQ ?deltaQ ;
+       quality:priority ?priority ;
+       quality:targetsFile ?file .
+}
+ORDER BY DESC(?deltaQ)
+LIMIT 5
 ```
 
 ## CI/CD Integration
@@ -138,6 +191,12 @@ RepoQ now captures **detailed per-function complexity metrics**, enabling target
     pip install repoq[full]
     repoq full . --format json > quality.json
     repoq structure . --format markdown > QUALITY_REPORT.md
+
+# .github/workflows/shacl-validation.yml (automatic)
+- name: SHACL Semantic Validation
+  run: |
+    repoq analyze . --ttl-output analysis.ttl --enrich-meta
+    python -c "from repoq.core.rdf_export import validate_shapes; ..."
 ```
 
 ## Output Example
@@ -164,9 +223,10 @@ RepoQ now captures **detailed per-function complexity metrics**, enabling target
 
 ## Roadmap
 
-**T+30 (Production Ready)**: 80% test coverage, Docker, GitHub Actions, SHACL validation  
-**T+60 (Semantic Certs)**: Quality certificates, PR bot, SPARQL queries  
-**T+90 (Advanced Analytics)**: Statistical coupling, SBOM security, ML patterns
+**✅ Phase 1 (COMPLETE)**: Core analysis, refactoring plans, quality gates, CI/CD integration  
+**✅ Phase 2 (COMPLETE)**: Meta-loop ontologies, RDF export, SHACL validation, self-analysis  
+**🚧 Phase 3 (In Progress)**: SPARQL endpoint, GraphViz RDF visualization, quality certificates  
+**📅 Phase 4 (Planned)**: Statistical coupling, SBOM security, ML-based recommendations
 
 ## Configuration
 
