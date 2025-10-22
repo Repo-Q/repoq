@@ -15,7 +15,7 @@
 <https://github.com/kirill-0440/repoq/meta/self-analysis> a meta:SelfAnalysis ;
     meta:analyzesSelf <https://github.com/kirill-0440/repoq> ;
     meta:maxSafeLevel "2"^^xsd:nonNegativeInteger ;
-    meta:performedAt "2025-10-22T11:17:09.957979+00:00"^^xsd:dateTime ;
+    meta:performedAt "2025-10-22T11:31:03.571610+00:00"^^xsd:dateTime ;
     meta:readOnlyMode true ;
     meta:safetyChecksPassed false ;
     meta:selfReferenceDetected true ;
@@ -37,25 +37,27 @@
 
 <https://github.com/kirill-0440/repoq/meta/self_analysis> a meta:SelfAnalysis ;
     meta:analyzedProject <https://github.com/kirill-0440/repoq> ;
-    meta:performedAt "2025-10-22T11:17:09.936371+00:00"^^xsd:dateTime ;
+    meta:performedAt "2025-10-22T11:31:03.548799+00:00"^^xsd:dateTime ;
     meta:readOnlyMode true ;
     meta:safetyChecksPassed true ;
     meta:stratificationLevel "0"^^xsd:nonNegativeInteger .
 
 <https://github.com/kirill-0440/repoq/quality/complexity_gate> a quality:ComplexityGate ;
-    quality:actualValue 6.836538461538462 ;
+    quality:actualValue 6.586538461538462 ;
     quality:gateStatus "passed" ;
     quality:threshold 15.0 .
 
 <https://github.com/kirill-0440/repoq/quality/recommendation_1> a quality:Recommendation ;
-    quality:deltaQ 149.0 ;
+    quality:deltaQ 114.0 ;
     quality:estimatedEffortHours 6.0 ;
     quality:priority "critical" ;
-    quality:recommendationDescription """Issues: High cyclomatic complexity (33.0) | Recommendations: 🔴 Refactor function `to_jsonld` (CCN=33, LOC=187, lines 68-336)
-   → Expected ΔQ: +199.7 points (100% of file's potential)
-   → Estimated effort: 3-4 hours; 🔥 Reduce change frequency (refactor to stabilize)""" ;
-    quality:recommendationTitle "Refactor jsonld.py" ;
-    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/core/jsonld.py> .
+    quality:recommendationDescription """Issues: High cyclomatic complexity (26.0); Large file size (568 LOC) | Recommendations: 🔴 Refactor function `generate_recommendations` (CCN=26, LOC=76, lines 291-402)
+   → Expected ΔQ: +143.3 points (64% of file's potential)
+   → Estimated effort: 3-4 hours; 🔴 Refactor function `generate_refactoring_plan` (CCN=18, LOC=74, lines 449-568)
+   → Expected ΔQ: +80.1 points (35% of file's potential)
+   → Estimated effort: 2-3 hours""" ;
+    quality:recommendationTitle "Refactor refactoring.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/refactoring.py> .
 
 <https://github.com/kirill-0440/repoq/quality/recommendation_10> a quality:Recommendation ;
     quality:deltaQ 63.0 ;
@@ -68,30 +70,6 @@
     quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/analyzers/complexity.py> .
 
 <https://github.com/kirill-0440/repoq/quality/recommendation_2> a quality:Recommendation ;
-    quality:deltaQ 131.0 ;
-    quality:estimatedEffortHours 6.0 ;
-    quality:priority "critical" ;
-    quality:recommendationDescription """Issues: High cyclomatic complexity (30.0) | Recommendations: 🔴 Refactor function `_run_git` (CCN=30, LOC=102, lines 271-377)
-   → Expected ΔQ: +158.8 points (78% of file's potential)
-   → Estimated effort: 3-4 hours; 🟡 Refactor function `_process_commit_metadata` (CCN=14, LOC=40, lines 89-141)
-   → Expected ΔQ: +35.8 points (17% of file's potential)
-   → Estimated effort: 1-2 hours""" ;
-    quality:recommendationTitle "Refactor history.py" ;
-    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/analyzers/history.py> .
-
-<https://github.com/kirill-0440/repoq/quality/recommendation_3> a quality:Recommendation ;
-    quality:deltaQ 114.0 ;
-    quality:estimatedEffortHours 6.0 ;
-    quality:priority "critical" ;
-    quality:recommendationDescription """Issues: High cyclomatic complexity (26.0); Large file size (568 LOC) | Recommendations: 🔴 Refactor function `generate_recommendations` (CCN=26, LOC=76, lines 291-402)
-   → Expected ΔQ: +143.3 points (64% of file's potential)
-   → Estimated effort: 3-4 hours; 🔴 Refactor function `generate_refactoring_plan` (CCN=18, LOC=74, lines 449-568)
-   → Expected ΔQ: +80.1 points (35% of file's potential)
-   → Estimated effort: 2-3 hours""" ;
-    quality:recommendationTitle "Refactor refactoring.py" ;
-    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/refactoring.py> .
-
-<https://github.com/kirill-0440/repoq/quality/recommendation_4> a quality:Recommendation ;
     quality:deltaQ 114.0 ;
     quality:estimatedEffortHours 6.0 ;
     quality:priority "critical" ;
@@ -103,7 +81,7 @@
     quality:recommendationTitle "Refactor rdf_export.py" ;
     quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/core/rdf_export.py> .
 
-<https://github.com/kirill-0440/repoq/quality/recommendation_5> a quality:Recommendation ;
+<https://github.com/kirill-0440/repoq/quality/recommendation_3> a quality:Recommendation ;
     quality:deltaQ 111.0 ;
     quality:estimatedEffortHours 6.0 ;
     quality:priority "critical" ;
@@ -115,7 +93,7 @@
     quality:recommendationTitle "Refactor cli.py" ;
     quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/cli.py> .
 
-<https://github.com/kirill-0440/repoq/quality/recommendation_6> a quality:Recommendation ;
+<https://github.com/kirill-0440/repoq/quality/recommendation_4> a quality:Recommendation ;
     quality:deltaQ 96.0 ;
     quality:estimatedEffortHours 6.0 ;
     quality:priority "critical" ;
@@ -127,7 +105,7 @@
     quality:recommendationTitle "Refactor gate.py" ;
     quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/gate.py> .
 
-<https://github.com/kirill-0440/repoq/quality/recommendation_7> a quality:Recommendation ;
+<https://github.com/kirill-0440/repoq/quality/recommendation_5> a quality:Recommendation ;
     quality:deltaQ 86.0 ;
     quality:estimatedEffortHours 6.0 ;
     quality:priority "critical" ;
@@ -138,6 +116,28 @@
    → Estimated effort: 2-3 hours""" ;
     quality:recommendationTitle "Refactor structure.py" ;
     quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/analyzers/structure.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_6> a quality:Recommendation ;
+    quality:deltaQ 79.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (19.0) | Recommendations: 🔴 Refactor function `to_jsonld` (CCN=19, LOC=82, lines 279-412)
+   → Expected ΔQ: +84.3 points (100% of file's potential)
+   → Estimated effort: 2-3 hours; 🔥 Reduce change frequency (refactor to stabilize)""" ;
+    quality:recommendationTitle "Refactor jsonld.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/core/jsonld.py> .
+
+<https://github.com/kirill-0440/repoq/quality/recommendation_7> a quality:Recommendation ;
+    quality:deltaQ 71.0 ;
+    quality:estimatedEffortHours 6.0 ;
+    quality:priority "critical" ;
+    quality:recommendationDescription """Issues: High cyclomatic complexity (18.0) | Recommendations: 🟠 Refactor function `_process_commits` (CCN=18, LOC=63, lines 351-424)
+   → Expected ΔQ: +71.1 points (48% of file's potential)
+   → Estimated effort: 2-3 hours; 🟡 Refactor function `_process_commit_metadata` (CCN=14, LOC=40, lines 89-141)
+   → Expected ΔQ: +37.4 points (25% of file's potential)
+   → Estimated effort: 1-2 hours""" ;
+    quality:recommendationTitle "Refactor history.py" ;
+    quality:targetsFile <https://github.com/kirill-0440/repoq/repoq/analyzers/history.py> .
 
 <https://github.com/kirill-0440/repoq/quality/recommendation_8> a quality:Recommendation ;
     quality:deltaQ 66.0 ;
@@ -166,8 +166,8 @@
         schema:SoftwareSourceCode,
         codemeta:SoftwareSourceCode,
         okn_sd:Software ;
-    dcterms:modified "2025-10-22T12:57:24+02:00" ;
-    prov:generatedAtTime "2025-10-22T11:17:09.263050+00:00" ;
+    dcterms:modified "2025-10-22T13:30:52+02:00" ;
+    prov:generatedAtTime "2025-10-22T11:31:02.868227+00:00" ;
     prov:wasGeneratedBy "2.0.0" ;
     schema:codeRepository "https://github.com/kirill-0440/repoq" ;
     schema:description "Repository Quality Analysis with Semantic Web Export" ;
