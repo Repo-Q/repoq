@@ -5,6 +5,42 @@ All notable changes to RepoQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-alpha.5] - 2025-01-15
+
+### Changed - SSoT Enforcement: RDF-only workflow ✅
+
+**Removed Extraction** (Markdown → RDF):
+- ❌ Removed `scripts/extract_vdad_rdf.py` (violates SSoT principle)
+- ❌ Removed `tests/vdad/test_vdad_extraction.py` (obsolete)
+- Rationale: Extraction creates dual source of truth (Markdown ↔ RDF drift)
+
+**Enforced Generation** (RDF → Markdown):
+- ✅ `scripts/generate_vdad_markdown.py` — ONLY workflow
+- ✅ New tests: `tests/vdad/test_vdad_generation.py` (7/7 passing)
+- Workflow: Edit `.repoq/vdad/*.ttl` → Generate `docs/vdad/*.md`
+
+**Updated ADR-014**:
+- Workflow diagram: RDF (edit) → Markdown (generate)
+- Rules: No Markdown → RDF extraction (one-way transformation)
+- Migration: Manual RDF editing or Protégé/VS Code extensions
+
+**Traceability:**
+- ADR-014: Single Source of Truth (.repoq/ for RDF)
+- FR-10: Reproducibility (RDF checksums)
+- Theorem A: Reproducibility (no drift)
+
+**Gates:**
+- ✅ Soundness: RDF → Markdown deterministic
+- ✅ SSoT enforced: No bidirectional sync
+- ✅ No drift: Markdown always generated from RDF
+
+**Statistics:**
+- Removed: 250+ lines (extractor)
+- Removed: 300+ lines (extraction tests)
+- Added: 200+ lines (generation tests)
+- Tests: 7/7 passing (100%)
+- Commit: TBD
+
 ## [2.0.0-alpha.4] - 2025-01-15
 
 ### Added - ADR-014: Single Source of Truth Principle ✅

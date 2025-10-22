@@ -19,6 +19,23 @@
 
 **Принцип**: `.repoq/` — единственный источник истины для всех RDF-артефактов.
 
+### Workflow
+
+**SSoT Flow** (правильный):
+
+```text
+1. EDIT: .repoq/vdad/phase2-values.ttl (hand-edit RDF)
+2. GENERATE: python scripts/generate_vdad_markdown.py
+3. OUTPUT: docs/vdad/phase2-values.md (generated)
+4. COMMIT: Both .ttl (source) and .md (generated)
+```
+
+**Направление**: RDF → Markdown (только одно направление!)
+
+- ✅ Edit RDF directly
+- ✅ Generate Markdown from RDF
+- ❌ Extract RDF from Markdown (eliminated)
+
 ### Структура
 
 ```text
@@ -48,11 +65,12 @@ docs/
 
 ### Правила
 
-1. **Editing**: Изменения вносятся только в `.repoq/**/*.ttl`
-2. **Generation**: `docs/**/*.md` генерируются из `.repoq/**/*.ttl`
-3. **Versioning**: `.repoq/**/*.ttl` коммитятся в git (SSoT)
-4. **Documentation**: `docs/**/*.md` могут быть в `.gitignore` (generated) или коммититься для удобства review
-5. **Validation**: `scripts/validate_vdad.py` проверяет консистентность RDF ↔ Markdown (если Markdown коммитится)
+1. **Editing**: Изменения вносятся только в `.repoq/**/*.ttl` (RDF — SSoT)
+2. **Generation**: `docs/**/*.md` генерируются из `.repoq/**/*.ttl` (RDF → Markdown)
+3. **Versioning**: `.repoq/**/*.ttl` коммитятся в git (source of truth)
+4. **Documentation**: `docs/**/*.md` коммитятся для удобства review (generated)
+5. **Regeneration**: Pre-commit hook запускает `generate_vdad_markdown.py`
+6. **No extraction**: Markdown → RDF extraction удалён (одностороннее преобразование)
 
 ## Последствия
 
@@ -64,19 +82,22 @@ docs/
 4. **Traceability**: Все артефакты трассируются через RDF
 5. **SPARQL Queries**: Единая база данных для запросов
 6. **Multi-format Export**: RDF → Markdown, HTML, PDF, LaTeX, диаграммы
+7. **No Drift**: Markdown всегда синхронизирован с RDF (generated)
+8. **Deterministic**: RDF → Markdown преобразование детерминированное
 
 ### ⚠️ Cons
 
-1. **Обучение**: Разработчики должны работать с RDF (но есть генераторы Markdown)
-2. **Tooling**: Нужны скрипты для генерации Markdown из RDF
-3. **Review**: Сложнее review RDF changes (но можно ревьюить generated Markdown)
+1. **Обучение**: Разработчики должны работать с RDF напрямую
+2. **Tooling**: Нужны RDF editors (Protégé, VS Code extensions)
+3. **Bootstrap**: Первоначальная миграция Markdown → RDF (один раз)
 
 ### Миграция
 
-**Phase 5.6 (POC)**: Phase 2 Values RDF → Markdown
+**Phase 5.6 (POC)**: RDF → Markdown generation
 
-- Extractor: `scripts/extract_vdad_rdf.py` (Markdown → RDF, временно)
-- Generator: `scripts/generate_vdad_markdown.py` (RDF → Markdown)
+- ~~Extractor: `scripts/extract_vdad_rdf.py` (REMOVED)~~
+- Generator: `scripts/generate_vdad_markdown.py` (RDF → Markdown) ✅
+- Manual RDF editing (или Protégé, VS Code RDF extension)
 
 **Phase 5.7 (Full VDAD)**: Все 5 фаз VDAD
 
@@ -122,11 +143,12 @@ docs/
 
 **Реализация**:
 
-- Commit: `49d6909` (VDAD ontology + extractor)
-- Tag: `v2.0.0-alpha.3`
+- Commit: `49d6909` (VDAD ontology), `b9c1e14` (SSoT principle)
+- Tag: `v2.0.0-alpha.4`
 - Скрипты:
-  - `scripts/extract_vdad_rdf.py` (Markdown → RDF, временно для миграции)
-  - `scripts/generate_vdad_markdown.py` (RDF → Markdown, основной workflow)
+  - ~~`scripts/extract_vdad_rdf.py` (REMOVED — violates SSoT)~~
+  - `scripts/generate_vdad_markdown.py` (RDF → Markdown, SSoT compliant) ✅
+- Tests: `tests/vdad/test_vdad_generation.py` (7/7 passing)
 
 ## Связанные ADR
 
