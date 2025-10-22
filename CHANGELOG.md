@@ -5,6 +5,49 @@ All notable changes to RepoQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-alpha.4] - 2025-01-15
+
+### Added - ADR-014: Single Source of Truth Principle ✅
+
+**Architecture Decision: `.repoq/` as SSoT**
+- All RDF artifacts stored in `.repoq/` (single source of truth)
+- `docs/` contains only generated Markdown (human-readable)
+- Edit RDF → regenerate Markdown (not vice versa)
+- No sidecar TTL files in `docs/` (eliminated duplication)
+
+**New Module: `scripts/generate_vdad_markdown.py`**
+- `generate_phase2_markdown()`: RDF → Markdown generator (180+ lines)
+- Extracts values, stakeholders from `.repoq/vdad/*.ttl`
+- Generates formatted Markdown with "Generated from RDF" marker
+- Output: `docs/vdad/phase2-values-generated.md`
+
+**ADR-014 Document**: `docs/adr/adr-014-single-source-of-truth.md`
+- Rationale: Eliminate RDF ↔ Markdown duplication
+- Structure: `.repoq/` (RDF SSoT) + `docs/` (generated Markdown)
+- Workflow: Edit RDF → regenerate docs → commit both
+- Alternatives considered: Markdown SSoT (rejected), Dual SSoT (rejected)
+
+**Updated Tests**: `tests/vdad/test_vdad_extraction.py` (15/16 passing)
+- `TestMarkdownGeneration`: New test class for RDF → Markdown
+  - `test_generate_markdown_from_rdf()`: Verify generation works
+  - `test_ssot_principle_enforced()`: Verify paths (RDF in .repoq/, MD in docs/)
+- `TestEndToEnd`: Updated to verify SSoT paths
+
+**Traceability:**
+- FR-10: Reproducibility (RDF checksums in manifest)
+- V07: Observability (RDF as queryable database)
+- Theorem A: Reproducibility (SSoT eliminates drift)
+
+**Gates:**
+- ✅ Soundness: Generated Markdown matches RDF content
+- ✅ Deterministic: Same RDF → same Markdown
+- ✅ SSoT enforced: RDF in `.repoq/`, Markdown in `docs/`
+
+**Statistics:**
+- Generator: 180+ lines Python
+- Tests: 16 tests (15 passed, 1 skipped)
+- Commit: `b9c1e14`
+
 ## [2.0.0-alpha.3] - 2025-01-15
 
 ### Added - Phase 5.6: VDAD as RDF (POC) ✅
