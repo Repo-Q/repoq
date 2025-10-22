@@ -1,0 +1,174 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix story: <https://repoq.io/story#> .
+@prefix vdad: <https://repoq.io/vdad#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://repoq.io/story#phases/phase1> a story:Phase ;
+    rdfs:label "Phase 1: Workspace Foundation" ;
+    story:author "Kirill" ;
+    story:duration "PT4H30M"^^xsd:duration ;
+    story:endDate "2025-01-15T12:30:00"^^xsd:dateTime ;
+    story:hasCommit <https://repoq.io/story#commits/3e9de12>,
+        <https://repoq.io/story#commits/857cc79>,
+        <https://repoq.io/story#commits/bed0ea5>,
+        <https://repoq.io/story#commits/f007076> ;
+    story:hasGate <https://repoq.io/story#gates/phase1-confluence>,
+        <https://repoq.io/story#gates/phase1-conservative-extension>,
+        <https://repoq.io/story#gates/phase1-performance>,
+        <https://repoq.io/story#gates/phase1-reflexive-completeness>,
+        <https://repoq.io/story#gates/phase1-soundness>,
+        <https://repoq.io/story#gates/phase1-termination>,
+        <https://repoq.io/story#gates/phase1-test-coverage> ;
+    story:produces <https://repoq.io/story#artifacts/CHANGELOG.md>,
+        <https://repoq.io/story#artifacts/docs-migration-phase1-workspace.md>,
+        <https://repoq.io/story#artifacts/repoq-core-workspace.py>,
+        <https://repoq.io/story#artifacts/tests-core-test_workspace.py>,
+        <https://repoq.io/story#artifacts/tests-integration-test_gate_workspace.py> ;
+    story:startDate "2025-01-15T08:00:00"^^xsd:dateTime ;
+    story:status "completed" ;
+    vdad:implements vdad:adr-008,
+        vdad:adr-010,
+        vdad:adr-013 ;
+    vdad:satisfies vdad:fr-10,
+        vdad:nfr-01,
+        vdad:theorem-a,
+        vdad:v7 .
+
+<https://repoq.io/story#artifacts/CHANGELOG.md> a story:Artifact,
+        story:Documentation ;
+    story:commit "3e9de12" ;
+    story:language "Markdown" ;
+    story:lines 176 ;
+    story:path "CHANGELOG.md" .
+
+<https://repoq.io/story#artifacts/docs-migration-phase1-workspace.md> a story:Artifact,
+        story:Documentation ;
+    story:commit "f007076" ;
+    story:language "Markdown" ;
+    story:lines 90 ;
+    story:path "docs/migration/phase1-workspace.md" .
+
+<https://repoq.io/story#artifacts/repoq-core-workspace.py> a story:Artifact,
+        story:Implementation ;
+    story:commit "857cc79" ;
+    story:language "Python" ;
+    story:lines 200 ;
+    story:path "repoq/core/workspace.py" .
+
+<https://repoq.io/story#artifacts/tests-core-test_workspace.py> a story:Artifact,
+        story:TestSuite ;
+    story:commit "857cc79" ;
+    story:language "Python" ;
+    story:lines 300 ;
+    story:path "tests/core/test_workspace.py" .
+
+<https://repoq.io/story#artifacts/tests-integration-test_gate_workspace.py> a story:Artifact,
+        story:TestSuite ;
+    story:commit "bed0ea5" ;
+    story:language "Python" ;
+    story:lines 150 ;
+    story:path "tests/integration/test_gate_workspace.py" .
+
+<https://repoq.io/story#commits/3e9de12> a story:Commit ;
+    story:commitAuthor "kirill.n <nikitink0440@gmail.com>" ;
+    story:commitDate "2025-10-22T21:27:16+02:00"^^xsd:dateTime ;
+    story:message "docs(changelog): add CHANGELOG.md for v2.0.0-alpha.1" ;
+    story:modifies "CHANGELOG.md" ;
+    story:sha "3e9de12" ;
+    vdad:satisfies vdad:v2 .
+
+<https://repoq.io/story#commits/857cc79> a story:Commit ;
+    story:commitAuthor "kirill.n <nikitink0440@gmail.com>" ;
+    story:commitDate "2025-10-22T21:08:14+02:00"^^xsd:dateTime ;
+    story:message "feat(workspace): implement RepoQWorkspace with TDD (Phase 5.1)" ;
+    story:modifies "docs/architecture/repoq-c4-v2.md",
+        "docs/archive/dogfooding-meta-level.md",
+        "docs/archive/dogfooding-retrospective.md",
+        "docs/archive/improvement-roadmap.md",
+        "docs/archive/phase4-compliance-report.md",
+        "docs/archive/phase4-final-execution-report.md",
+        "docs/archive/phase4-implementation-report.md",
+        "docs/archive/refactor-plan-implementation.md",
+        "docs/archive/refactoring-progress.md",
+        "docs/archive/task2-cli-refactoring.md",
+        "docs/archive/task2-failure-analysis.md",
+        "docs/vdad/phase4-adr-013-incremental-migration.md",
+        "docs/vdad/phase4-adrs.md",
+        "docs/vdad/phase4-compliance-report.md",
+        "docs/vdad/phase4-final-execution-report.md",
+        "docs/vdad/phase4-implementation-report.md",
+        "docs/vdad/phase5-migration-roadmap.md",
+        "docs/vdad/phase5-quick-reference.md",
+        "repoq/core/workspace.py",
+        "tests/core/test_workspace.py" ;
+    story:sha "857cc79" ;
+    vdad:satisfies vdad:adr-008,
+        vdad:adr-010,
+        vdad:fr-10,
+        vdad:nfr-03,
+        vdad:theorem-a,
+        vdad:v7 .
+
+<https://repoq.io/story#commits/bed0ea5> a story:Commit ;
+    story:commitAuthor "kirill.n <nikitink0440@gmail.com>" ;
+    story:commitDate "2025-10-22T21:24:46+02:00"^^xsd:dateTime ;
+    story:message "feat(pipeline): integrate RepoQWorkspace with pipeline" ;
+    story:modifies "repoq/pipeline.py",
+        "tests/integration/test_gate_workspace.py" ;
+    story:sha "bed0ea5" ;
+    vdad:satisfies vdad:adr-008,
+        vdad:adr-013,
+        vdad:fr-10,
+        vdad:nfr-01,
+        vdad:theorem-a,
+        vdad:v7 .
+
+<https://repoq.io/story#commits/f007076> a story:Commit ;
+    story:commitAuthor "kirill.n <nikitink0440@gmail.com>" ;
+    story:commitDate "2025-10-22T21:26:18+02:00"^^xsd:dateTime ;
+    story:message "docs(phase1): complete Phase 1 documentation" ;
+    story:modifies "README.md",
+        "docs/migration/phase1-workspace.md" ;
+    story:sha "f007076" ;
+    vdad:satisfies vdad:adr-013,
+        vdad:fr-10,
+        vdad:nfr-01,
+        vdad:nfr-02,
+        vdad:theorem-a,
+        vdad:v7 .
+
+<https://repoq.io/story#gates/phase1-confluence> a story:Gate ;
+    story:gateEvidence "No rule conflicts (data structure only)" ;
+    story:gateName "confluence" ;
+    story:gateStatus "passed" .
+
+<https://repoq.io/story#gates/phase1-conservative-extension> a story:Gate ;
+    story:gateEvidence "Zero breaking changes (backward compatible)" ;
+    story:gateName "conservative-extension" ;
+    story:gateStatus "passed" .
+
+<https://repoq.io/story#gates/phase1-performance> a story:Gate ;
+    story:gateEvidence "<50ms overhead (<5% of analysis time)" ;
+    story:gateName "performance" ;
+    story:gateStatus "passed" .
+
+<https://repoq.io/story#gates/phase1-reflexive-completeness> a story:Gate ;
+    story:gateEvidence "Workspace describes itself via manifest.json" ;
+    story:gateName "reflexive-completeness" ;
+    story:gateStatus "passed" .
+
+<https://repoq.io/story#gates/phase1-soundness> a story:Gate ;
+    story:gateEvidence "18/18 tests passing (100%)" ;
+    story:gateName "soundness" ;
+    story:gateStatus "passed" .
+
+<https://repoq.io/story#gates/phase1-termination> a story:Gate ;
+    story:gateEvidence "<50ms measured (NFR-01 satisfied)" ;
+    story:gateName "termination" ;
+    story:gateStatus "passed" .
+
+<https://repoq.io/story#gates/phase1-test-coverage> a story:Gate ;
+    story:gateEvidence "18 tests (15 unit + 3 integration)" ;
+    story:gateName "test-coverage" ;
+    story:gateStatus "passed" .
+

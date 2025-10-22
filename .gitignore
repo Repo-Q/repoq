@@ -64,6 +64,9 @@ htmlcov/
 artifacts/
 quality.md
 .repoq/
+# But keep story files (provenance)
+!.repoq/story/
+!.repoq/story/*.ttl
 
 # Temporary development artifacts (documented in tmp-artifacts-inventory.md)
 tmp/
