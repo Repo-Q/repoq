@@ -245,6 +245,160 @@ def _cleanup_worktree(repo_path: Path, worktree_path: Path) -> None:
         pass
 
 
+def _format_gate_header(passed: bool) -> list[str]:
+    """Format gate report header with status.
+    
+    Args:
+        passed: True if gate passed
+    
+    Returns:
+        List of formatted header lines
+    """
+    status = "PASS ✓" if passed else "FAIL ✗"
+    status_color = "green" if passed else "red"
+    
+    return [
+        "=" * 60,
+        f"[bold {status_color}]Quality Gate: {status}[/bold {status_color}]",
+        "=" * 60,
+        "",
+    ]
+
+
+def _format_metrics_comparison(result: GateResult) -> list[str]:
+    """Format BASE and HEAD metrics comparison section.
+    
+    Args:
+        result: GateResult with base and head metrics
+    
+    Returns:
+        List of formatted comparison lines
+    """
+    lines = ["[bold]📊 Metrics Comparison[/bold]", ""]
+    
+    # BASE metrics
+    pcq_base_str = f", PCQ={result.pcq_base:.1f}" if result.pcq_base is not None else ""
+    lines.extend([
+        f"  BASE: Q={result.base_metrics.score:.1f} "
+        f"({result.base_metrics.grade}){pcq_base_str}",
+        f"        Complexity={result.base_metrics.complexity:.2f}, "
+        f"Hotspots={result.base_metrics.hotspots}, "
+        f"TODOs={result.base_metrics.todos}",
+        f"        Coverage={result.base_metrics.tests_coverage:.1%}",
+        "",
+    ])
+    
+    # HEAD metrics
+    pcq_head_str = f", PCQ={result.pcq_head:.1f}" if result.pcq_head is not None else ""
+    lines.extend([
+        f"  HEAD: Q={result.head_metrics.score:.1f} "
+        f"({result.head_metrics.grade}){pcq_head_str}",
+        f"        Complexity={result.head_metrics.complexity:.2f}, "
+        f"Hotspots={result.head_metrics.hotspots}, "
+        f"TODOs={result.head_metrics.todos}",
+        f"        Coverage={result.head_metrics.tests_coverage:.1%}",
+        "",
+    ])
+    
+    return lines
+
+
+def _format_deltas_section(result: GateResult) -> list[str]:
+    """Format deltas (HEAD - BASE) section with emoji indicators.
+    
+    Args:
+        result: GateResult with computed deltas
+    
+    Returns:
+        List of formatted delta lines
+    """
+    lines = ["[bold]📈 Deltas (HEAD - BASE)[/bold]", ""]
+    
+    # ΔQ
+    delta_q = result.deltas["score_delta"]
+    delta_q_str = f"+{delta_q:.2f}" if delta_q >= 0 else f"{delta_q:.2f}"
+    delta_q_emoji = "✓" if delta_q >= 0 else "✗"
+    lines.append(f"  ΔQ: {delta_q_str} points {delta_q_emoji}")
+    
+    # ΔComplexity (lower is better)
+    delta_cplx = result.deltas["complexity_delta"]
+    delta_cplx_str = f"+{delta_cplx:.2f}" if delta_cplx >= 0 else f"{delta_cplx:.2f}"
+    delta_cplx_emoji = "✗" if delta_cplx > 0 else "✓"
+    lines.append(f"  ΔComplexity: {delta_cplx_str} {delta_cplx_emoji}")
+    
+    # ΔHotspots (lower is better)
+    delta_hotspots = result.deltas["hotspots_delta"]
+    delta_hotspots_str = f"+{delta_hotspots}" if delta_hotspots >= 0 else f"{delta_hotspots}"
+    delta_hotspots_emoji = "✗" if delta_hotspots > 0 else "✓"
+    lines.append(f"  ΔHotspots: {delta_hotspots_str} {delta_hotspots_emoji}")
+    
+    # ΔTODOs (lower is better)
+    delta_todos = result.deltas["todos_delta"]
+    delta_todos_str = f"+{delta_todos}" if delta_todos >= 0 else f"{delta_todos}"
+    delta_todos_emoji = "✗" if delta_todos > 0 else "✓"
+    lines.append(f"  ΔTODOs: {delta_todos_str} {delta_todos_emoji}")
+    
+    lines.append("")
+    return lines
+
+
+def _format_pcq_violations_witness(result: GateResult) -> list[str]:
+    """Format PCQ details, violations, and PCE witness sections.
+    
+    Args:
+        result: GateResult with optional PCQ, violations, and witness
+    
+    Returns:
+        List of formatted lines for these sections
+    """
+    lines = []
+    
+    # PCQ details (if enabled)
+    if result.pcq_base is not None and result.pcq_head is not None:
+        delta_pcq = result.pcq_head - result.pcq_base
+        delta_pcq_str = f"+{delta_pcq:.2f}" if delta_pcq >= 0 else f"{delta_pcq:.2f}"
+        delta_pcq_emoji = "✓" if delta_pcq >= 0 else "✗"
+        
+        lines.extend([
+            "[bold]🛡️  Gaming Protection (PCQ Min-Aggregation)[/bold]",
+            "",
+            f"  ΔPCQ: {delta_pcq_str} points {delta_pcq_emoji}",
+            "  PCQ enforces minimum quality across all modules",
+            "  (prevents hiding complexity in one module)",
+            "",
+        ])
+    
+    # Violations
+    if result.violations:
+        lines.extend([
+            "[bold red]❌ Constraint Violations[/bold red]",
+            "",
+        ])
+        for i, violation in enumerate(result.violations, 1):
+            lines.append(f"  {i}. {violation}")
+        lines.append("")
+    
+    # PCE witness (if available)
+    if result.pce_witness and len(result.pce_witness) > 0:
+        lines.extend([
+            "[bold yellow]💡 Constructive Feedback (PCE k-Repair Witness)[/bold yellow]",
+            "",
+            "  Top files to fix (by impact):",
+            "",
+        ])
+        
+        for i, action in enumerate(result.pce_witness[:5], 1):  # Show top 5
+            priority_emoji = "🔴" if action["priority"] == "high" else "🟡"
+            lines.extend([
+                f"  {i}. {priority_emoji} {action['file']}",
+                f"     Action: {action['action']}",
+                f"     Expected ΔQ: +{action['delta_q']:.2f} points",
+                "",
+            ])
+    
+    return lines
+
+
 def format_gate_report(result: GateResult) -> str:
     """Format GateResult as human-readable report with PCQ/PCE.
 
@@ -265,108 +419,20 @@ def format_gate_report(result: GateResult) -> str:
         ΔQ: +2.5 points ✓
     """
     lines = []
-
-    # Header
-    status = "PASS ✓" if result.passed else "FAIL ✗"
-    status_color = "green" if result.passed else "red"
-
+    
+    # 1. Header
+    lines.extend(_format_gate_header(result.passed))
+    
+    # 2. Metrics comparison
+    lines.extend(_format_metrics_comparison(result))
+    
+    # 3. Deltas
+    lines.extend(_format_deltas_section(result))
+    
+    # 4. PCQ, violations, and witness
+    lines.extend(_format_pcq_violations_witness(result))
+    
+    # 5. Footer
     lines.append("=" * 60)
-    lines.append(f"[bold {status_color}]Quality Gate: {status}[/bold {status_color}]")
-    lines.append("=" * 60)
-    lines.append("")
-
-    # Metrics comparison
-    lines.append("[bold]📊 Metrics Comparison[/bold]")
-    lines.append("")
-
-    # BASE metrics
-    pcq_base_str = f", PCQ={result.pcq_base:.1f}" if result.pcq_base is not None else ""
-    lines.append(
-        f"  BASE: Q={result.base_metrics.score:.1f} " f"({result.base_metrics.grade}){pcq_base_str}"
-    )
-    lines.append(
-        f"        Complexity={result.base_metrics.complexity:.2f}, "
-        f"Hotspots={result.base_metrics.hotspots}, "
-        f"TODOs={result.base_metrics.todos}"
-    )
-    lines.append(f"        Coverage={result.base_metrics.tests_coverage:.1%}")
-    lines.append("")
-
-    # HEAD metrics
-    pcq_head_str = f", PCQ={result.pcq_head:.1f}" if result.pcq_head is not None else ""
-    lines.append(
-        f"  HEAD: Q={result.head_metrics.score:.1f} " f"({result.head_metrics.grade}){pcq_head_str}"
-    )
-    lines.append(
-        f"        Complexity={result.head_metrics.complexity:.2f}, "
-        f"Hotspots={result.head_metrics.hotspots}, "
-        f"TODOs={result.head_metrics.todos}"
-    )
-    lines.append(f"        Coverage={result.head_metrics.tests_coverage:.1%}")
-    lines.append("")
-
-    # Deltas
-    lines.append("[bold]📈 Deltas (HEAD - BASE)[/bold]")
-    lines.append("")
-
-    delta_q = result.deltas["score_delta"]
-    delta_q_str = f"+{delta_q:.2f}" if delta_q >= 0 else f"{delta_q:.2f}"
-    delta_q_emoji = "✓" if delta_q >= 0 else "✗"
-    lines.append(f"  ΔQ: {delta_q_str} points {delta_q_emoji}")
-
-    delta_cplx = result.deltas["complexity_delta"]
-    delta_cplx_str = f"+{delta_cplx:.2f}" if delta_cplx >= 0 else f"{delta_cplx:.2f}"
-    delta_cplx_emoji = "✗" if delta_cplx > 0 else "✓"  # Lower is better
-    lines.append(f"  ΔComplexity: {delta_cplx_str} {delta_cplx_emoji}")
-
-    delta_hotspots = result.deltas["hotspots_delta"]
-    delta_hotspots_str = f"+{delta_hotspots}" if delta_hotspots >= 0 else f"{delta_hotspots}"
-    delta_hotspots_emoji = "✗" if delta_hotspots > 0 else "✓"
-    lines.append(f"  ΔHotspots: {delta_hotspots_str} {delta_hotspots_emoji}")
-
-    delta_todos = result.deltas["todos_delta"]
-    delta_todos_str = f"+{delta_todos}" if delta_todos >= 0 else f"{delta_todos}"
-    delta_todos_emoji = "✗" if delta_todos > 0 else "✓"
-    lines.append(f"  ΔTODOs: {delta_todos_str} {delta_todos_emoji}")
-
-    lines.append("")
-
-    # PCQ details (if enabled)
-    if result.pcq_base is not None and result.pcq_head is not None:
-        delta_pcq = result.pcq_head - result.pcq_base
-        delta_pcq_str = f"+{delta_pcq:.2f}" if delta_pcq >= 0 else f"{delta_pcq:.2f}"
-        delta_pcq_emoji = "✓" if delta_pcq >= 0 else "✗"
-
-        lines.append("[bold]🛡️  Gaming Protection (PCQ Min-Aggregation)[/bold]")
-        lines.append("")
-        lines.append(f"  ΔPCQ: {delta_pcq_str} points {delta_pcq_emoji}")
-        lines.append("  PCQ enforces minimum quality across all modules")
-        lines.append("  (prevents hiding complexity in one module)")
-        lines.append("")
-
-    # Violations
-    if result.violations:
-        lines.append("[bold red]❌ Constraint Violations[/bold red]")
-        lines.append("")
-        for i, violation in enumerate(result.violations, 1):
-            lines.append(f"  {i}. {violation}")
-        lines.append("")
-
-    # PCE witness (if available)
-    if result.pce_witness and len(result.pce_witness) > 0:
-        lines.append("[bold yellow]💡 Constructive Feedback (PCE k-Repair Witness)[/bold yellow]")
-        lines.append("")
-        lines.append("  Top files to fix (by impact):")
-        lines.append("")
-
-        for i, action in enumerate(result.pce_witness[:5], 1):  # Show top 5
-            priority_emoji = "🔴" if action["priority"] == "high" else "🟡"
-            lines.append(f"  {i}. {priority_emoji} {action['file']}")
-            lines.append(f"     Action: {action['action']}")
-            lines.append(f"     Expected ΔQ: +{action['delta_q']:.2f} points")
-            lines.append("")
-
-    # Footer
-    lines.append("=" * 60)
-
+    
     return "\n".join(lines)

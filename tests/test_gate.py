@@ -183,15 +183,15 @@ class TestFormatGateReport:
 
         report = format_gate_report(result)
 
-        assert "✅ PASS" in report
-        assert "Score: 85.0 (B)" in report  # BASE
-        assert "Score: 90.0 (A)" in report  # HEAD
-        assert "+5.0" in report  # score delta
+        assert "PASS ✓" in report
+        assert "Q=85.0 (B)" in report  # BASE
+        assert "Q=90.0 (A)" in report  # HEAD
+        assert "+5.00" in report  # score delta
         assert "-2" in report  # hotspots delta (negative is good)
-        assert "Complexity:" in report
-        assert "Hotspots:" in report
-        assert "TODOs:" in report
-        assert "Tests:" in report
+        assert "Complexity" in report
+        assert "Hotspots" in report
+        assert "TODOs" in report
+        assert "Coverage" in report
 
     def test_format_failed_gate_with_violations(self):
         """Format report for FAILED gate with multiple violations."""
@@ -245,9 +245,9 @@ class TestFormatGateReport:
 
         report = format_gate_report(result)
 
-        assert "❌ FAIL" in report
-        assert "Score: 70.0 (C)" in report  # HEAD (degraded)
-        assert "Constraint Violations:" in report
+        assert "FAIL ✗" in report
+        assert "Q=70.0 (C)" in report  # HEAD (degraded)
+        assert "Constraint Violations" in report
         assert "Tests coverage 75.0% < 80%" in report
         assert "TODOs count 120 > 100" in report
         assert "Hotspots count 25 > 20" in report
@@ -300,8 +300,8 @@ class TestFormatGateReport:
 
         report = format_gate_report(result)
 
-        assert "Deltas (HEAD - BASE):" in report
-        assert "+2.0" in report  # score delta
-        assert "+0.2" in report or "+0.20" in report  # complexity delta
+        assert "Deltas (HEAD - BASE)" in report
+        assert "+2.00" in report  # score delta
+        assert "+0.20" in report  # complexity delta
         assert "+1" in report  # hotspots delta
         assert "+2" in report  # todos delta (appears multiple times, but at least once in deltas)
