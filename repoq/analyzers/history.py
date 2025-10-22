@@ -270,7 +270,7 @@ class HistoryAnalyzer(Analyzer):
 
     def _get_last_commit_date(self, project: Project, repo_dir: str) -> None:
         """Extract last commit date from git log.
-        
+
         Args:
             project: Project model to update
             repo_dir: Repository directory path
@@ -278,14 +278,14 @@ class HistoryAnalyzer(Analyzer):
         last = _run(["git", "log", "-1", "--date=iso-strict", "--pretty=%cI"], cwd=repo_dir).strip()
         if last:
             project.last_commit_date = last
-    
+
     def _extract_authors(self, repo_dir: str, cfg) -> list[tuple[int, str, str]]:
         """Extract author statistics from git history.
-        
+
         Args:
             repo_dir: Repository directory path
             cfg: Configuration with optional 'since' filter
-            
+
         Returns:
             List of tuples: (commit_count, author_name, author_email)
         """
@@ -326,12 +326,12 @@ class HistoryAnalyzer(Analyzer):
                 else:
                     name, email = rest, ""
                 authors.append((n_commits, name, email))
-        
+
         return authors
-    
+
     def _populate_contributors(self, project: Project, authors: list[tuple[int, str, str]]) -> None:
         """Populate project contributors from author statistics.
-        
+
         Args:
             project: Project model to update
             authors: List of (commit_count, name, email) tuples
@@ -347,10 +347,100 @@ class HistoryAnalyzer(Analyzer):
                     foaf_mbox_sha1sum=foaf_sha1(email) if email else "",
                 )
             project.contributors[pid].commits += int(n_commits)
-    
+
+    def _parse_commit_header(
+        self,
+        project: Project,
+        line: str,
+    ) -> tuple[str, str, str]:
+        """Parse commit header line and create commit/version records.
+
+        Args:
+            project: Project model to update
+            line: Git log header line (SHA, date, author, email, message)
+
+        Returns:
+            Tuple of (sha, date, person_id) for tracking current commit
+        """
+        sha, date, author, email, msg = line.split("\t", 4)
+        pid = f"repo:person:{hash_email(email) or author.replace(' ', '_')}"
+
+        project.commits.append(
+            Commit(id=f"repo:commit:{sha}", message=msg, author_id=pid, ended_at=date)
+        )
+        project.versions.append(
+            VersionResource(
+                id=f"repo:version:{sha}",
+                version_id=sha,
+                branch=None,
+                committer=pid,
+                committed=date,
+            )
+        )
+
+        return sha, date, pid
+
+    def _parse_commit_file_changes(
+        self,
+        project: Project,
+        line: str,
+        current: tuple[str, str, str] | None,
+    ) -> str | None:
+        """Parse file change stats (numstat) and update file/contributor metrics.
+
+        Args:
+            project: Project model to update
+            line: Git numstat line (added, deleted, path)
+            current: Current commit context (sha, date, person_id)
+
+        Returns:
+            File ID if processed, None otherwise (for coupling tracking)
+        """
+        parts = line.split("\t")
+        if len(parts) < 3:
+            return None
+
+        added, deleted, path = parts[0], parts[1], parts[2]
+        try:
+            a = int(added) if added.isdigit() else 0
+            d = int(deleted) if deleted.isdigit() else 0
+        except Exception:
+            a, d = 0, 0
+
+        fid = f"repo:file:{path}"
+        f = project.files.get(fid)
+
+        if not f:
+            return None
+
+        # Update file metrics
+        f.code_churn += a + d
+        f.commits_count += 1
+
+        if not current:
+            return fid
+
+        _, date, pid = current
+        f.last_modified = date
+
+        # Update file contributor stats
+        if pid not in f.contributors:
+            f.contributors[pid] = {"linesAdded": 0, "linesDeleted": 0}
+        f.contributors[pid]["linesAdded"] += a
+        f.contributors[pid]["linesDeleted"] += d
+
+        # Update project contributor stats
+        if pid in project.contributors:
+            project.contributors[pid].lines_added += a
+            project.contributors[pid].lines_deleted += d
+            if fid not in project.contributors[pid].owns:
+                project.contributors[pid].owns.append(fid)
+
+        return fid
+
     def _process_commits(self, project: Project, repo_dir: str, cfg) -> None:
         """Process detailed commit history with file changes.
-        
+
         Args:
             project: Project model to update
             repo_dir: Repository directory path
@@ -365,67 +455,33 @@ class HistoryAnalyzer(Analyzer):
                 "--numstat",
                 "--format=%H%x09%aI%x09%an%x09%ae%x09%s",
             ]
+
         out = _run(cmd, cwd=repo_dir)
         current = None
         files_in_commit = []
-        
+
         for line in out.splitlines():
+            # Check if this is a commit header line
             if (
                 line.count("\t") >= 4
                 and len(line.split("\t")) >= 5
                 and len(line.split("\t")[0]) == 40
             ):
-                # commit header
                 if current and files_in_commit:
                     # coupling accumulation if needed (skipped for brevity)
                     files_in_commit = []
-                sha, date, author, email, msg = line.split("\t", 4)
-                pid = f"repo:person:{hash_email(email) or author.replace(' ', '_')}"
-                project.commits.append(
-                    Commit(id=f"repo:commit:{sha}", message=msg, author_id=pid, ended_at=date)
-                )
-                project.versions.append(
-                    VersionResource(
-                        id=f"repo:version:{sha}",
-                        version_id=sha,
-                        branch=None,
-                        committer=pid,
-                        committed=date,
-                    )
-                )
-                current = (sha, date, pid)
+
+                current = self._parse_commit_header(project, line)
                 continue
-            
-            parts = line.split("\t")
-            if len(parts) >= 3:
-                added, deleted, path = parts[0], parts[1], parts[2]
-                try:
-                    a = int(added) if added.isdigit() else 0
-                    d = int(deleted) if deleted.isdigit() else 0
-                except Exception:
-                    a, d = 0, 0
-                fid = f"repo:file:{path}"
-                f = project.files.get(fid)
-                if f:
-                    f.code_churn += a + d
-                    f.commits_count += 1
-                    f.last_modified = current[1] if current else f.last_modified
-                    if current:
-                        _, _, pid = current
-                        if pid not in f.contributors:
-                            f.contributors[pid] = {"linesAdded": 0, "linesDeleted": 0}
-                        f.contributors[pid]["linesAdded"] += a
-                        f.contributors[pid]["linesDeleted"] += d
-                        if pid in project.contributors:
-                            project.contributors[pid].lines_added += a
-                            project.contributors[pid].lines_deleted += d
-                            if fid not in project.contributors[pid].owns:
-                                project.contributors[pid].owns.append(fid)
-                    files_in_commit.append(fid)
-    
+
+            # Process file change stats
+            fid = self._parse_commit_file_changes(project, line, current)
+            if fid:
+                files_in_commit.append(fid)
+
     def _run_git(self, project: Project, repo_dir: str, cfg) -> None:
         """Git-based history analysis (refactored from original monolithic version).
-        
+
         Args:
             project: Project model to update
             repo_dir: Repository directory path
