@@ -4176,6 +4176,33 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#repoq.cli.twin_query" class="md-nav__link">
+    <span class="md-ellipsis">
+      twin_query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repoq.cli.twin_export" class="md-nav__link">
+    <span class="md-ellipsis">
+      twin_export
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repoq.cli.twin_stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      twin_stats
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -6547,6 +6574,33 @@
         
       </ul>
     </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repoq.cli.twin_query" class="md-nav__link">
+    <span class="md-ellipsis">
+      twin_query
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repoq.cli.twin_export" class="md-nav__link">
+    <span class="md-ellipsis">
+      twin_export
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repoq.cli.twin_stats" class="md-nav__link">
+    <span class="md-ellipsis">
+      twin_stats
+    </span>
+  </a>
   
 </li>
         
@@ -24758,6 +24812,562 @@ is generated in .repoq/certificates/ with timestamp and metrics.</p>
 </span><span id="__span-0-1828"><a id="__codelineno-0-1828" name="__codelineno-0-1828"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold red]❌ Validation failed with error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">[/bold red]&quot;</span><span class="p">)</span>
 </span><span id="__span-0-1829"><a id="__codelineno-0-1829" name="__codelineno-0-1829"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;Validation command failed&quot;</span><span class="p">)</span>
 </span><span id="__span-0-1830"><a id="__codelineno-0-1830" name="__codelineno-0-1830"></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="repoq.cli.twin_query" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">twin_query</span>
+
+
+<a href="#repoq.cli.twin_query" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">twin_query</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">sparql</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="o">...</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SPARQL query to execute&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="p">),</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">workspace</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="s2">&quot;--workspace&quot;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repository root (default: current directory)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="p">),</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="s2">&quot;--limit&quot;</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="s2">&quot;-l&quot;</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Max commits to include (0=all)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="p">),</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>    <span class="n">include_ontologies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="s2">&quot;--ontologies&quot;</span><span class="p">,</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Include TBox (ontologies) in graph&quot;</span><span class="p">,</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>    <span class="p">),</span>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>        <span class="s2">&quot;table&quot;</span><span class="p">,</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>        <span class="s2">&quot;--format&quot;</span><span class="p">,</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output format: table, json, csv&quot;</span><span class="p">,</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="p">),</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Execute SPARQL query against complete Digital Twin graph.</p>
+<p>The graph includes:
+- Static RDF: .repoq/ (story, adr, changelog)
+- Dynamic RDF: Git commits, file tree, tests
+- Optionally: TBox (ontologies)</p>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <p>repoq twin query "SELECT ?commit WHERE { ?commit a repo:Commit } LIMIT 5"</p>
+</details>
+
+            <details class="quote">
+              <summary>Source code in <code>repoq/cli.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1841">1841</a></span>
+<span class="normal"><a href="#__codelineno-0-1842">1842</a></span>
+<span class="normal"><a href="#__codelineno-0-1843">1843</a></span>
+<span class="normal"><a href="#__codelineno-0-1844">1844</a></span>
+<span class="normal"><a href="#__codelineno-0-1845">1845</a></span>
+<span class="normal"><a href="#__codelineno-0-1846">1846</a></span>
+<span class="normal"><a href="#__codelineno-0-1847">1847</a></span>
+<span class="normal"><a href="#__codelineno-0-1848">1848</a></span>
+<span class="normal"><a href="#__codelineno-0-1849">1849</a></span>
+<span class="normal"><a href="#__codelineno-0-1850">1850</a></span>
+<span class="normal"><a href="#__codelineno-0-1851">1851</a></span>
+<span class="normal"><a href="#__codelineno-0-1852">1852</a></span>
+<span class="normal"><a href="#__codelineno-0-1853">1853</a></span>
+<span class="normal"><a href="#__codelineno-0-1854">1854</a></span>
+<span class="normal"><a href="#__codelineno-0-1855">1855</a></span>
+<span class="normal"><a href="#__codelineno-0-1856">1856</a></span>
+<span class="normal"><a href="#__codelineno-0-1857">1857</a></span>
+<span class="normal"><a href="#__codelineno-0-1858">1858</a></span>
+<span class="normal"><a href="#__codelineno-0-1859">1859</a></span>
+<span class="normal"><a href="#__codelineno-0-1860">1860</a></span>
+<span class="normal"><a href="#__codelineno-0-1861">1861</a></span>
+<span class="normal"><a href="#__codelineno-0-1862">1862</a></span>
+<span class="normal"><a href="#__codelineno-0-1863">1863</a></span>
+<span class="normal"><a href="#__codelineno-0-1864">1864</a></span>
+<span class="normal"><a href="#__codelineno-0-1865">1865</a></span>
+<span class="normal"><a href="#__codelineno-0-1866">1866</a></span>
+<span class="normal"><a href="#__codelineno-0-1867">1867</a></span>
+<span class="normal"><a href="#__codelineno-0-1868">1868</a></span>
+<span class="normal"><a href="#__codelineno-0-1869">1869</a></span>
+<span class="normal"><a href="#__codelineno-0-1870">1870</a></span>
+<span class="normal"><a href="#__codelineno-0-1871">1871</a></span>
+<span class="normal"><a href="#__codelineno-0-1872">1872</a></span>
+<span class="normal"><a href="#__codelineno-0-1873">1873</a></span>
+<span class="normal"><a href="#__codelineno-0-1874">1874</a></span>
+<span class="normal"><a href="#__codelineno-0-1875">1875</a></span>
+<span class="normal"><a href="#__codelineno-0-1876">1876</a></span>
+<span class="normal"><a href="#__codelineno-0-1877">1877</a></span>
+<span class="normal"><a href="#__codelineno-0-1878">1878</a></span>
+<span class="normal"><a href="#__codelineno-0-1879">1879</a></span>
+<span class="normal"><a href="#__codelineno-0-1880">1880</a></span>
+<span class="normal"><a href="#__codelineno-0-1881">1881</a></span>
+<span class="normal"><a href="#__codelineno-0-1882">1882</a></span>
+<span class="normal"><a href="#__codelineno-0-1883">1883</a></span>
+<span class="normal"><a href="#__codelineno-0-1884">1884</a></span>
+<span class="normal"><a href="#__codelineno-0-1885">1885</a></span>
+<span class="normal"><a href="#__codelineno-0-1886">1886</a></span>
+<span class="normal"><a href="#__codelineno-0-1887">1887</a></span>
+<span class="normal"><a href="#__codelineno-0-1888">1888</a></span>
+<span class="normal"><a href="#__codelineno-0-1889">1889</a></span>
+<span class="normal"><a href="#__codelineno-0-1890">1890</a></span>
+<span class="normal"><a href="#__codelineno-0-1891">1891</a></span>
+<span class="normal"><a href="#__codelineno-0-1892">1892</a></span>
+<span class="normal"><a href="#__codelineno-0-1893">1893</a></span>
+<span class="normal"><a href="#__codelineno-0-1894">1894</a></span>
+<span class="normal"><a href="#__codelineno-0-1895">1895</a></span>
+<span class="normal"><a href="#__codelineno-0-1896">1896</a></span>
+<span class="normal"><a href="#__codelineno-0-1897">1897</a></span>
+<span class="normal"><a href="#__codelineno-0-1898">1898</a></span>
+<span class="normal"><a href="#__codelineno-0-1899">1899</a></span>
+<span class="normal"><a href="#__codelineno-0-1900">1900</a></span>
+<span class="normal"><a href="#__codelineno-0-1901">1901</a></span>
+<span class="normal"><a href="#__codelineno-0-1902">1902</a></span>
+<span class="normal"><a href="#__codelineno-0-1903">1903</a></span>
+<span class="normal"><a href="#__codelineno-0-1904">1904</a></span>
+<span class="normal"><a href="#__codelineno-0-1905">1905</a></span>
+<span class="normal"><a href="#__codelineno-0-1906">1906</a></span>
+<span class="normal"><a href="#__codelineno-0-1907">1907</a></span>
+<span class="normal"><a href="#__codelineno-0-1908">1908</a></span>
+<span class="normal"><a href="#__codelineno-0-1909">1909</a></span>
+<span class="normal"><a href="#__codelineno-0-1910">1910</a></span>
+<span class="normal"><a href="#__codelineno-0-1911">1911</a></span>
+<span class="normal"><a href="#__codelineno-0-1912">1912</a></span>
+<span class="normal"><a href="#__codelineno-0-1913">1913</a></span>
+<span class="normal"><a href="#__codelineno-0-1914">1914</a></span>
+<span class="normal"><a href="#__codelineno-0-1915">1915</a></span>
+<span class="normal"><a href="#__codelineno-0-1916">1916</a></span>
+<span class="normal"><a href="#__codelineno-0-1917">1917</a></span>
+<span class="normal"><a href="#__codelineno-0-1918">1918</a></span>
+<span class="normal"><a href="#__codelineno-0-1919">1919</a></span>
+<span class="normal"><a href="#__codelineno-0-1920">1920</a></span>
+<span class="normal"><a href="#__codelineno-0-1921">1921</a></span>
+<span class="normal"><a href="#__codelineno-0-1922">1922</a></span>
+<span class="normal"><a href="#__codelineno-0-1923">1923</a></span>
+<span class="normal"><a href="#__codelineno-0-1924">1924</a></span>
+<span class="normal"><a href="#__codelineno-0-1925">1925</a></span>
+<span class="normal"><a href="#__codelineno-0-1926">1926</a></span>
+<span class="normal"><a href="#__codelineno-0-1927">1927</a></span>
+<span class="normal"><a href="#__codelineno-0-1928">1928</a></span>
+<span class="normal"><a href="#__codelineno-0-1929">1929</a></span>
+<span class="normal"><a href="#__codelineno-0-1930">1930</a></span>
+<span class="normal"><a href="#__codelineno-0-1931">1931</a></span>
+<span class="normal"><a href="#__codelineno-0-1932">1932</a></span>
+<span class="normal"><a href="#__codelineno-0-1933">1933</a></span>
+<span class="normal"><a href="#__codelineno-0-1934">1934</a></span>
+<span class="normal"><a href="#__codelineno-0-1935">1935</a></span>
+<span class="normal"><a href="#__codelineno-0-1936">1936</a></span>
+<span class="normal"><a href="#__codelineno-0-1937">1937</a></span>
+<span class="normal"><a href="#__codelineno-0-1938">1938</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1841"><a id="__codelineno-0-1841" name="__codelineno-0-1841"></a><span class="nd">@twin_app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1842"><a id="__codelineno-0-1842" name="__codelineno-0-1842"></a><span class="k">def</span><span class="w"> </span><span class="nf">twin_query</span><span class="p">(</span>
+</span><span id="__span-0-1843"><a id="__codelineno-0-1843" name="__codelineno-0-1843"></a>    <span class="n">sparql</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;SPARQL query to execute&quot;</span><span class="p">),</span>
+</span><span id="__span-0-1844"><a id="__codelineno-0-1844" name="__codelineno-0-1844"></a>    <span class="n">workspace</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-1845"><a id="__codelineno-0-1845" name="__codelineno-0-1845"></a>        <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+</span><span id="__span-0-1846"><a id="__codelineno-0-1846" name="__codelineno-0-1846"></a>        <span class="s2">&quot;--workspace&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1847"><a id="__codelineno-0-1847" name="__codelineno-0-1847"></a>        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1848"><a id="__codelineno-0-1848" name="__codelineno-0-1848"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repository root (default: current directory)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1849"><a id="__codelineno-0-1849" name="__codelineno-0-1849"></a>    <span class="p">),</span>
+</span><span id="__span-0-1850"><a id="__codelineno-0-1850" name="__codelineno-0-1850"></a>    <span class="n">limit</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;--limit&quot;</span><span class="p">,</span> <span class="s2">&quot;-l&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Max commits to include (0=all)&quot;</span><span class="p">),</span>
+</span><span id="__span-0-1851"><a id="__codelineno-0-1851" name="__codelineno-0-1851"></a>    <span class="n">include_ontologies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-1852"><a id="__codelineno-0-1852" name="__codelineno-0-1852"></a>        <span class="kc">False</span><span class="p">,</span> <span class="s2">&quot;--ontologies&quot;</span><span class="p">,</span> <span class="s2">&quot;-o&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Include TBox (ontologies) in graph&quot;</span>
+</span><span id="__span-0-1853"><a id="__codelineno-0-1853" name="__codelineno-0-1853"></a>    <span class="p">),</span>
+</span><span id="__span-0-1854"><a id="__codelineno-0-1854" name="__codelineno-0-1854"></a>    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;table&quot;</span><span class="p">,</span> <span class="s2">&quot;--format&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output format: table, json, csv&quot;</span><span class="p">),</span>
+</span><span id="__span-0-1855"><a id="__codelineno-0-1855" name="__codelineno-0-1855"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-1856"><a id="__codelineno-0-1856" name="__codelineno-0-1856"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute SPARQL query against complete Digital Twin graph.</span>
+</span><span id="__span-0-1857"><a id="__codelineno-0-1857" name="__codelineno-0-1857"></a>
+</span><span id="__span-0-1858"><a id="__codelineno-0-1858" name="__codelineno-0-1858"></a><span class="sd">    The graph includes:</span>
+</span><span id="__span-0-1859"><a id="__codelineno-0-1859" name="__codelineno-0-1859"></a><span class="sd">    - Static RDF: .repoq/ (story, adr, changelog)</span>
+</span><span id="__span-0-1860"><a id="__codelineno-0-1860" name="__codelineno-0-1860"></a><span class="sd">    - Dynamic RDF: Git commits, file tree, tests</span>
+</span><span id="__span-0-1861"><a id="__codelineno-0-1861" name="__codelineno-0-1861"></a><span class="sd">    - Optionally: TBox (ontologies)</span>
+</span><span id="__span-0-1862"><a id="__codelineno-0-1862" name="__codelineno-0-1862"></a>
+</span><span id="__span-0-1863"><a id="__codelineno-0-1863" name="__codelineno-0-1863"></a><span class="sd">    Example:</span>
+</span><span id="__span-0-1864"><a id="__codelineno-0-1864" name="__codelineno-0-1864"></a><span class="sd">        repoq twin query &quot;SELECT ?commit WHERE { ?commit a repo:Commit } LIMIT 5&quot;</span>
+</span><span id="__span-0-1865"><a id="__codelineno-0-1865" name="__codelineno-0-1865"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-1866"><a id="__codelineno-0-1866" name="__codelineno-0-1866"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
+</span><span id="__span-0-1867"><a id="__codelineno-0-1867" name="__codelineno-0-1867"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">rich.table</span><span class="w"> </span><span class="kn">import</span> <span class="n">Table</span>
+</span><span id="__span-0-1868"><a id="__codelineno-0-1868" name="__codelineno-0-1868"></a>
+</span><span id="__span-0-1869"><a id="__codelineno-0-1869" name="__codelineno-0-1869"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">repoq.core.digital_twin</span><span class="w"> </span><span class="kn">import</span> <span class="n">DigitalTwin</span>
+</span><span id="__span-0-1870"><a id="__codelineno-0-1870" name="__codelineno-0-1870"></a>
+</span><span id="__span-0-1871"><a id="__codelineno-0-1871" name="__codelineno-0-1871"></a>    <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+</span><span id="__span-0-1872"><a id="__codelineno-0-1872" name="__codelineno-0-1872"></a>
+</span><span id="__span-0-1873"><a id="__codelineno-0-1873" name="__codelineno-0-1873"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-0-1874"><a id="__codelineno-0-1874" name="__codelineno-0-1874"></a>        <span class="c1"># Initialize Digital Twin</span>
+</span><span id="__span-0-1875"><a id="__codelineno-0-1875" name="__codelineno-0-1875"></a>        <span class="n">dt</span> <span class="o">=</span> <span class="n">DigitalTwin</span><span class="p">(</span><span class="n">workspace_root</span><span class="o">=</span><span class="n">workspace</span><span class="p">)</span>
+</span><span id="__span-0-1876"><a id="__codelineno-0-1876" name="__codelineno-0-1876"></a>
+</span><span id="__span-0-1877"><a id="__codelineno-0-1877" name="__codelineno-0-1877"></a>        <span class="c1"># Generate complete graph</span>
+</span><span id="__span-0-1878"><a id="__codelineno-0-1878" name="__codelineno-0-1878"></a>        <span class="k">with</span> <span class="n">console</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s2">&quot;[bold blue]Generating Digital Twin graph...&quot;</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="s2">&quot;dots&quot;</span><span class="p">):</span>
+</span><span id="__span-0-1879"><a id="__codelineno-0-1879" name="__codelineno-0-1879"></a>            <span class="n">complete</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">get_complete_graph</span><span class="p">(</span><span class="n">include_ontologies</span><span class="o">=</span><span class="n">include_ontologies</span><span class="p">)</span>
+</span><span id="__span-0-1880"><a id="__codelineno-0-1880" name="__codelineno-0-1880"></a>
+</span><span id="__span-0-1881"><a id="__codelineno-0-1881" name="__codelineno-0-1881"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[green]✓[/green] Graph ready: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">complete</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> triples&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1882"><a id="__codelineno-0-1882" name="__codelineno-0-1882"></a>
+</span><span id="__span-0-1883"><a id="__codelineno-0-1883" name="__codelineno-0-1883"></a>        <span class="c1"># Execute SPARQL query</span>
+</span><span id="__span-0-1884"><a id="__codelineno-0-1884" name="__codelineno-0-1884"></a>        <span class="k">with</span> <span class="n">console</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s2">&quot;[bold blue]Executing SPARQL query...&quot;</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="s2">&quot;dots&quot;</span><span class="p">):</span>
+</span><span id="__span-0-1885"><a id="__codelineno-0-1885" name="__codelineno-0-1885"></a>            <span class="n">results</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">complete</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">sparql</span><span class="p">))</span>
+</span><span id="__span-0-1886"><a id="__codelineno-0-1886" name="__codelineno-0-1886"></a>
+</span><span id="__span-0-1887"><a id="__codelineno-0-1887" name="__codelineno-0-1887"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-0-1888"><a id="__codelineno-0-1888" name="__codelineno-0-1888"></a>            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;[yellow]⚠️  Query returned no results[/yellow]&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1889"><a id="__codelineno-0-1889" name="__codelineno-0-1889"></a>            <span class="k">return</span>
+</span><span id="__span-0-1890"><a id="__codelineno-0-1890" name="__codelineno-0-1890"></a>
+</span><span id="__span-0-1891"><a id="__codelineno-0-1891" name="__codelineno-0-1891"></a>        <span class="c1"># Format output</span>
+</span><span id="__span-0-1892"><a id="__codelineno-0-1892" name="__codelineno-0-1892"></a>        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;table&quot;</span><span class="p">:</span>
+</span><span id="__span-0-1893"><a id="__codelineno-0-1893" name="__codelineno-0-1893"></a>            <span class="c1"># Rich table</span>
+</span><span id="__span-0-1894"><a id="__codelineno-0-1894" name="__codelineno-0-1894"></a>            <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;SPARQL Results (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2"> rows)&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1895"><a id="__codelineno-0-1895" name="__codelineno-0-1895"></a>
+</span><span id="__span-0-1896"><a id="__codelineno-0-1896" name="__codelineno-0-1896"></a>            <span class="c1"># Add columns from first row</span>
+</span><span id="__span-0-1897"><a id="__codelineno-0-1897" name="__codelineno-0-1897"></a>            <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-0-1898"><a id="__codelineno-0-1898" name="__codelineno-0-1898"></a>                <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">labels</span><span class="p">:</span>
+</span><span id="__span-0-1899"><a id="__codelineno-0-1899" name="__codelineno-0-1899"></a>                    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">var</span><span class="p">),</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;cyan&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1900"><a id="__codelineno-0-1900" name="__codelineno-0-1900"></a>
+</span><span id="__span-0-1901"><a id="__codelineno-0-1901" name="__codelineno-0-1901"></a>            <span class="c1"># Add rows</span>
+</span><span id="__span-0-1902"><a id="__codelineno-0-1902" name="__codelineno-0-1902"></a>            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-0-1903"><a id="__codelineno-0-1903" name="__codelineno-0-1903"></a>                <span class="n">table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">var</span><span class="p">])</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">labels</span><span class="p">])</span>
+</span><span id="__span-0-1904"><a id="__codelineno-0-1904" name="__codelineno-0-1904"></a>
+</span><span id="__span-0-1905"><a id="__codelineno-0-1905" name="__codelineno-0-1905"></a>            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+</span><span id="__span-0-1906"><a id="__codelineno-0-1906" name="__codelineno-0-1906"></a>
+</span><span id="__span-0-1907"><a id="__codelineno-0-1907" name="__codelineno-0-1907"></a>        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+</span><span id="__span-0-1908"><a id="__codelineno-0-1908" name="__codelineno-0-1908"></a>            <span class="c1"># JSON output</span>
+</span><span id="__span-0-1909"><a id="__codelineno-0-1909" name="__codelineno-0-1909"></a>            <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+</span><span id="__span-0-1910"><a id="__codelineno-0-1910" name="__codelineno-0-1910"></a>
+</span><span id="__span-0-1911"><a id="__codelineno-0-1911" name="__codelineno-0-1911"></a>            <span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-0-1912"><a id="__codelineno-0-1912" name="__codelineno-0-1912"></a>            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-0-1913"><a id="__codelineno-0-1913" name="__codelineno-0-1913"></a>                <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="nb">str</span><span class="p">(</span><span class="n">var</span><span class="p">):</span> <span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">var</span><span class="p">])</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">labels</span><span class="p">})</span>
+</span><span id="__span-0-1914"><a id="__codelineno-0-1914" name="__codelineno-0-1914"></a>            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+</span><span id="__span-0-1915"><a id="__codelineno-0-1915" name="__codelineno-0-1915"></a>
+</span><span id="__span-0-1916"><a id="__codelineno-0-1916" name="__codelineno-0-1916"></a>        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
+</span><span id="__span-0-1917"><a id="__codelineno-0-1917" name="__codelineno-0-1917"></a>            <span class="c1"># CSV output</span>
+</span><span id="__span-0-1918"><a id="__codelineno-0-1918" name="__codelineno-0-1918"></a>            <span class="kn">import</span><span class="w"> </span><span class="nn">csv</span>
+</span><span id="__span-0-1919"><a id="__codelineno-0-1919" name="__codelineno-0-1919"></a>            <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+</span><span id="__span-0-1920"><a id="__codelineno-0-1920" name="__codelineno-0-1920"></a>
+</span><span id="__span-0-1921"><a id="__codelineno-0-1921" name="__codelineno-0-1921"></a>            <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
+</span><span id="__span-0-1922"><a id="__codelineno-0-1922" name="__codelineno-0-1922"></a>
+</span><span id="__span-0-1923"><a id="__codelineno-0-1923" name="__codelineno-0-1923"></a>            <span class="c1"># Header</span>
+</span><span id="__span-0-1924"><a id="__codelineno-0-1924" name="__codelineno-0-1924"></a>            <span class="k">if</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-0-1925"><a id="__codelineno-0-1925" name="__codelineno-0-1925"></a>                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">labels</span><span class="p">])</span>
+</span><span id="__span-0-1926"><a id="__codelineno-0-1926" name="__codelineno-0-1926"></a>
+</span><span id="__span-0-1927"><a id="__codelineno-0-1927" name="__codelineno-0-1927"></a>            <span class="c1"># Rows</span>
+</span><span id="__span-0-1928"><a id="__codelineno-0-1928" name="__codelineno-0-1928"></a>            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-0-1929"><a id="__codelineno-0-1929" name="__codelineno-0-1929"></a>                <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="n">var</span><span class="p">])</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">labels</span><span class="p">])</span>
+</span><span id="__span-0-1930"><a id="__codelineno-0-1930" name="__codelineno-0-1930"></a>
+</span><span id="__span-0-1931"><a id="__codelineno-0-1931" name="__codelineno-0-1931"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-0-1932"><a id="__codelineno-0-1932" name="__codelineno-0-1932"></a>            <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[red]❌ Unknown format: </span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">[/red]&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1933"><a id="__codelineno-0-1933" name="__codelineno-0-1933"></a>            <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-0-1934"><a id="__codelineno-0-1934" name="__codelineno-0-1934"></a>
+</span><span id="__span-0-1935"><a id="__codelineno-0-1935" name="__codelineno-0-1935"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-0-1936"><a id="__codelineno-0-1936" name="__codelineno-0-1936"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold red]❌ Query failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">[/bold red]&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1937"><a id="__codelineno-0-1937" name="__codelineno-0-1937"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;twin query command failed&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1938"><a id="__codelineno-0-1938" name="__codelineno-0-1938"></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="repoq.cli.twin_export" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">twin_export</span>
+
+
+<a href="#repoq.cli.twin_export" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">twin_export</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="o">...</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output file path (.ttl)&quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="p">),</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">workspace</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="s2">&quot;--workspace&quot;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repository root (default: current directory)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="p">),</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">include_ontologies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="s2">&quot;--ontologies/--no-ontologies&quot;</span><span class="p">,</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Include TBox (ontologies)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="p">),</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>        <span class="s2">&quot;turtle&quot;</span><span class="p">,</span>
+</span><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>        <span class="s2">&quot;--format&quot;</span><span class="p">,</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>        <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;RDF format: turtle, xml, json-ld&quot;</span><span class="p">,</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="p">),</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Export complete Digital Twin graph to file.</p>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <p>repoq twin export snapshot.ttl --ontologies</p>
+</details>
+
+            <details class="quote">
+              <summary>Source code in <code>repoq/cli.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1941">1941</a></span>
+<span class="normal"><a href="#__codelineno-0-1942">1942</a></span>
+<span class="normal"><a href="#__codelineno-0-1943">1943</a></span>
+<span class="normal"><a href="#__codelineno-0-1944">1944</a></span>
+<span class="normal"><a href="#__codelineno-0-1945">1945</a></span>
+<span class="normal"><a href="#__codelineno-0-1946">1946</a></span>
+<span class="normal"><a href="#__codelineno-0-1947">1947</a></span>
+<span class="normal"><a href="#__codelineno-0-1948">1948</a></span>
+<span class="normal"><a href="#__codelineno-0-1949">1949</a></span>
+<span class="normal"><a href="#__codelineno-0-1950">1950</a></span>
+<span class="normal"><a href="#__codelineno-0-1951">1951</a></span>
+<span class="normal"><a href="#__codelineno-0-1952">1952</a></span>
+<span class="normal"><a href="#__codelineno-0-1953">1953</a></span>
+<span class="normal"><a href="#__codelineno-0-1954">1954</a></span>
+<span class="normal"><a href="#__codelineno-0-1955">1955</a></span>
+<span class="normal"><a href="#__codelineno-0-1956">1956</a></span>
+<span class="normal"><a href="#__codelineno-0-1957">1957</a></span>
+<span class="normal"><a href="#__codelineno-0-1958">1958</a></span>
+<span class="normal"><a href="#__codelineno-0-1959">1959</a></span>
+<span class="normal"><a href="#__codelineno-0-1960">1960</a></span>
+<span class="normal"><a href="#__codelineno-0-1961">1961</a></span>
+<span class="normal"><a href="#__codelineno-0-1962">1962</a></span>
+<span class="normal"><a href="#__codelineno-0-1963">1963</a></span>
+<span class="normal"><a href="#__codelineno-0-1964">1964</a></span>
+<span class="normal"><a href="#__codelineno-0-1965">1965</a></span>
+<span class="normal"><a href="#__codelineno-0-1966">1966</a></span>
+<span class="normal"><a href="#__codelineno-0-1967">1967</a></span>
+<span class="normal"><a href="#__codelineno-0-1968">1968</a></span>
+<span class="normal"><a href="#__codelineno-0-1969">1969</a></span>
+<span class="normal"><a href="#__codelineno-0-1970">1970</a></span>
+<span class="normal"><a href="#__codelineno-0-1971">1971</a></span>
+<span class="normal"><a href="#__codelineno-0-1972">1972</a></span>
+<span class="normal"><a href="#__codelineno-0-1973">1973</a></span>
+<span class="normal"><a href="#__codelineno-0-1974">1974</a></span>
+<span class="normal"><a href="#__codelineno-0-1975">1975</a></span>
+<span class="normal"><a href="#__codelineno-0-1976">1976</a></span>
+<span class="normal"><a href="#__codelineno-0-1977">1977</a></span>
+<span class="normal"><a href="#__codelineno-0-1978">1978</a></span>
+<span class="normal"><a href="#__codelineno-0-1979">1979</a></span>
+<span class="normal"><a href="#__codelineno-0-1980">1980</a></span>
+<span class="normal"><a href="#__codelineno-0-1981">1981</a></span>
+<span class="normal"><a href="#__codelineno-0-1982">1982</a></span>
+<span class="normal"><a href="#__codelineno-0-1983">1983</a></span>
+<span class="normal"><a href="#__codelineno-0-1984">1984</a></span>
+<span class="normal"><a href="#__codelineno-0-1985">1985</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1941"><a id="__codelineno-0-1941" name="__codelineno-0-1941"></a><span class="nd">@twin_app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;export&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1942"><a id="__codelineno-0-1942" name="__codelineno-0-1942"></a><span class="k">def</span><span class="w"> </span><span class="nf">twin_export</span><span class="p">(</span>
+</span><span id="__span-0-1943"><a id="__codelineno-0-1943" name="__codelineno-0-1943"></a>    <span class="n">output</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Argument</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output file path (.ttl)&quot;</span><span class="p">),</span>
+</span><span id="__span-0-1944"><a id="__codelineno-0-1944" name="__codelineno-0-1944"></a>    <span class="n">workspace</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-1945"><a id="__codelineno-0-1945" name="__codelineno-0-1945"></a>        <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+</span><span id="__span-0-1946"><a id="__codelineno-0-1946" name="__codelineno-0-1946"></a>        <span class="s2">&quot;--workspace&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1947"><a id="__codelineno-0-1947" name="__codelineno-0-1947"></a>        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1948"><a id="__codelineno-0-1948" name="__codelineno-0-1948"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repository root (default: current directory)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1949"><a id="__codelineno-0-1949" name="__codelineno-0-1949"></a>    <span class="p">),</span>
+</span><span id="__span-0-1950"><a id="__codelineno-0-1950" name="__codelineno-0-1950"></a>    <span class="n">include_ontologies</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-1951"><a id="__codelineno-0-1951" name="__codelineno-0-1951"></a>        <span class="kc">True</span><span class="p">,</span> <span class="s2">&quot;--ontologies/--no-ontologies&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Include TBox (ontologies)&quot;</span>
+</span><span id="__span-0-1952"><a id="__codelineno-0-1952" name="__codelineno-0-1952"></a>    <span class="p">),</span>
+</span><span id="__span-0-1953"><a id="__codelineno-0-1953" name="__codelineno-0-1953"></a>    <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span><span class="s2">&quot;turtle&quot;</span><span class="p">,</span> <span class="s2">&quot;--format&quot;</span><span class="p">,</span> <span class="s2">&quot;-f&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;RDF format: turtle, xml, json-ld&quot;</span><span class="p">),</span>
+</span><span id="__span-0-1954"><a id="__codelineno-0-1954" name="__codelineno-0-1954"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-1955"><a id="__codelineno-0-1955" name="__codelineno-0-1955"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Export complete Digital Twin graph to file.</span>
+</span><span id="__span-0-1956"><a id="__codelineno-0-1956" name="__codelineno-0-1956"></a>
+</span><span id="__span-0-1957"><a id="__codelineno-0-1957" name="__codelineno-0-1957"></a><span class="sd">    Example:</span>
+</span><span id="__span-0-1958"><a id="__codelineno-0-1958" name="__codelineno-0-1958"></a><span class="sd">        repoq twin export snapshot.ttl --ontologies</span>
+</span><span id="__span-0-1959"><a id="__codelineno-0-1959" name="__codelineno-0-1959"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-1960"><a id="__codelineno-0-1960" name="__codelineno-0-1960"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
+</span><span id="__span-0-1961"><a id="__codelineno-0-1961" name="__codelineno-0-1961"></a>
+</span><span id="__span-0-1962"><a id="__codelineno-0-1962" name="__codelineno-0-1962"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">repoq.core.digital_twin</span><span class="w"> </span><span class="kn">import</span> <span class="n">DigitalTwin</span>
+</span><span id="__span-0-1963"><a id="__codelineno-0-1963" name="__codelineno-0-1963"></a>
+</span><span id="__span-0-1964"><a id="__codelineno-0-1964" name="__codelineno-0-1964"></a>    <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+</span><span id="__span-0-1965"><a id="__codelineno-0-1965" name="__codelineno-0-1965"></a>
+</span><span id="__span-0-1966"><a id="__codelineno-0-1966" name="__codelineno-0-1966"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-0-1967"><a id="__codelineno-0-1967" name="__codelineno-0-1967"></a>        <span class="c1"># Initialize Digital Twin</span>
+</span><span id="__span-0-1968"><a id="__codelineno-0-1968" name="__codelineno-0-1968"></a>        <span class="n">dt</span> <span class="o">=</span> <span class="n">DigitalTwin</span><span class="p">(</span><span class="n">workspace_root</span><span class="o">=</span><span class="n">workspace</span><span class="p">)</span>
+</span><span id="__span-0-1969"><a id="__codelineno-0-1969" name="__codelineno-0-1969"></a>
+</span><span id="__span-0-1970"><a id="__codelineno-0-1970" name="__codelineno-0-1970"></a>        <span class="c1"># Export snapshot</span>
+</span><span id="__span-0-1971"><a id="__codelineno-0-1971" name="__codelineno-0-1971"></a>        <span class="k">with</span> <span class="n">console</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold blue]Exporting Digital Twin to </span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">,</span> <span class="n">spinner</span><span class="o">=</span><span class="s2">&quot;dots&quot;</span><span class="p">):</span>
+</span><span id="__span-0-1972"><a id="__codelineno-0-1972" name="__codelineno-0-1972"></a>            <span class="n">dt</span><span class="o">.</span><span class="n">export_snapshot</span><span class="p">(</span>
+</span><span id="__span-0-1973"><a id="__codelineno-0-1973" name="__codelineno-0-1973"></a>                <span class="n">output_path</span><span class="o">=</span><span class="n">output</span><span class="p">,</span>
+</span><span id="__span-0-1974"><a id="__codelineno-0-1974" name="__codelineno-0-1974"></a>                <span class="n">include_ontologies</span><span class="o">=</span><span class="n">include_ontologies</span><span class="p">,</span>
+</span><span id="__span-0-1975"><a id="__codelineno-0-1975" name="__codelineno-0-1975"></a>                <span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">,</span>
+</span><span id="__span-0-1976"><a id="__codelineno-0-1976" name="__codelineno-0-1976"></a>            <span class="p">)</span>
+</span><span id="__span-0-1977"><a id="__codelineno-0-1977" name="__codelineno-0-1977"></a>
+</span><span id="__span-0-1978"><a id="__codelineno-0-1978" name="__codelineno-0-1978"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[green]✓[/green] Exported to </span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1979"><a id="__codelineno-0-1979" name="__codelineno-0-1979"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Format: </span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1980"><a id="__codelineno-0-1980" name="__codelineno-0-1980"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Size: </span><span class="si">{</span><span class="n">output</span><span class="o">.</span><span class="n">stat</span><span class="p">()</span><span class="o">.</span><span class="n">st_size</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> bytes&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1981"><a id="__codelineno-0-1981" name="__codelineno-0-1981"></a>
+</span><span id="__span-0-1982"><a id="__codelineno-0-1982" name="__codelineno-0-1982"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-0-1983"><a id="__codelineno-0-1983" name="__codelineno-0-1983"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold red]❌ Export failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">[/bold red]&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1984"><a id="__codelineno-0-1984" name="__codelineno-0-1984"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;twin export command failed&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1985"><a id="__codelineno-0-1985" name="__codelineno-0-1985"></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+    </div>
+
+</div>
+
+<div class="doc doc-object doc-function">
+
+
+<h5 id="repoq.cli.twin_stats" class="doc doc-heading">
+            <span class="doc doc-object-name doc-function-name">twin_stats</span>
+
+
+<a href="#repoq.cli.twin_stats" class="headerlink" title="Permanent link">&para;</a></h5>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">twin_stats</span><span class="p">(</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">workspace</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="s2">&quot;--workspace&quot;</span><span class="p">,</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repository root (default: current directory)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span>
+</span></code></pre></div>
+
+    <div class="doc doc-contents ">
+
+        <p>Show Digital Twin statistics.</p>
+
+
+<details class="example" open>
+  <summary>Example</summary>
+  <p>repoq twin stats</p>
+</details>
+
+            <details class="quote">
+              <summary>Source code in <code>repoq/cli.py</code></summary>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1988">1988</a></span>
+<span class="normal"><a href="#__codelineno-0-1989">1989</a></span>
+<span class="normal"><a href="#__codelineno-0-1990">1990</a></span>
+<span class="normal"><a href="#__codelineno-0-1991">1991</a></span>
+<span class="normal"><a href="#__codelineno-0-1992">1992</a></span>
+<span class="normal"><a href="#__codelineno-0-1993">1993</a></span>
+<span class="normal"><a href="#__codelineno-0-1994">1994</a></span>
+<span class="normal"><a href="#__codelineno-0-1995">1995</a></span>
+<span class="normal"><a href="#__codelineno-0-1996">1996</a></span>
+<span class="normal"><a href="#__codelineno-0-1997">1997</a></span>
+<span class="normal"><a href="#__codelineno-0-1998">1998</a></span>
+<span class="normal"><a href="#__codelineno-0-1999">1999</a></span>
+<span class="normal"><a href="#__codelineno-0-2000">2000</a></span>
+<span class="normal"><a href="#__codelineno-0-2001">2001</a></span>
+<span class="normal"><a href="#__codelineno-0-2002">2002</a></span>
+<span class="normal"><a href="#__codelineno-0-2003">2003</a></span>
+<span class="normal"><a href="#__codelineno-0-2004">2004</a></span>
+<span class="normal"><a href="#__codelineno-0-2005">2005</a></span>
+<span class="normal"><a href="#__codelineno-0-2006">2006</a></span>
+<span class="normal"><a href="#__codelineno-0-2007">2007</a></span>
+<span class="normal"><a href="#__codelineno-0-2008">2008</a></span>
+<span class="normal"><a href="#__codelineno-0-2009">2009</a></span>
+<span class="normal"><a href="#__codelineno-0-2010">2010</a></span>
+<span class="normal"><a href="#__codelineno-0-2011">2011</a></span>
+<span class="normal"><a href="#__codelineno-0-2012">2012</a></span>
+<span class="normal"><a href="#__codelineno-0-2013">2013</a></span>
+<span class="normal"><a href="#__codelineno-0-2014">2014</a></span>
+<span class="normal"><a href="#__codelineno-0-2015">2015</a></span>
+<span class="normal"><a href="#__codelineno-0-2016">2016</a></span>
+<span class="normal"><a href="#__codelineno-0-2017">2017</a></span>
+<span class="normal"><a href="#__codelineno-0-2018">2018</a></span>
+<span class="normal"><a href="#__codelineno-0-2019">2019</a></span>
+<span class="normal"><a href="#__codelineno-0-2020">2020</a></span>
+<span class="normal"><a href="#__codelineno-0-2021">2021</a></span>
+<span class="normal"><a href="#__codelineno-0-2022">2022</a></span>
+<span class="normal"><a href="#__codelineno-0-2023">2023</a></span>
+<span class="normal"><a href="#__codelineno-0-2024">2024</a></span>
+<span class="normal"><a href="#__codelineno-0-2025">2025</a></span>
+<span class="normal"><a href="#__codelineno-0-2026">2026</a></span>
+<span class="normal"><a href="#__codelineno-0-2027">2027</a></span>
+<span class="normal"><a href="#__codelineno-0-2028">2028</a></span>
+<span class="normal"><a href="#__codelineno-0-2029">2029</a></span>
+<span class="normal"><a href="#__codelineno-0-2030">2030</a></span>
+<span class="normal"><a href="#__codelineno-0-2031">2031</a></span>
+<span class="normal"><a href="#__codelineno-0-2032">2032</a></span>
+<span class="normal"><a href="#__codelineno-0-2033">2033</a></span>
+<span class="normal"><a href="#__codelineno-0-2034">2034</a></span>
+<span class="normal"><a href="#__codelineno-0-2035">2035</a></span>
+<span class="normal"><a href="#__codelineno-0-2036">2036</a></span>
+<span class="normal"><a href="#__codelineno-0-2037">2037</a></span>
+<span class="normal"><a href="#__codelineno-0-2038">2038</a></span>
+<span class="normal"><a href="#__codelineno-0-2039">2039</a></span>
+<span class="normal"><a href="#__codelineno-0-2040">2040</a></span>
+<span class="normal"><a href="#__codelineno-0-2041">2041</a></span>
+<span class="normal"><a href="#__codelineno-0-2042">2042</a></span>
+<span class="normal"><a href="#__codelineno-0-2043">2043</a></span>
+<span class="normal"><a href="#__codelineno-0-2044">2044</a></span>
+<span class="normal"><a href="#__codelineno-0-2045">2045</a></span>
+<span class="normal"><a href="#__codelineno-0-2046">2046</a></span>
+<span class="normal"><a href="#__codelineno-0-2047">2047</a></span>
+<span class="normal"><a href="#__codelineno-0-2048">2048</a></span>
+<span class="normal"><a href="#__codelineno-0-2049">2049</a></span>
+<span class="normal"><a href="#__codelineno-0-2050">2050</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1988"><a id="__codelineno-0-1988" name="__codelineno-0-1988"></a><span class="nd">@twin_app</span><span class="o">.</span><span class="n">command</span><span class="p">(</span><span class="s2">&quot;stats&quot;</span><span class="p">)</span>
+</span><span id="__span-0-1989"><a id="__codelineno-0-1989" name="__codelineno-0-1989"></a><span class="k">def</span><span class="w"> </span><span class="nf">twin_stats</span><span class="p">(</span>
+</span><span id="__span-0-1990"><a id="__codelineno-0-1990" name="__codelineno-0-1990"></a>    <span class="n">workspace</span><span class="p">:</span> <span class="n">Path</span> <span class="o">=</span> <span class="n">typer</span><span class="o">.</span><span class="n">Option</span><span class="p">(</span>
+</span><span id="__span-0-1991"><a id="__codelineno-0-1991" name="__codelineno-0-1991"></a>        <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">(),</span>
+</span><span id="__span-0-1992"><a id="__codelineno-0-1992" name="__codelineno-0-1992"></a>        <span class="s2">&quot;--workspace&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1993"><a id="__codelineno-0-1993" name="__codelineno-0-1993"></a>        <span class="s2">&quot;-w&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1994"><a id="__codelineno-0-1994" name="__codelineno-0-1994"></a>        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Repository root (default: current directory)&quot;</span><span class="p">,</span>
+</span><span id="__span-0-1995"><a id="__codelineno-0-1995" name="__codelineno-0-1995"></a>    <span class="p">),</span>
+</span><span id="__span-0-1996"><a id="__codelineno-0-1996" name="__codelineno-0-1996"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-0-1997"><a id="__codelineno-0-1997" name="__codelineno-0-1997"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Show Digital Twin statistics.</span>
+</span><span id="__span-0-1998"><a id="__codelineno-0-1998" name="__codelineno-0-1998"></a>
+</span><span id="__span-0-1999"><a id="__codelineno-0-1999" name="__codelineno-0-1999"></a><span class="sd">    Example:</span>
+</span><span id="__span-0-2000"><a id="__codelineno-0-2000" name="__codelineno-0-2000"></a><span class="sd">        repoq twin stats</span>
+</span><span id="__span-0-2001"><a id="__codelineno-0-2001" name="__codelineno-0-2001"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-2002"><a id="__codelineno-0-2002" name="__codelineno-0-2002"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">rdflib</span><span class="w"> </span><span class="kn">import</span> <span class="n">RDF</span>
+</span><span id="__span-0-2003"><a id="__codelineno-0-2003" name="__codelineno-0-2003"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
+</span><span id="__span-0-2004"><a id="__codelineno-0-2004" name="__codelineno-0-2004"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">rich.panel</span><span class="w"> </span><span class="kn">import</span> <span class="n">Panel</span>
+</span><span id="__span-0-2005"><a id="__codelineno-0-2005" name="__codelineno-0-2005"></a>
+</span><span id="__span-0-2006"><a id="__codelineno-0-2006" name="__codelineno-0-2006"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">repoq.core.digital_twin</span><span class="w"> </span><span class="kn">import</span> <span class="n">DigitalTwin</span>
+</span><span id="__span-0-2007"><a id="__codelineno-0-2007" name="__codelineno-0-2007"></a>
+</span><span id="__span-0-2008"><a id="__codelineno-0-2008" name="__codelineno-0-2008"></a>    <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+</span><span id="__span-0-2009"><a id="__codelineno-0-2009" name="__codelineno-0-2009"></a>
+</span><span id="__span-0-2010"><a id="__codelineno-0-2010" name="__codelineno-0-2010"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-0-2011"><a id="__codelineno-0-2011" name="__codelineno-0-2011"></a>        <span class="c1"># Initialize Digital Twin</span>
+</span><span id="__span-0-2012"><a id="__codelineno-0-2012" name="__codelineno-0-2012"></a>        <span class="n">dt</span> <span class="o">=</span> <span class="n">DigitalTwin</span><span class="p">(</span><span class="n">workspace_root</span><span class="o">=</span><span class="n">workspace</span><span class="p">)</span>
+</span><span id="__span-0-2013"><a id="__codelineno-0-2013" name="__codelineno-0-2013"></a>
+</span><span id="__span-0-2014"><a id="__codelineno-0-2014" name="__codelineno-0-2014"></a>        <span class="c1"># Get component graphs</span>
+</span><span id="__span-0-2015"><a id="__codelineno-0-2015" name="__codelineno-0-2015"></a>        <span class="n">static</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">static_graph</span>
+</span><span id="__span-0-2016"><a id="__codelineno-0-2016" name="__codelineno-0-2016"></a>        <span class="n">ontologies</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">ontologies_graph</span>
+</span><span id="__span-0-2017"><a id="__codelineno-0-2017" name="__codelineno-0-2017"></a>        <span class="n">commits</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">get_commits_rdf</span><span class="p">()</span>  <span class="c1"># All commits (no limit)</span>
+</span><span id="__span-0-2018"><a id="__codelineno-0-2018" name="__codelineno-0-2018"></a>        <span class="n">files</span> <span class="o">=</span> <span class="n">dt</span><span class="o">.</span><span class="n">get_files_rdf</span><span class="p">()</span>
+</span><span id="__span-0-2019"><a id="__codelineno-0-2019" name="__codelineno-0-2019"></a>
+</span><span id="__span-0-2020"><a id="__codelineno-0-2020" name="__codelineno-0-2020"></a>        <span class="c1"># Count types</span>
+</span><span id="__span-0-2021"><a id="__codelineno-0-2021" name="__codelineno-0-2021"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">repoq.core.digital_twin</span><span class="w"> </span><span class="kn">import</span> <span class="n">REPO</span>
+</span><span id="__span-0-2022"><a id="__codelineno-0-2022" name="__codelineno-0-2022"></a>
+</span><span id="__span-0-2023"><a id="__codelineno-0-2023" name="__codelineno-0-2023"></a>        <span class="n">num_commits</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">commits</span><span class="o">.</span><span class="n">subjects</span><span class="p">(</span><span class="n">RDF</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">REPO</span><span class="o">.</span><span class="n">Commit</span><span class="p">)))</span>
+</span><span id="__span-0-2024"><a id="__codelineno-0-2024" name="__codelineno-0-2024"></a>        <span class="n">num_files</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">files</span><span class="o">.</span><span class="n">subjects</span><span class="p">(</span><span class="n">RDF</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">REPO</span><span class="o">.</span><span class="n">File</span><span class="p">)))</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span>
+</span><span id="__span-0-2025"><a id="__codelineno-0-2025" name="__codelineno-0-2025"></a>            <span class="nb">list</span><span class="p">(</span><span class="n">files</span><span class="o">.</span><span class="n">subjects</span><span class="p">(</span><span class="n">RDF</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">REPO</span><span class="o">.</span><span class="n">PythonFile</span><span class="p">))</span>
+</span><span id="__span-0-2026"><a id="__codelineno-0-2026" name="__codelineno-0-2026"></a>        <span class="p">)</span>
+</span><span id="__span-0-2027"><a id="__codelineno-0-2027" name="__codelineno-0-2027"></a>
+</span><span id="__span-0-2028"><a id="__codelineno-0-2028" name="__codelineno-0-2028"></a>        <span class="c1"># Format output</span>
+</span><span id="__span-0-2029"><a id="__codelineno-0-2029" name="__codelineno-0-2029"></a>        <span class="n">stats_text</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-0-2030"><a id="__codelineno-0-2030" name="__codelineno-0-2030"></a><span class="s2">[cyan]Static ABox:[/cyan]  </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">static</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> triples (.repoq/)</span>
+</span><span id="__span-0-2031"><a id="__codelineno-0-2031" name="__codelineno-0-2031"></a><span class="s2">[cyan]TBox:[/cyan]         </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">ontologies</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> triples (ontologies)</span>
+</span><span id="__span-0-2032"><a id="__codelineno-0-2032" name="__codelineno-0-2032"></a><span class="s2">[cyan]Dynamic ABox:[/cyan] </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">commits</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> triples</span>
+</span><span id="__span-0-2033"><a id="__codelineno-0-2033" name="__codelineno-0-2033"></a><span class="s2">  - Commits:     </span><span class="si">{</span><span class="n">num_commits</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">commits</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> triples)</span>
+</span><span id="__span-0-2034"><a id="__codelineno-0-2034" name="__codelineno-0-2034"></a><span class="s2">  - Files:       </span><span class="si">{</span><span class="n">num_files</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> (</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> triples)</span>
+</span><span id="__span-0-2035"><a id="__codelineno-0-2035" name="__codelineno-0-2035"></a>
+</span><span id="__span-0-2036"><a id="__codelineno-0-2036" name="__codelineno-0-2036"></a><span class="s2">[bold]Total:[/bold]        </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">static</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">ontologies</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">commits</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span><span class="si">:</span><span class="s2">,</span><span class="si">}</span><span class="s2"> triples</span>
+</span><span id="__span-0-2037"><a id="__codelineno-0-2037" name="__codelineno-0-2037"></a><span class="s2">&quot;&quot;&quot;</span>
+</span><span id="__span-0-2038"><a id="__codelineno-0-2038" name="__codelineno-0-2038"></a>
+</span><span id="__span-0-2039"><a id="__codelineno-0-2039" name="__codelineno-0-2039"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span>
+</span><span id="__span-0-2040"><a id="__codelineno-0-2040" name="__codelineno-0-2040"></a>            <span class="n">Panel</span><span class="p">(</span>
+</span><span id="__span-0-2041"><a id="__codelineno-0-2041" name="__codelineno-0-2041"></a>                <span class="n">stats_text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span>
+</span><span id="__span-0-2042"><a id="__codelineno-0-2042" name="__codelineno-0-2042"></a>                <span class="n">title</span><span class="o">=</span><span class="s2">&quot;[bold]Digital Twin Statistics[/bold]&quot;</span><span class="p">,</span>
+</span><span id="__span-0-2043"><a id="__codelineno-0-2043" name="__codelineno-0-2043"></a>                <span class="n">border_style</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+</span><span id="__span-0-2044"><a id="__codelineno-0-2044" name="__codelineno-0-2044"></a>            <span class="p">)</span>
+</span><span id="__span-0-2045"><a id="__codelineno-0-2045" name="__codelineno-0-2045"></a>        <span class="p">)</span>
+</span><span id="__span-0-2046"><a id="__codelineno-0-2046" name="__codelineno-0-2046"></a>
+</span><span id="__span-0-2047"><a id="__codelineno-0-2047" name="__codelineno-0-2047"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-0-2048"><a id="__codelineno-0-2048" name="__codelineno-0-2048"></a>        <span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[bold red]❌ Stats failed: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">[/bold red]&quot;</span><span class="p">)</span>
+</span><span id="__span-0-2049"><a id="__codelineno-0-2049" name="__codelineno-0-2049"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">&quot;twin stats command failed&quot;</span><span class="p">)</span>
+</span><span id="__span-0-2050"><a id="__codelineno-0-2050" name="__codelineno-0-2050"></a>        <span class="k">raise</span> <span class="n">typer</span><span class="o">.</span><span class="n">Exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
