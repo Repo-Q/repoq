@@ -6,8 +6,8 @@
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 [![CI](https://github.com/kirill-0440/repoq/workflows/CI/badge.svg)](https://github.com/kirill-0440/repoq/actions/workflows/ci.yml)
 [![SHACL](https://github.com/kirill-0440/repoq/workflows/SHACL%20Semantic%20Validation/badge.svg)](https://github.com/kirill-0440/repoq/actions/workflows/shacl-validation.yml)
-[![Tests](https://img.shields.io/badge/tests-407%20passing-brightgreen)](tests/)
-[![Coverage](https://img.shields.io/badge/coverage-70%25-yellowgreen)](tests/)
+[![Tests](https://img.shields.io/badge/tests-408%20passing-brightgreen)](tests/)
+[![Coverage](https://img.shields.io/badge/coverage-62%25-yellowgreen)](tests/)
 [![Docker](https://img.shields.io/badge/docker-161MB-blue)](https://hub.docker.com/r/kirill0440/repoq)
 [![Status](https://img.shields.io/badge/status-beta-orange)](https://github.com/kirill-0440/repoq)
 
@@ -31,6 +31,12 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 - 🔀 **TRS Rules Extraction**: Normalization rules → RDF/Turtle (trs:Rule, trs:RewriteSystem)
 - 📈 **Quality Recommendations**: ΔQ-based prioritization → RDF/Turtle (quality:Recommendation)
 - 🔁 **Self-Validation**: Meta-loop closure with circular dependency detection (meta:SelfAnalysis)
+- 🆕 **Extended Ontologies (Phase 0.5)**: 5 new domain-specific ontologies with OWL2/SHACL validation:
+  - 🧪 **test.ttl**: Testing & coverage (PropertyTest, ContractTest, ConceptCoverage) - 5 issue types
+  - 🔒 **security.ttl**: Vulnerabilities & secrets (CVE, SecretLeak, CVSS scoring) - 7 issue types
+  - 🏛️ **arch.ttl**: Architecture layers (Hexagonal/Clean/Layered patterns, DAG enforcement) - 6 issue types
+  - 📜 **license.ttl**: License compliance (SPDX integration, directional compatibility rules) - 6 issue types
+  - 🔌 **api.ttl**: API contracts (semver enforcement, breaking change detection) - 5 issue types
 
 **In Development:**
 
@@ -181,6 +187,59 @@ WHERE {
 ORDER BY DESC(?deltaQ)
 LIMIT 5
 ```
+
+## Ontology Validation (Phase 0.5)
+
+RepoQ uses **OntologistAgent** for automated ontology validation with 5-gate quality checks:
+
+```bash
+# Validate ontology for analyzer
+python -c "
+from repoq.ontologies.ontologist_agent import OntologistAgent, AnalyzerMetadata
+
+metadata = AnalyzerMetadata(
+    name='SecurityAnalyzer',
+    ontology='security.ttl',
+    rdf_namespace='http://example.org/vocab/security#',
+    issue_types=['ExposedAPIKey', 'VulnerableDependency', ...]
+)
+
+agent = OntologistAgent()
+report = agent.validate_for_analyzer(metadata)
+print(report.summary())  # ✅ Passed (5 gates checked)
+"
+```
+
+**5 Validation Gates:**
+
+1. **Ontology Exists**: File parseable as Turtle/RDF
+2. **Issue Types Defined**: All analyzer issue types have OWL classes
+3. **No Cycles**: Class hierarchy is acyclic (DAG enforcement)
+4. **Namespace Isolation**: No collisions with other ontologies
+5. **Property Consistency**: Domains/ranges defined and valid
+
+**Integration with AnalyzerRegistry** (coming in Phase 1):
+
+```python
+from repoq.core.registry import AnalyzerRegistry
+
+# Registration automatically validates ontology
+@AnalyzerRegistry.register(
+    ontology="security.ttl",
+    issue_types=["ExposedAPIKey", "VulnerableDependency"]
+)
+class SecurityAnalyzer(BaseAnalyzer):
+    pass  # If ontology invalid, registration fails (fail-fast)
+```
+
+**OML Formalization** (see `repoq/ontologies/FORMALIZATION.md`):
+
+All 5 ontologies have formal OML specifications with Lean4 invariants:
+
+- **arch.ttl**: `layer_hierarchy_acyclic` theorem (well-founded recursion)
+- **license.ttl**: `compatibility_not_symmetric` proof (MIT→GPL ≠ GPL→MIT)
+- **security.ttl**: `cvss_valid` constraint (CVSS ∈ [0,10])
+- **api.ttl**: `breaking_change_requires_major_bump` (semver enforcement)
 
 ## CI/CD Integration
 
