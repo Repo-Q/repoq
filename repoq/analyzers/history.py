@@ -148,7 +148,16 @@ class HistoryAnalyzer(Analyzer):
             )
 
             files_in_commit = []
-            for m in commit.modifications:
+            
+            # Handle different PyDriller API versions
+            try:
+                modifications = commit.modifications if hasattr(commit, 'modifications') else []
+            except AttributeError:
+                logger.warning("'Commit' object has no attribute 'modifications', falling back to Git CLI")
+                self._run_git(project, repo_dir, cfg)
+                return
+            
+            for m in modifications:
                 path = m.new_path or m.old_path
                 if not path:
                     continue

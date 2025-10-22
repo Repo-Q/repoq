@@ -87,6 +87,13 @@ class OntologyPlugin(ABC):
         """
         pass
 
+    def check_applicability(self, project_data: Dict[str, Any]) -> float:
+        """
+        Alias for detect_applicability for backward compatibility.
+        Returns confidence score 0.0-1.0.
+        """
+        return self.detect_applicability(project_data)
+
     @abstractmethod
     def extract_concepts(self, project_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """Extract ontology concepts from project data."""
@@ -183,11 +190,12 @@ class CodeOntologyPlugin(OntologyPlugin):
     def detect_applicability(self, project_data: Dict[str, Any]) -> float:
         """Always applicable for code projects."""
         files = project_data.get("files", [])
-        code_files = [
-            f
-            for f in files
-            if any(f.endswith(ext) for ext in [".py", ".js", ".java", ".cpp", ".cs"])
-        ]
+        code_files = []
+        for f in files:
+            # Handle both dict and string formats
+            path = f if isinstance(f, str) else f.get("path", "")
+            if any(path.endswith(ext) for ext in [".py", ".js", ".java", ".cpp", ".cs"]):
+                code_files.append(path)
         return min(1.0, len(code_files) / 10)  # Max at 10+ code files
 
     def extract_concepts(self, project_data: Dict[str, Any]) -> List[Dict[str, Any]]:
@@ -471,7 +479,7 @@ class OntologyManager:
     def __init__(self, plugin_directory: Optional[Path] = None):
         self.plugin_directory = plugin_directory or Path(__file__).parent / "plugins"
         self.plugins: Dict[str, OntologyPlugin] = {}
-        self.active_plugins: List[OntologyPlugin] = []
+        self.active_plugins: set = set()  # Set of active plugin names
         self._loaded = False
 
     def load_plugins(self) -> None:
@@ -691,13 +699,13 @@ class OntologyManager:
             self.load_plugins()
 
         # Determine applicable plugins
-        self.active_plugins = []
+        self.active_plugins = set()  # Use set for O(1) lookup and .add() method
         for plugin in self.plugins.values():
             if plugin.metadata.enabled:
                 score = plugin.detect_applicability(project_data)
                 if score > 0.1:  # Minimum threshold
                     plugin.applicability_score = score
-                    self.active_plugins.append(plugin)
+                    self.active_plugins.add(plugin.metadata.name)
 
         # Sort by applicability score and priority
         self.active_plugins.sort(key=lambda p: (-p.applicability_score, p.metadata.priority))

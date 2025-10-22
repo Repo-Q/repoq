@@ -63,7 +63,8 @@ class ComplexityAnalyzer(Analyzer):
             file_paths.append(str(Path(repo_dir) / rel))
 
         try:
-            results = lizard.analyze_files(file_paths, threads=0)
+            # Use threads=1 (minimum) to avoid "Number of processes must be at least 1" error
+            results = lizard.analyze_files(file_paths, threads=1)
             for r in results:
                 rel = Path(r.filename).relative_to(repo_dir).as_posix()
                 fid = f"repo:file:{rel}"
