@@ -29,22 +29,25 @@ def test_refactor_plan_missing_file():
 def test_refactor_plan_with_baseline(tmp_path):
     """Test refactor-plan with baseline data (if exists)."""
     baseline = Path("baseline-quality.jsonld")
-    
+
     if baseline.exists():
         # Test markdown format
         result = runner.invoke(app, ["refactor-plan", str(baseline), "--top-k", "3"])
         assert result.exit_code == 0
-        assert "Generating refactoring plan" in result.output or "No refactoring needed" in result.output
-        
+        assert (
+            "Generating refactoring plan" in result.output
+            or "No refactoring needed" in result.output
+        )
+
         # Test JSON format
         output_json = tmp_path / "tasks.json"
         result = runner.invoke(
-            app, 
-            ["refactor-plan", str(baseline), "--format", "json", "-o", str(output_json)]
+            app, ["refactor-plan", str(baseline), "--format", "json", "-o", str(output_json)]
         )
         assert result.exit_code == 0
         if output_json.exists():
             import json
+
             data = json.loads(output_json.read_text())
             assert "tasks" in data
             assert "baseline_q" in data

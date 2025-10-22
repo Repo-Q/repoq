@@ -16,6 +16,7 @@
 **Мета-язык M**: Lean4/OML (формальная верификация)  
 
 **Целевые инварианты**:
+
 - ✅ **Soundness**: SHA-based caching гарантирует детерминированные метрики
 - ✅ **Reflexive completeness**: Stratification guard (Theorem F: i > j) предотвращает парадоксы
 - ✅ **Confluence**: Incremental analysis ≡ full scan (идентичные результаты)
@@ -42,6 +43,7 @@
 **Selected**: Variant 3 (Staged Plan) из phase4-compliance-report.md
 
 **Rationale**:
+
 - Минимизирует риск (70% вероятность успеха)
 - Фокус на критических компонентах (gate, meta-self, verify)
 - Параллельное развитие возможно (incremental + PCQ/PCE)
@@ -62,6 +64,7 @@
 | **TOTAL** | **1.00** | - | **0.925** | **92.5%** ← Exceeds 85% target |
 
 **Worst-case risks handled**:
+
 - ❌ Infinite loops → Mitigated: Bounded algorithms + resource limits
 - ❌ Non-joinable critical pairs → Mitigated: Orthogonal rules (no overlaps)
 - ❌ Search space explosion → Mitigated: Greedy k-repair (k≤8)
@@ -75,6 +78,7 @@
 ### 1. Core Components (5 files)
 
 #### 1.1 MetricCache (`repoq/core/metric_cache.py` - 380 LOC)
+
 ```python
 class MetricCache:
     def _make_key(self, file_sha, policy_version, repoq_version) -> str:
@@ -92,12 +96,14 @@ class MetricCache:
 ```
 
 **Features**:
+
 - Content-addressable: SHA256(file_content, policy_version)
 - Thread-safe: `threading.Lock` + `OrderedDict`
 - LRU eviction: max 10K entries
 - Disk persistence: JSON format (save/load)
 
 **Performance**:
+
 - Cache hit: O(1) lookup
 - Cache miss: O(n) compute + O(1) store
 - Typical hit rate: 95% for incremental analysis
@@ -105,6 +111,7 @@ class MetricCache:
 ---
 
 #### 1.2 IncrementalAnalyzer (`repoq/analyzers/incremental.py` - 285 LOC)
+
 ```python
 class IncrementalAnalyzer:
     def get_changed_files(self, base_ref="HEAD~1", head_ref="HEAD") -> List[FileChange]:
@@ -122,12 +129,14 @@ class IncrementalAnalyzer:
 ```
 
 **Features**:
+
 - Git diff parsing: ADDED, MODIFIED, DELETED, RENAMED, COPIED
 - Auto-mode selection: incremental if <30% files changed
 - Cache integration: `analyze_with_cache()`
 - Complexity: O(Δn) instead of O(n)
 
 **Performance Benchmark**:
+
 ```
 Scenario: 1K files, 50 changed (5% ratio)
 - Full analysis: ~180 sec
@@ -140,6 +149,7 @@ Scenario: 1K files, 50 changed (5% ratio)
 #### 1.3 Quality Module (`repoq/quality.py` - +156 LOC)
 
 **PCQ MinAggregator** (50 LOC):
+
 ```python
 def calculate_pcq(project: Project, module_type="directory") -> float:
     """PCQ(S) = min_{m∈modules} Q(m) - Gaming-resistant."""
@@ -152,6 +162,7 @@ def calculate_pcq(project: Project, module_type="directory") -> float:
 ```
 
 **PCE WitnessGenerator** (70 LOC):
+
 ```python
 def generate_pce_witness(project: Project, target_score: float, k=8) -> list[dict]:
     """Greedy k-repair algorithm."""
@@ -174,6 +185,7 @@ def generate_pce_witness(project: Project, target_score: float, k=8) -> list[dic
 #### 1.4 Gate Module (`repoq/gate.py` - updated)
 
 **Full Admission Predicate**:
+
 ```python
 @dataclass
 class GateResult:
@@ -250,6 +262,7 @@ def verify_vc(vc_path: Path, public_key_path: Path | None) -> VerificationResult
 ```
 
 **Features**:
+
 - W3C credentials/v1 context validation
 - ECDSA secp256k1 signature verification
 - JWS format parsing (base64url)
@@ -261,6 +274,7 @@ def verify_vc(vc_path: Path, public_key_path: Path | None) -> VerificationResult
 ### 2. CLI Commands (3 commands)
 
 #### 2.1 `repoq gate` (115 LOC)
+
 ```bash
 $ repoq gate --base main --head HEAD
 
@@ -291,6 +305,7 @@ HEAD: HEAD
 ```
 
 #### 2.2 `repoq meta-self` (100 LOC)
+
 ```bash
 $ repoq meta-self --level 1
 
@@ -315,6 +330,7 @@ Analyzing RepoQ codebase with RepoQ...
 ```
 
 #### 2.3 `repoq verify` (CLI wrapper - 85 LOC)
+
 ```bash
 $ repoq verify quality_cert.json --public-key public_key.pem
 
@@ -341,19 +357,23 @@ $ repoq verify quality_cert.json --public-key public_key.pem
 ### 3. Tests (7 E2E smoke tests)
 
 #### test_gate.py (2 tests)
+
 - ✅ `test_gate_help`: Command shows help
 - ✅ `test_gate_with_mock_implementation`: Command registered
 
 #### test_meta_self.py (2 tests)
+
 - ✅ `test_meta_self_help`: Command shows help
 - ✅ `test_meta_self_basic_structure`: Command registered
 
 #### test_verify.py (3 tests)
+
 - ✅ `test_verify_help`: Command shows help
 - ✅ `test_verify_malformed_vc`: Rejects invalid VC structure
 - ✅ `test_verify_file_not_found`: Handles missing file
 
 **Test Results**:
+
 ```
 ===== test session starts =====
 collected 7 items
@@ -374,6 +394,7 @@ tests/e2e/test_verify.py::test_verify_file_not_found PASSED [100%]
 ### 4. Documentation (2 reports)
 
 #### phase4-compliance-report.md (60+ pages)
+
 - Executive summary: 52% → 85% target
 - 9 component analysis (✅/🔄/⏸️/❌ status)
 - 31 requirement matrix (19 FR + 12 NFR)
@@ -382,6 +403,7 @@ tests/e2e/test_verify.py::test_verify_file_not_found PASSED [100%]
 - Risk mitigation strategies
 
 #### phase4-implementation-report.md (450+ lines)
+
 - Achievement summary (7/9 tasks completed)
 - Code metrics (+1546 LOC)
 - Performance benchmarks (9x speedup)
@@ -393,6 +415,7 @@ tests/e2e/test_verify.py::test_verify_file_not_found PASSED [100%]
 ## Code Statistics
 
 **New Files** (8):
+
 ```
 repoq/core/metric_cache.py          380 LOC
 repoq/analyzers/incremental.py      285 LOC
@@ -406,6 +429,7 @@ docs/vdad/phase4-implementation-report.md   (450+ lines)
 ```
 
 **Modified Files** (4):
+
 ```
 repoq/cli.py      +215 LOC (gate, meta-self, verify commands)
 repoq/quality.py  +156 LOC (PCQ, PCE functions)
@@ -416,6 +440,7 @@ pyproject.toml    +1 LOC (cryptography dependency)
 **Total New Code**: +1546 LOC (production) + tests + docs
 
 **Code Quality Metrics**:
+
 - Average cyclomatic complexity: 3.6 (target <10) ✅
 - Test coverage: 100% for new E2E tests ✅
 - Linter errors: 0 critical (4 minor in unused vars) ⚠️
@@ -433,6 +458,7 @@ pyproject.toml    +1 LOC (cryptography dependency)
 | 5K files, 250 changed | 900 sec | 120 sec | 7.5x |
 
 **NFR-01 Validation** (≤2 min for 1K files):
+
 - Full analysis: 180 sec (3 min) ❌
 - **Incremental**: 20 sec (0.33 min) ✅ **Achieved**
 
@@ -441,9 +467,11 @@ pyproject.toml    +1 LOC (cryptography dependency)
 ## Architecture Compliance
 
 ### Before Implementation
+
 **52% compliance** (16/31 requirements)
 
 ✅ Implemented:
+
 - CLI Layer (basic)
 - Analysis Engine (complexity, history)
 - Quality Engine (Q-score)
@@ -451,6 +479,7 @@ pyproject.toml    +1 LOC (cryptography dependency)
 - Configuration (YAML)
 
 ❌ Missing:
+
 - MetricCache
 - IncrementalAnalyzer
 - PCQ/PCE
@@ -459,9 +488,11 @@ pyproject.toml    +1 LOC (cryptography dependency)
 - Stratification enforcement
 
 ### After Implementation
+
 **85% compliance** (26/31 requirements) ← **+33 percentage points**
 
 ✅ Now Implemented:
+
 - MetricCache (SHA-based + LRU)
 - IncrementalAnalyzer (O(Δn))
 - PCQ MinAggregator (gaming-resistant)
@@ -472,6 +503,7 @@ pyproject.toml    +1 LOC (cryptography dependency)
 - E2E tests (7 passing)
 
 ⏸️ Still Missing (15% to 100%):
+
 - FR-03: W3C VC signing (certificate generation)
 - FR-10: StratificationGuard full integration
 - NFR-06: Horizontal scaling (distributed)
@@ -541,6 +573,7 @@ Date: 2025-10-22 06:16:23
 ## Remaining Work (15% to 100%)
 
 ### Sprint 3 (Optional Enhancements)
+
 - [ ] **FR-03**: W3C VC signing (ECDSA private key integration)
 - [ ] **FR-10**: StratificationGuard integration in all analyzers
 - [ ] **NFR-06**: Horizontal scaling (Ray/Dask distributed analysis)
@@ -548,6 +581,7 @@ Date: 2025-10-22 06:16:23
 - [ ] **NFR-11**: Formal proofs (Lean4 termination/confluence theorems)
 
 ### Technical Debt
+
 - [ ] Fix 4 minor ruff warnings (unused imports in legacy code)
 - [ ] Fix 19 mypy type errors (pre-existing in other modules)
 - [ ] Add comprehensive E2E tests (beyond smoke tests)
@@ -563,6 +597,7 @@ Date: 2025-10-22 06:16:23
 Все 9 критических задач Phase 4 выполнены за одну сессию (~3 часа), код закоммичен, тесты проходят. Достигнуто 85% соответствие архитектуре (целевой порог), превышен порог по качеству кода (92.5% по Λ-критериям).
 
 **Key Achievements**:
+
 1. ✅ MetricCache: SHA-based caching with 9x speedup
 2. ✅ IncrementalAnalyzer: O(Δn) complexity (NFR-01 met)
 3. ✅ Full Admission Predicate: H ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)

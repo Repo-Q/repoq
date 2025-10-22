@@ -1329,7 +1329,9 @@ def refactor_plan(
         )
 
         if not plan.tasks:
-            console.print("[bold green]✅ No refactoring needed - quality is already high![/bold green]")
+            console.print(
+                "[bold green]✅ No refactoring needed - quality is already high![/bold green]"
+            )
             console.print(f"Current Q-score: {plan.baseline_q:.2f}")
             raise typer.Exit(0)
 
@@ -1370,13 +1372,11 @@ def refactor_plan(
                 output_path = Path(output).resolve()
                 output_path.write_text(json.dumps(github_issues, indent=2), encoding="utf-8")
                 console.print(f"[green]📄 GitHub issues saved to {output_path}[/green]")
-                console.print(
-                    "\n[yellow]💡 Use gh CLI to create issues:[/yellow]"
-                )
+                console.print("\n[yellow]💡 Use gh CLI to create issues:[/yellow]")
                 console.print(f"  cat {output_path} | jq -c '.[]' | while read issue; do")
-                console.print("    gh issue create --body \"$(echo $issue | jq -r .body)\" \\")
-                console.print("      --title \"$(echo $issue | jq -r .title)\" \\")
-                console.print("      --label \"$(echo $issue | jq -r '.labels | join(\",\")'); done")
+                console.print('    gh issue create --body "$(echo $issue | jq -r .body)" \\')
+                console.print('      --title "$(echo $issue | jq -r .title)" \\')
+                console.print('      --label "$(echo $issue | jq -r \'.labels | join(",")\'); done')
             else:
                 console.print_json(data=github_issues)
 
@@ -1387,7 +1387,7 @@ def refactor_plan(
 
         # Print summary
         console.print()
-        console.print(f"[bold]📊 Summary:[/bold]")
+        console.print("[bold]📊 Summary:[/bold]")
         console.print(f"  • Tasks generated: {len(plan.tasks)}")
         console.print(f"  • Total ΔQ: +{plan.total_delta_q:.1f}")
         console.print(f"  • Current Q-score: {plan.baseline_q:.2f}")
@@ -1399,7 +1399,7 @@ def refactor_plan(
             priority_counts[task.priority] = priority_counts.get(task.priority, 0) + 1
 
         if priority_counts:
-            console.print(f"\n[bold]🎯 Priority breakdown:[/bold]")
+            console.print("\n[bold]🎯 Priority breakdown:[/bold]")
             for priority in ["critical", "high", "medium", "low"]:
                 count = priority_counts.get(priority, 0)
                 if count > 0:

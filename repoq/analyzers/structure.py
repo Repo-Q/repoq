@@ -265,6 +265,155 @@ def _parse_python_dep(dep_spec: str) -> tuple[Optional[str], Optional[str]]:
     return None, None
 
 
+def _process_file(
+    fpath: Path,
+    repo_path: Path,
+    cfg,
+    project: Project,
+) -> Optional[File]:
+    """Process a single file: count LOC, detect language, compute checksum.
+
+    Args:
+        fpath: Absolute path to file
+        repo_path: Repository root path
+        cfg: Configuration with hash_algo
+        project: Project model for module lookup
+
+    Returns:
+        File object or None if file should be skipped
+    """
+    rel = fpath.relative_to(repo_path).as_posix()
+
+    # Detect language and count LOC
+    language = guess_language(rel)
+    loc = 0
+    if _is_textlike(fpath):
+        try:
+            with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
+                loc = sum(1 for _ in fh)
+        except Exception:
+            loc = 0
+
+    # Create File object
+    fid = f"repo:file:{rel}"
+    file_obj = File(id=fid, path=rel, language=language, lines_of_code=loc)
+
+    # Detect test files
+    if "/tests/" in f"/{rel}/" or rel.endswith("_test.py") or rel.endswith("Test.java"):
+        file_obj.test_file = True
+
+    # Compute checksum
+    if cfg.hash_algo:
+        try:
+            file_obj.checksum_algo = cfg.hash_algo.lower()
+            file_obj.checksum_value = checksum_file(str(fpath), cfg.hash_algo)
+        except Exception:
+            file_obj.checksum_algo = None
+            file_obj.checksum_value = None
+
+    # Attach to module (top-level directory)
+    parts = rel.split("/")
+    if len(parts) > 1:
+        top = parts[0]
+        mid = f"repo:module:{top}"
+        if mid in project.modules:
+            file_obj.module = mid
+            m = project.modules[mid]
+            m.contains_files.append(fid)
+            m.total_loc += loc
+
+    return file_obj
+
+
+def _extract_file_dependencies(
+    file_obj: File,
+    fpath: Path,
+    project: Project,
+) -> None:
+    """Extract dependencies (imports) from a single file.
+
+    Args:
+        file_obj: File object to extract dependencies from
+        fpath: Absolute path to file
+        project: Project model to add dependencies to
+
+    Note:
+        Mutates project.dependencies in-place
+    """
+    if not file_obj.module or not _is_textlike(fpath):
+        return
+
+    try:
+        with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
+            content = fh.read()
+
+        # Python imports
+        if file_obj.language == "Python":
+            imps = python_imports(content)
+            for mod in imps:
+                project.dependencies.append(
+                    DependencyEdge(
+                        source=file_obj.module,
+                        target=f"pypi:{mod}",
+                        weight=1,
+                        type="import",
+                    )
+                )
+
+        # JavaScript/TypeScript imports
+        elif file_obj.language in ("JavaScript", "TypeScript"):
+            imps = js_imports(content)
+            for pkg in imps:
+                project.dependencies.append(
+                    DependencyEdge(
+                        source=file_obj.module,
+                        target=f"npm:{pkg}",
+                        weight=1,
+                        type="import",
+                    )
+                )
+    except Exception:
+        pass
+
+
+def _process_repository_metadata(
+    project: Project,
+    repo_path: Path,
+) -> None:
+    """Process repository metadata: README, license, CI configuration.
+
+    Args:
+        project: Project model to populate
+        repo_path: Repository root path
+
+    Note:
+        Mutates project.description, project.license, project.ci_configured
+    """
+    # README description
+    readme = repo_path / "README.md"
+    if readme.exists() and (project.description is None or not project.description):
+        try:
+            with open(readme, "r", encoding="utf-8", errors="ignore") as fh:
+                project.description = fh.readline().strip() or project.description
+        except Exception:
+            pass
+
+    # SPDX license detection
+    project.license = project.license or _detect_spdx_license(repo_path)
+
+    # CI/CD system detection
+    ci = []
+    if (repo_path / ".github" / "workflows").exists():
+        ci.append("GitHub Actions")
+    if (repo_path / ".gitlab-ci.yml").exists():
+        ci.append("GitLab CI")
+    if (repo_path / ".travis.yml").exists():
+        ci.append("Travis CI")
+    if (repo_path / "Jenkinsfile").exists():
+        ci.append("Jenkins")
+    project.ci_configured = ci
+
+
 class StructureAnalyzer(Analyzer):
     """Analyzer for repository structure and static code metrics.
 
@@ -299,7 +448,36 @@ class StructureAnalyzer(Analyzer):
         repo_path = Path(repo_dir)
         language_loc: Dict[str, int] = defaultdict(int)
 
-        # top-level modules
+        # Initialize top-level modules
+        self._init_modules(project, repo_path, cfg)
+
+        # Scan directory tree and process files
+        count = self._scan_and_process_files(project, repo_path, cfg, language_loc)
+
+        logger.info(f"Processed {count} files")
+
+        # Extract dependencies from manifest files
+        self._extract_manifest_dependencies(project, repo_path)
+
+        # Process repository metadata (README, license, CI)
+        _process_repository_metadata(project, repo_path)
+
+        # Set programming languages distribution
+        project.programming_languages = dict(
+            sorted(language_loc.items(), key=lambda kv: kv[1], reverse=True)
+        )
+
+        # Enrich with ontological analysis
+        self._enrich_with_ontological_analysis(project, repo_path)
+
+    def _init_modules(self, project: Project, repo_path: Path, cfg) -> None:
+        """Initialize top-level modules from directory structure.
+
+        Args:
+            project: Project model to populate
+            repo_path: Repository root path
+            cfg: Configuration with exclude_globs
+        """
         for entry in sorted(repo_path.iterdir()):
             if (
                 entry.is_dir()
@@ -309,8 +487,28 @@ class StructureAnalyzer(Analyzer):
                 mid = f"repo:module:{entry.name}"
                 project.modules[mid] = Module(id=mid, name=entry.name, path=entry.as_posix())
 
+    def _scan_and_process_files(
+        self,
+        project: Project,
+        repo_path: Path,
+        cfg,
+        language_loc: Dict[str, int],
+    ) -> int:
+        """Scan directory tree and process all files.
+
+        Args:
+            project: Project model to populate
+            repo_path: Repository root path
+            cfg: Configuration with filters
+            language_loc: Dictionary to accumulate LOC by language
+
+        Returns:
+            Number of files processed
+        """
         count = 0
+
         for root, dirs, files in os.walk(repo_path.as_posix()):
+            # Filter directories
             relroot = Path(root).relative_to(repo_path).as_posix()
             dirs[:] = [
                 d
@@ -318,9 +516,13 @@ class StructureAnalyzer(Analyzer):
                 if not d.startswith(".")
                 and not is_excluded(f"{relroot}/{d}" if relroot != "." else d, cfg.exclude_globs)
             ]
+
+            # Process files
             for fname in files:
                 fpath = Path(root) / fname
                 rel = fpath.relative_to(repo_path).as_posix()
+
+                # Apply filters
                 if is_excluded(rel, cfg.exclude_globs):
                     continue
                 if rel.startswith(".git/"):
@@ -332,116 +534,45 @@ class StructureAnalyzer(Analyzer):
                 if cfg.include_extensions and ext not in cfg.include_extensions:
                     continue
 
-                language = guess_language(rel)
-                loc = 0
-                if _is_textlike(fpath):
-                    try:
-                        with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
-                            loc = sum(1 for _ in fh)
-                    except Exception:
-                        loc = 0
+                # Process file
+                file_obj = _process_file(fpath, repo_path, cfg, project)
+                if file_obj:
+                    project.files[file_obj.id] = file_obj
 
-                fid = f"repo:file:{rel}"
-                file_obj = File(id=fid, path=rel, language=language, lines_of_code=loc)
-                if "/tests/" in f"/{rel}/" or rel.endswith("_test.py") or rel.endswith("Test.java"):
-                    file_obj.test_file = True
+                    # Update language LOC
+                    if file_obj.language:
+                        language_loc[file_obj.language] += file_obj.lines_of_code
 
-                # checksum
-                if cfg.hash_algo:
-                    try:
-                        file_obj.checksum_algo = cfg.hash_algo.lower()
-                        file_obj.checksum_value = checksum_file(str(fpath), cfg.hash_algo)
-                    except Exception:
-                        file_obj.checksum_algo = None
-                        file_obj.checksum_value = None
+                    # Extract dependencies
+                    _extract_file_dependencies(file_obj, fpath, project)
 
-                # attach to module (top-level dir)
-                parts = rel.split("/")
-                if len(parts) > 1:
-                    top = parts[0]
-                    mid = f"repo:module:{top}"
-                    if mid in project.modules:
-                        file_obj.module = mid
-                        m = project.modules[mid]
-                        m.contains_files.append(fid)
-                        m.total_loc += loc
+                    count += 1
 
-                project.files[fid] = file_obj
-                if language:
-                    language_loc[language] += loc
-                count += 1
+        return count
 
-                # dependencies (Python/JS)
-                try:
-                    if language == "Python" and _is_textlike(fpath):
-                        with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
-                            imps = python_imports(fh.read())
-                        for mod in imps:
-                            if file_obj.module:
-                                project.dependencies.append(
-                                    DependencyEdge(
-                                        source=file_obj.module,
-                                        target=f"pypi:{mod}",
-                                        weight=1,
-                                        type="import",
-                                    )
-                                )
-                    elif language in ("JavaScript", "TypeScript") and _is_textlike(fpath):
-                        with open(fpath, "r", encoding="utf-8", errors="ignore") as fh:
-                            imps = js_imports(fh.read())
-                        for pkg in imps:
-                            if file_obj.module:
-                                project.dependencies.append(
-                                    DependencyEdge(
-                                        source=file_obj.module,
-                                        target=f"npm:{pkg}",
-                                        weight=1,
-                                        type="import",
-                                    )
-                                )
-                except Exception:
-                    pass
+    def _extract_manifest_dependencies(self, project: Project, repo_path: Path) -> None:
+        """Extract dependencies from manifest files (package.json, pyproject.toml, etc.).
 
-        # Extract dependencies from manifest files (with normalized version constraints)
+        Args:
+            project: Project model to add dependencies to
+            repo_path: Repository root path
+        """
         try:
             manifest_deps = _parse_dependency_manifests(repo_path)
             project.dependencies.extend(manifest_deps)
         except Exception as e:
             logger.debug(f"Failed to parse dependency manifests: {e}")
 
-        # README/License/CI
-        readme = repo_path / "README.md"
-        if readme.exists() and (project.description is None or not project.description):
-            try:
-                with open(readme, "r", encoding="utf-8", errors="ignore") as fh:
-                    project.description = fh.readline().strip() or project.description
-            except Exception:
-                pass
-
-        project.license = project.license or _detect_spdx_license(repo_path)
-
-        ci = []
-        if (repo_path / ".github" / "workflows").exists():
-            ci.append("GitHub Actions")
-        if (repo_path / ".gitlab-ci.yml").exists():
-            ci.append("GitLab CI")
-        if (repo_path / ".travis.yml").exists():
-            ci.append("Travis CI")
-        if (repo_path / "Jenkinsfile").exists():
-            ci.append("Jenkins")
-        project.ci_configured = ci
-
-        project.programming_languages = dict(
-            sorted(language_loc.items(), key=lambda kv: kv[1], reverse=True)
-        )
-
-        # ONTOLOGICAL INTEGRATION: Extract domain concepts
-        project = self._enrich_with_ontological_analysis(project, repo_path)
-
-        return project
-
-    def _enrich_with_ontological_analysis(self, project: Project, repo_path: Path) -> Project:
-        """Enrich project with ontological concept extraction."""
+    def _enrich_with_ontological_analysis(self, project: Project, repo_path: Path) -> None:
+        """Enrich project with ontological concept extraction.
+        
+        Args:
+            project: Project model to enrich with ontological insights
+            repo_path: Repository root path
+            
+        Note:
+            Mutates project.ontological_analysis in-place
+        """
         try:
             # Import ontology manager (optional dependency)
             from ..ontologies.ontology_manager import OntologyManager
@@ -465,5 +596,3 @@ class StructureAnalyzer(Analyzer):
             logger.debug("Ontology manager not available - skipping ontological analysis")
         except Exception as e:
             logger.warning(f"Ontological analysis failed: {e}")
-
-        return project

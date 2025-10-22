@@ -15,6 +15,7 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 ## Features
 
 **Currently Available:**
+
 - 📊 **Structure Analysis**: Files, modules, languages, LOC, dependencies  
 - 📈 **Complexity Metrics**: Cyclomatic complexity, maintainability index
 - 📚 **Git History**: Authorship, churn, temporal coupling
@@ -25,6 +26,7 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 - ⚙️ **Quality Gates**: CI/CD-ready quality comparison and admission predicates
 
 **In Development:**
+
 - SHACL validation, Docker container, GitHub Actions
 - Quality certificates, statistical coupling analysis
 
@@ -69,6 +71,7 @@ repoq refactor-plan baseline.jsonld --format github -o issues.json
 ```
 
 **Output includes:**
+
 - 🎯 **Priority-ranked tasks** (critical/high/medium/low)
 - 📈 **Expected ΔQ improvement** per task
 - ⏱️ **Effort estimates** (15 min to 8 hours)
@@ -76,6 +79,7 @@ repoq refactor-plan baseline.jsonld --format github -o issues.json
 - 📊 **Current metrics** (complexity, LOC, TODOs, issues)
 
 Example task:
+
 ```markdown
 ### Task #1: repoq/analyzers/structure.py
 **Priority**: 🔴 CRITICAL
