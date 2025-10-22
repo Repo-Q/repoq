@@ -25,12 +25,15 @@ Safety:
 
 from __future__ import annotations
 
-import re
+import logging
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Dict, List, Set
 
-from ..core.model import File, Project
+from ..config import AnalyzeConfig
+from ..core.model import Project
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -140,6 +143,30 @@ class ArchitectureAnalyzer:
         "Data": ["Infrastructure"],
         "Infrastructure": [],
     }
+
+    def run(self, project: Project, repo_dir: str, cfg: AnalyzeConfig) -> None:
+        """Run architecture analysis (BaseAnalyzer interface).
+
+        Analyzes architecture and attaches ArchitectureModel to project.architecture_model.
+
+        Args:
+            project: Project model to populate
+            repo_dir: Repository directory path
+            cfg: Analysis configuration
+        """
+        logger.info("Running architecture analysis...")
+        arch_model = self.analyze(project)
+
+        # Attach to project for downstream use (e.g., Q-score calculation)
+        # TODO: Add architecture_model field to Project dataclass
+        # For now, store in project.__dict__ as workaround
+        project.__dict__["architecture_model"] = arch_model
+
+        logger.info(
+            f"Architecture analysis complete: {len(arch_model.layers)} layers, "
+            f"{len(arch_model.layering_violations)} violations, "
+            f"{len(arch_model.circular_dependencies)} circular deps"
+        )
 
     def analyze(self, project: Project) -> ArchitectureModel:
         """Analyze project architecture.
@@ -296,7 +323,9 @@ class ArchitectureAnalyzer:
 
         return violations
 
-    def _detect_circular_dependencies(self, dep_graph: Dict[str, Set[str]]) -> List[CircularDependency]:
+    def _detect_circular_dependencies(
+        self, dep_graph: Dict[str, Set[str]]
+    ) -> List[CircularDependency]:
         """Detect circular dependencies using DFS.
 
         Returns:
@@ -662,5 +691,3 @@ def generate_architecture_recommendations(
             rec_id += 1
 
     return recommendations
-
-

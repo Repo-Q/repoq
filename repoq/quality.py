@@ -56,10 +56,10 @@ class QualityMetrics:
 
 def _compute_complexity_metric(files: list) -> float:
     """Compute normalized complexity metric ∈ [0, 5].
-    
+
     Args:
         files: List of File objects
-        
+
     Returns:
         Normalized complexity score
     """
@@ -69,21 +69,29 @@ def _compute_complexity_metric(files: list) -> float:
     return (avg_cplx / max_cplx * 5.0) if max_cplx > 0 else 0.0
 
 
-def _count_quality_issues(files: list) -> tuple[int, int]:
+def _count_quality_issues(project: Project) -> tuple[int, int]:
     """Count hotspots and TODOs across all files.
-    
+
     Args:
-        files: List of File objects
-        
+        project: Project with files and issues
+
     Returns:
         Tuple of (hotspots_count, todos_count)
     """
+    files = list(project.files.values())
     hotspots_count = sum(1 for f in files if (f.hotness or 0.0) > 0.66)
-    
-    todos_count = sum(
-        1 for f in files for issue in getattr(f, "issues", []) if "todo" in issue.type.lower()
-    )
-    
+
+    # Project.issues is Dict[str, Issue], not List[Issue]
+    issues_by_id = project.issues if project.issues else {}
+
+    # Count TODOs by checking issue types
+    todos_count = 0
+    for f in files:
+        for issue_id in getattr(f, "issues", []):
+            issue = issues_by_id.get(issue_id)
+            if issue and "todo" in issue.type.lower():
+                todos_count += 1
+
     return hotspots_count, todos_count
 
 
@@ -93,14 +101,14 @@ def _calculate_q_score(
     todos_count: int,
 ) -> float:
     """Calculate Q-score using weighted formula.
-    
+
     Formula: Q = 100 - 20×complexity - 30×hotspots - 10×todos
-    
+
     Args:
         normalized_complexity: Complexity metric ∈ [0, 5]
         hotspots_count: Number of hotspot files
         todos_count: Number of TODO items
-        
+
     Returns:
         Quality score ∈ [0, 100]
     """
@@ -121,12 +129,12 @@ def _check_quality_constraints(
     tests_coverage: float, todos_count: int, hotspots_count: int
 ) -> dict[str, bool]:
     """Check hard quality constraints.
-    
+
     Args:
         tests_coverage: Test coverage ratio
         todos_count: Total TODOs
         hotspots_count: Total hotspots
-        
+
     Returns:
         Dict of constraint name → passed boolean
     """
@@ -139,24 +147,24 @@ def _check_quality_constraints(
 
 def _calculate_architecture_adjustment(arch_model) -> float:
     """Calculate architecture quality adjustment for Q-score.
-    
+
     Bonuses/Penalties:
     - +10 for clean architecture (no layering violations, no circular deps)
     - -5 per layering violation (max -15)
     - -5 per circular dependency (max -10)
-    
+
     Args:
         arch_model: ArchitectureModel from ArchitectureAnalyzer
-        
+
     Returns:
         Adjustment value (can be positive or negative)
     """
     adjustment = 0.0
-    
+
     # Check for clean architecture
     has_violations = len(arch_model.layering_violations) > 0
     has_circular = len(arch_model.circular_dependencies) > 0
-    
+
     if not has_violations and not has_circular:
         # Bonus for clean architecture
         adjustment += 10.0
@@ -165,75 +173,52 @@ def _calculate_architecture_adjustment(arch_model) -> float:
         # -5 per layering violation (max -15)
         violation_penalty = min(len(arch_model.layering_violations) * 5.0, 15.0)
         adjustment -= violation_penalty
-        
+
         # -5 per circular dependency (max -10)
         circular_penalty = min(len(arch_model.circular_dependencies) * 5.0, 10.0)
         adjustment -= circular_penalty
-    
+
     return adjustment
 
 
 def compute_quality_score(project: Project, arch_model=None) -> QualityMetrics:
-    """Compute Q-metric for a project.
+    """Compute overall quality score Q for project.
 
     Algorithm:
-        1. Normalize complexity: avg(file.complexity) / max(file.complexity) * 5
-        2. Count hotspots: files with hotness > 0.66
-        3. Count TODOs: sum(file.issues with type TodoComment)
-        4. Compute Q = 100 - 20×complexity - 30×(hotspots/20) - 10×(todos/10)
-        5. Apply architecture bonuses/penalties (if arch_model provided):
-           - +10 for clean architecture (no violations)
-           - -15 for each layering violation
-           - -10 for each circular dependency
-        6. Check hard constraints
+        1. Normalize complexity (cyclomatic + maintainability)
+        2. Count hotspots (files with hotness > 0.66)
+        3. Count TODOs from issues
+        4. Calculate Q = 100 - 20×complexity - 30×hotspots - 10×todos
+        5. Apply architecture adjustment (+10 bonus or up to -25 penalty)
+        6. Check hard constraints (tests ≥ 80%, todos ≤ 100, hotspots ≤ 20)
 
     Args:
-        project: Project model with files and analysis results
-        arch_model: Optional ArchitectureModel from ArchitectureAnalyzer
+        project: Project model with analysis results
+        arch_model: Optional ArchitectureModel with violations/metrics
 
     Returns:
-        QualityMetrics with score, components, and constraint status
-
-    Example:
-        >>> from repoq.core.model import Project, File
-        >>> p = Project(id="test", name="Test", files={"f1": File(...)})
-        >>> metrics = compute_quality_score(p)
-        >>> assert 0 <= metrics.score <= 100
+        QualityMetrics with score, grade, and constraint results
     """
     files = list(project.files.values())
 
-    if not files:
-        # Empty project: perfect score
-        return QualityMetrics(
-            score=100.0,
-            complexity=0.0,
-            hotspots=0,
-            todos=0,
-            tests_coverage=1.0,
-            grade="A",
-            constraints_passed={
-                "tests_coverage_ge_80": True,
-                "todos_le_100": True,
-                "hotspots_le_20": True,
-            },
-        )
-
-    # Compute metrics
+    # 1. Normalize complexity
     normalized_complexity = _compute_complexity_metric(files)
-    hotspots_count, todos_count = _count_quality_issues(files)
-    
+
+    # 2. Count quality issues
+    hotspots_count, todos_count = _count_quality_issues(project)  # Pass project, not files
+
     # Tests coverage (heuristic: test_files / total_files)
     test_files = sum(1 for f in files if f.test_file)
     tests_coverage = test_files / len(files) if files else 0.0
 
     # Calculate base Q-score
     score = _calculate_q_score(normalized_complexity, hotspots_count, todos_count)
-    
+
     # Apply architecture bonuses/penalties (NEW!)
     if arch_model:
         arch_adjustment = _calculate_architecture_adjustment(arch_model)
         score = max(0.0, min(100.0, score + arch_adjustment))
-    
+
     # Grade and constraints
     grade = _compute_grade(score)
     constraints = _check_quality_constraints(tests_coverage, todos_count, hotspots_count)
@@ -405,20 +390,25 @@ def generate_pce_witness(
         actions = []
 
         # Action 1: Reduce complexity
-        if (file_obj.complexity or 0) > 10:
-            delta_q = (file_obj.complexity - 10) * 0.5  # Heuristic
+        complexity = file_obj.complexity or 0.0
+        if complexity > 10:
+            delta_q = (complexity - 10) * 0.5  # Heuristic
             actions.append(
                 {
                     "file": file_obj.path,
-                    "action": f"Reduce complexity from {file_obj.complexity:.1f} to 10",
+                    "action": f"Reduce complexity from {complexity:.1f} to 10",
                     "delta_q": min(delta_q, gap),
-                    "priority": "high" if file_obj.complexity > 20 else "medium",
+                    "priority": "high" if complexity > 20 else "medium",
                 }
             )
 
         # Action 2: Resolve TODOs
+        # NOTE: File.issues are string IDs, need to resolve from project.issues
+        issues_by_id = project.issues if project.issues else {}
         todo_count = sum(
-            1 for issue in getattr(file_obj, "issues", []) if "todo" in issue.type.lower()
+            1
+            for issue_id in getattr(file_obj, "issues", [])
+            if (issue := issues_by_id.get(issue_id)) and "todo" in issue.type.lower()
         )
         if todo_count > 0:
             delta_q = todo_count * 0.1  # Heuristic: 0.1 point per TODO

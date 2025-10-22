@@ -601,7 +601,7 @@ def diff(
 
 def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, progress, task_id):
     """Execute analysis pipeline based on mode configuration.
-    
+
     Args:
         project: Project model to populate
         repo_dir: Repository directory path
@@ -610,8 +610,9 @@ def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, 
         task_id: Progress task ID for advancement
     """
     mode = cfg.mode
-    
+
     if mode in ("structure", "full"):
+        from .analyzers.architecture import ArchitectureAnalyzer
         from .analyzers.ci_qm import CIQualityAnalyzer
         from .analyzers.complexity import ComplexityAnalyzer
         from .analyzers.structure import StructureAnalyzer
@@ -621,6 +622,7 @@ def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, 
         ComplexityAnalyzer().run(project, repo_dir, cfg)
         WeaknessAnalyzer().run(project, repo_dir, cfg)
         CIQualityAnalyzer().run(project, repo_dir, cfg)
+        ArchitectureAnalyzer().run(project, repo_dir, cfg)  # Architecture analysis
     progress.advance(task_id)
 
     if mode in ("history", "full"):
@@ -635,11 +637,30 @@ def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, 
         HotspotsAnalyzer().run(project, repo_dir, cfg)
     progress.advance(task_id)
 
+    # Compute Q-score (needs architecture_model if available)
+    from .quality import compute_quality_score
 
-def _export_results(project: Project, cfg: AnalyzeConfig, output: str, md: str | None, 
-                    ttl: str | None, graphs: str | None, progress, task_id):
+    arch_model = project.__dict__.get("architecture_model")
+    metrics = compute_quality_score(project, arch_model=arch_model)
+
+    # Attach metrics to project for export
+    project.qualityScore = metrics.score
+    project.qualityGrade = metrics.grade
+    logger.info(f"Q-score computed: {metrics.score:.1f} (grade: {metrics.grade})")
+
+
+def _export_results(
+    project: Project,
+    cfg: AnalyzeConfig,
+    output: str,
+    md: str | None,
+    ttl: str | None,
+    graphs: str | None,
+    progress,
+    task_id,
+):
     """Export analysis results to various formats.
-    
+
     Args:
         project: Analyzed project model
         cfg: Analysis configuration
@@ -659,11 +680,9 @@ def _export_results(project: Project, cfg: AnalyzeConfig, output: str, md: str |
     # JSON-LD export
     from .core.jsonld import dump_jsonld
 
-    dump_jsonld(
-        project, output, context_file=cfg.context_file, field33_context=cfg.field33_context
-    )
+    dump_jsonld(project, output, context_file=cfg.context_file, field33_context=cfg.field33_context)
     print(f"[green]JSON‑LD сохранён в[/green] {output}")
-    
+
     # Markdown report
     if md:
         from .reporting.markdown import render_markdown
@@ -676,22 +695,20 @@ def _export_results(project: Project, cfg: AnalyzeConfig, output: str, md: str |
     if ttl:
         from .core.rdf_export import export_ttl
 
-        export_ttl(
-            project, ttl, context_file=cfg.context_file, field33_context=cfg.field33_context
-        )
+        export_ttl(project, ttl, context_file=cfg.context_file, field33_context=cfg.field33_context)
         print(f"[green]TTL сохранён в[/green] {ttl}")
 
 
 def _run_shacl_validation(project: Project, cfg: AnalyzeConfig):
     """Run SHACL shapes validation if enabled.
-    
+
     Args:
         project: Analyzed project model
         cfg: Analysis configuration with validation settings
     """
     if not cfg.validate_shapes:
         return
-    
+
     shapes = cfg.shapes_dir or os.path.join(os.path.dirname(__file__), "shapes")
     from .core.rdf_export import validate_shapes
 
@@ -707,28 +724,26 @@ def _run_shacl_validation(project: Project, cfg: AnalyzeConfig):
 
 def _check_fail_on_issues(project: Project, cfg: AnalyzeConfig):
     """Check if issues exceed configured severity threshold for CI failure.
-    
+
     Args:
         project: Analyzed project model
         cfg: Analysis configuration with fail_on_issues setting
-    
+
     Raises:
         typer.Exit: If issues at or above threshold severity are found
     """
     if not cfg.fail_on_issues:
         return
-    
+
     sev_order = {"low": 1, "medium": 2, "high": 3}
     min_level = sev_order.get(cfg.fail_on_issues, 3)
     worst = 0
-    
+
     for issue in project.issues.values():
         worst = max(worst, sev_order.get(issue.severity, 1))
-    
+
     if worst >= min_level:
-        print(
-            f"[red]Достигнут уровень проблем: {cfg.fail_on_issues}. Завершаем с ошибкой.[/red]"
-        )
+        print(f"[red]Достигнут уровень проблем: {cfg.fail_on_issues}. Завершаем с ошибкой.[/red]")
         raise typer.Exit(code=2)
 
 
@@ -827,19 +842,19 @@ def _run_command(
     try:
         with Progress() as progress:
             t = progress.add_task("Анализ...", total=5 if mode == "full" else 3)
-            
+
             # Run analysis pipeline
             _run_analysis_pipeline(project, repo_dir, cfg, progress, t)
-            
+
             # Export results
             _export_results(project, cfg, output, md, ttl, graphs, progress, t)
-            
+
             # SHACL validation
             _run_shacl_validation(project, cfg)
-            
+
             # CI: fail on issues by severity
             _check_fail_on_issues(project, cfg)
-            
+
             progress.advance(t)
 
     finally:
@@ -851,42 +866,42 @@ def _run_command(
 
 def _build_pytest_command(test_file: str, level: str) -> list[str]:
     """Build pytest command with appropriate options based on verification level.
-    
+
     Args:
         test_file: Path to test file
         level: Verification level ('basic', 'advanced', or 'full')
-        
+
     Returns:
         List of command arguments for subprocess
     """
     python_exe = sys.executable
     cmd = [python_exe, "-m", "pytest", test_file, "-v", "--tb=short"]
-    
+
     if level == "basic":
         cmd.append("-k 'not test_advanced'")
     elif level == "advanced":
         cmd.extend(["--hypothesis-max-examples=1000"])
-    
+
     return cmd
 
 
 def _run_single_trs_test(test_file: str, level: str) -> dict[str, Any]:
     """Run a single TRS property test file.
-    
+
     Args:
         test_file: Path to test file
         level: Verification level
-        
+
     Returns:
         Dictionary with test results (passed, exit_code, stdout, stderr)
     """
     import subprocess
-    
+
     cmd = _build_pytest_command(test_file, level)
-    
+
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, cwd=Path.cwd())
-        
+
         return {
             "passed": result.returncode == 0,
             "exit_code": result.returncode,
@@ -899,17 +914,17 @@ def _run_single_trs_test(test_file: str, level: str) -> dict[str, Any]:
 
 def _format_test_result(system_name: str, result: dict[str, Any], quiet: bool) -> bool:
     """Format and print test result.
-    
+
     Args:
         system_name: Name of the TRS system being tested
         result: Test result dictionary
         quiet: Whether to suppress output
-        
+
     Returns:
         True if test passed, False otherwise
     """
     passed = result.get("passed", False)
-    
+
     if not quiet:
         if passed:
             print(f"    ✅ {system_name} passed")
@@ -919,18 +934,18 @@ def _format_test_result(system_name: str, result: dict[str, Any], quiet: bool) -
                 print(f"    ❌ {system_name} error: {error}")
             else:
                 print(f"    ❌ {system_name} failed")
-    
+
     return passed
 
 
 def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str, Any]:
     """Run TRS property verification.
-    
+
     Args:
         level: Verification level ('basic', 'advanced', or 'full')
         quiet: Whether to suppress output
         fail_fast: Stop on first failure
-        
+
     Returns:
         Dictionary with results for each TRS system and overall status
     """
@@ -966,7 +981,7 @@ def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str,
 
         # Format output and check status
         passed = _format_test_result(system_name, result, quiet)
-        
+
         if not passed:
             all_passed = False
             if fail_fast:

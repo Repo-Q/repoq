@@ -122,6 +122,9 @@ def _build_project_metadata(project: Project, context: Dict[str, Any]) -> Dict[s
         "analyzedAt": project.analyzed_at,
         "repoqVersion": project.repoq_version,
         "ciConfigured": project.ci_configured,
+        # Quality metrics
+        "qualityScore": getattr(project, "qualityScore", None),
+        "qualityGrade": getattr(project, "qualityGrade", None),
         "modules": [],
         "files": [],
         "contributors": [],
