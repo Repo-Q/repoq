@@ -149,6 +149,13 @@ nav:
     - BAML AI Agent: architecture/baml-agent.md
     - Analyzer Pipeline: architecture/analyzer-pipeline.md
     - Stratification Guard: architecture/stratification-guard.md
+  - Tutorials:
+    - First Analysis: tutorials/01-first-analysis.md
+    - Custom Analyzer: tutorials/02-custom-analyzer.md
+    - CI/CD Integration: tutorials/03-ci-cd-integration.md
+    - Advanced Filtering: tutorials/04-advanced-filtering.md
+    - RDF Queries: tutorials/05-rdf-queries.md
+    - AI Agent Configuration: tutorials/06-ai-agent-config.md
   - Advanced Topics:
     - Meta-Quality Loop: ontology/meta-loop.md
     - Ontological Intelligence: ontology/intelligence.md
