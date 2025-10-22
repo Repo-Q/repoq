@@ -322,6 +322,7 @@ class GitStatusAnalyzer(Analyzer):
                 priority="medium",
                 status="Open",
                 title="Uncommitted changes detected",
+                metadata={"analyzer": "GitStatusAnalyzer", "category": "repo_hygiene"},
             )
             project.issues[issue.id] = issue
             issues_count += 1
@@ -341,6 +342,7 @@ class GitStatusAnalyzer(Analyzer):
                 priority="low",
                 status="Open",
                 title=f"{len(report.untracked_files)} untracked files",
+                metadata={"analyzer": "GitStatusAnalyzer", "category": "repo_hygiene"},
             )
             project.issues[issue.id] = issue
             issues_count += 1
@@ -359,6 +361,7 @@ class GitStatusAnalyzer(Analyzer):
                 priority="high",
                 status="Open",
                 title="Merge conflicts detected",
+                metadata={"analyzer": "GitStatusAnalyzer", "category": "repo_hygiene"},
             )
             project.issues[issue.id] = issue
             issues_count += 1
@@ -377,6 +380,7 @@ class GitStatusAnalyzer(Analyzer):
                 priority="medium",
                 status="Open",
                 title="Detached HEAD state",
+                metadata={"analyzer": "GitStatusAnalyzer", "category": "repo_hygiene"},
             )
             project.issues[issue.id] = issue
             issues_count += 1
@@ -395,6 +399,7 @@ class GitStatusAnalyzer(Analyzer):
                 priority="low",
                 status="Open",
                 title=f"Branch ahead by {report.ahead} commits",
+                metadata={"analyzer": "GitStatusAnalyzer", "category": "repo_hygiene"},
             )
             project.issues[issue.id] = issue
             issues_count += 1
@@ -412,6 +417,7 @@ class GitStatusAnalyzer(Analyzer):
                 priority="low",
                 status="Open",
                 title=f"Branch behind by {report.behind} commits",
+                metadata={"analyzer": "GitStatusAnalyzer", "category": "repo_hygiene"},
             )
             project.issues[issue.id] = issue
             issues_count += 1

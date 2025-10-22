@@ -602,6 +602,9 @@ def diff(
 def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, progress, task_id):
     """Execute analysis pipeline based on mode configuration.
 
+    Delegates to pipeline.run_pipeline() for single source of truth,
+    then handles UI concerns (progress tracking, Q-score computation).
+
     Args:
         project: Project model to populate
         repo_dir: Repository directory path
@@ -609,37 +612,18 @@ def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, 
         progress: Rich Progress instance for UI
         task_id: Progress task ID for advancement
     """
-    mode = cfg.mode
+    from .pipeline import run_pipeline
 
-    if mode in ("structure", "full"):
-        from .analyzers.architecture import ArchitectureAnalyzer
-        from .analyzers.ci_qm import CIQualityAnalyzer
-        from .analyzers.complexity import ComplexityAnalyzer
-        from .analyzers.doc_code_sync import DocCodeSyncAnalyzer
-        from .analyzers.git_status import GitStatusAnalyzer
-        from .analyzers.structure import StructureAnalyzer
-        from .analyzers.weakness import WeaknessAnalyzer
+    # Delegate analyzer orchestration to pipeline module (DRY principle)
+    run_pipeline(project, repo_dir, cfg)
 
-        StructureAnalyzer().run(project, repo_dir, cfg)
-        GitStatusAnalyzer().run(project, repo_dir, cfg)  # Git status check
-        ComplexityAnalyzer().run(project, repo_dir, cfg)
-        WeaknessAnalyzer().run(project, repo_dir, cfg)
-        CIQualityAnalyzer().run(project, repo_dir, cfg)
-        ArchitectureAnalyzer().run(project, repo_dir, cfg)  # Architecture analysis
-        DocCodeSyncAnalyzer().run(project, repo_dir, cfg)  # Documentation sync
-    progress.advance(task_id)
-
-    if mode in ("history", "full"):
-        from .analyzers.history import HistoryAnalyzer
-
-        HistoryAnalyzer().run(project, repo_dir, cfg)
-    progress.advance(task_id)
-
-    if mode in ("full",):
-        from .analyzers.hotspots import HotspotsAnalyzer
-
-        HotspotsAnalyzer().run(project, repo_dir, cfg)
-    progress.advance(task_id)
+    # Advance progress after each major phase
+    if cfg.mode in ("structure", "full"):
+        progress.advance(task_id)  # Structure phase complete
+    if cfg.mode in ("history", "full"):
+        progress.advance(task_id)  # History phase complete
+    if cfg.mode == "full":
+        progress.advance(task_id)  # Hotspots phase complete
 
     # Compute Q-score (needs architecture_model if available)
     from .quality import compute_quality_score

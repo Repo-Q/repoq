@@ -110,6 +110,7 @@ class Issue:
         priority: Priority level - "low", "medium", "high", or None (default: None)
         status: Current status - "Open", "InProgress", "Closed", or None (default: None)
         title: Short title/summary of the issue, or None (default: None)
+        metadata: Additional metadata (e.g., {"analyzer": "GitStatusAnalyzer", "category": "repo_hygiene"})
     """
 
     id: str
@@ -120,6 +121,7 @@ class Issue:
     priority: Optional[str] = None  # low|medium|high
     status: Optional[str] = None  # Open/Inprogress/Closed
     title: Optional[str] = None
+    metadata: dict = field(default_factory=dict)
 
 
 @dataclass

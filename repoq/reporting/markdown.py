@@ -26,10 +26,17 @@ TEMPLATE = Template(
     """
 # Репозиторий: **{{ p.name }}**
 
-**URL**: {{ p.repository_url or '-' }}  
-**Лицензия**: {{ p.license or '-' }}  
-**Дата последнего коммита**: {{ p.last_commit_date or '-' }}  
+**URL**: {{ p.repository_url or '-' }}
+**Лицензия**: {{ p.license or '-' }}
+**Дата последнего коммита**: {{ p.last_commit_date or '-' }}
 **CI**: {{ p.ci_configured|join(', ') if p.ci_configured else '-' }}
+
+## 📊 Статистика
+
+**Файлов**: {{ p.files|length }}
+**Зависимостей**: {{ p.dependencies|length }}
+**Языков программирования**: {{ p.programming_languages|length }}
+**Issues**: {{ p.issues|length }}
 
 ## Языки (LOC)
 {% for lang, loc in p.programming_languages.items() -%}
@@ -52,14 +59,28 @@ TEMPLATE = Template(
 {% endif -%}
 {% endfor %}
 
-## TODO/FIXME/Deprecated
+## 🔍 Analysis Results by Analyzer
+
+{% set issues_by_analyzer = {} -%}
 {% for issue in p.issues.values() -%}
-{% if 'TodoComment' in issue.type or 'Deprecated' in issue.type -%}
-- {{ issue.file_id }} — {{ issue.description }}
+  {% set analyzer = issue.metadata.get('analyzer', 'Other') -%}
+  {% if analyzer not in issues_by_analyzer -%}
+    {% set _ = issues_by_analyzer.update({analyzer: []}) -%}
+  {% endif -%}
+  {% set _ = issues_by_analyzer[analyzer].append(issue) -%}
+{% endfor -%}
+
+{% for analyzer, issues in issues_by_analyzer.items()|sort -%}
+### {{ analyzer }} ({{ issues|length }} issues)
+
+{% for issue in issues[:15] -%}
+- **{{ issue.type.split(':')[-1] if ':' in issue.type else issue.type }}**: {{ issue.description[:120] }}{{ '...' if issue.description|length > 120 else '' }}
+{% endfor -%}
+{% if issues|length > 15 -%}
+... and {{ issues|length - 15 }} more issues
 {% endif -%}
-{% else %}
-Нет найденных пометок.
-{% endfor %}
+
+{% endfor -%}
 
 ## Тесты (JUnit → OSLC QM)
 {% set test_results = (p.tests_results|list) -%}

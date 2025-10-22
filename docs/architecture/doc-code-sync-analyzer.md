@@ -254,7 +254,7 @@ def run_full_analysis(project: Project, config: Config):
    ```python
    from nonexistent_module import func
    ```
-   
+
    issues = analyzer._check_readme_examples(...)
    assert any("OutdatedREADMEExample" in i.type for i in issues)
    ```

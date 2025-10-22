@@ -183,6 +183,7 @@ class DocCodeSyncAnalyzer(Analyzer):
                 priority="low",
                 status="Open",
                 title=f"Missing docstring: {func_name}()",
+                metadata={"analyzer": "DocCodeSyncAnalyzer", "category": "documentation"},
             )
             issues.append(issue)
             return issues  # No docstring, can't check signature
@@ -201,6 +202,7 @@ class DocCodeSyncAnalyzer(Analyzer):
                 priority="low",
                 status="Open",
                 title=f"Outdated docstring: {func_name}()",
+                metadata={"analyzer": "DocCodeSyncAnalyzer", "category": "documentation"},
             )
             issues.append(issue)
 
@@ -272,6 +274,7 @@ class DocCodeSyncAnalyzer(Analyzer):
                     priority="medium",
                     status="Open",
                     title=f"Signature mismatch: {func_name}()",
+                    metadata={"analyzer": "DocCodeSyncAnalyzer", "category": "documentation"},
                 )
 
         except Exception as e:
@@ -316,6 +319,7 @@ class DocCodeSyncAnalyzer(Analyzer):
                 priority="low",
                 status="Open",
                 title=f"Missing docstring: class {class_name}",
+                metadata={"analyzer": "DocCodeSyncAnalyzer", "category": "documentation"},
             )
             issues.append(issue)
 
@@ -385,6 +389,10 @@ class DocCodeSyncAnalyzer(Analyzer):
                             priority="medium",
                             status="Open",
                             title=f"Outdated README example (block {i+1})",
+                            metadata={
+                                "analyzer": "DocCodeSyncAnalyzer",
+                                "category": "documentation",
+                            },
                         )
                         issues.append(issue)
                         break  # One issue per code block
