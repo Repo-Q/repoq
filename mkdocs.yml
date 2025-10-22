@@ -147,6 +147,7 @@ nav:
     - TRS Framework: architecture/trs-framework.md
     - RDF Export: architecture/rdf-export.md
     - BAML AI Agent: architecture/baml-agent.md
+    - Ontologist Agent: architecture/ontologist-agent.md
     - Analyzer Pipeline: architecture/analyzer-pipeline.md
     - Architecture Analyzer: architecture/architecture-analyzer.md
     - Git Status Analyzer: architecture/git-status-analyzer.md
