@@ -17,6 +17,11 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 
 **Currently Available:**
 
+- 🆕 **Workspace Management (Phase 1)**: `.repoq/` directory for reproducible analysis
+  - Automatic workspace initialization on every run
+  - `manifest.json` with commit SHA + ontology checksums
+  - Traceability for audits and debugging (FR-10, Theorem A)
+  - See [Phase 1 docs](docs/migration/phase1-workspace.md)
 - 📊 **Structure Analysis**: Files, modules, languages, LOC, dependencies  
 - 📈 **Complexity Metrics**: Cyclomatic complexity, maintainability index
 - 📚 **Git History**: Authorship, churn, temporal coupling
