@@ -1,0 +1,4302 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Revolutionary repository quality analysis with ontological intelligence">
+      
+      
+        <meta name="author" content="RepoQ Contributors">
+      
+      
+        <link rel="canonical" href="https://repo-q.github.io/repoq/latest/vdad/phase4-compliance-report/">
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>ОТЧЁТ О СООТВЕТСТВИИ РЕАЛИЗАЦИИ АРХИТЕКТУРЕ (Phase 4) - RepoQ - Semantic Meta-Quality Loop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#phase-4" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RepoQ - Semantic Meta-Quality Loop" class="md-header__button md-logo" aria-label="RepoQ - Semantic Meta-Quality Loop" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RepoQ - Semantic Meta-Quality Loop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ОТЧЁТ О СООТВЕТСТВИИ РЕАЛИЗАЦИИ АРХИТЕКТУРЕ (Phase 4)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Repo-Q/repoq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user-guide/usage/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/01-first-analysis/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ontology/meta-loop/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced Topics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../development/index.md" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../phase1-domain-context/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  VDAD Process
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../about/limitations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RepoQ - Semantic Meta-Quality Loop" class="md-nav__button md-logo" aria-label="RepoQ - Semantic Meta-Quality Loop" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RepoQ - Semantic Meta-Quality Loop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Repo-Q/repoq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Workflows
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/trs-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TRS Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/rdf-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/baml-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BAML AI Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/analyzer-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Analyzer Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/stratification-guard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Stratification Guard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/01-first-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    First Analysis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/02-custom-analyzer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Analyzer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/03-ci-cd-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CI/CD Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/04-advanced-filtering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Filtering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/05-rdf-queries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RDF Queries
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/06-ai-agent-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI Agent Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ontology/meta-loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Meta-Quality Loop
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ontology/intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ontological Intelligence
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Development Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/uv-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    uv Setup Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/CONTRIBUTING.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/testing.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Testing Strategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/mathematical-proof-quality-monotonicity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mathematical Proof (Quality Monotonicity)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/formal-foundations-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Formal Foundations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/formal-diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/quality-loop-roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quality Loop Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/tmp-artifacts-inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    tmp/ Artifacts Inventory
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    VDAD Process
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            VDAD Process
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase1-domain-context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase1-stakeholders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 1 - Stakeholders
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase2-value-register/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 2 - Value Register
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase3-requirements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - Architecture Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-c4-diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - C4 Diagrams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-adrs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-nfr-realization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - NFR Realization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-baml-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            About
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      [Σ] EXECUTIVE SUMMARY
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[Σ] EXECUTIVE SUMMARY">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Общая оценка реализации
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Статус по фазам
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Критические находки
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      [Γ] ДЕТАЛЬНЫЙ АУДИТ ПО КОМПОНЕНТАМ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[Γ] ДЕТАЛЬНЫЙ АУДИТ ПО КОМПОНЕНТАМ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-cli-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. CLI Layer
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. CLI Layer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      Отклонения от архитектуры
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-analysis-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Analysis Engine
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Analysis Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#missing-caching-layer" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная проблема: Missing Caching Layer
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-quality-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Quality Engine
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Quality Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#missing-pcqpce" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная проблема: Missing PCQ/PCE
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-ontology-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Ontology Engine
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Ontology Engine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#triple-ontology" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная сильная сторона: Triple Ontology
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-normalization-any2math-trs-engine" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Normalization (Any2Math TRS Engine)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Normalization (Any2Math TRS Engine)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#any2math-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная проблема: Any2Math Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6-certificate-vc" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Certificate &amp; VC
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Certificate &amp; VC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#w3c-vc-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная сильная сторона: W3C VC Compliance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7-self-application-guard" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Self-Application Guard
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Self-Application Guard">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#theorem-f-enforcement" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная сильная сторона: Theorem F Enforcement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configurable-weights" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная сильная сторона: Configurable Weights
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9-ai-agent-baml" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. AI Agent (BAML)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. AI Agent (BAML)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      Соответствие
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#phase-5-scope" class="md-nav__link">
+    <span class="md-ellipsis">
+      Архитектурная корректность: Phase 5 Scope
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      Гейты (Γ)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендации
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#p" class="md-nav__link">
+    <span class="md-ellipsis">
+      [𝒫] АЛЬТЕРНАТИВНЫЕ ВАРИАНТЫ ЗАКРЫТИЯ РАЗРЫВОВ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[𝒫] АЛЬТЕРНАТИВНЫЕ ВАРИАНТЫ ЗАКРЫТИЯ РАЗРЫВОВ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-quick-wins" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вариант 1: Минимальная интеграция (Quick Wins)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tmp-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вариант 2: Полная интеграция tmp/ кода (Complete)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-staged" class="md-nav__link">
+    <span class="md-ellipsis">
+      Вариант 3: Поэтапная миграция (Staged)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      [Λ] ОЦЕНКА ВАРИАНТОВ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[Λ] ОЦЕНКА ВАРИАНТОВ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      Критерии оценки
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worst-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      Worst-case сценарии
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      Рекомендация
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r" class="md-nav__link">
+    <span class="md-ellipsis">
+      [R] ФИНАЛЬНЫЕ АРТЕФАКТЫ И РЕКОМЕНДАЦИИ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="[R] ФИНАЛЬНЫЕ АРТЕФАКТЫ И РЕКОМЕНДАЦИИ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-31-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Итоговая матрица соответствия (31 requirement)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-staged-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Критические действия (Staged Plan)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Критические действия (Staged Plan)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#sprint-1-critical-infrastructure-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 1: Critical Infrastructure (2 недели)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-2-gaming-protection-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 2: Gaming Protection (2 недели)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sprint-3-normalization-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sprint 3: Normalization (3 недели)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Риски и митигация
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Следующие шаги
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      ЗАКЛЮЧЕНИЕ
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ЗАКЛЮЧЕНИЕ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_37" class="md-nav__link">
+    <span class="md-ellipsis">
+      Резюме
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/Repo-Q/repoq/edit/main/docs/vdad/phase4-compliance-report.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/Repo-Q/repoq/raw/main/docs/vdad/phase4-compliance-report.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
+    </a>
+  
+
+
+<h1 id="phase-4">ОТЧЁТ О СООТВЕТСТВИИ РЕАЛИЗАЦИИ АРХИТЕКТУРЕ (Phase 4)<a class="headerlink" href="#phase-4" title="Permanent link">&para;</a></h1>
+<p><strong>Дата</strong>: 2025-01-21<br />
+<strong>Версия RepoQ</strong>: 2.0.0<br />
+<strong>Базовый документ</strong>: <code>docs/vdad/phase4-architecture-overview.md</code><br />
+<strong>Метод аудита</strong>: Σ→Γ→𝒫→Λ→R (URPKS)</p>
+<hr />
+<h2 id="executive-summary">[Σ] EXECUTIVE SUMMARY<a class="headerlink" href="#executive-summary" title="Permanent link">&para;</a></h2>
+<h3 id="_1">Общая оценка реализации<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Метрика</th>
+<th>Заявлено</th>
+<th>Реализовано</th>
+<th>Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Компонентов (9)</strong></td>
+<td>9</td>
+<td>7 полных + 2 частичных</td>
+<td>78%</td>
+</tr>
+<tr>
+<td><strong>Требований (31)</strong></td>
+<td>31</td>
+<td>16 полных + 7 частичных</td>
+<td>52%</td>
+</tr>
+<tr>
+<td><strong>Функциональных (FR-19)</strong></td>
+<td>19</td>
+<td>9 полных + 5 частичных</td>
+<td>47%</td>
+</tr>
+<tr>
+<td><strong>Нефункциональных (NFR-12)</strong></td>
+<td>12</td>
+<td>7 полных + 2 частичных</td>
+<td>58%</td>
+</tr>
+<tr>
+<td><strong>Строк кода</strong></td>
+<td>N/A</td>
+<td>13,848 LOC</td>
+<td>✅</td>
+</tr>
+<tr>
+<td><strong>Тестов</strong></td>
+<td>64% (target 80%)</td>
+<td>285 тестов (100% pass)</td>
+<td>+45%</td>
+</tr>
+<tr>
+<td><strong>Кодовая база</strong></td>
+<td>—</td>
+<td>repoq/ + tmp/ (WIP)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_2">Статус по фазам<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>✅ IMPLEMENTED (полная реализация):     52%  ███████████░░░░░░░░░
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>🔄 IN PROGRESS (частичная реализация):  23%  █████░░░░░░░░░░░░░░░
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>⏸️ PLANNED (заявлено, не начато):       25%  █████░░░░░░░░░░░░░░░
+</span></code></pre></div>
+<h3 id="_3">Критические находки<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>✅ СИЛЬНЫЕ СТОРОНЫ</strong>:</li>
+<li>Полностью реализована Analysis Engine (6 анализаторов)</li>
+<li>Ontology Engine с тройной онтологией (Code/C4/DDD)</li>
+<li>TRS-фреймворк с 5 системами нормализации</li>
+<li>VC/Certificates с ECDSA-подписями</li>
+<li>Stratification Guard с уровнями L₀→L₁→L₂</li>
+<li>285 тестов (100% прохождение), включая E2E</li>
+<li>
+<p>Timestamp/provenance метаданные (PROV-O)</p>
+</li>
+<li>
+<p><strong>⚠️ ОТКЛОНЕНИЯ ОТ АРХИТЕКТУРЫ</strong>:</p>
+</li>
+<li>CLI: реализован на <strong>Typer</strong> (заявлен Click 8.x) — минимальное отклонение</li>
+<li>Команды <code>gate</code>, <code>verify</code>, <code>meta-self</code> в tmp/ (не интегрированы)</li>
+<li>IncrementalAnalyzer + MetricCache <strong>НЕ РЕАЛИЗОВАНЫ</strong> (заявлена SHA-стратегия)</li>
+<li>PCQ/PCE частично в tmp/zag_repoq-finished/ (не активны)</li>
+<li>Any2Math AST normalizer в tmp/repoq-any2math-integration/ (не интегрирован)</li>
+<li>
+<p>Lean ProofBridge <strong>НЕ РЕАЛИЗОВАН</strong> (subprocess-изоляция не реализована)</p>
+</li>
+<li>
+<p><strong>🔴 КРИТИЧЕСКИЕ РАЗРЫВЫ</strong>:</p>
+</li>
+<li><strong>NFR-01 (Performance ≤2 min)</strong>: Заявлено через incremental cache, <strong>не реализовано</strong> → риск пропуска SLA</li>
+<li><strong>FR-10 (Incremental Analysis)</strong>: Полностью отсутствует SHA-based caching</li>
+<li><strong>FR-06 (Any2Math Normalization)</strong>: Скелет в tmp/, не подключён к pipeline</li>
+<li><strong>FR-04 (PCQ Min-Aggregator)</strong>: Код в tmp/zag, но не в main pipeline</li>
+<li><strong>FR-02 (PCE Witness)</strong>: Не найдено реализации k-repair алгоритма</li>
+</ol>
+<hr />
+<h2 id="_4">[Γ] ДЕТАЛЬНЫЙ АУДИТ ПО КОМПОНЕНТАМ<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="1-cli-layer">1. CLI Layer<a class="headerlink" href="#1-cli-layer" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: Click 8.x, 5 команд (gate, verify, meta-self, export, analyze)<br />
+<strong>Реализовано</strong>: Typer, 4 основные команды (structure, history, full, analyze)<br />
+<strong>Статус</strong>: 🔄 <strong>PARTIAL</strong> (70%)</p>
+<h4 id="_5">Соответствие<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repoq analyze</code></td>
+<td><code>repoq/cli.py:571-635</code></td>
+<td>✅</td>
+<td>Полный пайплайн с Rich progress</td>
+</tr>
+<tr>
+<td><code>repoq structure</code></td>
+<td><code>repoq/cli.py:242-282</code></td>
+<td>✅</td>
+<td>AST-анализ структуры</td>
+</tr>
+<tr>
+<td><code>repoq history</code></td>
+<td><code>repoq/cli.py:285-343</code></td>
+<td>✅</td>
+<td>Git log анализ</td>
+</tr>
+<tr>
+<td><code>repoq full</code></td>
+<td><code>repoq/cli.py:430-568</code></td>
+<td>✅</td>
+<td>Комплексный анализ</td>
+</tr>
+<tr>
+<td><code>repoq gate</code></td>
+<td><code>repoq/gate.py:40-120</code></td>
+<td>⚠️</td>
+<td>Реализован, но не экспортирован в CLI (не в Typer app)</td>
+</tr>
+<tr>
+<td><code>repoq verify</code></td>
+<td>—</td>
+<td>❌</td>
+<td>Не найдено</td>
+</tr>
+<tr>
+<td><code>repoq meta-self</code></td>
+<td><code>tmp/repoq-meta-loop-addons/</code></td>
+<td>⏸️</td>
+<td>WIP в tmp/, не интегрирован</td>
+</tr>
+<tr>
+<td><code>repoq export</code></td>
+<td><code>repoq/cli.py:346-427</code></td>
+<td>✅</td>
+<td>JSON-LD/RDF экспорт</td>
+</tr>
+</tbody>
+</table>
+<h4 id="_6">Отклонения от архитектуры<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<div class="language-diff highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="gd">- Technology: Click 8.x (Phase 4 doc)</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="gi">+ Technology: Typer (реализация)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w"> </span> Обоснование: Typer — современная альтернатива Click с type hints
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w"> </span> Риск: МИНИМАЛЬНЫЙ (совместимый API)
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="gd">- Commands: gate, verify, meta-self в main CLI</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="gi">+ Commands: gate существует в repoq/gate.py, но не экспортирован</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w"> </span> Риск: СРЕДНИЙ (функциональность реализована, но не доступна пользователю)
+</span></code></pre></div>
+<h4 id="_7">Гейты (Γ)<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: CLI-команды корректно вызывают анализаторы</li>
+<li>⚠️ <strong>Completeness</strong>: gate/verify/meta-self не в main entrypoint</li>
+<li>✅ <strong>Termination</strong>: Все команды имеют чёткие границы выполнения</li>
+<li>✅ <strong>Resources</strong>: Timeouts + Rich progress bars</li>
+</ul>
+<h4 id="_8">Рекомендации<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Высокий приоритет</strong>: Интегрировать <code>repoq/gate.py</code> в Typer app</li>
+<li><strong>Средний приоритет</strong>: Добавить <code>repoq verify</code> (W3C VC валидация)</li>
+<li><strong>Низкий приоритет</strong>: Мигрировать tmp/repoq-meta-loop-addons/ → repoq/cli.py</li>
+</ol>
+<hr />
+<h3 id="2-analysis-engine">2. Analysis Engine<a class="headerlink" href="#2-analysis-engine" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: AnalysisOrchestrator + 4 sub-components (MetricCalculators, MetricCache, IncrementalAnalyzer, orchestration)<br />
+<strong>Реализовано</strong>: 6 анализаторов + orchestration в cli.py<br />
+<strong>Статус</strong>: 🔄 <strong>PARTIAL</strong> (65%)</p>
+<h4 id="_9">Соответствие<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>StructureAnalyzer</strong></td>
+<td><code>repoq/analyzers/structure.py:268</code></td>
+<td>✅</td>
+<td>AST-анализ (классы, функции, импорты)</td>
+</tr>
+<tr>
+<td><strong>ComplexityAnalyzer</strong></td>
+<td><code>repoq/analyzers/complexity.py:23</code></td>
+<td>✅</td>
+<td>Cyclomatic complexity (radon integration)</td>
+</tr>
+<tr>
+<td><strong>HistoryAnalyzer</strong></td>
+<td><code>repoq/analyzers/history.py:51</code></td>
+<td>✅</td>
+<td>Git history (коммиты, авторы, темп)</td>
+</tr>
+<tr>
+<td><strong>HotspotsAnalyzer</strong></td>
+<td><code>repoq/analyzers/hotspots.py:35</code></td>
+<td>✅</td>
+<td>Hotspot detection (git log + complexity)</td>
+</tr>
+<tr>
+<td><strong>WeaknessAnalyzer</strong></td>
+<td><code>repoq/analyzers/weakness.py:45</code></td>
+<td>✅</td>
+<td>TODOs, FIXMEs, code smells</td>
+</tr>
+<tr>
+<td><strong>CIQualityAnalyzer</strong></td>
+<td><code>repoq/analyzers/ci_qm.py:31</code></td>
+<td>✅</td>
+<td>CI/CD config анализ (GitHub Actions, GitLab CI)</td>
+</tr>
+<tr>
+<td><strong>Orchestrator</strong></td>
+<td><code>repoq/cli.py:571-635</code></td>
+<td>✅</td>
+<td>Координация анализаторов</td>
+</tr>
+<tr>
+<td><strong>MetricCache</strong></td>
+<td>—</td>
+<td>❌</td>
+<td><strong>НЕ РЕАЛИЗОВАН</strong> (заявлено SHA-based caching)</td>
+</tr>
+<tr>
+<td><strong>IncrementalAnalyzer</strong></td>
+<td>—</td>
+<td>❌</td>
+<td><strong>НЕ РЕАЛИЗОВАН</strong> (заявлен git diff parsing)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="missing-caching-layer">Архитектурная проблема: Missing Caching Layer<a class="headerlink" href="#missing-caching-layer" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># ЗАЯВЛЕНО (Phase 4 doc, lines 213-225):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">cache_key</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">file_sha</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">policy_version</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">repoq_version</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">if</span> <span class="n">cache_key</span> <span class="ow">in</span> <span class="n">cache</span><span class="p">:</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">return</span> <span class="n">cached_metrics</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">else</span><span class="p">:</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">metrics</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">cache</span><span class="p">[</span><span class="n">cache_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">metrics</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="k">return</span> <span class="n">metrics</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># РЕАЛИЗОВАНО:</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="c1"># ❌ НЕТ cache_key генерации</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="c1"># ❌ НЕТ LRU-кэша</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="c1"># ❌ НЕТ git diff parsing для инкрементальности</span>
+</span></code></pre></div>
+<p><strong>Consequence</strong>: NFR-01 (Performance ≤2 min) под угрозой для больших репозиториев (&gt;1K files)</p>
+<h4 id="_10">Гейты (Γ)<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: Анализаторы корректно обрабатывают AST/git</li>
+<li>❌ <strong>Performance</strong>: Отсутствие кэша → O(n) при каждом запуске (не O(Δn))</li>
+<li>✅ <strong>Termination</strong>: Все анализаторы имеют чёткие границы</li>
+<li>⚠️ <strong>Resources</strong>: Без кэша возможен timeout на больших кодовых базах</li>
+</ul>
+<h4 id="_11">Рекомендации<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>КРИТИЧНО</strong>: Реализовать <code>MetricCache</code> с SHA-based ключами (блокирует NFR-01)</li>
+<li><strong>Высокий приоритет</strong>: Добавить <code>IncrementalAnalyzer</code> с git diff parsing</li>
+<li><strong>Средний приоритет</strong>: Benchmark текущей производительности (реальный P90)</li>
+</ol>
+<hr />
+<h3 id="3-quality-engine">3. Quality Engine<a class="headerlink" href="#3-quality-engine" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: QualityCalculator + GateEvaluator + PCQ + PCE + AdmissionPredicate<br />
+<strong>Реализовано</strong>: QualityMetrics + compute_quality_score + gate.py (частичная реализация)<br />
+<strong>Статус</strong>: 🔄 <strong>PARTIAL</strong> (40%)</p>
+<h4 id="_12">Соответствие<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>QualityMetrics</strong></td>
+<td><code>repoq/quality.py:26</code></td>
+<td>✅</td>
+<td>Dataclass с метриками Q-score</td>
+</tr>
+<tr>
+<td><strong>compute_quality_score</strong></td>
+<td><code>repoq/quality.py:60-180</code></td>
+<td>✅</td>
+<td>Вычисление Q = Q_max - Σ(w_i * x_i)</td>
+</tr>
+<tr>
+<td><strong>GateEvaluator</strong></td>
+<td><code>repoq/gate.py:40-120</code></td>
+<td>✅</td>
+<td>BASE vs HEAD сравнение</td>
+</tr>
+<tr>
+<td><strong>Hard Constraints</strong></td>
+<td><code>repoq/gate.py:104-113</code></td>
+<td>✅</td>
+<td>tests≥80%, TODOs≤100, hotspots≤20</td>
+</tr>
+<tr>
+<td><strong>PCQ MinAggregator</strong></td>
+<td><code>tmp/zag_repoq-finished/repoq/integrations/zag.py</code></td>
+<td>⏸️</td>
+<td>Код существует, но не в main pipeline</td>
+</tr>
+<tr>
+<td><strong>PCE WitnessGenerator</strong></td>
+<td>—</td>
+<td>❌</td>
+<td><strong>НЕ НАЙДЕНО</strong> (k-repair алгоритм отсутствует)</td>
+</tr>
+<tr>
+<td><strong>AdmissionPredicate</strong></td>
+<td><code>repoq/gate.py:104-125</code></td>
+<td>🔄</td>
+<td>Упрощённая версия (без PCQ/PCE)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="missing-pcqpce">Архитектурная проблема: Missing PCQ/PCE<a class="headerlink" href="#missing-pcqpce" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># ЗАЯВЛЕНО (Phase 4 doc, lines 240-252):</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">admission</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">State</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="n">Policy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">H</span> <span class="o">=</span> <span class="n">hard_constraints_pass</span><span class="p">(</span><span class="n">head</span><span class="p">)</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">delta_q</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">q</span> <span class="o">-</span> <span class="n">base</span><span class="o">.</span><span class="n">q</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">pcq</span> <span class="o">=</span> <span class="n">calculate_pcq</span><span class="p">(</span><span class="n">head</span><span class="o">.</span><span class="n">modules</span><span class="p">)</span>  <span class="c1"># ❌ MISSING</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">return</span> <span class="n">H</span> <span class="ow">and</span> <span class="p">(</span><span class="n">delta_q</span> <span class="o">&gt;=</span> <span class="n">policy</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">pcq</span> <span class="o">&gt;=</span> <span class="n">policy</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># РЕАЛИЗОВАНО (repoq/gate.py:104-120):</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">run_quality_gate</span><span class="p">(</span><span class="o">...</span><span class="p">):</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="n">violations</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">head_metrics</span><span class="o">.</span><span class="n">constraints_passed</span><span class="p">[</span><span class="s2">&quot;tests_coverage_ge_80&quot;</span><span class="p">]:</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        <span class="n">violations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="c1"># ❌ НЕТ PCQ проверки</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="c1"># ❌ НЕТ epsilon/tau threshold</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>    <span class="n">passed</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">violations</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span>
+</span></code></pre></div>
+<p><strong>Consequence</strong>:</p>
+<ul>
+<li>⚠️ FR-04 (Gaming-resistant PCQ) не реализован → риск "gaming" метрик через перераспределение нагрузки между модулями</li>
+<li>⚠️ FR-02 (Constructive Feedback) без PCE → пользователи не получают k-repair пути</li>
+</ul>
+<h4 id="_13">Гейты (Γ)<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: Q-score формула корректна (w=[20,30,10,40])</li>
+<li>❌ <strong>Gaming-Resistance</strong>: Без PCQ min-aggregator возможен обход через локализацию сложности</li>
+<li>❌ <strong>Completeness</strong>: PCE witness не генерируется</li>
+<li>✅ <strong>Termination</strong>: GateEvaluator имеет чёткие границы</li>
+</ul>
+<h4 id="_14">Рекомендации<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>КРИТИЧНО</strong>: Интегрировать PCQ из tmp/zag_repoq-finished/ (блокирует FR-04)</li>
+<li><strong>Высокий приоритет</strong>: Реализовать PCE WitnessGenerator с greedy k-repair (FR-02)</li>
+<li><strong>Средний приоритет</strong>: Добавить epsilon/tau thresholds в качественный gate</li>
+</ol>
+<hr />
+<h3 id="4-ontology-engine">4. Ontology Engine<a class="headerlink" href="#4-ontology-engine" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: OntologyManager + RDF TripleStore + SPARQL + PatternDetector + Inference<br />
+<strong>Реализовано</strong>: OntologyManager (2 версии) + RDFLib + SPARQL + частичное pattern detection<br />
+<strong>Статус</strong>: ✅ <strong>IMPLEMENTED</strong> (85%)</p>
+<h4 id="_15">Соответствие<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>OntologyManager</strong></td>
+<td><code>repoq/ontologies/manager.py:33</code></td>
+<td>✅</td>
+<td>Полная реализация</td>
+</tr>
+<tr>
+<td><strong>OntologyManager (v2)</strong></td>
+<td><code>repoq/ontologies/ontology_manager.py:469</code></td>
+<td>✅</td>
+<td>Расширенная версия</td>
+</tr>
+<tr>
+<td><strong>RDF TripleStore</strong></td>
+<td>Встроен в OntologyManager</td>
+<td>✅</td>
+<td>RDFLib Graph</td>
+</tr>
+<tr>
+<td><strong>SPARQL Engine</strong></td>
+<td><code>repoq/ontologies/manager.py:150-220</code></td>
+<td>✅</td>
+<td>SPARQL 1.1 queries</td>
+</tr>
+<tr>
+<td><strong>PatternDetector</strong></td>
+<td><code>repoq/ontologies/manager.py:120-278</code></td>
+<td>🔄</td>
+<td>Базовые паттерны (detect_pattern method)</td>
+</tr>
+<tr>
+<td><strong>SemanticInference</strong></td>
+<td>—</td>
+<td>⏸️</td>
+<td>Не найдено (RDFS/OWL reasoning)</td>
+</tr>
+<tr>
+<td><strong>3 Ontologies</strong></td>
+<td><code>repoq/ontologies/*.jsonld</code></td>
+<td>✅</td>
+<td>Code, C4, DDD ontologies</td>
+</tr>
+</tbody>
+</table>
+<h4 id="triple-ontology">Архитектурная сильная сторона: Triple Ontology<a class="headerlink" href="#triple-ontology" title="Permanent link">&para;</a></h4>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c"># Реализовано 3 онтологии (Phase 4 doc, lines 244-249):</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="err">✅</span> <span class="nn">O_Code</span><span class="p">:</span> <span class="err">Functions</span><span class="p">,</span> <span class="err">classes</span><span class="p">,</span> <span class="err">calls</span><span class="p">,</span> <span class="err">imports</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="err">✅</span> <span class="nn">O_C4</span><span class="p">:</span> <span class="err">Components</span><span class="p">,</span> <span class="err">containers</span><span class="p">,</span> <span class="err">dependencies</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="err">✅</span> <span class="nn">O_DDD</span><span class="p">:</span> <span class="err">Entities</span><span class="p">,</span> <span class="err">aggregates</span><span class="p">,</span> <span class="err">bounded</span> <span class="err">contexts</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="c"># Файлы:</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="err">-</span> <span class="err">repoq/ontologies/context_ext</span><span class="p">.</span><span class="err">jsonld</span> <span class="p">(</span><span class="err">основной</span> <span class="err">контекст</span><span class="p">)</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="err">-</span> <span class="err">repoq/ontologies/field</span><span class="mi">33</span><span class="p">.</span><span class="err">context</span><span class="p">.</span><span class="err">jsonld</span> <span class="p">(</span><span class="err">Field</span><span class="mi">33</span> <span class="err">расширения</span><span class="p">)</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="err">-</span> <span class="err">docs/ontology/code_ontology_v</span><span class="mi">1</span><span class="p">.</span><span class="err">ttl</span> <span class="p">(</span><span class="err">Code</span> <span class="err">ontology</span> <span class="err">spec</span><span class="p">)</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="err">-</span> <span class="err">docs/ontology/c</span><span class="mi">4</span><span class="err">_ontology_v</span><span class="mi">1</span><span class="p">.</span><span class="err">ttl</span> <span class="p">(</span><span class="err">C</span><span class="mi">4</span> <span class="err">ontology</span> <span class="err">spec</span><span class="p">)</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="err">-</span> <span class="err">docs/ontology/ddd_ontology_v</span><span class="mi">1</span><span class="p">.</span><span class="err">ttl</span> <span class="p">(</span><span class="err">DDD</span> <span class="err">ontology</span> <span class="err">spec</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="_16">Гейты (Γ)<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: RDFLib обеспечивает корректную обработку триплетов</li>
+<li>✅ <strong>Completeness</strong>: SPARQL 1.1 полностью реализован</li>
+<li>⚠️ <strong>Inference</strong>: RDFS/OWL reasoning отсутствует (ограниченная дедукция)</li>
+<li>✅ <strong>Performance</strong>: RDFLib достаточен для &lt;10K триплетов</li>
+</ul>
+<h4 id="_17">Рекомендации<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Низкий приоритет</strong>: Добавить OWL-RL reasoner (Owlready2) для семантического вывода</li>
+<li><strong>Средний приоритет</strong>: Документировать 5-7 паттернов detection (заявлено в Phase 4)</li>
+<li><strong>Опция</strong>: Рассмотреть Oxigraph (C++) для &gt;10K триплетов (Phase 4 risk mitigation)</li>
+</ol>
+<hr />
+<h3 id="5-normalization-any2math-trs-engine">5. Normalization (Any2Math TRS Engine)<a class="headerlink" href="#5-normalization-any2math-trs-engine" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: ASTNormalizer + TRS Engine + Lean Bridge<br />
+<strong>Реализовано</strong>: 5 TRS систем (filters, metrics, rdf, spdx, semver) + скелет Any2Math в tmp/<br />
+<strong>Статус</strong>: 🔄 <strong>PARTIAL</strong> (55%)</p>
+<h4 id="_18">Соответствие<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FiltersTRS</strong></td>
+<td><code>repoq/normalize/filters_trs.py</code></td>
+<td>✅</td>
+<td>Нормализация filter expressions</td>
+</tr>
+<tr>
+<td><strong>MetricsTRS</strong></td>
+<td><code>repoq/normalize/metrics_trs.py</code></td>
+<td>✅</td>
+<td>Нормализация метрик/весов</td>
+</tr>
+<tr>
+<td><strong>RDF-TRS</strong></td>
+<td><code>repoq/normalize/rdf_trs.py</code></td>
+<td>✅</td>
+<td>Нормализация RDF триплетов</td>
+</tr>
+<tr>
+<td><strong>SPDX-TRS</strong></td>
+<td><code>repoq/normalize/spdx_trs.py</code></td>
+<td>✅</td>
+<td>Нормализация лицензионных выражений</td>
+</tr>
+<tr>
+<td><strong>SemVer-TRS</strong></td>
+<td><code>repoq/normalize/semver_trs.py</code></td>
+<td>✅</td>
+<td>Нормализация version ranges</td>
+</tr>
+<tr>
+<td><strong>AST Normalizer</strong></td>
+<td><code>tmp/repoq-any2math-integration/</code></td>
+<td>⏸️</td>
+<td>WIP, не интегрирован в main pipeline</td>
+</tr>
+<tr>
+<td><strong>Lean Bridge</strong></td>
+<td>—</td>
+<td>❌</td>
+<td><strong>НЕ РЕАЛИЗОВАН</strong> (subprocess-изоляция отсутствует)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="any2math-integration">Архитектурная проблема: Any2Math Integration<a class="headerlink" href="#any2math-integration" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># ЗАЯВЛЕНО (Phase 4 doc, lines 280-295):</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># 1. AST → Any2Math canonical form</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="c1"># 2. TRS-правила переписывания (Knuth-Bendix)</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1"># 3. Lean proof verification (confluence, termination)</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># РЕАЛИЗОВАНО:</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="c1"># ✅ 5 специализированных TRS систем</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c1"># ⏸️ Any2Math скелет в tmp/ (не подключён)</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># ❌ Lean bridge отсутствует</span>
+</span></code></pre></div>
+<p><strong>Consequence</strong>:</p>
+<ul>
+<li>⚠️ FR-06 (Any2Math normalization) не выполнен → синтаксический "gaming" возможен</li>
+<li>⚠️ NFR-03 (Confluence provably guaranteed) частично (только для 5 специализированных TRS)</li>
+</ul>
+<h4 id="_19">Гейты (Γ)<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: 5 TRS систем корректны (property-based тесты)</li>
+<li>⚠️ <strong>Confluence</strong>: Доказана для 5 TRS, но не для общего AST-нормализатора</li>
+<li>❌ <strong>Completeness</strong>: Any2Math AST нормализатор отсутствует</li>
+<li>✅ <strong>Termination</strong>: Все 5 TRS гарантированно терминируют</li>
+</ul>
+<h4 id="_20">Рекомендации<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Средний приоритет</strong>: Интегрировать tmp/repoq-any2math-integration/ в main pipeline</li>
+<li><strong>Низкий приоритет</strong>: Добавить Lean subprocess bridge (optional feature)</li>
+<li><strong>Критично</strong>: Документировать риски отсутствия Any2Math (gaming scenarios)</li>
+</ol>
+<hr />
+<h3 id="6-certificate-vc">6. Certificate &amp; VC<a class="headerlink" href="#6-certificate-vc" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: VCGenerator + ECDSA Signer + Certificate Registry<br />
+<strong>Реализовано</strong>: VC генерация + ECDSA signing в quality.py<br />
+<strong>Статус</strong>: ✅ <strong>IMPLEMENTED</strong> (75%)</p>
+<h4 id="_21">Соответствие<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VCGenerator</strong></td>
+<td><code>repoq/quality.py:182-260</code></td>
+<td>✅</td>
+<td>W3C Verifiable Credentials</td>
+</tr>
+<tr>
+<td><strong>ECDSA Signer</strong></td>
+<td><code>repoq/quality.py:220-240</code></td>
+<td>✅</td>
+<td>cryptography library (ECDSA secp256k1)</td>
+</tr>
+<tr>
+<td><strong>VC Structure</strong></td>
+<td><code>repoq/quality.py:182-210</code></td>
+<td>✅</td>
+<td>Соответствует W3C VC spec</td>
+</tr>
+<tr>
+<td><strong>Certificate Registry</strong></td>
+<td>—</td>
+<td>❌</td>
+<td><strong>НЕ НАЙДЕНО</strong> (хранилище сертификатов)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="w3c-vc-compliance">Архитектурная сильная сторона: W3C VC Compliance<a class="headerlink" href="#w3c-vc-compliance" title="Permanent link">&para;</a></h4>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">// РЕАЛИЗОВАНО (repoq/quality.py:182-210):</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="p">{</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">&quot;@context&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;https://www.w3.org/2018/credentials/v1&quot;</span><span class="p">],</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;VerifiableCredential&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;QualityAssessmentCredential&quot;</span><span class="p">],</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span><span class="nt">&quot;issuer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;did:repoq:v1&quot;</span><span class="p">,</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">  </span><span class="nt">&quot;credentialSubject&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span><span class="nt">&quot;repository&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span><span class="nt">&quot;commit&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span><span class="p">,</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span><span class="nt">&quot;q_score&quot;</span><span class="p">:</span><span class="w"> </span><span class="mf">82.5</span><span class="p">,</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="w">    </span><span class="nt">&quot;verdict&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;PASS&quot;</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="w">  </span><span class="nt">&quot;proof&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="w">    </span><span class="nt">&quot;type&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;EcdsaSecp256k1Signature2019&quot;</span><span class="p">,</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="w">    </span><span class="nt">&quot;jws&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;...&quot;</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="p">}</span>
+</span></code></pre></div>
+<h4 id="_22">Гейты (Γ)<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: ECDSA signature корректна (cryptography library)</li>
+<li>✅ <strong>Compliance</strong>: W3C VC 1.0 spec соблюдён</li>
+<li>❌ <strong>Persistence</strong>: Certificate Registry отсутствует (no storage)</li>
+<li>✅ <strong>Auditability</strong>: VC включает timestamp + commit SHA</li>
+</ul>
+<h4 id="_23">Рекомендации<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Средний приоритет</strong>: Реализовать Certificate Registry (SQLite или JSON-файлы)</li>
+<li><strong>Низкий приоритет</strong>: Добавить <code>repoq verify</code> команду для проверки VC подписей</li>
+<li><strong>Опция</strong>: Интеграция с DID resolvers (did:key, did:web)</li>
+</ol>
+<hr />
+<h3 id="7-self-application-guard">7. Self-Application Guard<a class="headerlink" href="#7-self-application-guard" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: StratificationGuard + LevelTracker + MetaAnalyzer (L₀ → L₁ → L₂)<br />
+<strong>Реализовано</strong>: StratificationGuard полная реализация + MetaAnalyzer в tmp/<br />
+<strong>Статус</strong>: 🔄 <strong>PARTIAL</strong> (70%)</p>
+<h4 id="_24">Соответствие<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>StratificationGuard</strong></td>
+<td><code>repoq/core/stratification_guard.py:53</code></td>
+<td>✅</td>
+<td>Полная реализация</td>
+</tr>
+<tr>
+<td><strong>check_transition</strong></td>
+<td><code>repoq/core/stratification_guard.py:87</code></td>
+<td>✅</td>
+<td>Проверка i &gt; j (strict ordering)</td>
+</tr>
+<tr>
+<td><strong>LevelTracker</strong></td>
+<td>Встроен в StratificationGuard</td>
+<td>✅</td>
+<td>Отслеживание уровней</td>
+</tr>
+<tr>
+<td><strong>MetaAnalyzer</strong></td>
+<td><code>tmp/repoq-meta-loop-addons/</code></td>
+<td>⏸️</td>
+<td>WIP, не интегрирован</td>
+</tr>
+<tr>
+<td><strong>CLI Integration</strong></td>
+<td>—</td>
+<td>⚠️</td>
+<td><code>repoq meta-self</code> не в main CLI</td>
+</tr>
+</tbody>
+</table>
+<h4 id="theorem-f-enforcement">Архитектурная сильная сторона: Theorem F Enforcement<a class="headerlink" href="#theorem-f-enforcement" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># РЕАЛИЗОВАНО (repoq/core/stratification_guard.py:87-140):</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">check_transition</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">from_level</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">to_level</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TransitionResult</span><span class="p">:</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Theorem F: Can analyze L_j from L_i iff i &gt; j (strict ordering).&quot;&quot;&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="k">if</span> <span class="n">to_level</span> <span class="o">&gt;=</span> <span class="n">from_level</span><span class="p">:</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>        <span class="k">return</span> <span class="n">TransitionResult</span><span class="p">(</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>            <span class="n">allowed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>            <span class="n">reason</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;Stratification violation: </span><span class="si">{</span><span class="n">to_level</span><span class="si">}</span><span class="s2"> &gt;= </span><span class="si">{</span><span class="n">from_level</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>        <span class="p">)</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="k">if</span> <span class="n">from_level</span> <span class="o">-</span> <span class="n">to_level</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>        <span class="k">return</span> <span class="n">TransitionResult</span><span class="p">(</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>            <span class="n">allowed</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>            <span class="n">reason</span><span class="o">=</span><span class="s2">&quot;Cannot skip levels. Analyze L_{i-1} first.&quot;</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>        <span class="p">)</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>    <span class="k">return</span> <span class="n">TransitionResult</span><span class="p">(</span><span class="n">allowed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></code></pre></div>
+<h4 id="_25">Гейты (Γ)<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: Theorem F корректно реализован</li>
+<li>✅ <strong>Safety</strong>: Невозможны циклы самоссылки (i &gt; j enforcement)</li>
+<li>⚠️ <strong>Completeness</strong>: MetaAnalyzer не доступен в CLI</li>
+<li>✅ <strong>Termination</strong>: Ограничение уровней (L₀, L₁, L₂) гарантирует терминацию</li>
+</ul>
+<h4 id="_26">Рекомендации<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Высокий приоритет</strong>: Интегрировать tmp/repoq-meta-loop-addons/ в main CLI</li>
+<li><strong>Средний приоритет</strong>: Добавить <code>repoq meta-self --level N</code> команду</li>
+<li><strong>Низкий приоритет</strong>: Документировать процесс dogfooding (user guide)</li>
+</ol>
+<hr />
+<h3 id="8-configuration">8. Configuration<a class="headerlink" href="#8-configuration" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: PolicyLoader + YAML Parser + Validator<br />
+<strong>Реализовано</strong>: AnalyzeConfig + quality_policy.yml + validation<br />
+<strong>Статус</strong>: ✅ <strong>IMPLEMENTED</strong> (90%)</p>
+<h4 id="_27">Соответствие<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AnalyzeConfig</strong></td>
+<td><code>repoq/config/settings.py:30-90</code></td>
+<td>✅</td>
+<td>Dataclass с policy</td>
+</tr>
+<tr>
+<td><strong>quality_policy.yml</strong></td>
+<td><code>repoq/config/quality_policy.yaml</code></td>
+<td>✅</td>
+<td>Конфигурация весов/thresholds</td>
+</tr>
+<tr>
+<td><strong>YAML Parser</strong></td>
+<td><code>repoq/config/quality_policy.py:15-60</code></td>
+<td>✅</td>
+<td>PyYAML integration</td>
+</tr>
+<tr>
+<td><strong>Validator</strong></td>
+<td><code>repoq/config/quality_policy.py:45-100</code></td>
+<td>✅</td>
+<td>Schema validation</td>
+</tr>
+<tr>
+<td><strong>Exemptions</strong></td>
+<td><code>repoq/config/quality_policy.yaml:25-40</code></td>
+<td>✅</td>
+<td>Complexity/legacy exemptions</td>
+</tr>
+</tbody>
+</table>
+<h4 id="configurable-weights">Архитектурная сильная сторона: Configurable Weights<a class="headerlink" href="#configurable-weights" title="Permanent link">&para;</a></h4>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># РЕАЛИЗОВАНО (repoq/config/quality_policy.yaml):</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nt">weights</span><span class="p">:</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">complexity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">hotspots</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">todos</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">coverage_gap</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">40</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="nt">thresholds</span><span class="p">:</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="nt">epsilon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">  </span><span class="nt">tau</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="w">  </span><span class="nt">q_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="nt">exemptions</span><span class="p">:</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="w">  </span><span class="nt">complexity</span><span class="p">:</span>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;algorithms/*.py&quot;</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="w">      </span><span class="nt">max_complexity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="w">      </span><span class="nt">reason</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Graph</span><span class="nv"> </span><span class="s">algorithms</span><span class="nv"> </span><span class="s">naturally</span><span class="nv"> </span><span class="s">complex&quot;</span>
+</span></code></pre></div>
+<h4 id="_28">Гейты (Γ)<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: YAML schema валидация корректна</li>
+<li>✅ <strong>Fairness</strong>: Веса настраиваемы (V06 - Fairness requirement)</li>
+<li>✅ <strong>Transparency</strong>: Exemptions с обоснованиями</li>
+<li>✅ <strong>Extensibility</strong>: Простое добавление новых параметров</li>
+</ul>
+<h4 id="_29">Рекомендации<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Низкий приоритет</strong>: Добавить JSON Schema для качественной валидации</li>
+<li><strong>Опция</strong>: CLI команда <code>repoq config validate</code> для проверки policy.yaml</li>
+</ol>
+<hr />
+<h3 id="9-ai-agent-baml">9. AI Agent (BAML)<a class="headerlink" href="#9-ai-agent-baml" title="Permanent link">&para;</a></h3>
+<p><strong>Заявлено</strong>: BAML Agent + LLM Client + Consent Manager (Phase 5)<br />
+<strong>Реализовано</strong>: BAML scaffolding + 5 функций (inactive)<br />
+<strong>Статус</strong>: ⏸️ <strong>PLANNED</strong> (20%)</p>
+<h4 id="_30">Соответствие<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Подкомпонент</th>
+<th>Файл</th>
+<th>Статус</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BAML Client</strong></td>
+<td><code>repoq/ai/baml_client/</code></td>
+<td>✅</td>
+<td>Auto-generated код</td>
+</tr>
+<tr>
+<td><strong>5 BAML Functions</strong></td>
+<td><code>repoq/ai/baml_client/parser.py</code></td>
+<td>✅</td>
+<td>AnalyzeStratification, CheckCriticalPairs, ReviewPullRequest, ValidateOntology, ValidateTRSRule</td>
+</tr>
+<tr>
+<td><strong>BAMLAgent</strong></td>
+<td><code>repoq/ai/baml_agent.py</code></td>
+<td>✅</td>
+<td>Обёртка над BAML client</td>
+</tr>
+<tr>
+<td><strong>ConsentManager</strong></td>
+<td>—</td>
+<td>❌</td>
+<td>Не найдено (opt-in механизм)</td>
+</tr>
+<tr>
+<td><strong>CLI Integration</strong></td>
+<td>—</td>
+<td>❌</td>
+<td>Не активирован в main pipeline</td>
+</tr>
+</tbody>
+</table>
+<h4 id="phase-5-scope">Архитектурная корректность: Phase 5 Scope<a class="headerlink" href="#phase-5-scope" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># СТАТУС: Phase 5, opt-in only (Phase 4 doc, lines 400-450)</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="c1"># ✅ Scaffolding готов</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c1"># ❌ Не активирован (соответствует Phase 4 плану)</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># ⏸️ Интеграция в Phase 5</span>
+</span></code></pre></div>
+<h4 id="_31">Гейты (Γ)<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h4>
+<ul>
+<li>✅ <strong>Soundness</strong>: BAML type-safe (не подвержено hallucination-рискам)</li>
+<li>⏸️ <strong>Privacy</strong>: ConsentManager не реализован (блокирует активацию)</li>
+<li>⏸️ <strong>Reliability</strong>: Экспериментальный режим (Phase 5)</li>
+<li>✅ <strong>Extensibility</strong>: 5 функций готовы к активации</li>
+</ul>
+<h4 id="_32">Рекомендации<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>Phase 5 Priority</strong>: Реализовать ConsentManager (explicit opt-in)</li>
+<li><strong>Phase 5 Priority</strong>: Добавить <code>--enable-ai</code> флаг в CLI</li>
+<li><strong>Phase 5 Priority</strong>: Документировать data privacy policy для AI features</li>
+</ol>
+<hr />
+<h2 id="p">[𝒫] АЛЬТЕРНАТИВНЫЕ ВАРИАНТЫ ЗАКРЫТИЯ РАЗРЫВОВ<a class="headerlink" href="#p" title="Permanent link">&para;</a></h2>
+<h3 id="1-quick-wins">Вариант 1: Минимальная интеграция (Quick Wins)<a class="headerlink" href="#1-quick-wins" title="Permanent link">&para;</a></h3>
+<p><strong>Цель</strong>: Закрыть критические разрывы минимальными усилиями</p>
+<p><strong>Действия</strong>:</p>
+<ol>
+<li>Интегрировать <code>repoq/gate.py</code> в Typer CLI → <code>repoq gate</code> (2 часа)</li>
+<li>Перенести StratificationGuard CLI из tmp/ → main (4 часа)</li>
+<li>Добавить базовый MetricCache (SHA-based dict) без LRU (6 часов)</li>
+<li>Документировать риски отсутствия Any2Math/PCQ (2 часа)</li>
+</ol>
+<p><strong>Плюсы</strong>:</p>
+<ul>
+<li>Быстрая реализация (14 часов)</li>
+<li>Закрывает CLI-разрыв</li>
+<li>Частично решает NFR-01 (cache)</li>
+</ul>
+<p><strong>Минусы</strong>:</p>
+<ul>
+<li>PCQ/PCE остаются не реализованными (FR-04, FR-02)</li>
+<li>Any2Math не интегрирован (FR-06)</li>
+<li>Performance gain ограничен (dict без LRU)</li>
+</ul>
+<p><strong>Риски</strong>:</p>
+<ul>
+<li>Cache без eviction → memory leak на больших репозиториях</li>
+<li>Gaming риск остаётся (no PCQ)</li>
+</ul>
+<hr />
+<h3 id="2-tmp-complete">Вариант 2: Полная интеграция tmp/ кода (Complete)<a class="headerlink" href="#2-tmp-complete" title="Permanent link">&para;</a></h3>
+<p><strong>Цель</strong>: Закрыть все разрывы через интеграцию WIP-кода из tmp/</p>
+<p><strong>Действия</strong>:</p>
+<ol>
+<li>Интегрировать tmp/zag_repoq-finished/ → PCQ/PCE (16 часов)</li>
+<li>Интегрировать tmp/repoq-any2math-integration/ → AST normalizer (24 часа)</li>
+<li>Интегрировать tmp/repoq-meta-loop-addons/ → meta-self CLI (8 часов)</li>
+<li>Реализовать IncrementalAnalyzer с git diff (12 часов)</li>
+<li>Добавить LRU MetricCache (8 часов)</li>
+</ol>
+<p><strong>Плюсы</strong>:</p>
+<ul>
+<li>Полное соответствие Phase 4 архитектуре</li>
+<li>Закрывает FR-04, FR-06, FR-02, FR-10, NFR-01</li>
+<li>Eliminates gaming риски</li>
+</ul>
+<p><strong>Минусы</strong>:</p>
+<ul>
+<li>Высокая сложность интеграции (68 часов)</li>
+<li>Риски конфликтов между tmp/ и main кодом</li>
+<li>Требуется обширное тестирование</li>
+</ul>
+<p><strong>Риски</strong>:</p>
+<ul>
+<li>Интеграция Any2Math может привести к regression (сложный TRS engine)</li>
+<li>PCQ/PCE требуют валидацию корректности min-aggregator</li>
+</ul>
+<hr />
+<h3 id="3-staged">Вариант 3: Поэтапная миграция (Staged)<a class="headerlink" href="#3-staged" title="Permanent link">&para;</a></h3>
+<p><strong>Цель</strong>: Закрывать разрывы по приоритетам в 3 спринта</p>
+<p><strong>Sprint 1 (Critical Gaps — 2 недели)</strong>:</p>
+<ol>
+<li>MetricCache + IncrementalAnalyzer (NFR-01)</li>
+<li>Интегрировать gate CLI (FR-08)</li>
+<li>Добавить meta-self CLI (FR-16)</li>
+</ol>
+<p><strong>Sprint 2 (Gaming Protection — 2 недели)</strong>:</p>
+<ol>
+<li>Интегрировать PCQ из tmp/zag (FR-04)</li>
+<li>Реализовать PCE WitnessGenerator (FR-02)</li>
+<li>Тестирование gaming scenarios</li>
+</ol>
+<p><strong>Sprint 3 (Normalization — 3 недели)</strong>:</p>
+<ol>
+<li>Интегрировать Any2Math AST normalizer (FR-06)</li>
+<li>Добавить Lean bridge (optional, NFR-03)</li>
+<li>Performance benchmarking</li>
+</ol>
+<p><strong>Плюсы</strong>:</p>
+<ul>
+<li>Постепенное снижение рисков</li>
+<li>Тестирование после каждого спринта</li>
+<li>Приоритизация критических функций</li>
+</ul>
+<p><strong>Минусы</strong>:</p>
+<ul>
+<li>Более длинный timeline (7 недель)</li>
+<li>Требуется coordination между спринтами</li>
+</ul>
+<p><strong>Риски</strong>:</p>
+<ul>
+<li>Scope creep в Sprint &#8532;</li>
+<li>Dependencies между компонентами могут блокировать progress</li>
+</ul>
+<hr />
+<h2 id="_33">[Λ] ОЦЕНКА ВАРИАНТОВ<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h2>
+<h3 id="_34">Критерии оценки<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Критерий</th>
+<th>Вес</th>
+<th>Вариант 1 (Min)</th>
+<th>Вариант 2 (Full)</th>
+<th>Вариант 3 (Staged)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Soundness</strong></td>
+<td>0.30</td>
+<td>0.6 (cache без eviction)</td>
+<td>0.9 (PCQ+PCE+Any2Math)</td>
+<td>0.85 (постепенная валидация)</td>
+</tr>
+<tr>
+<td><strong>Confluence</strong></td>
+<td>0.25</td>
+<td>0.7 (5 TRS only)</td>
+<td>1.0 (Any2Math integrated)</td>
+<td>0.9 (Sprint 3)</td>
+</tr>
+<tr>
+<td><strong>Completeness</strong></td>
+<td>0.20</td>
+<td>0.4 (major gaps remain)</td>
+<td>1.0 (full Phase 4)</td>
+<td>0.8 (Sprint 3 end)</td>
+</tr>
+<tr>
+<td><strong>Termination</strong></td>
+<td>0.10</td>
+<td>0.9 (всегда терминирует)</td>
+<td>0.85 (риск Any2Math loops)</td>
+<td>0.9 (staged testing)</td>
+</tr>
+<tr>
+<td><strong>Performance</strong></td>
+<td>0.10</td>
+<td>0.5 (dict cache limited)</td>
+<td>0.8 (LRU+incremental)</td>
+<td>0.75 (Sprint 1)</td>
+</tr>
+<tr>
+<td><strong>Maintainability</strong></td>
+<td>0.05</td>
+<td>0.8 (простая интеграция)</td>
+<td>0.4 (сложная кодовая база)</td>
+<td>0.7 (iterative refactor)</td>
+</tr>
+<tr>
+<td><strong>ИТОГО</strong></td>
+<td>1.00</td>
+<td><strong>0.63</strong></td>
+<td><strong>0.87</strong></td>
+<td><strong>0.82</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="worst-case">Worst-case сценарии<a class="headerlink" href="#worst-case" title="Permanent link">&para;</a></h3>
+<p><strong>Вариант 1</strong>:</p>
+<ul>
+<li>⚠️ Cache без LRU → memory exhaustion на &gt;10K файлов</li>
+<li>⚠️ Отсутствие PCQ → gaming через локализацию complexity в одном модуле</li>
+<li>⚠️ Отсутствие Any2Math → syntactic gaming (rename refactoring без семантических изменений)</li>
+</ul>
+<p><strong>Вариант 2</strong>:</p>
+<ul>
+<li>🔴 Интеграция Any2Math → regression в existing analyzers (breaking changes)</li>
+<li>🔴 PCQ min-aggregator → неправильная реализация может блокировать все PRs (false negatives)</li>
+<li>🔴 Сложность интеграции → deadline slip (68 часов → 100+ часов реально)</li>
+</ul>
+<p><strong>Вариант 3</strong>:</p>
+<ul>
+<li>⚠️ Sprint 2 dependency on Sprint 1 → блокировка при cache issues</li>
+<li>⚠️ Scope creep → Sprint 3 может растянуться до 5 недель</li>
+<li>⚠️ Any2Math в Sprint 3 → мало времени на stabilization</li>
+</ul>
+<h3 id="_35">Рекомендация<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h3>
+<p><strong>✅ Вариант 3 (Staged) — ОПТИМАЛЬНЫЙ</strong></p>
+<p><strong>Обоснование</strong>:</p>
+<ol>
+<li><strong>Soundness</strong>: Высокая (0.85) через постепенную валидацию</li>
+<li><strong>Completeness</strong>: Достаточная (0.8) при завершении всех спринтов</li>
+<li><strong>Risk Mitigation</strong>: Staged testing снижает worst-case риски</li>
+<li><strong>Maintainability</strong>: Баланс между сложностью и качеством (0.7)</li>
+</ol>
+<p><strong>Компромисс</strong>: Timeline (7 недель) vs. Quality (0.82 score)</p>
+<hr />
+<h2 id="r">[R] ФИНАЛЬНЫЕ АРТЕФАКТЫ И РЕКОМЕНДАЦИИ<a class="headerlink" href="#r" title="Permanent link">&para;</a></h2>
+<h3 id="1-31-requirement">1. Итоговая матрица соответствия (31 requirement)<a class="headerlink" href="#1-31-requirement" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>Требование</th>
+<th>Компонент</th>
+<th>Статус</th>
+<th>Файл</th>
+<th>Примечания</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FR-01</strong></td>
+<td>Detailed output</td>
+<td>CLI</td>
+<td>✅</td>
+<td>cli.py:242-635</td>
+<td>Rich progress bars</td>
+</tr>
+<tr>
+<td><strong>FR-02</strong></td>
+<td>Constructive feedback (PCE)</td>
+<td>Quality Engine</td>
+<td>❌</td>
+<td>—</td>
+<td>k-repair witness отсутствует</td>
+</tr>
+<tr>
+<td><strong>FR-04</strong></td>
+<td>Gaming-resistant (PCQ)</td>
+<td>Quality Engine</td>
+<td>⏸️</td>
+<td>tmp/zag</td>
+<td>Min-aggregator в tmp/</td>
+</tr>
+<tr>
+<td><strong>FR-06</strong></td>
+<td>Any2Math normalization</td>
+<td>Normalization</td>
+<td>⏸️</td>
+<td>tmp/any2math</td>
+<td>AST normalizer в tmp/</td>
+</tr>
+<tr>
+<td><strong>FR-08</strong></td>
+<td>Admission predicate</td>
+<td>Quality Engine</td>
+<td>🔄</td>
+<td>gate.py:104-125</td>
+<td>Упрощённая версия (без PCQ)</td>
+</tr>
+<tr>
+<td><strong>FR-10</strong></td>
+<td>Incremental analysis</td>
+<td>Analysis Engine</td>
+<td>❌</td>
+<td>—</td>
+<td>Cache + git diff отсутствуют</td>
+</tr>
+<tr>
+<td><strong>FR-12</strong></td>
+<td>Ontology exemptions</td>
+<td>Ontology Engine</td>
+<td>✅</td>
+<td>manager.py:120</td>
+<td>SPARQL-based detection</td>
+</tr>
+<tr>
+<td><strong>FR-14</strong></td>
+<td>Zero network calls</td>
+<td>All</td>
+<td>✅</td>
+<td>—</td>
+<td>Локальная обработка</td>
+</tr>
+<tr>
+<td><strong>FR-15</strong></td>
+<td>AI agent (opt-in)</td>
+<td>AI Agent</td>
+<td>⏸️</td>
+<td>ai/baml_client/</td>
+<td>Phase 5 scope</td>
+</tr>
+<tr>
+<td><strong>FR-16</strong></td>
+<td>Safe self-analysis</td>
+<td>Self-App Guard</td>
+<td>🔄</td>
+<td>stratification_guard.py:53</td>
+<td>StratificationGuard OK, CLI не интегрирован</td>
+</tr>
+<tr>
+<td><strong>FR-17</strong></td>
+<td>Meta-analysis</td>
+<td>Self-App Guard</td>
+<td>⏸️</td>
+<td>tmp/meta-loop</td>
+<td>meta-self в tmp/</td>
+</tr>
+<tr>
+<td><strong>FR-18</strong></td>
+<td>RDF/JSON-LD export</td>
+<td>CLI</td>
+<td>✅</td>
+<td>cli.py:346-427</td>
+<td>JSON-LD + Turtle</td>
+</tr>
+<tr>
+<td><strong>FR-19</strong></td>
+<td>W3C VC</td>
+<td>Certificate</td>
+<td>✅</td>
+<td>quality.py:182-260</td>
+<td>ECDSA signing</td>
+</tr>
+<tr>
+<td><strong>NFR-01</strong></td>
+<td>Performance ≤2 min</td>
+<td>Analysis Engine</td>
+<td>❌</td>
+<td>—</td>
+<td>Cache отсутствует → риск SLA</td>
+</tr>
+<tr>
+<td><strong>NFR-02</strong></td>
+<td>Deterministic</td>
+<td>Quality Engine</td>
+<td>✅</td>
+<td>quality.py:60-180</td>
+<td>Fixed weights/formula</td>
+</tr>
+<tr>
+<td><strong>NFR-03</strong></td>
+<td>Confluence proven</td>
+<td>Normalization</td>
+<td>🔄</td>
+<td>normalize/*.py</td>
+<td>5 TRS proven, Any2Math no</td>
+</tr>
+<tr>
+<td><strong>NFR-04</strong></td>
+<td>Monotonic (Theorem B)</td>
+<td>Quality Engine</td>
+<td>✅</td>
+<td>—</td>
+<td>Математически доказано</td>
+</tr>
+<tr>
+<td><strong>NFR-05</strong></td>
+<td>Transparent formulas</td>
+<td>Quality Engine</td>
+<td>✅</td>
+<td>quality.py:60-120</td>
+<td>Q = Q_max - Σ(w_i*x_i)</td>
+</tr>
+<tr>
+<td><strong>NFR-09</strong></td>
+<td>Zero network</td>
+<td>All</td>
+<td>✅</td>
+<td>—</td>
+<td>Локальная обработка</td>
+</tr>
+<tr>
+<td><strong>NFR-10</strong></td>
+<td>Test coverage ≥80%</td>
+<td>Testing</td>
+<td>✅</td>
+<td>—</td>
+<td>285 тестов (100% pass)</td>
+</tr>
+<tr>
+<td><strong>NFR-11</strong></td>
+<td>Auditability</td>
+<td>Certificate</td>
+<td>✅</td>
+<td>quality.py:182-260</td>
+<td>VC с timestamp+SHA</td>
+</tr>
+<tr>
+<td><strong>NFR-12</strong></td>
+<td>Extensibility</td>
+<td>Ontology Engine</td>
+<td>✅</td>
+<td>manager.py:33</td>
+<td>Pluggable ontologies</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Итого</strong>:</p>
+<ul>
+<li>✅ <strong>Полностью реализовано</strong>: 11/31 (35%)</li>
+<li>🔄 <strong>Частично реализовано</strong>: 7/31 (23%)</li>
+<li>⏸️ <strong>В разработке (tmp/)</strong>: 7/31 (23%)</li>
+<li>❌ <strong>Не реализовано</strong>: 6/31 (19%)</li>
+</ul>
+<h3 id="2-staged-plan">2. Критические действия (Staged Plan)<a class="headerlink" href="#2-staged-plan" title="Permanent link">&para;</a></h3>
+<h4 id="sprint-1-critical-infrastructure-2">Sprint 1: Critical Infrastructure (2 недели)<a class="headerlink" href="#sprint-1-critical-infrastructure-2" title="Permanent link">&para;</a></h4>
+<p><strong>Цель</strong>: Закрыть performance и CLI gaps</p>
+<p><strong>Задачи</strong>:</p>
+<ol>
+<li>✅ <strong>MetricCache</strong> (SHA-based + LRU eviction)</li>
+<li>Файл: <code>repoq/core/metric_cache.py</code></li>
+<li>Ключ: <code>f"{file_sha}_{policy_ver}_{repoq_ver}"</code></li>
+<li>
+<p>Тесты: property-based (Hypothesis)</p>
+</li>
+<li>
+<p>✅ <strong>IncrementalAnalyzer</strong> (git diff parsing)</p>
+</li>
+<li>Файл: <code>repoq/analyzers/incremental.py</code></li>
+<li>Интеграция: <code>cli.py:571</code> (orchestrator)</li>
+<li>
+<p>Тесты: E2E с git repos</p>
+</li>
+<li>
+<p>✅ <strong>gate CLI integration</strong></p>
+</li>
+<li>Действие: Export <code>repoq/gate.py:run_quality_gate</code> в Typer app</li>
+<li>Команда: <code>repoq gate --base main --head HEAD</code></li>
+<li>
+<p>Тесты: E2E gate scenarios</p>
+</li>
+<li>
+<p>✅ <strong>meta-self CLI integration</strong></p>
+</li>
+<li>Действие: Migrate <code>tmp/repoq-meta-loop-addons/</code> → <code>repoq/cli.py</code></li>
+<li>Команда: <code>repoq meta-self --level N</code></li>
+<li>Тесты: Stratification violations</li>
+</ol>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>Performance: P90 ≤2 min для &lt;1K файлов</li>
+<li>CLI: <code>repoq gate</code> и <code>repoq meta-self</code> работают</li>
+<li>Tests: 300+ тестов (coverage ≥80%)</li>
+</ul>
+<hr />
+<h4 id="sprint-2-gaming-protection-2">Sprint 2: Gaming Protection (2 недели)<a class="headerlink" href="#sprint-2-gaming-protection-2" title="Permanent link">&para;</a></h4>
+<p><strong>Цель</strong>: Закрыть FR-04 (PCQ) и FR-02 (PCE)</p>
+<p><strong>Задачи</strong>:</p>
+<ol>
+<li>✅ <strong>PCQ MinAggregator</strong></li>
+<li>Источник: <code>tmp/zag_repoq-finished/repoq/integrations/zag.py</code></li>
+<li>Интеграция: <code>repoq/quality.py:calculate_pcq()</code></li>
+<li>Формула: <code>PCQ(S) = min_{m∈modules} Q(m)</code></li>
+<li>
+<p>Тесты: Gaming scenarios (локализация complexity)</p>
+</li>
+<li>
+<p>✅ <strong>PCE WitnessGenerator</strong></p>
+</li>
+<li>Файл: <code>repoq/quality.py:generate_pce_witness()</code></li>
+<li>Алгоритм: Greedy k-repair (k≤8)</li>
+<li>Output: List[Tuple[file, action, delta_q]]</li>
+<li>
+<p>Тесты: Witness validity (manual inspection)</p>
+</li>
+<li>
+<p>✅ <strong>Admission Predicate (full)</strong></p>
+</li>
+<li>Обновить: <code>repoq/gate.py:run_quality_gate()</code></li>
+<li>Формула: <code>H ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)</code></li>
+<li>Config: <code>quality_policy.yaml</code> (epsilon, tau)</li>
+<li>Тесты: Gate scenarios с PCQ violations</li>
+</ol>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>PCQ: Min-aggregator корректно вычисляется</li>
+<li>PCE: k-repair witness генерируется (k≤8)</li>
+<li>Gate: Admission predicate с epsilon/tau thresholds</li>
+</ul>
+<hr />
+<h4 id="sprint-3-normalization-3">Sprint 3: Normalization (3 недели)<a class="headerlink" href="#sprint-3-normalization-3" title="Permanent link">&para;</a></h4>
+<p><strong>Цель</strong>: Закрыть FR-06 (Any2Math) и NFR-03 (Confluence)</p>
+<p><strong>Задачи</strong>:</p>
+<ol>
+<li>⚠️ <strong>Any2Math AST Normalizer</strong></li>
+<li>Источник: <code>tmp/repoq-any2math-integration/</code></li>
+<li>Интеграция: <code>repoq/normalize/ast_normalizer.py</code></li>
+<li>Алгоритм: AST → canonical form (Knuth-Bendix)</li>
+<li>
+<p>Тесты: Property-based (confluence, termination)</p>
+</li>
+<li>
+<p>⚠️ <strong>Lean Bridge (optional)</strong></p>
+</li>
+<li>Файл: <code>repoq/normalize/lean_bridge.py</code></li>
+<li>Механизм: subprocess с timeout</li>
+<li>Цель: Proof verification (confluence, termination)</li>
+<li>
+<p>Тесты: Integration с Lean 4 (skip if not installed)</p>
+</li>
+<li>
+<p>✅ <strong>Performance Benchmarking</strong></p>
+</li>
+<li>Сценарий: RepoQ self-analysis (L₀ → L₁)</li>
+<li>Метрики: P50, P90, P99 (time + memory)</li>
+<li>Цель: P90 ≤2 min для RepoQ codebase</li>
+<li>Report: <code>docs/benchmarks/phase4-performance.md</code></li>
+</ol>
+<p><strong>Acceptance Criteria</strong>:</p>
+<ul>
+<li>Any2Math: AST normalizer интегрирован и протестирован</li>
+<li>Confluence: Property-based тесты для всех TRS (включая Any2Math)</li>
+<li>Performance: P90 ≤2 min (verified через benchmark)</li>
+</ul>
+<hr />
+<h3 id="3">3. Риски и митигация<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Риск</th>
+<th>Вероятность</th>
+<th>Влияние</th>
+<th>Митигация</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>R1: MetricCache memory leak</strong></td>
+<td>Средняя</td>
+<td>Высокое</td>
+<td>LRU eviction (max 10K entries)</td>
+</tr>
+<tr>
+<td><strong>R2: PCQ false negatives</strong></td>
+<td>Низкая</td>
+<td>Критическое</td>
+<td>Extensive testing + manual review</td>
+</tr>
+<tr>
+<td><strong>R3: Any2Math integration regression</strong></td>
+<td>Высокая</td>
+<td>Высокое</td>
+<td>Feature flag <code>--disable-any2math</code></td>
+</tr>
+<tr>
+<td><strong>R4: Performance не достигает ≤2 min</strong></td>
+<td>Средняя</td>
+<td>Среднее</td>
+<td>Fallback: opt-in incremental mode</td>
+</tr>
+<tr>
+<td><strong>R5: Sprint 3 deadline slip</strong></td>
+<td>Высокая</td>
+<td>Среднее</td>
+<td>Phase 5 дедлайн для Lean bridge</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4">4. Следующие шаги<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p><strong>Immediate Actions (до начала Sprint 1)</strong>:</p>
+<ol>
+<li>✅ Code review текущей реализации (этот отчёт)</li>
+<li>⏭️ Создать GitHub Issues для 11 задач (Sprint 1-3)</li>
+<li>⏭️ Setup benchmarking инфраструктуры</li>
+<li>⏭️ Документировать API контракты для MetricCache/PCQ/PCE</li>
+</ol>
+<p><strong>Sprint 1 Kickoff (Week 1)</strong>:</p>
+<ol>
+<li>⏭️ Implement MetricCache (TDD approach)</li>
+<li>⏭️ Write property-based tests (Hypothesis)</li>
+<li>⏭️ Integrate gate CLI (2 hours work)</li>
+</ol>
+<p><strong>Documentation</strong>:</p>
+<ol>
+<li>⏭️ Update <code>README.md</code> с реальным статусом (не Phase 4 doc)</li>
+<li>⏭️ Создать <code>docs/architecture/compliance-status.md</code> (этот отчёт)</li>
+<li>⏭️ Документировать gaps в <code>docs/roadmap/phase4-remaining.md</code></li>
+</ol>
+<hr />
+<h2 id="_36">ЗАКЛЮЧЕНИЕ<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h2>
+<h3 id="_37">Резюме<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h3>
+<p><strong>RepoQ v2.0.0</strong> демонстрирует <strong>солидную реализацию</strong> (52% completion) заявленной Phase 4 архитектуры:</p>
+<p>✅ <strong>Сильные стороны</strong>:</p>
+<ul>
+<li>Analysis Engine полностью реализован (6 analyzers)</li>
+<li>Ontology Engine с triple-ontology архитектурой</li>
+<li>TRS framework (5 систем) с property-based тестами</li>
+<li>W3C VC с ECDSA signing</li>
+<li>StratificationGuard (Theorem F enforcement)</li>
+<li>285 тестов (100% pass)</li>
+</ul>
+<p>⚠️ <strong>Критические gaps</strong>:</p>
+<ul>
+<li>Отсутствие MetricCache + IncrementalAnalyzer → NFR-01 (Performance) под угрозой</li>
+<li>PCQ/PCE в tmp/ → FR-04 (Gaming protection) не активен</li>
+<li>Any2Math в tmp/ → FR-06 (Normalization) не интегрирован</li>
+<li>gate/meta-self команды не экспортированы в CLI</li>
+</ul>
+<p>🎯 <strong>Рекомендация</strong>: <strong>Вариант 3 (Staged)</strong> — 3 спринта (7 недель) для закрытия критических gaps с постепенной валидацией.</p>
+<p><strong>Soundness Score</strong>: 0.82/1.0 (хорошо, но требуется Sprint 1-3 для 0.9+)</p>
+<hr />
+<p><strong>Подпись</strong>: RepoQ URPKS Compliance Audit<br />
+<strong>Дата</strong>: 2025-01-21<br />
+<strong>Методология</strong>: Σ→Γ→𝒫→Λ→R (Signature→Gates→Options→Aggregation→Result)</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 RepoQ Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Repo-Q/repoq" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/repoq/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
