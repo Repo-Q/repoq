@@ -86,10 +86,32 @@ def is_excluded(relpath: str, patterns: list[str]) -> bool:
         True
         >>> is_excluded("src/main.py", ["test_*"])
         False
+        >>> is_excluded("tmp/old_file.py", ["tmp/**"])
+        True
     """
+    # Auto-exclude common temporary/cache directories
+    AUTO_EXCLUDE_PREFIXES = [
+        "tmp/", "temp/", ".cache/", "__pycache__/", 
+        "node_modules/", ".git/", ".tox/", ".pytest_cache/",
+        "build/", "dist/", ".eggs/", "*.egg-info/"
+    ]
+    
+    # Check if path starts with any auto-exclude prefix
+    for prefix in AUTO_EXCLUDE_PREFIXES:
+        if relpath.startswith(prefix) or f"/{prefix}" in relpath:
+            logger.debug(f"Auto-excluding path: {relpath} (matches {prefix})")
+            return True
+    
+    # Check user-provided patterns
     for p in patterns:
         if fnmatch.fnmatch(relpath, p):
             return True
+        # Handle **/pattern (recursive glob)
+        if p.startswith("**/"):
+            pattern = p[3:]  # Remove **/
+            if fnmatch.fnmatch(relpath, pattern) or fnmatch.fnmatch(relpath, f"*/{pattern}"):
+                return True
+    
     return False
 
 

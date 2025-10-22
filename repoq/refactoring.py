@@ -228,6 +228,66 @@ def calculate_delta_q(file_data: dict) -> float:
     return delta_q
 
 
+def _estimate_function_delta_q(func: dict, file_loc: int) -> float:
+    """Estimate ΔQ improvement from refactoring a single function (T1.3).
+    
+    Args:
+        func: Function metrics dict with cyclomaticComplexity, linesOfCode, etc.
+        file_loc: Total file LOC for file impact factor
+    
+    Returns:
+        Expected ΔQ improvement (0.0 if function doesn't need refactoring)
+    
+    Formula:
+        ΔQ = (CCN_delta × w_ccn + LOC_delta × w_loc) × file_factor
+        where:
+            CCN_delta = max(0, current_CCN - target_CCN)
+            LOC_delta = max(0, current_LOC - target_LOC)
+            file_factor = 1.0 + (file_LOC / 1000.0)  # Larger files benefit more
+    """
+    current_ccn = func.get("cyclomaticComplexity", 0)
+    current_loc = func.get("linesOfCode", 0)
+    
+    # Target thresholds
+    target_ccn = 10.0
+    target_loc = current_loc * 0.7  # Aim for 30% reduction
+    
+    # Calculate deltas (only positive improvements)
+    ccn_delta = max(0, current_ccn - target_ccn)
+    loc_delta = max(0, current_loc - target_loc)
+    
+    # Weights
+    w_ccn = 5.0  # High weight for complexity reduction
+    w_loc = 0.5  # Lower weight for LOC reduction
+    
+    # File impact factor (larger files benefit more from extraction)
+    file_factor = 1.0 + (file_loc / 1000.0)
+    
+    # Calculate ΔQ
+    delta_q = (ccn_delta * w_ccn + loc_delta * w_loc) * file_factor
+    
+    return round(delta_q, 1)
+
+
+def _get_function_priority(delta_q: float) -> str:
+    """Determine refactoring priority based on ΔQ (T1.3).
+    
+    Args:
+        delta_q: Expected ΔQ improvement
+    
+    Returns:
+        Priority level: "critical", "high", "medium", or "low"
+    """
+    if delta_q >= 80:
+        return "critical"
+    elif delta_q >= 40:
+        return "high"
+    elif delta_q >= 20:
+        return "medium"
+    else:
+        return "low"
+
+
 def generate_recommendations(file_data: dict) -> List[str]:
     """Generate specific refactoring recommendations based on metrics.
 
@@ -244,21 +304,54 @@ def generate_recommendations(file_data: dict) -> List[str]:
     issues = file_data.get("issues", [])
     functions = file_data.get("functions", [])
 
-    # NEW: Per-function recommendations (if available)
+    # NEW: Per-function recommendations with ΔQ estimation (T1.3)
     if functions:
         complex_funcs = [f for f in functions if f.get("cyclomaticComplexity", 0) >= 10]
         if complex_funcs:
-            # Sort by complexity descending
-            complex_funcs.sort(key=lambda f: f.get("cyclomaticComplexity", 0), reverse=True)
+            # Calculate ΔQ for each function
+            file_delta_q_total = 0.0
+            for func in complex_funcs:
+                delta_q = _estimate_function_delta_q(func, loc)
+                func["_delta_q"] = delta_q  # Store for sorting
+                file_delta_q_total += delta_q
             
-            for func in complex_funcs[:3]:  # Top 3 most complex
+            # Sort by ΔQ descending (highest impact first)
+            complex_funcs.sort(key=lambda f: f.get("_delta_q", 0), reverse=True)
+            
+            for func in complex_funcs[:3]:  # Top 3 highest impact
                 fname = func.get("name", "unknown")
                 fccn = func.get("cyclomaticComplexity", 0)
                 flines = f"{func.get('startLine', '?')}-{func.get('endLine', '?')}"
+                floc = func.get("linesOfCode", 0)
+                delta_q = func.get("_delta_q", 0.0)
+                
+                # Calculate percentage of file's total potential
+                pct = int((delta_q / file_delta_q_total * 100)) if file_delta_q_total > 0 else 0
+                
+                # Priority indicator
+                priority = _get_function_priority(delta_q)
+                priority_emoji = {
+                    "critical": "🔴",
+                    "high": "🟠", 
+                    "medium": "🟡",
+                    "low": "🟢"
+                }.get(priority, "⚪")
+                
+                # Estimate effort (simplified for per-function)
+                if fccn >= 20:
+                    effort_str = "3-4 hours"
+                elif fccn >= 15:
+                    effort_str = "2-3 hours"
+                elif fccn >= 10:
+                    effort_str = "1-2 hours"
+                else:
+                    effort_str = "30-60 min"
                 
                 recommendations.append(
-                    f"🎯 Refactor function `{fname}` "
-                    f"(CCN={fccn}, lines {flines}) → split complex logic"
+                    f"{priority_emoji} Refactor function `{fname}` "
+                    f"(CCN={fccn}, LOC={floc}, lines {flines})\n"
+                    f"   → Expected ΔQ: +{delta_q:.1f} points ({pct}% of file's potential)\n"
+                    f"   → Estimated effort: {effort_str}"
                 )
         
         # If functions available but none complex, note the file-level complexity

@@ -78,6 +78,8 @@ class FunctionMetrics:
         end_line: Ending line number in file
         token_count: Total token count (default: None)
         max_nesting_depth: Maximum nesting depth (default: None)
+        expected_delta_q: Expected Q-score improvement if refactored (T1.3, default: None)
+        refactoring_priority: Priority level: "critical"/"high"/"medium"/"low" (T1.3, default: None)
     """
 
     name: str
@@ -88,6 +90,8 @@ class FunctionMetrics:
     end_line: int
     token_count: Optional[int] = None
     max_nesting_depth: Optional[int] = None
+    expected_delta_q: Optional[float] = None  # T1.3: Per-function ΔQ estimation
+    refactoring_priority: Optional[str] = None  # T1.3: "critical", "high", "medium", "low"
 
 
 @dataclass

@@ -447,6 +447,9 @@ class StructureAnalyzer(Analyzer):
         """
         repo_path = Path(repo_dir)
         language_loc: Dict[str, int] = defaultdict(int)
+        
+        # Check for stale files (T1.2: stale data warning)
+        self._check_stale_files(repo_path, cfg)
 
         # Initialize top-level modules
         self._init_modules(project, repo_path, cfg)
@@ -562,6 +565,54 @@ class StructureAnalyzer(Analyzer):
             project.dependencies.extend(manifest_deps)
         except Exception as e:
             logger.debug(f"Failed to parse dependency manifests: {e}")
+
+    def _check_stale_files(self, repo_path: Path, cfg, max_age_days: int = 7) -> None:
+        """Check for potentially stale files and warn user (T1.2).
+        
+        Args:
+            repo_path: Repository root path
+            cfg: Configuration with filters
+            max_age_days: Maximum file age in days before warning (default: 7)
+        """
+        import time
+        
+        stale_paths = []
+        now = time.time()
+        max_age_seconds = max_age_days * 86400
+        
+        for root, dirs, files in os.walk(repo_path.as_posix()):
+            # Filter directories (same logic as _scan_and_process_files)
+            relroot = Path(root).relative_to(repo_path).as_posix()
+            dirs[:] = [
+                d for d in dirs
+                if not d.startswith(".") and not is_excluded(
+                    f"{relroot}/{d}" if relroot != "." else d, cfg.exclude_globs
+                )
+            ]
+            
+            for fname in files:
+                fpath = Path(root) / fname
+                rel = fpath.relative_to(repo_path).as_posix()
+                
+                # Skip excluded files
+                if is_excluded(rel, cfg.exclude_globs) or rel.startswith(".git/"):
+                    continue
+                
+                try:
+                    mtime = fpath.stat().st_mtime
+                    if now - mtime > max_age_seconds:
+                        stale_paths.append((rel, int((now - mtime) / 86400)))
+                except OSError:
+                    pass
+        
+        if stale_paths and len(stale_paths) > 10:
+            # Warn only if significant number of stale files
+            oldest = sorted(stale_paths, key=lambda x: x[1], reverse=True)[:3]
+            logger.warning(
+                f"⚠️  Found {len(stale_paths)} files not modified in {max_age_days}+ days. "
+                f"Oldest: {', '.join(f'{p} ({d}d)' for p, d in oldest)}. "
+                f"Consider excluding old snapshots with --exclude."
+            )
 
     def _enrich_with_ontological_analysis(self, project: Project, repo_path: Path) -> None:
         """Enrich project with ontological concept extraction.
