@@ -395,6 +395,254 @@ similarity_threshold = 0.85
 
 ---
 
+## 🔗 Ontological Grounding: Анализаторы & Онтологии
+
+### Проблема: Each Analyzer = One Ontology Fragment
+
+**Критический инвариант:** Каждый анализатор **привязан к конкретной онтологии** и **расширяет семантическую модель** проекта.
+
+#### Текущее состояние онтологий
+
+```
+repoq/ontologies/
+├── FORMALIZATION.md          # OML спецификация core концептов
+├── quality.ttl               # Метрики, гейты, сертификаты, ΔQ
+├── trs.ttl                   # TRS правила переписывания
+├── meta.ttl                  # Мета-уровень (рефлексия)
+├── docs.ttl                  # Документация (пока пустая?)
+├── test.ttl                  # Тесты (пока пустая?)
+├── context_ext.jsonld        # JSON-LD контексты
+└── field33.context.jsonld    # Field33 интеграция
+```
+
+#### Mapping: Analyzer → Ontology → Issue Types
+
+| Analyzer | Ontology Fragment | Issue Types | RDF Classes |
+|----------|------------------|-------------|-------------|
+| **StructureAnalyzer** | `quality:Metric`, `repo:File` | `HighComplexity`, `LowMaintainability` | `quality:ComplexityMetric`, `quality:MaintainabilityMetric` |
+| **DocCodeSyncAnalyzer** | `repo:Documentation`, `quality:Issue` | `MissingDocstring`, `OutdatedDocstring` | `repo:Docstring`, `quality:DocumentationIssue` |
+| **GitStatusAnalyzer** | `prov:Activity`, `repo:Change` | `UncommittedChanges`, `MergeConflicts` | `prov:Activity`, `repo:UncommittedChange` |
+| **CoverageAnalyzer** [NEW] | `test:Coverage`, `quality:CoverageMetric` | `UncoveredCode`, `LowCoverage` | `test:TestCoverage`, `test:UncoveredFunction` |
+| **DependencyHealthAnalyzer** [NEW] | `spdx:Package`, `security:CVE` | `VulnerableDependency`, `OutdatedDependency` | `spdx:Package`, `security:Vulnerability` |
+| **LicenseComplianceAnalyzer** [NEW] | `spdx:License`, `license:Policy` | `IncompatibleLicense`, `UnknownLicense` | `spdx:License`, `license:Violation` |
+| **SecretLeakAnalyzer** [NEW] | `security:Secret`, `security:Leak` | `ExposedAPIKey`, `HardcodedPassword` | `security:SecretLeak`, `security:Credential` |
+| **ArchitectureDriftAnalyzer** [NEW] | `arch:Layer`, `arch:Violation` | `LayerViolation`, `CyclicDependency` | `arch:ArchitectureRule`, `arch:Violation` |
+| **TestEffectivenessAnalyzer** [NEW] | `test:TestSuite`, `test:Quality` | `FlakyTest`, `WeakTest` | `test:TestQuality`, `test:AntiPattern` |
+| **APIBreakingChangeAnalyzer** [NEW] | `api:Contract`, `api:BreakingChange` | `BreakingChange`, `DeprecatedAPI` | `api:APIVersion`, `api:BreakingChange` |
+
+### Проблема: Missing Ontologies для новых анализаторов
+
+**Текущие онтологии:**
+- ✅ `quality.ttl` — есть базовые метрики (complexity, maintainability, duplication)
+- ✅ `trs.ttl` — есть TRS rules
+- ❓ `test.ttl` — **пустая?** Нужно для CoverageAnalyzer, TestEffectivenessAnalyzer
+- ❓ `docs.ttl` — **пустая?** Нужно для DocsCoverageAnalyzer
+- ❌ `security.ttl` — **отсутствует!** Нужно для SecretLeakAnalyzer, DependencyHealthAnalyzer
+- ❌ `arch.ttl` — **отсутствует!** Нужно для ArchitectureDriftAnalyzer
+- ❌ `license.ttl` — **отсутствует!** Нужно для LicenseComplianceAnalyzer
+- ❌ `api.ttl` — **отсутствует!** Нужно для APIBreakingChangeAnalyzer
+
+### Решение: Ontology-First Development
+
+#### Принцип: "No Analyzer Without Ontology"
+
+```python
+@AnalyzerRegistry.register(AnalyzerMetadata(
+    name="CoverageAnalyzer",
+    category="testing",
+    ontology="test.ttl",  # NEW: явная зависимость
+    rdf_namespace="http://example.org/vocab/test#",
+    issue_types=["UncoveredCode", "LowCoverage"],
+    dependencies=["StructureAnalyzer"]
+))
+class CoverageAnalyzer(BaseAnalyzer):
+    """Requires test:Coverage, test:TestSuite from test.ttl"""
+    
+    def run(self, project, repo_dir, config):
+        # Load ontology (validated at registration)
+        ontology = self._load_ontology("test.ttl")
+        
+        # Parse coverage
+        cov_data = self._parse_coverage_xml(coverage_file)
+        
+        # Create RDF triples using ontology classes
+        for file_path, cov in cov_data.items():
+            file_uri = project.files[file_path].id
+            
+            # Use ontology vocabulary
+            g.add((
+                URIRef(file_uri),
+                URIRef(ontology.test.hasCoverage),  # from test.ttl
+                Literal(cov.line_rate, datatype=XSD.decimal)
+            ))
+            
+            if cov.line_rate < config.coverage_threshold:
+                issue = Issue(
+                    type="LowCoverage",  # must be in ontology.issue_types
+                    rdf_class=ontology.test.UncoveredFunction,  # from test.ttl
+                    ...
+                )
+```
+
+#### Ontology Validation at Registration
+
+```python
+# repoq/analyzers/registry.py
+class AnalyzerRegistry:
+    @classmethod
+    def register(cls, metadata: AnalyzerMetadata):
+        def decorator(analyzer_cls):
+            # [Γ] Gate: Validate ontology exists
+            ontology_path = ONTOLOGIES_DIR / metadata.ontology
+            if not ontology_path.exists():
+                raise AnalyzerRegistrationError(
+                    f"Analyzer {metadata.name} requires missing ontology: {metadata.ontology}"
+                )
+            
+            # [Γ] Gate: Validate issue types defined in ontology
+            ontology = _load_ontology(ontology_path)
+            for issue_type in metadata.issue_types:
+                if not _has_issue_class(ontology, issue_type):
+                    raise AnalyzerRegistrationError(
+                        f"Issue type '{issue_type}' not found in {metadata.ontology}"
+                    )
+            
+            # [Γ] Gate: Validate RDF namespace matches ontology
+            if not _namespace_matches(ontology, metadata.rdf_namespace):
+                raise AnalyzerRegistrationError(
+                    f"Namespace mismatch: {metadata.rdf_namespace} not in {metadata.ontology}"
+                )
+            
+            cls._registry[metadata.name] = (analyzer_cls, metadata)
+            return analyzer_cls
+        return decorator
+```
+
+### Action Items: Ontology Creation (Before Analyzers!)
+
+#### Phase 0.5: Ontology Scaffolding (1 week, BLOCKING)
+
+**Priority: P0 — все новые анализаторы зависят от этого!**
+
+1. **Create `test.ttl`** (для CoverageAnalyzer, TestEffectivenessAnalyzer):
+   ```turtle
+   @prefix test: <http://example.org/vocab/test#> .
+   
+   test:TestCoverage a owl:Class ;
+       rdfs:label "Test Coverage" ;
+       rdfs:comment "Coverage metrics for code elements" .
+   
+   test:TestSuite a owl:Class ;
+       rdfs:label "Test Suite" ;
+       rdfs:comment "Collection of tests" .
+   
+   test:UncoveredFunction a owl:Class ;
+       rdfs:subClassOf quality:Issue ;
+       rdfs:label "Uncovered Function" .
+   
+   test:hasCoverage a owl:DatatypeProperty ;
+       rdfs:domain repo:File ;
+       rdfs:range xsd:decimal ;
+       rdfs:comment "Line coverage percentage 0.0-1.0" .
+   ```
+
+2. **Create `security.ttl`** (для SecretLeakAnalyzer, DependencyHealthAnalyzer):
+   ```turtle
+   @prefix security: <http://example.org/vocab/security#> .
+   
+   security:Vulnerability a owl:Class ;
+       rdfs:label "Security Vulnerability" .
+   
+   security:CVE a owl:Class ;
+       rdfs:subClassOf security:Vulnerability ;
+       rdfs:label "CVE Vulnerability" .
+   
+   security:SecretLeak a owl:Class ;
+       rdfs:subClassOf quality:Issue ;
+       rdfs:label "Exposed Secret" .
+   
+   security:hasCVEID a owl:DatatypeProperty ;
+       rdfs:domain security:CVE ;
+       rdfs:range xsd:string .
+   ```
+
+3. **Create `arch.ttl`** (для ArchitectureDriftAnalyzer):
+   ```turtle
+   @prefix arch: <http://example.org/vocab/arch#> .
+   
+   arch:Layer a owl:Class ;
+       rdfs:label "Architecture Layer" .
+   
+   arch:ArchitectureRule a owl:Class ;
+       rdfs:label "Architecture Constraint" .
+   
+   arch:Violation a owl:Class ;
+       rdfs:subClassOf quality:Issue ;
+       rdfs:label "Architecture Violation" .
+   ```
+
+4. **Create `license.ttl`** (для LicenseComplianceAnalyzer):
+   ```turtle
+   @prefix license: <http://example.org/vocab/license#> .
+   
+   license:Policy a owl:Class ;
+       rdfs:label "License Policy" .
+   
+   license:Violation a owl:Class ;
+       rdfs:subClassOf quality:Issue ;
+       rdfs:label "License Violation" .
+   ```
+
+5. **Create `api.ttl`** (для APIBreakingChangeAnalyzer):
+   ```turtle
+   @prefix api: <http://example.org/vocab/api#> .
+   
+   api:Contract a owl:Class ;
+       rdfs:label "API Contract" .
+   
+   api:BreakingChange a owl:Class ;
+       rdfs:subClassOf quality:Issue ;
+       rdfs:label "Breaking API Change" .
+   ```
+
+6. **Update `FORMALIZATION.md`** с новыми концептами из всех онтологий
+
+7. **Create `ontology_validator.py`**:
+   ```python
+   # repoq/ontologies/validator.py
+   def validate_ontology(ontology_path: Path) -> ValidationResult:
+       """Validate OWL/Turtle ontology."""
+       g = Graph()
+       g.parse(ontology_path, format="turtle")
+       
+       # Check required prefixes
+       # Check class hierarchy (no cycles)
+       # Check property domains/ranges
+       # Check consistency (SHACL if available)
+       
+       return ValidationResult(is_valid=True, errors=[])
+   ```
+
+### Обновлённая зависимость задач
+
+```mermaid
+graph TD
+    A[Phase 0.5: Create ontologies] -->|BLOCKS| B[Phase 1: AnalyzerRegistry]
+    A -->|BLOCKS| C[Phase 2: Tier-1 P0 Analyzers]
+    B --> C
+    C --> D[Phase 3: Tier-1 P1 Analyzers]
+    D --> E[Phase 4: Tier-1 P2 Analyzers]
+    E --> F[Phase 5: Validation]
+    
+    style A fill:#ff6b6b,stroke:#c92a2a,stroke-width:4px
+    style B fill:#ffd43b,stroke:#fab005
+    style C fill:#51cf66,stroke:#37b24d
+```
+
+**Critical Path:** Ontologies MUST be created FIRST! 🚨
+
+---
+
 ## Архитектура: Metadata-Driven Analyzers
 
 ### Текущее состояние (Phase 0)
