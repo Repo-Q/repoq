@@ -1,0 +1,1975 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Revolutionary repository quality analysis with ontological intelligence" name="description"/>
+<meta content="RepoQ Contributors" name="author"/>
+<link href="https://repo-q.github.io/repoq/latest/architecture/rdf-export/" rel="canonical"/>
+<link href="../trs-framework/" rel="prev"/>
+<link href="../baml-agent/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.22" name="generator"/>
+<title>RDF Export - RepoQ - Semantic Meta-Quality Loop</title>
+<link href="../../assets/stylesheets/main.84d31ad4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="amber" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#rdf-export-architecture">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-header__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            RepoQ - Semantic Meta-Quality Loop
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              RDF Export
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started/installation/">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../user-guide/usage/">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../overview/">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../tutorials/01-first-analysis/">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../ontology/meta-loop/">
+          
+  
+  
+    
+  
+  Advanced Topics
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../development/index.md">
+          
+  
+  
+    
+  
+  Development
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../vdad/phase1-domain-context/">
+          
+  
+  
+    
+  
+  VDAD Process
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../api/reference/">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../about/limitations/">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    RepoQ - Semantic Meta-Quality Loop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/installation/">
+<span class="md-ellipsis">
+    Installation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/quickstart/">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/usage/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/commands/">
+<span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/workflows/">
+<span class="md-ellipsis">
+    Workflows
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../overview/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../trs-framework/">
+<span class="md-ellipsis">
+    TRS Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rdf-stack">
+<span class="md-ellipsis">
+      RDF Stack
+    </span>
+</a>
+<nav aria-label="RDF Stack" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-technologies">
+<span class="md-ellipsis">
+      Core Technologies
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ontologies">
+<span class="md-ellipsis">
+      Ontologies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-model">
+<span class="md-ellipsis">
+      Data Model
+    </span>
+</a>
+<nav aria-label="Data Model" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-classes">
+<span class="md-ellipsis">
+      Core Classes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#properties">
+<span class="md-ellipsis">
+      Properties
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prov-o-integration">
+<span class="md-ellipsis">
+      PROV-O Integration
+    </span>
+</a>
+<nav aria-label="PROV-O Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#provenance-model">
+<span class="md-ellipsis">
+      Provenance Model
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example">
+<span class="md-ellipsis">
+      Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oslc-cm-compliance">
+<span class="md-ellipsis">
+      OSLC-CM Compliance
+    </span>
+</a>
+<nav aria-label="OSLC-CM Compliance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#change-management">
+<span class="md-ellipsis">
+      Change Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resource-shapes">
+<span class="md-ellipsis">
+      Resource Shapes
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#spdx-integration">
+<span class="md-ellipsis">
+      SPDX Integration
+    </span>
+</a>
+<nav aria-label="SPDX Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#license-annotations">
+<span class="md-ellipsis">
+      License Annotations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#export-process">
+<span class="md-ellipsis">
+      Export Process
+    </span>
+</a>
+<nav aria-label="Export Process" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pipeline">
+<span class="md-ellipsis">
+      Pipeline
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#uri-strategy">
+<span class="md-ellipsis">
+      URI Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#shacl-validation">
+<span class="md-ellipsis">
+      SHACL Validation
+    </span>
+</a>
+<nav aria-label="SHACL Validation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#shapes">
+<span class="md-ellipsis">
+      Shapes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-reports">
+<span class="md-ellipsis">
+      Validation Reports
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query-interface">
+<span class="md-ellipsis">
+      Query Interface
+    </span>
+</a>
+<nav aria-label="Query Interface" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sparql-queries">
+<span class="md-ellipsis">
+      SPARQL Queries
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graphql-like-traversal">
+<span class="md-ellipsis">
+      GraphQL-like Traversal
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance">
+<span class="md-ellipsis">
+      Performance
+    </span>
+</a>
+<nav aria-label="Performance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serialization">
+<span class="md-ellipsis">
+      Serialization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#memory">
+<span class="md-ellipsis">
+      Memory
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-examples">
+<span class="md-ellipsis">
+      Integration Examples
+    </span>
+</a>
+<nav aria-label="Integration Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#export-to-triplestore">
+<span class="md-ellipsis">
+      Export to Triplestore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#federated-queries">
+<span class="md-ellipsis">
+      Federated Queries
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#standards-compliance">
+<span class="md-ellipsis">
+      Standards Compliance
+    </span>
+</a>
+<nav aria-label="Standards Compliance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specifications">
+<span class="md-ellipsis">
+      Specifications
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation">
+<span class="md-ellipsis">
+      Validation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+<span class="md-ellipsis">
+      Next Steps
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../baml-agent/">
+<span class="md-ellipsis">
+    BAML AI Agent
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../analyzer-pipeline/">
+<span class="md-ellipsis">
+    Analyzer Pipeline
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../stratification-guard/">
+<span class="md-ellipsis">
+    Stratification Guard
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/01-first-analysis/">
+<span class="md-ellipsis">
+    First Analysis
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/02-custom-analyzer/">
+<span class="md-ellipsis">
+    Custom Analyzer
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/03-ci-cd-integration/">
+<span class="md-ellipsis">
+    CI/CD Integration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/04-advanced-filtering/">
+<span class="md-ellipsis">
+    Advanced Filtering
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/05-rdf-queries/">
+<span class="md-ellipsis">
+    RDF Queries
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/06-ai-agent-config/">
+<span class="md-ellipsis">
+    AI Agent Configuration
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/meta-loop/">
+<span class="md-ellipsis">
+    Meta-Quality Loop
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/intelligence/">
+<span class="md-ellipsis">
+    Ontological Intelligence
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/index.md">
+<span class="md-ellipsis">
+    Development Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/uv-setup/">
+<span class="md-ellipsis">
+    uv Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/CONTRIBUTING.md">
+<span class="md-ellipsis">
+    Contributing Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/testing.md">
+<span class="md-ellipsis">
+    Testing Strategy
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/mathematical-proof-quality-monotonicity/">
+<span class="md-ellipsis">
+    Mathematical Proof (Quality Monotonicity)
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-foundations-complete/">
+<span class="md-ellipsis">
+    Formal Foundations
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-diagrams/">
+<span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/quality-loop-roadmap/">
+<span class="md-ellipsis">
+    Quality Loop Roadmap
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/tmp-artifacts-inventory/">
+<span class="md-ellipsis">
+    tmp/ Artifacts Inventory
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    VDAD Process
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            VDAD Process
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase1-domain-context/">
+<span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase1-stakeholders/">
+<span class="md-ellipsis">
+    Phase 1 - Stakeholders
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase2-value-register/">
+<span class="md-ellipsis">
+    Phase 2 - Value Register
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase3-requirements/">
+<span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-architecture-overview/">
+<span class="md-ellipsis">
+    Phase 4 - Architecture Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-c4-diagrams/">
+<span class="md-ellipsis">
+    Phase 4 - C4 Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-adrs/">
+<span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-nfr-realization/">
+<span class="md-ellipsis">
+    Phase 4 - NFR Realization
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-baml-agent/">
+<span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    About
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            About
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../about/limitations/">
+<span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#overview">
+<span class="md-ellipsis">
+      Overview
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rdf-stack">
+<span class="md-ellipsis">
+      RDF Stack
+    </span>
+</a>
+<nav aria-label="RDF Stack" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-technologies">
+<span class="md-ellipsis">
+      Core Technologies
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#ontologies">
+<span class="md-ellipsis">
+      Ontologies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#data-model">
+<span class="md-ellipsis">
+      Data Model
+    </span>
+</a>
+<nav aria-label="Data Model" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-classes">
+<span class="md-ellipsis">
+      Core Classes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#properties">
+<span class="md-ellipsis">
+      Properties
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#prov-o-integration">
+<span class="md-ellipsis">
+      PROV-O Integration
+    </span>
+</a>
+<nav aria-label="PROV-O Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#provenance-model">
+<span class="md-ellipsis">
+      Provenance Model
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#example">
+<span class="md-ellipsis">
+      Example
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#oslc-cm-compliance">
+<span class="md-ellipsis">
+      OSLC-CM Compliance
+    </span>
+</a>
+<nav aria-label="OSLC-CM Compliance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#change-management">
+<span class="md-ellipsis">
+      Change Management
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#resource-shapes">
+<span class="md-ellipsis">
+      Resource Shapes
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#spdx-integration">
+<span class="md-ellipsis">
+      SPDX Integration
+    </span>
+</a>
+<nav aria-label="SPDX Integration" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#license-annotations">
+<span class="md-ellipsis">
+      License Annotations
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#export-process">
+<span class="md-ellipsis">
+      Export Process
+    </span>
+</a>
+<nav aria-label="Export Process" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#pipeline">
+<span class="md-ellipsis">
+      Pipeline
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#uri-strategy">
+<span class="md-ellipsis">
+      URI Strategy
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#shacl-validation">
+<span class="md-ellipsis">
+      SHACL Validation
+    </span>
+</a>
+<nav aria-label="SHACL Validation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#shapes">
+<span class="md-ellipsis">
+      Shapes
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation-reports">
+<span class="md-ellipsis">
+      Validation Reports
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#query-interface">
+<span class="md-ellipsis">
+      Query Interface
+    </span>
+</a>
+<nav aria-label="Query Interface" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#sparql-queries">
+<span class="md-ellipsis">
+      SPARQL Queries
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#graphql-like-traversal">
+<span class="md-ellipsis">
+      GraphQL-like Traversal
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#performance">
+<span class="md-ellipsis">
+      Performance
+    </span>
+</a>
+<nav aria-label="Performance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#serialization">
+<span class="md-ellipsis">
+      Serialization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#memory">
+<span class="md-ellipsis">
+      Memory
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#integration-examples">
+<span class="md-ellipsis">
+      Integration Examples
+    </span>
+</a>
+<nav aria-label="Integration Examples" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#export-to-triplestore">
+<span class="md-ellipsis">
+      Export to Triplestore
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#federated-queries">
+<span class="md-ellipsis">
+      Federated Queries
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#standards-compliance">
+<span class="md-ellipsis">
+      Standards Compliance
+    </span>
+</a>
+<nav aria-label="Standards Compliance" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#specifications">
+<span class="md-ellipsis">
+      Specifications
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#validation">
+<span class="md-ellipsis">
+      Validation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#next-steps">
+<span class="md-ellipsis">
+      Next Steps
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/edit/main/docs/architecture/rdf-export.md" rel="edit" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"></path></svg>
+</a>
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/raw/main/docs/architecture/rdf-export.md" title="View source of this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg>
+</a>
+<h1 id="rdf-export-architecture">RDF Export Architecture<a class="headerlink" href="#rdf-export-architecture" title="Permanent link">¶</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Semantic Web Integration</p>
+<p>RepoQ exports all analysis results as RDF graphs with PROV-O provenance, OSLC-CM compliance, and SPDX/DOAP annotations.</p>
+</div>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">¶</a></h2>
+<p>Every analysis result is:
+- <strong>RDF-annotated</strong>: Linked data with URIs
+- <strong>Provenance-tracked</strong>: PROV-O entities, activities, agents
+- <strong>Standards-compliant</strong>: OSLC-CM, SPDX, DOAP, C4, DDD
+- <strong>SHACL-validated</strong>: Shapes ensure data quality</p>
+<h2 id="rdf-stack">RDF Stack<a class="headerlink" href="#rdf-stack" title="Permanent link">¶</a></h2>
+<h3 id="core-technologies">Core Technologies<a class="headerlink" href="#core-technologies" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Purpose</th>
+<th>Specification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>rdflib</strong></td>
+<td>RDF graph manipulation</td>
+<td>RDF 1.1</td>
+</tr>
+<tr>
+<td><strong>JSON-LD</strong></td>
+<td>Serialization format</td>
+<td>JSON-LD 1.1</td>
+</tr>
+<tr>
+<td><strong>Turtle</strong></td>
+<td>Human-readable RDF</td>
+<td>Turtle 1.1</td>
+</tr>
+<tr>
+<td><strong>SPARQL</strong></td>
+<td>Query language</td>
+<td>SPARQL 1.1</td>
+</tr>
+<tr>
+<td><strong>PyShacl</strong></td>
+<td>Validation</td>
+<td>SHACL W3C</td>
+</tr>
+</tbody>
+</table>
+<h3 id="ontologies">Ontologies<a class="headerlink" href="#ontologies" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph LR
+    CODE[Code Ontology] --&gt; PROV[PROV-O]
+    CODE --&gt; DOAP[DOAP]
+    CODE --&gt; SPDX[SPDX]
+
+    OSLC[OSLC-CM] --&gt; DCTERMS[Dublin Core]
+    OSLC --&gt; RDF[RDFS/OWL]
+
+    C4[C4 Model] --&gt; ARCH[Architecture]
+    DDD[DDD] --&gt; DOMAIN[Domain Model]
+
+    PROV --&gt; RDF
+    DOAP --&gt; RDF
+    SPDX --&gt; RDF
+
+    style PROV fill:#B0E0E6
+    style OSLC fill:#98FB98
+    style C4 fill:#FFB6C1</code></pre>
+<h2 id="data-model">Data Model<a class="headerlink" href="#data-model" title="Permanent link">¶</a></h2>
+<h3 id="core-classes">Core Classes<a class="headerlink" href="#core-classes" title="Permanent link">¶</a></h3>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c"># repoq/ontologies/field33.context.jsonld</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="k">@prefix</span><span class="w"> </span><span class="nn">repoq:</span><span class="w"> </span><span class="nv">&lt;https://field33.com/ontologies/repoq#&gt;</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="k">@prefix</span><span class="w"> </span><span class="nn">prov:</span><span class="w"> </span><span class="nv">&lt;http://www.w3.org/ns/prov#&gt;</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="k">@prefix</span><span class="w"> </span><span class="nn">oslc:</span><span class="w"> </span><span class="nv">&lt;http://open-services.net/ns/cm#&gt;</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="k">@prefix</span><span class="w"> </span><span class="nn">spdx:</span><span class="w"> </span><span class="nv">&lt;http://spdx.org/rdf/terms#&gt;</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="c"># Analysis Result</span>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">AnalysisResult</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span> <span class="p">;</span>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Entity</span> <span class="p">;</span>
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">"Analysis Result"</span> <span class="p">;</span>
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">comment</span> <span class="s">"Output from a RepoQ analyzer"</span> <span class="p">.</span>
+</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>
+</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="c"># Repository</span>
+</span><span id="__span-0-15"><a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">Repository</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span> <span class="p">;</span>
+</span><span id="__span-0-16"><a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Entity</span><span class="p">,</span> <span class="nn">doap</span><span class="p">:</span><span class="nt">Project</span> <span class="p">;</span>
+</span><span id="__span-0-17"><a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">"Git Repository"</span> <span class="p">.</span>
+</span><span id="__span-0-18"><a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="c"># File Node</span>
+</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">FileNode</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span> <span class="p">;</span>
+</span><span id="__span-0-21"><a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Entity</span> <span class="p">;</span>
+</span><span id="__span-0-22"><a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">"Source Code File"</span> <span class="p">;</span>
+</span><span id="__span-0-23"><a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a>    <span class="nn">oslc</span><span class="p">:</span><span class="nt">instanceShape</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">FileNodeShape</span> <span class="p">.</span>
+</span><span id="__span-0-24"><a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a>
+</span><span id="__span-0-25"><a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a><span class="c"># Complexity Metrics</span>
+</span><span id="__span-0-26"><a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">ComplexityMetrics</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span> <span class="p">;</span>
+</span><span id="__span-0-27"><a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Entity</span> <span class="p">;</span>
+</span><span id="__span-0-28"><a href="#__codelineno-0-28" id="__codelineno-0-28" name="__codelineno-0-28"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">"Code Complexity Metrics"</span> <span class="p">.</span>
+</span><span id="__span-0-29"><a href="#__codelineno-0-29" id="__codelineno-0-29" name="__codelineno-0-29"></a>
+</span><span id="__span-0-30"><a href="#__codelineno-0-30" id="__codelineno-0-30" name="__codelineno-0-30"></a><span class="c"># Hotspot</span>
+</span><span id="__span-0-31"><a href="#__codelineno-0-31" id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">Hotspot</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">Class</span> <span class="p">;</span>
+</span><span id="__span-0-32"><a href="#__codelineno-0-32" id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subClassOf</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Entity</span> <span class="p">;</span>
+</span><span id="__span-0-33"><a href="#__codelineno-0-33" id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">"Complexity + Change Hotspot"</span> <span class="p">.</span>
+</span></code></pre></div>
+<h3 id="properties">Properties<a class="headerlink" href="#properties" title="Permanent link">¶</a></h3>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c"># Structural properties</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">hasFile</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span> <span class="p">;</span>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">Repository</span> <span class="p">;</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">FileNode</span> <span class="p">.</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">hasLicense</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">DatatypeProperty</span> <span class="p">;</span>
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">Repository</span> <span class="p">;</span>
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">spdx</span><span class="p">:</span><span class="nt">LicenseExpression</span> <span class="p">.</span>
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="c"># Complexity metrics</span>
+</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">cyclomaticComplexity</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">DatatypeProperty</span> <span class="p">;</span>
+</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">ComplexityMetrics</span> <span class="p">;</span>
+</span><span id="__span-1-13"><a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">integer</span> <span class="p">.</span>
+</span><span id="__span-1-14"><a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">maintainabilityIndex</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">DatatypeProperty</span> <span class="p">;</span>
+</span><span id="__span-1-16"><a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">ComplexityMetrics</span> <span class="p">;</span>
+</span><span id="__span-1-17"><a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">float</span> <span class="p">.</span>
+</span><span id="__span-1-18"><a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a><span class="c"># Provenance</span>
+</span><span id="__span-1-20"><a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">generatedBy</span> <span class="kt">a</span> <span class="nn">owl</span><span class="p">:</span><span class="nt">ObjectProperty</span> <span class="p">;</span>
+</span><span id="__span-1-21"><a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">subPropertyOf</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">wasGeneratedBy</span> <span class="p">;</span>
+</span><span id="__span-1-22"><a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">domain</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">AnalysisResult</span> <span class="p">;</span>
+</span><span id="__span-1-23"><a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">range</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">AnalysisActivity</span> <span class="p">.</span>
+</span></code></pre></div>
+<h2 id="prov-o-integration">PROV-O Integration<a class="headerlink" href="#prov-o-integration" title="Permanent link">¶</a></h2>
+<h3 id="provenance-model">Provenance Model<a class="headerlink" href="#provenance-model" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TD
+    Agent[prov:Agent&lt;br/&gt;RepoQ v0.3.0] 
+    Activity[prov:Activity&lt;br/&gt;analyze-structure]
+    Entity[prov:Entity&lt;br/&gt;AnalysisResult]
+
+    Agent --&gt;|prov:wasAssociatedWith| Activity
+    Activity --&gt;|prov:generated| Entity
+    Entity --&gt;|prov:wasAttributedTo| Agent
+
+    Input[prov:Entity&lt;br/&gt;Repository] --&gt;|prov:used| Activity
+
+    style Agent fill:#FFD700
+    style Activity fill:#87CEEB
+    style Entity fill:#90EE90</code></pre>
+<h3 id="example">Example<a class="headerlink" href="#example" title="Permanent link">¶</a></h3>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c"># Analysis activity</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="nv">&lt;analysis/abc123&gt;</span> <span class="kt">a</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Activity</span><span class="p">,</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">AnalysisActivity</span> <span class="p">;</span>
+</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a>    <span class="nn">prov</span><span class="p">:</span><span class="nt">startedAtTime</span> <span class="s">"2024-01-15T10:30:00Z"</span><span class="p">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span> <span class="p">;</span>
+</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a>    <span class="nn">prov</span><span class="p">:</span><span class="nt">endedAtTime</span> <span class="s">"2024-01-15T10:30:05Z"</span><span class="p">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span> <span class="p">;</span>
+</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a>    <span class="nn">prov</span><span class="p">:</span><span class="nt">wasAssociatedWith</span> <span class="nv">&lt;agent/repoq-0.3.0&gt;</span> <span class="p">;</span>
+</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>    <span class="nn">prov</span><span class="p">:</span><span class="nt">used</span> <span class="nv">&lt;repo/myproject&gt;</span> <span class="p">;</span>
+</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a>    <span class="nn">prov</span><span class="p">:</span><span class="nt">generated</span> <span class="nv">&lt;result/abc123&gt;</span> <span class="p">.</span>
+</span><span id="__span-2-8"><a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="c"># Agent</span>
+</span><span id="__span-2-10"><a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="nv">&lt;agent/repoq-0.3.0&gt;</span> <span class="kt">a</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Agent</span><span class="p">,</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">SoftwareAgent</span> <span class="p">;</span>
+</span><span id="__span-2-11"><a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="nn">rdfs</span><span class="p">:</span><span class="nt">label</span> <span class="s">"RepoQ v0.3.0"</span> <span class="p">;</span>
+</span><span id="__span-2-12"><a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a>    <span class="nn">repoq</span><span class="p">:</span><span class="nt">version</span> <span class="s">"0.3.0"</span> <span class="p">;</span>
+</span><span id="__span-2-13"><a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="nn">doap</span><span class="p">:</span><span class="nt">homepage</span> <span class="nv">&lt;https://github.com/field33/repoq&gt;</span> <span class="p">.</span>
+</span><span id="__span-2-14"><a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a>
+</span><span id="__span-2-15"><a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a><span class="c"># Result</span>
+</span><span id="__span-2-16"><a href="#__codelineno-2-16" id="__codelineno-2-16" name="__codelineno-2-16"></a><span class="nv">&lt;result/abc123&gt;</span> <span class="kt">a</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Entity</span><span class="p">,</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">AnalysisResult</span> <span class="p">;</span>
+</span><span id="__span-2-17"><a href="#__codelineno-2-17" id="__codelineno-2-17" name="__codelineno-2-17"></a>    <span class="nn">prov</span><span class="p">:</span><span class="nt">wasGeneratedBy</span> <span class="nv">&lt;analysis/abc123&gt;</span> <span class="p">;</span>
+</span><span id="__span-2-18"><a href="#__codelineno-2-18" id="__codelineno-2-18" name="__codelineno-2-18"></a>    <span class="nn">prov</span><span class="p">:</span><span class="nt">wasAttributedTo</span> <span class="nv">&lt;agent/repoq-0.3.0&gt;</span> <span class="p">;</span>
+</span><span id="__span-2-19"><a href="#__codelineno-2-19" id="__codelineno-2-19" name="__codelineno-2-19"></a>    <span class="nn">repoq</span><span class="p">:</span><span class="nt">analysisTimestamp</span> <span class="s">"2024-01-15T10:30:05Z"</span><span class="p">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span> <span class="p">;</span>
+</span><span id="__span-2-20"><a href="#__codelineno-2-20" id="__codelineno-2-20" name="__codelineno-2-20"></a>    <span class="nn">repoq</span><span class="p">:</span><span class="nt">hasMetrics</span> <span class="nv">&lt;metrics/abc123&gt;</span> <span class="p">.</span>
+</span></code></pre></div>
+<h2 id="oslc-cm-compliance">OSLC-CM Compliance<a class="headerlink" href="#oslc-cm-compliance" title="Permanent link">¶</a></h2>
+<h3 id="change-management">Change Management<a class="headerlink" href="#change-management" title="Permanent link">¶</a></h3>
+<p>OSLC-CM defines resources for change management:</p>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">@prefix</span><span class="w"> </span><span class="nn">oslc_cm:</span><span class="w"> </span><span class="nv">&lt;http://open-services.net/ns/cm#&gt;</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="c"># Defect (for weaknesses)</span>
+</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="nv">&lt;defect/todo-123&gt;</span> <span class="kt">a</span> <span class="nn">oslc_cm</span><span class="p">:</span><span class="nt">Defect</span> <span class="p">;</span>
+</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a>    <span class="nn">dcterms</span><span class="p">:</span><span class="nt">title</span> <span class="s">"TODO: Refactor authentication logic"</span> <span class="p">;</span>
+</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="nn">dcterms</span><span class="p">:</span><span class="nt">description</span> <span class="s">"Found in src/auth.py:42"</span> <span class="p">;</span>
+</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="nn">oslc_cm</span><span class="p">:</span><span class="nt">severity</span> <span class="s">"minor"</span> <span class="p">;</span>
+</span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a>    <span class="nn">oslc_cm</span><span class="p">:</span><span class="nt">status</span> <span class="s">"open"</span> <span class="p">;</span>
+</span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a>    <span class="nn">repoq</span><span class="p">:</span><span class="nt">detectedByAnalyzer</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">WeaknessAnalyzer</span> <span class="p">;</span>
+</span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a>    <span class="nn">repoq</span><span class="p">:</span><span class="nt">inFile</span> <span class="nv">&lt;file/src/auth.py&gt;</span> <span class="p">;</span>
+</span><span id="__span-3-11"><a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="nn">repoq</span><span class="p">:</span><span class="nt">atLine</span> <span class="mi">42</span> <span class="p">.</span>
+</span><span id="__span-3-12"><a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a>
+</span><span id="__span-3-13"><a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="c"># Task (for refactoring recommendations)</span>
+</span><span id="__span-3-14"><a href="#__codelineno-3-14" id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="nv">&lt;task/refactor-456&gt;</span> <span class="kt">a</span> <span class="nn">oslc_cm</span><span class="p">:</span><span class="nt">Task</span> <span class="p">;</span>
+</span><span id="__span-3-15"><a href="#__codelineno-3-15" id="__codelineno-3-15" name="__codelineno-3-15"></a>    <span class="nn">dcterms</span><span class="p">:</span><span class="nt">title</span> <span class="s">"Reduce complexity in calculate_metrics()"</span> <span class="p">;</span>
+</span><span id="__span-3-16"><a href="#__codelineno-3-16" id="__codelineno-3-16" name="__codelineno-3-16"></a>    <span class="nn">dcterms</span><span class="p">:</span><span class="nt">description</span> <span class="s">"Cyclomatic complexity: 42 (threshold: 15)"</span> <span class="p">;</span>
+</span><span id="__span-3-17"><a href="#__codelineno-3-17" id="__codelineno-3-17" name="__codelineno-3-17"></a>    <span class="nn">oslc_cm</span><span class="p">:</span><span class="nt">priority</span> <span class="s">"high"</span> <span class="p">;</span>
+</span><span id="__span-3-18"><a href="#__codelineno-3-18" id="__codelineno-3-18" name="__codelineno-3-18"></a>    <span class="nn">oslc_cm</span><span class="p">:</span><span class="nt">status</span> <span class="s">"proposed"</span> <span class="p">;</span>
+</span><span id="__span-3-19"><a href="#__codelineno-3-19" id="__codelineno-3-19" name="__codelineno-3-19"></a>    <span class="nn">repoq</span><span class="p">:</span><span class="nt">affectsFile</span> <span class="nv">&lt;file/src/metrics.py&gt;</span> <span class="p">.</span>
+</span></code></pre></div>
+<h3 id="resource-shapes">Resource Shapes<a class="headerlink" href="#resource-shapes" title="Permanent link">¶</a></h3>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="c"># OSLC Resource Shape for FileNode</span>
+</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="nv">&lt;shape/FileNode&gt;</span> <span class="kt">a</span> <span class="nn">oslc</span><span class="p">:</span><span class="nt">ResourceShape</span> <span class="p">;</span>
+</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>    <span class="nn">oslc</span><span class="p">:</span><span class="nt">describes</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">FileNode</span> <span class="p">;</span>
+</span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>    <span class="nn">dcterms</span><span class="p">:</span><span class="nt">title</span> <span class="s">"File Node Shape"</span> <span class="p">;</span>
+</span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>    <span class="nn">oslc</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">name</span> <span class="s">"path"</span> <span class="p">;</span>
+</span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">occurs</span> <span class="nn">oslc</span><span class="p">:</span><span class="nt">Exactly-one</span> <span class="p">;</span>
+</span><span id="__span-4-8"><a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">propertyDefinition</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">path</span> <span class="p">;</span>
+</span><span id="__span-4-9"><a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">valueType</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">string</span>
+</span><span id="__span-4-10"><a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a>    <span class="p">]</span> <span class="p">;</span>
+</span><span id="__span-4-11"><a href="#__codelineno-4-11" id="__codelineno-4-11" name="__codelineno-4-11"></a>    <span class="nn">oslc</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-4-12"><a href="#__codelineno-4-12" id="__codelineno-4-12" name="__codelineno-4-12"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">name</span> <span class="s">"complexity"</span> <span class="p">;</span>
+</span><span id="__span-4-13"><a href="#__codelineno-4-13" id="__codelineno-4-13" name="__codelineno-4-13"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">occurs</span> <span class="nn">oslc</span><span class="p">:</span><span class="nt">Zero-or-one</span> <span class="p">;</span>
+</span><span id="__span-4-14"><a href="#__codelineno-4-14" id="__codelineno-4-14" name="__codelineno-4-14"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">propertyDefinition</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">cyclomaticComplexity</span> <span class="p">;</span>
+</span><span id="__span-4-15"><a href="#__codelineno-4-15" id="__codelineno-4-15" name="__codelineno-4-15"></a>        <span class="nn">oslc</span><span class="p">:</span><span class="nt">valueType</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">integer</span>
+</span><span id="__span-4-16"><a href="#__codelineno-4-16" id="__codelineno-4-16" name="__codelineno-4-16"></a>    <span class="p">]</span> <span class="p">.</span>
+</span></code></pre></div>
+<h2 id="spdx-integration">SPDX Integration<a class="headerlink" href="#spdx-integration" title="Permanent link">¶</a></h2>
+<h3 id="license-annotations">License Annotations<a class="headerlink" href="#license-annotations" title="Permanent link">¶</a></h3>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">@prefix</span><span class="w"> </span><span class="nn">spdx:</span><span class="w"> </span><span class="nv">&lt;http://spdx.org/rdf/terms#&gt;</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="c"># SPDX Document</span>
+</span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a><span class="nv">&lt;spdx/myproject&gt;</span> <span class="kt">a</span> <span class="nn">spdx</span><span class="p">:</span><span class="nt">SpdxDocument</span> <span class="p">;</span>
+</span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">specVersion</span> <span class="s">"SPDX-2.3"</span> <span class="p">;</span>
+</span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">creationInfo</span> <span class="p">[</span>
+</span><span id="__span-5-7"><a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>        <span class="nn">spdx</span><span class="p">:</span><span class="nt">created</span> <span class="s">"2024-01-15T10:30:00Z"</span><span class="p">^^</span><span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span> <span class="p">;</span>
+</span><span id="__span-5-8"><a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>        <span class="nn">spdx</span><span class="p">:</span><span class="nt">creator</span> <span class="s">"Tool: RepoQ-0.3.0"</span> <span class="p">;</span>
+</span><span id="__span-5-9"><a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a>        <span class="nn">spdx</span><span class="p">:</span><span class="nt">licenseListVersion</span> <span class="s">"3.21"</span>
+</span><span id="__span-5-10"><a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a>    <span class="p">]</span> <span class="p">;</span>
+</span><span id="__span-5-11"><a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">describesPackage</span> <span class="nv">&lt;package/myproject&gt;</span> <span class="p">.</span>
+</span><span id="__span-5-12"><a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>
+</span><span id="__span-5-13"><a href="#__codelineno-5-13" id="__codelineno-5-13" name="__codelineno-5-13"></a><span class="c"># Package</span>
+</span><span id="__span-5-14"><a href="#__codelineno-5-14" id="__codelineno-5-14" name="__codelineno-5-14"></a><span class="nv">&lt;package/myproject&gt;</span> <span class="kt">a</span> <span class="nn">spdx</span><span class="p">:</span><span class="nt">Package</span> <span class="p">;</span>
+</span><span id="__span-5-15"><a href="#__codelineno-5-15" id="__codelineno-5-15" name="__codelineno-5-15"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">name</span> <span class="s">"myproject"</span> <span class="p">;</span>
+</span><span id="__span-5-16"><a href="#__codelineno-5-16" id="__codelineno-5-16" name="__codelineno-5-16"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">versionInfo</span> <span class="s">"1.2.3"</span> <span class="p">;</span>
+</span><span id="__span-5-17"><a href="#__codelineno-5-17" id="__codelineno-5-17" name="__codelineno-5-17"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">downloadLocation</span> <span class="s">"https://github.com/user/myproject"</span> <span class="p">;</span>
+</span><span id="__span-5-18"><a href="#__codelineno-5-18" id="__codelineno-5-18" name="__codelineno-5-18"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">licenseConcluded</span> <span class="s">"MIT"</span> <span class="p">;</span>
+</span><span id="__span-5-19"><a href="#__codelineno-5-19" id="__codelineno-5-19" name="__codelineno-5-19"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">licenseDeclared</span> <span class="s">"MIT"</span> <span class="p">;</span>
+</span><span id="__span-5-20"><a href="#__codelineno-5-20" id="__codelineno-5-20" name="__codelineno-5-20"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">copyrightText</span> <span class="s">"Copyright 2024 User"</span> <span class="p">;</span>
+</span><span id="__span-5-21"><a href="#__codelineno-5-21" id="__codelineno-5-21" name="__codelineno-5-21"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">hasFile</span> <span class="nv">&lt;file/src/main.py&gt;</span><span class="p">,</span> <span class="nv">&lt;file/src/utils.py&gt;</span> <span class="p">.</span>
+</span><span id="__span-5-22"><a href="#__codelineno-5-22" id="__codelineno-5-22" name="__codelineno-5-22"></a>
+</span><span id="__span-5-23"><a href="#__codelineno-5-23" id="__codelineno-5-23" name="__codelineno-5-23"></a><span class="c"># File with license</span>
+</span><span id="__span-5-24"><a href="#__codelineno-5-24" id="__codelineno-5-24" name="__codelineno-5-24"></a><span class="nv">&lt;file/src/main.py&gt;</span> <span class="kt">a</span> <span class="nn">spdx</span><span class="p">:</span><span class="nt">File</span> <span class="p">;</span>
+</span><span id="__span-5-25"><a href="#__codelineno-5-25" id="__codelineno-5-25" name="__codelineno-5-25"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">fileName</span> <span class="s">"./src/main.py"</span> <span class="p">;</span>
+</span><span id="__span-5-26"><a href="#__codelineno-5-26" id="__codelineno-5-26" name="__codelineno-5-26"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">fileType</span> <span class="nn">spdx</span><span class="p">:</span><span class="nt">fileType_source</span> <span class="p">;</span>
+</span><span id="__span-5-27"><a href="#__codelineno-5-27" id="__codelineno-5-27" name="__codelineno-5-27"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">licenseConcluded</span> <span class="s">"MIT"</span> <span class="p">;</span>
+</span><span id="__span-5-28"><a href="#__codelineno-5-28" id="__codelineno-5-28" name="__codelineno-5-28"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">licenseInfoInFile</span> <span class="s">"MIT"</span> <span class="p">;</span>
+</span><span id="__span-5-29"><a href="#__codelineno-5-29" id="__codelineno-5-29" name="__codelineno-5-29"></a>    <span class="nn">spdx</span><span class="p">:</span><span class="nt">copyrightText</span> <span class="s">"Copyright 2024 User"</span> <span class="p">.</span>
+</span></code></pre></div>
+<h2 id="export-process">Export Process<a class="headerlink" href="#export-process" title="Permanent link">¶</a></h2>
+<h3 id="pipeline">Pipeline<a class="headerlink" href="#pipeline" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant A as Analyzer
+    participant M as AnalysisResult
+    participant E as RDFExporter
+    participant O as OntologyManager
+    participant S as SHACL Validator
+    participant F as Output File
+
+    A-&gt;&gt;M: Create result
+    M-&gt;&gt;M: Annotate with URIs
+    M-&gt;&gt;E: Export request
+    E-&gt;&gt;O: Load ontologies
+    O--&gt;&gt;E: Return graph
+    E-&gt;&gt;E: Build RDF graph
+    E-&gt;&gt;E: Add PROV-O
+    E-&gt;&gt;S: Validate
+    S--&gt;&gt;E: Valid ✓
+    E-&gt;&gt;F: Serialize (JSON-LD/Turtle)</code></pre>
+<h3 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># repoq/core/rdf_export.py</span>
+</span><span id="__span-6-2"><a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">RDFExporter</span><span class="p">:</span>
+</span><span id="__span-6-4"><a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="sd">"""Export AnalysisResult to RDF with PROV-O provenance."""</span>
+</span><span id="__span-6-5"><a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ontology_manager</span><span class="p">:</span> <span class="n">OntologyManager</span><span class="p">):</span>
+</span><span id="__span-6-7"><a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">ontology</span> <span class="o">=</span> <span class="n">ontology_manager</span>
+</span><span id="__span-6-8"><a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+</span><span id="__span-6-9"><a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_load_contexts</span><span class="p">()</span>
+</span><span id="__span-6-10"><a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a href="#__codelineno-6-11" id="__codelineno-6-11" name="__codelineno-6-11"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">export</span><span class="p">(</span>
+</span><span id="__span-6-12"><a href="#__codelineno-6-12" id="__codelineno-6-12" name="__codelineno-6-12"></a>        <span class="bp">self</span><span class="p">,</span>
+</span><span id="__span-6-13"><a href="#__codelineno-6-13" id="__codelineno-6-13" name="__codelineno-6-13"></a>        <span class="n">result</span><span class="p">:</span> <span class="n">AnalysisResult</span><span class="p">,</span>
+</span><span id="__span-6-14"><a href="#__codelineno-6-14" id="__codelineno-6-14" name="__codelineno-6-14"></a>        <span class="nb">format</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"turtle"</span><span class="p">,</span> <span class="s2">"json-ld"</span><span class="p">,</span> <span class="s2">"nt"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"turtle"</span>
+</span><span id="__span-6-15"><a href="#__codelineno-6-15" id="__codelineno-6-15" name="__codelineno-6-15"></a>    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-6-16"><a href="#__codelineno-6-16" id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="w">        </span><span class="sd">"""Export result as RDF."""</span>
+</span><span id="__span-6-17"><a href="#__codelineno-6-17" id="__codelineno-6-17" name="__codelineno-6-17"></a>        <span class="c1"># 1. Create provenance entities</span>
+</span><span id="__span-6-18"><a href="#__codelineno-6-18" id="__codelineno-6-18" name="__codelineno-6-18"></a>        <span class="n">activity_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_activity</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span id="__span-6-19"><a href="#__codelineno-6-19" id="__codelineno-6-19" name="__codelineno-6-19"></a>        <span class="n">agent_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_agent</span><span class="p">()</span>
+</span><span id="__span-6-20"><a href="#__codelineno-6-20" id="__codelineno-6-20" name="__codelineno-6-20"></a>        <span class="n">result_uri</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_result_entity</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+</span><span id="__span-6-21"><a href="#__codelineno-6-21" id="__codelineno-6-21" name="__codelineno-6-21"></a>
+</span><span id="__span-6-22"><a href="#__codelineno-6-22" id="__codelineno-6-22" name="__codelineno-6-22"></a>        <span class="c1"># 2. Link with PROV-O</span>
+</span><span id="__span-6-23"><a href="#__codelineno-6-23" id="__codelineno-6-23" name="__codelineno-6-23"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">result_uri</span><span class="p">,</span> <span class="n">PROV</span><span class="o">.</span><span class="n">wasGeneratedBy</span><span class="p">,</span> <span class="n">activity_uri</span><span class="p">))</span>
+</span><span id="__span-6-24"><a href="#__codelineno-6-24" id="__codelineno-6-24" name="__codelineno-6-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">activity_uri</span><span class="p">,</span> <span class="n">PROV</span><span class="o">.</span><span class="n">wasAssociatedWith</span><span class="p">,</span> <span class="n">agent_uri</span><span class="p">))</span>
+</span><span id="__span-6-25"><a href="#__codelineno-6-25" id="__codelineno-6-25" name="__codelineno-6-25"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">result_uri</span><span class="p">,</span> <span class="n">PROV</span><span class="o">.</span><span class="n">wasAttributedTo</span><span class="p">,</span> <span class="n">agent_uri</span><span class="p">))</span>
+</span><span id="__span-6-26"><a href="#__codelineno-6-26" id="__codelineno-6-26" name="__codelineno-6-26"></a>
+</span><span id="__span-6-27"><a href="#__codelineno-6-27" id="__codelineno-6-27" name="__codelineno-6-27"></a>        <span class="c1"># 3. Add domain entities</span>
+</span><span id="__span-6-28"><a href="#__codelineno-6-28" id="__codelineno-6-28" name="__codelineno-6-28"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_add_repository</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">repository</span><span class="p">)</span>
+</span><span id="__span-6-29"><a href="#__codelineno-6-29" id="__codelineno-6-29" name="__codelineno-6-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_add_files</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">files</span><span class="p">)</span>
+</span><span id="__span-6-30"><a href="#__codelineno-6-30" id="__codelineno-6-30" name="__codelineno-6-30"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_add_metrics</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">complexity</span><span class="p">)</span>
+</span><span id="__span-6-31"><a href="#__codelineno-6-31" id="__codelineno-6-31" name="__codelineno-6-31"></a>
+</span><span id="__span-6-32"><a href="#__codelineno-6-32" id="__codelineno-6-32" name="__codelineno-6-32"></a>        <span class="c1"># 4. Validate with SHACL</span>
+</span><span id="__span-6-33"><a href="#__codelineno-6-33" id="__codelineno-6-33" name="__codelineno-6-33"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_validate_graph</span><span class="p">()</span>
+</span><span id="__span-6-34"><a href="#__codelineno-6-34" id="__codelineno-6-34" name="__codelineno-6-34"></a>
+</span><span id="__span-6-35"><a href="#__codelineno-6-35" id="__codelineno-6-35" name="__codelineno-6-35"></a>        <span class="c1"># 5. Serialize</span>
+</span><span id="__span-6-36"><a href="#__codelineno-6-36" id="__codelineno-6-36" name="__codelineno-6-36"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">serialize</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="nb">format</span><span class="p">)</span>
+</span><span id="__span-6-37"><a href="#__codelineno-6-37" id="__codelineno-6-37" name="__codelineno-6-37"></a>
+</span><span id="__span-6-38"><a href="#__codelineno-6-38" id="__codelineno-6-38" name="__codelineno-6-38"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_create_activity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">AnalysisResult</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">URIRef</span><span class="p">:</span>
+</span><span id="__span-6-39"><a href="#__codelineno-6-39" id="__codelineno-6-39" name="__codelineno-6-39"></a><span class="w">        </span><span class="sd">"""Create prov:Activity for analysis."""</span>
+</span><span id="__span-6-40"><a href="#__codelineno-6-40" id="__codelineno-6-40" name="__codelineno-6-40"></a>        <span class="n">uri</span> <span class="o">=</span> <span class="n">URIRef</span><span class="p">(</span><span class="sa">f</span><span class="s2">"urn:repoq:analysis:</span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-6-41"><a href="#__codelineno-6-41" id="__codelineno-6-41" name="__codelineno-6-41"></a>
+</span><span id="__span-6-42"><a href="#__codelineno-6-42" id="__codelineno-6-42" name="__codelineno-6-42"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">RDF</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">PROV</span><span class="o">.</span><span class="n">Activity</span><span class="p">))</span>
+</span><span id="__span-6-43"><a href="#__codelineno-6-43" id="__codelineno-6-43" name="__codelineno-6-43"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">RDF</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">REPOQ</span><span class="o">.</span><span class="n">AnalysisActivity</span><span class="p">))</span>
+</span><span id="__span-6-44"><a href="#__codelineno-6-44" id="__codelineno-6-44" name="__codelineno-6-44"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">PROV</span><span class="o">.</span><span class="n">startedAtTime</span><span class="p">,</span> 
+</span><span id="__span-6-45"><a href="#__codelineno-6-45" id="__codelineno-6-45" name="__codelineno-6-45"></a>                       <span class="n">Literal</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="n">XSD</span><span class="o">.</span><span class="n">dateTime</span><span class="p">)))</span>
+</span><span id="__span-6-46"><a href="#__codelineno-6-46" id="__codelineno-6-46" name="__codelineno-6-46"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">REPOQ</span><span class="o">.</span><span class="n">analyzers</span><span class="p">,</span> 
+</span><span id="__span-6-47"><a href="#__codelineno-6-47" id="__codelineno-6-47" name="__codelineno-6-47"></a>                       <span class="n">Literal</span><span class="p">(</span><span class="s2">","</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">analyzers</span><span class="p">))))</span>
+</span><span id="__span-6-48"><a href="#__codelineno-6-48" id="__codelineno-6-48" name="__codelineno-6-48"></a>
+</span><span id="__span-6-49"><a href="#__codelineno-6-49" id="__codelineno-6-49" name="__codelineno-6-49"></a>        <span class="k">return</span> <span class="n">uri</span>
+</span><span id="__span-6-50"><a href="#__codelineno-6-50" id="__codelineno-6-50" name="__codelineno-6-50"></a>
+</span><span id="__span-6-51"><a href="#__codelineno-6-51" id="__codelineno-6-51" name="__codelineno-6-51"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_create_agent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">URIRef</span><span class="p">:</span>
+</span><span id="__span-6-52"><a href="#__codelineno-6-52" id="__codelineno-6-52" name="__codelineno-6-52"></a><span class="w">        </span><span class="sd">"""Create prov:SoftwareAgent for RepoQ."""</span>
+</span><span id="__span-6-53"><a href="#__codelineno-6-53" id="__codelineno-6-53" name="__codelineno-6-53"></a>        <span class="n">uri</span> <span class="o">=</span> <span class="n">URIRef</span><span class="p">(</span><span class="sa">f</span><span class="s2">"urn:repoq:agent:</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-6-54"><a href="#__codelineno-6-54" id="__codelineno-6-54" name="__codelineno-6-54"></a>
+</span><span id="__span-6-55"><a href="#__codelineno-6-55" id="__codelineno-6-55" name="__codelineno-6-55"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">RDF</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">PROV</span><span class="o">.</span><span class="n">Agent</span><span class="p">))</span>
+</span><span id="__span-6-56"><a href="#__codelineno-6-56" id="__codelineno-6-56" name="__codelineno-6-56"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">RDF</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">PROV</span><span class="o">.</span><span class="n">SoftwareAgent</span><span class="p">))</span>
+</span><span id="__span-6-57"><a href="#__codelineno-6-57" id="__codelineno-6-57" name="__codelineno-6-57"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">RDFS</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">Literal</span><span class="p">(</span><span class="sa">f</span><span class="s2">"RepoQ v</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">"</span><span class="p">)))</span>
+</span><span id="__span-6-58"><a href="#__codelineno-6-58" id="__codelineno-6-58" name="__codelineno-6-58"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">uri</span><span class="p">,</span> <span class="n">REPOQ</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">Literal</span><span class="p">(</span><span class="n">__version__</span><span class="p">)))</span>
+</span><span id="__span-6-59"><a href="#__codelineno-6-59" id="__codelineno-6-59" name="__codelineno-6-59"></a>
+</span><span id="__span-6-60"><a href="#__codelineno-6-60" id="__codelineno-6-60" name="__codelineno-6-60"></a>        <span class="k">return</span> <span class="n">uri</span>
+</span><span id="__span-6-61"><a href="#__codelineno-6-61" id="__codelineno-6-61" name="__codelineno-6-61"></a>
+</span><span id="__span-6-62"><a href="#__codelineno-6-62" id="__codelineno-6-62" name="__codelineno-6-62"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_validate_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-6-63"><a href="#__codelineno-6-63" id="__codelineno-6-63" name="__codelineno-6-63"></a><span class="w">        </span><span class="sd">"""Validate RDF graph with SHACL shapes."""</span>
+</span><span id="__span-6-64"><a href="#__codelineno-6-64" id="__codelineno-6-64" name="__codelineno-6-64"></a>        <span class="n">shacl_graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+</span><span id="__span-6-65"><a href="#__codelineno-6-65" id="__codelineno-6-65" name="__codelineno-6-65"></a>        <span class="n">shacl_graph</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s2">"repoq/shapes/shacl_project.ttl"</span><span class="p">)</span>
+</span><span id="__span-6-66"><a href="#__codelineno-6-66" id="__codelineno-6-66" name="__codelineno-6-66"></a>
+</span><span id="__span-6-67"><a href="#__codelineno-6-67" id="__codelineno-6-67" name="__codelineno-6-67"></a>        <span class="n">conforms</span><span class="p">,</span> <span class="n">results_graph</span><span class="p">,</span> <span class="n">results_text</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span>
+</span><span id="__span-6-68"><a href="#__codelineno-6-68" id="__codelineno-6-68" name="__codelineno-6-68"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="p">,</span>
+</span><span id="__span-6-69"><a href="#__codelineno-6-69" id="__codelineno-6-69" name="__codelineno-6-69"></a>            <span class="n">shacl_graph</span><span class="o">=</span><span class="n">shacl_graph</span><span class="p">,</span>
+</span><span id="__span-6-70"><a href="#__codelineno-6-70" id="__codelineno-6-70" name="__codelineno-6-70"></a>            <span class="n">inference</span><span class="o">=</span><span class="s2">"rdfs"</span><span class="p">,</span>  <span class="c1"># RDFS reasoning</span>
+</span><span id="__span-6-71"><a href="#__codelineno-6-71" id="__codelineno-6-71" name="__codelineno-6-71"></a>            <span class="n">abort_on_first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-6-72"><a href="#__codelineno-6-72" id="__codelineno-6-72" name="__codelineno-6-72"></a>        <span class="p">)</span>
+</span><span id="__span-6-73"><a href="#__codelineno-6-73" id="__codelineno-6-73" name="__codelineno-6-73"></a>
+</span><span id="__span-6-74"><a href="#__codelineno-6-74" id="__codelineno-6-74" name="__codelineno-6-74"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="n">conforms</span><span class="p">:</span>
+</span><span id="__span-6-75"><a href="#__codelineno-6-75" id="__codelineno-6-75" name="__codelineno-6-75"></a>            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"SHACL validation failed:</span><span class="se">\n</span><span class="si">{</span><span class="n">results_text</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="uri-strategy">URI Strategy<a class="headerlink" href="#uri-strategy" title="Permanent link">¶</a></h3>
+<p><strong>Stable URIs</strong> for resources:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># Repository</span>
+</span><span id="__span-7-2"><a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="sa">f</span><span class="s2">"urn:repoq:repo:</span><span class="si">{</span><span class="n">repo_hash</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-7-3"><a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="c1"># File (content-addressed)</span>
+</span><span id="__span-7-5"><a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="sa">f</span><span class="s2">"urn:repoq:file:</span><span class="si">{</span><span class="n">file_path_hash</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-7-6"><a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="c1"># Analysis result</span>
+</span><span id="__span-7-8"><a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="sa">f</span><span class="s2">"urn:repoq:analysis:</span><span class="si">{</span><span class="n">uuid4</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-7-9"><a href="#__codelineno-7-9" id="__codelineno-7-9" name="__codelineno-7-9"></a>
+</span><span id="__span-7-10"><a href="#__codelineno-7-10" id="__codelineno-7-10" name="__codelineno-7-10"></a><span class="c1"># Metrics</span>
+</span><span id="__span-7-11"><a href="#__codelineno-7-11" id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="sa">f</span><span class="s2">"urn:repoq:metrics:</span><span class="si">{</span><span class="n">analysis_id</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">analyzer_name</span><span class="si">}</span><span class="s2">"</span>
+</span></code></pre></div>
+<h2 id="shacl-validation">SHACL Validation<a class="headerlink" href="#shacl-validation" title="Permanent link">¶</a></h2>
+<h3 id="shapes">Shapes<a class="headerlink" href="#shapes" title="Permanent link">¶</a></h3>
+<div class="language-turtle highlight"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c"># repoq/shapes/shacl_project.ttl</span>
+</span><span id="__span-8-2"><a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>
+</span><span id="__span-8-3"><a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="k">@prefix</span><span class="w"> </span><span class="nn">sh:</span><span class="w"> </span><span class="nv">&lt;http://www.w3.org/ns/shacl#&gt;</span><span class="w"> </span><span class="p">.</span>
+</span><span id="__span-8-4"><a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="c"># FileNode shape</span>
+</span><span id="__span-8-6"><a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">FileNodeShape</span> <span class="kt">a</span> <span class="nn">sh</span><span class="p">:</span><span class="nt">NodeShape</span> <span class="p">;</span>
+</span><span id="__span-8-7"><a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">targetClass</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">FileNode</span> <span class="p">;</span>
+</span><span id="__span-8-8"><a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-8-9"><a href="#__codelineno-8-9" id="__codelineno-8-9" name="__codelineno-8-9"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">path</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">path</span> <span class="p">;</span>
+</span><span id="__span-8-10"><a href="#__codelineno-8-10" id="__codelineno-8-10" name="__codelineno-8-10"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">datatype</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">string</span> <span class="p">;</span>
+</span><span id="__span-8-11"><a href="#__codelineno-8-11" id="__codelineno-8-11" name="__codelineno-8-11"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">minCount</span> <span class="mi">1</span> <span class="p">;</span>
+</span><span id="__span-8-12"><a href="#__codelineno-8-12" id="__codelineno-8-12" name="__codelineno-8-12"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">maxCount</span> <span class="mi">1</span> <span class="p">;</span>
+</span><span id="__span-8-13"><a href="#__codelineno-8-13" id="__codelineno-8-13" name="__codelineno-8-13"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">pattern</span> <span class="s">"^[a-zA-Z0-9_/.-]+$"</span>  <span class="c"># Valid file path</span>
+</span><span id="__span-8-14"><a href="#__codelineno-8-14" id="__codelineno-8-14" name="__codelineno-8-14"></a>    <span class="p">]</span> <span class="p">;</span>
+</span><span id="__span-8-15"><a href="#__codelineno-8-15" id="__codelineno-8-15" name="__codelineno-8-15"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-8-16"><a href="#__codelineno-8-16" id="__codelineno-8-16" name="__codelineno-8-16"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">path</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">cyclomaticComplexity</span> <span class="p">;</span>
+</span><span id="__span-8-17"><a href="#__codelineno-8-17" id="__codelineno-8-17" name="__codelineno-8-17"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">datatype</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">integer</span> <span class="p">;</span>
+</span><span id="__span-8-18"><a href="#__codelineno-8-18" id="__codelineno-8-18" name="__codelineno-8-18"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">minInclusive</span> <span class="mi">1</span> <span class="p">;</span>
+</span><span id="__span-8-19"><a href="#__codelineno-8-19" id="__codelineno-8-19" name="__codelineno-8-19"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">maxInclusive</span> <span class="mi">1000</span>  <span class="c"># Sanity bound</span>
+</span><span id="__span-8-20"><a href="#__codelineno-8-20" id="__codelineno-8-20" name="__codelineno-8-20"></a>    <span class="p">]</span> <span class="p">;</span>
+</span><span id="__span-8-21"><a href="#__codelineno-8-21" id="__codelineno-8-21" name="__codelineno-8-21"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-8-22"><a href="#__codelineno-8-22" id="__codelineno-8-22" name="__codelineno-8-22"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">path</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">maintainabilityIndex</span> <span class="p">;</span>
+</span><span id="__span-8-23"><a href="#__codelineno-8-23" id="__codelineno-8-23" name="__codelineno-8-23"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">datatype</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">float</span> <span class="p">;</span>
+</span><span id="__span-8-24"><a href="#__codelineno-8-24" id="__codelineno-8-24" name="__codelineno-8-24"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">minInclusive</span> <span class="mf">0.0</span> <span class="p">;</span>
+</span><span id="__span-8-25"><a href="#__codelineno-8-25" id="__codelineno-8-25" name="__codelineno-8-25"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">maxInclusive</span> <span class="mf">100.0</span>
+</span><span id="__span-8-26"><a href="#__codelineno-8-26" id="__codelineno-8-26" name="__codelineno-8-26"></a>    <span class="p">]</span> <span class="p">.</span>
+</span><span id="__span-8-27"><a href="#__codelineno-8-27" id="__codelineno-8-27" name="__codelineno-8-27"></a>
+</span><span id="__span-8-28"><a href="#__codelineno-8-28" id="__codelineno-8-28" name="__codelineno-8-28"></a><span class="c"># AnalysisResult shape</span>
+</span><span id="__span-8-29"><a href="#__codelineno-8-29" id="__codelineno-8-29" name="__codelineno-8-29"></a><span class="nn">repoq</span><span class="p">:</span><span class="nt">AnalysisResultShape</span> <span class="kt">a</span> <span class="nn">sh</span><span class="p">:</span><span class="nt">NodeShape</span> <span class="p">;</span>
+</span><span id="__span-8-30"><a href="#__codelineno-8-30" id="__codelineno-8-30" name="__codelineno-8-30"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">targetClass</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">AnalysisResult</span> <span class="p">;</span>
+</span><span id="__span-8-31"><a href="#__codelineno-8-31" id="__codelineno-8-31" name="__codelineno-8-31"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-8-32"><a href="#__codelineno-8-32" id="__codelineno-8-32" name="__codelineno-8-32"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">path</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">wasGeneratedBy</span> <span class="p">;</span>
+</span><span id="__span-8-33"><a href="#__codelineno-8-33" id="__codelineno-8-33" name="__codelineno-8-33"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">class</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Activity</span> <span class="p">;</span>
+</span><span id="__span-8-34"><a href="#__codelineno-8-34" id="__codelineno-8-34" name="__codelineno-8-34"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">minCount</span> <span class="mi">1</span> <span class="p">;</span>
+</span><span id="__span-8-35"><a href="#__codelineno-8-35" id="__codelineno-8-35" name="__codelineno-8-35"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">maxCount</span> <span class="mi">1</span>
+</span><span id="__span-8-36"><a href="#__codelineno-8-36" id="__codelineno-8-36" name="__codelineno-8-36"></a>    <span class="p">]</span> <span class="p">;</span>
+</span><span id="__span-8-37"><a href="#__codelineno-8-37" id="__codelineno-8-37" name="__codelineno-8-37"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-8-38"><a href="#__codelineno-8-38" id="__codelineno-8-38" name="__codelineno-8-38"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">path</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">wasAttributedTo</span> <span class="p">;</span>
+</span><span id="__span-8-39"><a href="#__codelineno-8-39" id="__codelineno-8-39" name="__codelineno-8-39"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">class</span> <span class="nn">prov</span><span class="p">:</span><span class="nt">Agent</span> <span class="p">;</span>
+</span><span id="__span-8-40"><a href="#__codelineno-8-40" id="__codelineno-8-40" name="__codelineno-8-40"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">minCount</span> <span class="mi">1</span>
+</span><span id="__span-8-41"><a href="#__codelineno-8-41" id="__codelineno-8-41" name="__codelineno-8-41"></a>    <span class="p">]</span> <span class="p">;</span>
+</span><span id="__span-8-42"><a href="#__codelineno-8-42" id="__codelineno-8-42" name="__codelineno-8-42"></a>    <span class="nn">sh</span><span class="p">:</span><span class="nt">property</span> <span class="p">[</span>
+</span><span id="__span-8-43"><a href="#__codelineno-8-43" id="__codelineno-8-43" name="__codelineno-8-43"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">path</span> <span class="nn">repoq</span><span class="p">:</span><span class="nt">analysisTimestamp</span> <span class="p">;</span>
+</span><span id="__span-8-44"><a href="#__codelineno-8-44" id="__codelineno-8-44" name="__codelineno-8-44"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">datatype</span> <span class="nn">xsd</span><span class="p">:</span><span class="nt">dateTime</span> <span class="p">;</span>
+</span><span id="__span-8-45"><a href="#__codelineno-8-45" id="__codelineno-8-45" name="__codelineno-8-45"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">minCount</span> <span class="mi">1</span> <span class="p">;</span>
+</span><span id="__span-8-46"><a href="#__codelineno-8-46" id="__codelineno-8-46" name="__codelineno-8-46"></a>        <span class="nn">sh</span><span class="p">:</span><span class="nt">maxCount</span> <span class="mi">1</span>
+</span><span id="__span-8-47"><a href="#__codelineno-8-47" id="__codelineno-8-47" name="__codelineno-8-47"></a>    <span class="p">]</span> <span class="p">.</span>
+</span></code></pre></div>
+<h3 id="validation-reports">Validation Reports<a class="headerlink" href="#validation-reports" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyshacl</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate</span>
+</span><span id="__span-9-2"><a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a>
+</span><span id="__span-9-3"><a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="c1"># Validate graph</span>
+</span><span id="__span-9-4"><a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="n">conforms</span><span class="p">,</span> <span class="n">results_graph</span><span class="p">,</span> <span class="n">results_text</span> <span class="o">=</span> <span class="n">validate</span><span class="p">(</span>
+</span><span id="__span-9-5"><a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a>    <span class="n">data_graph</span><span class="p">,</span>
+</span><span id="__span-9-6"><a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a>    <span class="n">shacl_graph</span><span class="o">=</span><span class="n">shacl_graph</span><span class="p">,</span>
+</span><span id="__span-9-7"><a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a>    <span class="n">inference</span><span class="o">=</span><span class="s2">"rdfs"</span><span class="p">,</span>
+</span><span id="__span-9-8"><a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a>    <span class="n">abort_on_first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+</span><span id="__span-9-9"><a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="p">)</span>
+</span><span id="__span-9-10"><a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a>
+</span><span id="__span-9-11"><a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">conforms</span><span class="p">:</span>
+</span><span id="__span-9-12"><a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">results_text</span><span class="p">)</span>
+</span><span id="__span-9-13"><a href="#__codelineno-9-13" id="__codelineno-9-13" name="__codelineno-9-13"></a>    <span class="c1"># Output:</span>
+</span><span id="__span-9-14"><a href="#__codelineno-9-14" id="__codelineno-9-14" name="__codelineno-9-14"></a>    <span class="c1"># Validation Report</span>
+</span><span id="__span-9-15"><a href="#__codelineno-9-15" id="__codelineno-9-15" name="__codelineno-9-15"></a>    <span class="c1"># Conforms: False</span>
+</span><span id="__span-9-16"><a href="#__codelineno-9-16" id="__codelineno-9-16" name="__codelineno-9-16"></a>    <span class="c1"># Results (1):</span>
+</span><span id="__span-9-17"><a href="#__codelineno-9-17" id="__codelineno-9-17" name="__codelineno-9-17"></a>    <span class="c1"># Constraint Violation in FileNodeShape:</span>
+</span><span id="__span-9-18"><a href="#__codelineno-9-18" id="__codelineno-9-18" name="__codelineno-9-18"></a>    <span class="c1">#   Severity: sh:Violation</span>
+</span><span id="__span-9-19"><a href="#__codelineno-9-19" id="__codelineno-9-19" name="__codelineno-9-19"></a>    <span class="c1">#   Focus Node: &lt;file/src/main.py&gt;</span>
+</span><span id="__span-9-20"><a href="#__codelineno-9-20" id="__codelineno-9-20" name="__codelineno-9-20"></a>    <span class="c1">#   Result Path: repoq:cyclomaticComplexity</span>
+</span><span id="__span-9-21"><a href="#__codelineno-9-21" id="__codelineno-9-21" name="__codelineno-9-21"></a>    <span class="c1">#   Message: Value 1500 exceeds maxInclusive of 1000</span>
+</span></code></pre></div>
+<h2 id="query-interface">Query Interface<a class="headerlink" href="#query-interface" title="Permanent link">¶</a></h2>
+<h3 id="sparql-queries">SPARQL Queries<a class="headerlink" href="#sparql-queries" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rdflib.plugins.sparql</span><span class="w"> </span><span class="kn">import</span> <span class="n">prepareQuery</span>
+</span><span id="__span-10-2"><a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a>
+</span><span id="__span-10-3"><a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="c1"># Find high-complexity files</span>
+</span><span id="__span-10-4"><a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="n">query</span> <span class="o">=</span> <span class="n">prepareQuery</span><span class="p">(</span><span class="s2">"""</span>
+</span><span id="__span-10-5"><a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="s2">    PREFIX repoq: &lt;https://field33.com/ontologies/repoq#&gt;</span>
+</span><span id="__span-10-6"><a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="s2">    SELECT ?file ?complexity</span>
+</span><span id="__span-10-8"><a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="s2">    WHERE {</span>
+</span><span id="__span-10-9"><a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="s2">        ?file a repoq:FileNode ;</span>
+</span><span id="__span-10-10"><a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="s2">              repoq:path ?path ;</span>
+</span><span id="__span-10-11"><a href="#__codelineno-10-11" id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="s2">              repoq:cyclomaticComplexity ?complexity .</span>
+</span><span id="__span-10-12"><a href="#__codelineno-10-12" id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="s2">        FILTER (?complexity &gt; 15)</span>
+</span><span id="__span-10-13"><a href="#__codelineno-10-13" id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="s2">    }</span>
+</span><span id="__span-10-14"><a href="#__codelineno-10-14" id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="s2">    ORDER BY DESC(?complexity)</span>
+</span><span id="__span-10-15"><a href="#__codelineno-10-15" id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="s2">"""</span><span class="p">)</span>
+</span><span id="__span-10-16"><a href="#__codelineno-10-16" id="__codelineno-10-16" name="__codelineno-10-16"></a>
+</span><span id="__span-10-17"><a href="#__codelineno-10-17" id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="n">results</span> <span class="o">=</span> <span class="n">graph</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+</span><span id="__span-10-18"><a href="#__codelineno-10-18" id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+</span><span id="__span-10-19"><a href="#__codelineno-10-19" id="__codelineno-10-19" name="__codelineno-10-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">file</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">row</span><span class="o">.</span><span class="n">complexity</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="graphql-like-traversal">GraphQL-like Traversal<a class="headerlink" href="#graphql-like-traversal" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># Find hotspots (high complexity + high change frequency)</span>
+</span><span id="__span-11-2"><a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="n">query</span> <span class="o">=</span> <span class="n">prepareQuery</span><span class="p">(</span><span class="s2">"""</span>
+</span><span id="__span-11-3"><a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a><span class="s2">    PREFIX repoq: &lt;https://field33.com/ontologies/repoq#&gt;</span>
+</span><span id="__span-11-4"><a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a>
+</span><span id="__span-11-5"><a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="s2">    SELECT ?file ?complexity ?changes</span>
+</span><span id="__span-11-6"><a href="#__codelineno-11-6" id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="s2">    WHERE {</span>
+</span><span id="__span-11-7"><a href="#__codelineno-11-7" id="__codelineno-11-7" name="__codelineno-11-7"></a><span class="s2">        ?file a repoq:FileNode ;</span>
+</span><span id="__span-11-8"><a href="#__codelineno-11-8" id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="s2">              repoq:cyclomaticComplexity ?complexity .</span>
+</span><span id="__span-11-9"><a href="#__codelineno-11-9" id="__codelineno-11-9" name="__codelineno-11-9"></a>
+</span><span id="__span-11-10"><a href="#__codelineno-11-10" id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="s2">        OPTIONAL {</span>
+</span><span id="__span-11-11"><a href="#__codelineno-11-11" id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="s2">            ?file repoq:changeFrequency ?changes .</span>
+</span><span id="__span-11-12"><a href="#__codelineno-11-12" id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="s2">        }</span>
+</span><span id="__span-11-13"><a href="#__codelineno-11-13" id="__codelineno-11-13" name="__codelineno-11-13"></a>
+</span><span id="__span-11-14"><a href="#__codelineno-11-14" id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="s2">        FILTER (?complexity &gt; 10 &amp;&amp; ?changes &gt; 5)</span>
+</span><span id="__span-11-15"><a href="#__codelineno-11-15" id="__codelineno-11-15" name="__codelineno-11-15"></a><span class="s2">    }</span>
+</span><span id="__span-11-16"><a href="#__codelineno-11-16" id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="s2">    ORDER BY DESC(?complexity * ?changes)</span>
+</span><span id="__span-11-17"><a href="#__codelineno-11-17" id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="s2">"""</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="performance">Performance<a class="headerlink" href="#performance" title="Permanent link">¶</a></h2>
+<h3 id="serialization">Serialization<a class="headerlink" href="#serialization" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Format</th>
+<th>Time (1000 triples)</th>
+<th>Size</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Turtle</strong></td>
+<td>50ms</td>
+<td>100KB</td>
+</tr>
+<tr>
+<td><strong>JSON-LD</strong></td>
+<td>80ms</td>
+<td>150KB</td>
+</tr>
+<tr>
+<td><strong>N-Triples</strong></td>
+<td>30ms</td>
+<td>120KB</td>
+</tr>
+<tr>
+<td><strong>RDF/XML</strong></td>
+<td>120ms</td>
+<td>180KB</td>
+</tr>
+</tbody>
+</table>
+<h3 id="memory">Memory<a class="headerlink" href="#memory" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>In-memory graph</strong>: ~1MB per 10k triples</li>
+<li><strong>Streaming</strong>: O(1) memory for large exports</li>
+<li><strong>Indexed</strong>: BerkeleyDB backend for &gt; 1M triples</li>
+</ul>
+<h2 id="integration-examples">Integration Examples<a class="headerlink" href="#integration-examples" title="Permanent link">¶</a></h2>
+<h3 id="export-to-triplestore">Export to Triplestore<a class="headerlink" href="#export-to-triplestore" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rdflib.plugins.stores</span><span class="w"> </span><span class="kn">import</span> <span class="n">sparqlstore</span>
+</span><span id="__span-12-2"><a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>
+</span><span id="__span-12-3"><a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a><span class="c1"># Export to Fuseki</span>
+</span><span id="__span-12-4"><a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a><span class="n">store</span> <span class="o">=</span> <span class="n">sparqlstore</span><span class="o">.</span><span class="n">SPARQLUpdateStore</span><span class="p">()</span>
+</span><span id="__span-12-5"><a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a><span class="n">store</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s2">"http://localhost:3030/repoq/update"</span><span class="p">)</span>
+</span><span id="__span-12-6"><a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a>
+</span><span id="__span-12-7"><a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a><span class="c1"># Add triples</span>
+</span><span id="__span-12-8"><a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a><span class="k">for</span> <span class="n">triple</span> <span class="ow">in</span> <span class="n">graph</span><span class="p">:</span>
+</span><span id="__span-12-9"><a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a>    <span class="n">store</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">triple</span><span class="p">)</span>
+</span><span id="__span-12-10"><a href="#__codelineno-12-10" id="__codelineno-12-10" name="__codelineno-12-10"></a>
+</span><span id="__span-12-11"><a href="#__codelineno-12-11" id="__codelineno-12-11" name="__codelineno-12-11"></a><span class="n">store</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="federated-queries">Federated Queries<a class="headerlink" href="#federated-queries" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1"># Query across multiple repositories</span>
+</span><span id="__span-13-2"><a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a><span class="n">federated_query</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span id="__span-13-3"><a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a><span class="s2">    PREFIX repoq: &lt;https://field33.com/ontologies/repoq#&gt;</span>
+</span><span id="__span-13-4"><a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a>
+</span><span id="__span-13-5"><a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="s2">    SELECT ?repo ?avgComplexity</span>
+</span><span id="__span-13-6"><a href="#__codelineno-13-6" id="__codelineno-13-6" name="__codelineno-13-6"></a><span class="s2">    WHERE {</span>
+</span><span id="__span-13-7"><a href="#__codelineno-13-7" id="__codelineno-13-7" name="__codelineno-13-7"></a><span class="s2">        SERVICE &lt;http://sparql-endpoint-1/sparql&gt; {</span>
+</span><span id="__span-13-8"><a href="#__codelineno-13-8" id="__codelineno-13-8" name="__codelineno-13-8"></a><span class="s2">            ?repo a repoq:Repository ;</span>
+</span><span id="__span-13-9"><a href="#__codelineno-13-9" id="__codelineno-13-9" name="__codelineno-13-9"></a><span class="s2">                  repoq:averageComplexity ?avgComplexity .</span>
+</span><span id="__span-13-10"><a href="#__codelineno-13-10" id="__codelineno-13-10" name="__codelineno-13-10"></a><span class="s2">        }</span>
+</span><span id="__span-13-11"><a href="#__codelineno-13-11" id="__codelineno-13-11" name="__codelineno-13-11"></a>
+</span><span id="__span-13-12"><a href="#__codelineno-13-12" id="__codelineno-13-12" name="__codelineno-13-12"></a><span class="s2">        FILTER (?avgComplexity &gt; 20)</span>
+</span><span id="__span-13-13"><a href="#__codelineno-13-13" id="__codelineno-13-13" name="__codelineno-13-13"></a><span class="s2">    }</span>
+</span><span id="__span-13-14"><a href="#__codelineno-13-14" id="__codelineno-13-14" name="__codelineno-13-14"></a><span class="s2">"""</span>
+</span></code></pre></div>
+<h2 id="standards-compliance">Standards Compliance<a class="headerlink" href="#standards-compliance" title="Permanent link">¶</a></h2>
+<h3 id="specifications">Specifications<a class="headerlink" href="#specifications" title="Permanent link">¶</a></h3>
+<ul>
+<li>✅ <strong>RDF 1.1</strong>: <a href="https://www.w3.org/TR/rdf11-concepts/">W3C Recommendation</a></li>
+<li>✅ <strong>JSON-LD 1.1</strong>: <a href="https://www.w3.org/TR/json-ld11/">W3C Recommendation</a></li>
+<li>✅ <strong>PROV-O</strong>: <a href="https://www.w3.org/TR/prov-o/">W3C Recommendation</a></li>
+<li>✅ <strong>OSLC-CM 3.0</strong>: <a href="https://open-services.net/spec/cm/latest">OASIS Standard</a></li>
+<li>✅ <strong>SPDX 2.3</strong>: <a href="https://spdx.github.io/spdx-spec/">ISO/IEC 5962:2021</a></li>
+<li>✅ <strong>SHACL</strong>: <a href="https://www.w3.org/TR/shacl/">W3C Recommendation</a></li>
+</ul>
+<h3 id="validation">Validation<a class="headerlink" href="#validation" title="Permanent link">¶</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-14-1"><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="c1"># Validate JSON-LD context</span>
+</span><span id="__span-14-2"><a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a>repoq<span class="w"> </span>validate<span class="w"> </span>jsonld<span class="w"> </span>repoq/ontologies/field33.context.jsonld
+</span><span id="__span-14-3"><a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a>
+</span><span id="__span-14-4"><a href="#__codelineno-14-4" id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="c1"># Validate SHACL shapes</span>
+</span><span id="__span-14-5"><a href="#__codelineno-14-5" id="__codelineno-14-5" name="__codelineno-14-5"></a>repoq<span class="w"> </span>validate<span class="w"> </span>shacl<span class="w"> </span>repoq/shapes/shacl_project.ttl
+</span><span id="__span-14-6"><a href="#__codelineno-14-6" id="__codelineno-14-6" name="__codelineno-14-6"></a>
+</span><span id="__span-14-7"><a href="#__codelineno-14-7" id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="c1"># Validate RDF graph</span>
+</span><span id="__span-14-8"><a href="#__codelineno-14-8" id="__codelineno-14-8" name="__codelineno-14-8"></a>repoq<span class="w"> </span>validate<span class="w"> </span>rdf<span class="w"> </span>output/analysis.ttl
+</span></code></pre></div>
+<h2 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">¶</a></h2>
+<ul>
+<li><strong><a href="../baml-agent/">BAML AI Agent</a></strong>: AI-assisted RDF reasoning</li>
+<li><strong><a href="../analyzer-pipeline/">Analyzer Pipeline</a></strong>: Data flow to RDF</li>
+<li><strong><a href="../stratification-guard/">Stratification Guard</a></strong>: Safe meta-level reasoning</li>
+<li><strong><a href="../../api/reference/">API Reference</a></strong>: Programmatic RDF export</li>
+</ul>
+<div class="admonition success">
+<p class="admonition-title">Linked Data Ready</p>
+<p>All RepoQ outputs are valid RDF graphs with provenance, ready for SPARQL queries, triplestore storage, and federated reasoning.</p>
+</div>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2025 RepoQ Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/Repo-Q/repoq" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+<a class="md-social__link" href="https://pypi.org/project/repoq/" rel="noopener" target="_blank" title="pypi.org">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+</body>
+</html>

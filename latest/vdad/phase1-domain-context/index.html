@@ -1,0 +1,2029 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Revolutionary repository quality analysis with ontological intelligence" name="description"/>
+<meta content="RepoQ Contributors" name="author"/>
+<link href="https://repo-q.github.io/repoq/latest/vdad/phase1-domain-context/" rel="canonical"/>
+<link href="../../development/tmp-artifacts-inventory/" rel="prev"/>
+<link href="../phase1-stakeholders/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.22" name="generator"/>
+<title>Phase 1 - Domain Context - RepoQ - Semantic Meta-Quality Loop</title>
+<link href="../../assets/stylesheets/main.84d31ad4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="amber" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#vdad-phase-1-domain-analysis-context-modeling">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-header__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            RepoQ - Semantic Meta-Quality Loop
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Phase 1 - Domain Context
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started/installation/">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../user-guide/usage/">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../architecture/overview/">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../tutorials/01-first-analysis/">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../ontology/meta-loop/">
+          
+  
+  
+    
+  
+  Advanced Topics
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../development/index.md">
+          
+  
+  
+    
+  
+  Development
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="./">
+          
+  
+  
+    
+  
+  VDAD Process
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../api/reference/">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../about/limitations/">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    RepoQ - Semantic Meta-Quality Loop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/installation/">
+<span class="md-ellipsis">
+    Installation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/quickstart/">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/usage/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/commands/">
+<span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/workflows/">
+<span class="md-ellipsis">
+    Workflows
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/overview/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/trs-framework/">
+<span class="md-ellipsis">
+    TRS Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/rdf-export/">
+<span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/baml-agent/">
+<span class="md-ellipsis">
+    BAML AI Agent
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/analyzer-pipeline/">
+<span class="md-ellipsis">
+    Analyzer Pipeline
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/stratification-guard/">
+<span class="md-ellipsis">
+    Stratification Guard
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/01-first-analysis/">
+<span class="md-ellipsis">
+    First Analysis
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/02-custom-analyzer/">
+<span class="md-ellipsis">
+    Custom Analyzer
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/03-ci-cd-integration/">
+<span class="md-ellipsis">
+    CI/CD Integration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/04-advanced-filtering/">
+<span class="md-ellipsis">
+    Advanced Filtering
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/05-rdf-queries/">
+<span class="md-ellipsis">
+    RDF Queries
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/06-ai-agent-config/">
+<span class="md-ellipsis">
+    AI Agent Configuration
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/meta-loop/">
+<span class="md-ellipsis">
+    Meta-Quality Loop
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/intelligence/">
+<span class="md-ellipsis">
+    Ontological Intelligence
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/index.md">
+<span class="md-ellipsis">
+    Development Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/uv-setup/">
+<span class="md-ellipsis">
+    uv Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/CONTRIBUTING.md">
+<span class="md-ellipsis">
+    Contributing Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/testing.md">
+<span class="md-ellipsis">
+    Testing Strategy
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/mathematical-proof-quality-monotonicity/">
+<span class="md-ellipsis">
+    Mathematical Proof (Quality Monotonicity)
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-foundations-complete/">
+<span class="md-ellipsis">
+    Formal Foundations
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-diagrams/">
+<span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/quality-loop-roadmap/">
+<span class="md-ellipsis">
+    Quality Loop Roadmap
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/tmp-artifacts-inventory/">
+<span class="md-ellipsis">
+    tmp/ Artifacts Inventory
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+<span class="md-ellipsis">
+    VDAD Process
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            VDAD Process
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#executive-summary">
+<span class="md-ellipsis">
+      Executive Summary
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-domain-overview">
+<span class="md-ellipsis">
+      1. Domain Overview
+    </span>
+</a>
+<nav aria-label="1. Domain Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#11-problem-space">
+<span class="md-ellipsis">
+      1.1 Problem Space
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#12-solution-space">
+<span class="md-ellipsis">
+      1.2 Solution Space
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-bounded-contexts">
+<span class="md-ellipsis">
+      2. Bounded Contexts
+    </span>
+</a>
+<nav aria-label="2. Bounded Contexts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#21-analysis-context">
+<span class="md-ellipsis">
+      2.1 Analysis Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#22-quality-context">
+<span class="md-ellipsis">
+      2.2 Quality Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#23-ontology-context">
+<span class="md-ellipsis">
+      2.3 Ontology Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#24-integration-context">
+<span class="md-ellipsis">
+      2.4 Integration Context
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-context-map">
+<span class="md-ellipsis">
+      3. Context Map
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-ubiquitous-language">
+<span class="md-ellipsis">
+      4. Ubiquitous Language
+    </span>
+</a>
+<nav aria-label="4. Ubiquitous Language" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-terms">
+<span class="md-ellipsis">
+      Core Terms
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#formal-symbols-from-formal-foundations-completemd">
+<span class="md-ellipsis">
+      Formal Symbols (from formal-foundations-complete.md)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-domain-entities-relationships">
+<span class="md-ellipsis">
+      5. Domain Entities &amp; Relationships
+    </span>
+</a>
+<nav aria-label="5. Domain Entities &amp; Relationships" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#51-entity-diagram">
+<span class="md-ellipsis">
+      5.1 Entity Diagram
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#52-key-relationships">
+<span class="md-ellipsis">
+      5.2 Key Relationships
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-domain-workflows">
+<span class="md-ellipsis">
+      6. Domain Workflows
+    </span>
+</a>
+<nav aria-label="6. Domain Workflows" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#61-quality-gate-workflow">
+<span class="md-ellipsis">
+      6.1 Quality Gate Workflow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#62-self-analysis-workflow-stratified">
+<span class="md-ellipsis">
+      6.2 Self-Analysis Workflow (Stratified)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-technical-debt-future-extensions">
+<span class="md-ellipsis">
+      7. Technical Debt &amp; Future Extensions
+    </span>
+</a>
+<nav aria-label="7. Technical Debt &amp; Future Extensions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#71-current-limitations">
+<span class="md-ellipsis">
+      7.1 Current Limitations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#72-roadmap-alignment">
+<span class="md-ellipsis">
+      7.2 Roadmap Alignment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8-domain-invariants">
+<span class="md-ellipsis">
+      8. Domain Invariants
+    </span>
+</a>
+<nav aria-label="8. Domain Invariants" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#81-formal-guarantees-from-theorems-a-h-151-153">
+<span class="md-ellipsis">
+      8.1 Formal Guarantees (from Theorems A-H, 15.1-15.3)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#82-business-rules">
+<span class="md-ellipsis">
+      8.2 Business Rules
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#9-integration-with-formal-documentation">
+<span class="md-ellipsis">
+      9. Integration with Formal Documentation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#10-success-criteria-vdad-phase-1">
+<span class="md-ellipsis">
+      10. Success Criteria (VDAD Phase 1)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      References
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase1-stakeholders/">
+<span class="md-ellipsis">
+    Phase 1 - Stakeholders
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase2-value-register/">
+<span class="md-ellipsis">
+    Phase 2 - Value Register
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase3-requirements/">
+<span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-architecture-overview/">
+<span class="md-ellipsis">
+    Phase 4 - Architecture Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-c4-diagrams/">
+<span class="md-ellipsis">
+    Phase 4 - C4 Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-adrs/">
+<span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-nfr-realization/">
+<span class="md-ellipsis">
+    Phase 4 - NFR Realization
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-baml-agent/">
+<span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    About
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            About
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../about/limitations/">
+<span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#executive-summary">
+<span class="md-ellipsis">
+      Executive Summary
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-domain-overview">
+<span class="md-ellipsis">
+      1. Domain Overview
+    </span>
+</a>
+<nav aria-label="1. Domain Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#11-problem-space">
+<span class="md-ellipsis">
+      1.1 Problem Space
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#12-solution-space">
+<span class="md-ellipsis">
+      1.2 Solution Space
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-bounded-contexts">
+<span class="md-ellipsis">
+      2. Bounded Contexts
+    </span>
+</a>
+<nav aria-label="2. Bounded Contexts" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#21-analysis-context">
+<span class="md-ellipsis">
+      2.1 Analysis Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#22-quality-context">
+<span class="md-ellipsis">
+      2.2 Quality Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#23-ontology-context">
+<span class="md-ellipsis">
+      2.3 Ontology Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#24-integration-context">
+<span class="md-ellipsis">
+      2.4 Integration Context
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-context-map">
+<span class="md-ellipsis">
+      3. Context Map
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-ubiquitous-language">
+<span class="md-ellipsis">
+      4. Ubiquitous Language
+    </span>
+</a>
+<nav aria-label="4. Ubiquitous Language" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#core-terms">
+<span class="md-ellipsis">
+      Core Terms
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#formal-symbols-from-formal-foundations-completemd">
+<span class="md-ellipsis">
+      Formal Symbols (from formal-foundations-complete.md)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-domain-entities-relationships">
+<span class="md-ellipsis">
+      5. Domain Entities &amp; Relationships
+    </span>
+</a>
+<nav aria-label="5. Domain Entities &amp; Relationships" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#51-entity-diagram">
+<span class="md-ellipsis">
+      5.1 Entity Diagram
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#52-key-relationships">
+<span class="md-ellipsis">
+      5.2 Key Relationships
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-domain-workflows">
+<span class="md-ellipsis">
+      6. Domain Workflows
+    </span>
+</a>
+<nav aria-label="6. Domain Workflows" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#61-quality-gate-workflow">
+<span class="md-ellipsis">
+      6.1 Quality Gate Workflow
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#62-self-analysis-workflow-stratified">
+<span class="md-ellipsis">
+      6.2 Self-Analysis Workflow (Stratified)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-technical-debt-future-extensions">
+<span class="md-ellipsis">
+      7. Technical Debt &amp; Future Extensions
+    </span>
+</a>
+<nav aria-label="7. Technical Debt &amp; Future Extensions" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#71-current-limitations">
+<span class="md-ellipsis">
+      7.1 Current Limitations
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#72-roadmap-alignment">
+<span class="md-ellipsis">
+      7.2 Roadmap Alignment
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8-domain-invariants">
+<span class="md-ellipsis">
+      8. Domain Invariants
+    </span>
+</a>
+<nav aria-label="8. Domain Invariants" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#81-formal-guarantees-from-theorems-a-h-151-153">
+<span class="md-ellipsis">
+      8.1 Formal Guarantees (from Theorems A-H, 15.1-15.3)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#82-business-rules">
+<span class="md-ellipsis">
+      8.2 Business Rules
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#9-integration-with-formal-documentation">
+<span class="md-ellipsis">
+      9. Integration with Formal Documentation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#10-success-criteria-vdad-phase-1">
+<span class="md-ellipsis">
+      10. Success Criteria (VDAD Phase 1)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      References
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/edit/main/docs/vdad/phase1-domain-context.md" rel="edit" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"></path></svg>
+</a>
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/raw/main/docs/vdad/phase1-domain-context.md" title="View source of this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg>
+</a>
+<h1 id="vdad-phase-1-domain-analysis-context-modeling">VDAD Phase 1: Domain Analysis &amp; Context Modeling<a class="headerlink" href="#vdad-phase-1-domain-analysis-context-modeling" title="Permanent link">¶</a></h1>
+<p><strong>Status</strong>: ✅ ACTIVE<br/>
+<strong>VDAD Step</strong>: Step 1 (Domain Analysis)<br/>
+<strong>Created</strong>: 2025-10-21<br/>
+<strong>Last Updated</strong>: 2025-10-21</p>
+<hr/>
+<h2 id="executive-summary">Executive Summary<a class="headerlink" href="#executive-summary" title="Permanent link">¶</a></h2>
+<p>This document captures RepoQ's domain model, bounded contexts, and ubiquitous language as part of VDAD Phase 1 (Domain Immersion). It provides the foundational understanding needed for value elicitation (Phase 2) and requirements engineering (Phase 3).</p>
+<p><strong>Key Insights</strong>:
+- <strong>Core Domain</strong>: Quality metric calculation with <strong>formal guarantees</strong> (6 theorems: correctness, monotonicity, safety, constructiveness, stability, canonicity)
+- <strong>Unique Differentiator</strong>: First system with <strong>formally proven safe self-understanding</strong> (stratified self-application, Theorem F)
+- <strong>Technical Foundation</strong>: 77 ready-to-integrate artifacts in <code>tmp/</code> (TRS engines, ontologies, ZAG PCQ/PCE, Any2Math normalization)
+- <strong>Complexity</strong>: 4 bounded contexts, 9 major components, 3 ontology layers (Code, C4, DDD)</p>
+<hr/>
+<h2 id="1-domain-overview">1. Domain Overview<a class="headerlink" href="#1-domain-overview" title="Permanent link">¶</a></h2>
+<h3 id="11-problem-space">1.1 Problem Space<a class="headerlink" href="#11-problem-space" title="Permanent link">¶</a></h3>
+<p><strong>Problem Statement</strong>: Software quality is notoriously difficult to measure objectively and improve systematically. Existing approaches suffer from:
+- <strong>Subjectivity</strong>: Code review opinions vary wildly
+- <strong>Gaming</strong>: Teams optimize metrics without improving real quality (Goodhart's Law)
+- <strong>Regression</strong>: Refactorings unintentionally degrade quality (no monotonicity guarantee)
+- <strong>Shallow Analysis</strong>: Syntax-only metrics miss architectural/semantic issues
+- <strong>Lack of Trust</strong>: No cryptographic proof of quality claims</p>
+<p><strong>Market Context</strong>:
+- Static analysis tools (SonarQube, CodeClimate): metrics without formal guarantees
+- CI/CD quality gates: ad-hoc thresholds, easily gamed
+- Code review: human bottleneck, inconsistent standards
+- Research gap: no production system combines TRS verification + proof-carrying certificates + safe self-analysis</p>
+<h3 id="12-solution-space">1.2 Solution Space<a class="headerlink" href="#12-solution-space" title="Permanent link">¶</a></h3>
+<p><strong>RepoQ's Approach</strong>:
+1. <strong>Formal Q-metric</strong>: Aggregate of complexity, hotspots, TODOs, test coverage with proven monotonicity (Theorem B)
+2. <strong>Hard Constraints</strong>: Tests ≥80%, TODO ≤100, hotspots ≤20 (not negotiable)
+3. <strong>Anti-Gaming</strong>: PCQ min-aggregator (ZAG framework) detects metric compensation (Theorem C)
+4. <strong>Proof-Carrying</strong>: Verifiable Credentials (W3C VC) with cryptographic signatures
+5. <strong>Deterministic Analysis</strong>: Any2Math Lean normalization eliminates syntactic noise (Theorem 15.3)
+6. <strong>Ontological Intelligence</strong>: Code/C4/DDD pattern detection via semantic inference
+7. <strong>Safe Self-Application</strong>: Stratified levels (0-2) prevent paradoxes (Theorem F)</p>
+<p><strong>Unique Value Proposition</strong>: "Monotonic quality improvement with cryptographic proof and formal safety guarantees."</p>
+<hr/>
+<h2 id="2-bounded-contexts">2. Bounded Contexts<a class="headerlink" href="#2-bounded-contexts" title="Permanent link">¶</a></h2>
+<p>RepoQ follows Domain-Driven Design (DDD) with 4 bounded contexts:</p>
+<h3 id="21-analysis-context">2.1 Analysis Context<a class="headerlink" href="#21-analysis-context" title="Permanent link">¶</a></h3>
+<p><strong>Responsibility</strong>: Extract metrics and facts from source code.</p>
+<p><strong>Core Entities</strong>:
+- <code>Repository</code> (aggregate root): Git repo with commits, branches
+- <code>Commit</code>: SHA, author, timestamp, diff
+- <code>File</code>: Path, content, language, LOC
+- <code>Metric</code>: Complexity, hotspots, TODOs, test coverage (value objects)</p>
+<p><strong>Key Operations</strong>:
+- <code>analyze_repository(repo_path) -&gt; AnalysisResult</code>
+- <code>calculate_complexity(file) -&gt; ComplexityMetric</code>
+- <code>detect_hotspots(history) -&gt; HotspotList</code>
+- <code>count_todos(file) -&gt; int</code>
+- <code>measure_coverage(test_dir) -&gt; CoverageMetric</code></p>
+<p><strong>Technology</strong>:
+- Python AST parsing (built-in <code>ast</code> module)
+- Radon (complexity), git log parsing (hotspots)
+- Regex scanning (TODOs)
+- Coverage.py integration (test coverage)</p>
+<p><strong>Bounded Context Integration</strong>:
+- <strong>Upstream</strong>: None (entry point)
+- <strong>Downstream</strong>: Publishes <code>AnalysisResult</code> to Quality Context</p>
+<hr/>
+<h3 id="22-quality-context">2.2 Quality Context<a class="headerlink" href="#22-quality-context" title="Permanent link">¶</a></h3>
+<p><strong>Responsibility</strong>: Aggregate metrics into Q-score, evaluate admission policies, issue gate decisions.</p>
+<p><strong>Core Entities</strong>:
+- <code>QualityState</code> (aggregate root): Repository state at specific commit with Q-score
+- <code>AdmissionPolicy</code>: Rules defining when ΔQ is acceptable (ε-threshold, PCQ τ-threshold, hard constraints)
+- <code>GateDecision</code>: Pass/Fail with reasoning and PCE witness (if available)
+- <code>Certificate</code> (value object): W3C Verifiable Credential with proof</p>
+<p><strong>Key Operations</strong>:
+- <code>calculate_q(metrics, weights) -&gt; float</code> — Q = 100 - Σw_i·x_i
+- <code>evaluate_policy(base_state, head_state, policy) -&gt; GateDecision</code>
+- <code>generate_certificate(decision, signature_key) -&gt; VC</code>
+- <code>compute_pcq(state, fairness_cover) -&gt; float</code> — min over modules/users
+- <code>find_pce_witness(state, k) -&gt; RepairWitness</code> — k-file subset for improvement</p>
+<p><strong>Formulas</strong> (from <code>formal-foundations-complete.md</code>):
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>Q(S) = Q_max - Σ_{i=1}^d w_i · x_i(S) - Φ(x(S))
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>Admission: A(S_base, S_head) ≡ (H) ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>  where:
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>    H = hard constraints (tests ≥80%, TODO ≤100, hotspots ≤20)
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>    ΔQ = Q(S_head) - Q(S_base)
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>    ε ∈ [0.2, 0.5] — noise tolerance
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>    τ ∈ [0.75, 0.9] — PCQ threshold
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a>PCQ(S) = min_{i ∈ U} u_i(S)  [ZAG framework, Theorem C]
+</span></code></pre></div></p>
+<p><strong>Technology</strong>:
+- Python calculation engine
+- YAML config parser (<code>.github/quality-policy.yml</code>)
+- VC generation library (custom or <code>vc-data-model</code> implementation)
+- ECDSA signing (cryptography.io)</p>
+<p><strong>Bounded Context Integration</strong>:
+- <strong>Upstream</strong>: Consumes <code>AnalysisResult</code> from Analysis Context
+- <strong>Downstream</strong>: Publishes <code>GateDecision</code> + <code>Certificate</code> to Integration Context</p>
+<hr/>
+<h3 id="23-ontology-context">2.3 Ontology Context<a class="headerlink" href="#23-ontology-context" title="Permanent link">¶</a></h3>
+<p><strong>Responsibility</strong>: Semantic understanding of code/architecture via RDF ontologies and SPARQL inference.</p>
+<p><strong>Core Entities</strong>:
+- <code>Ontology</code> (aggregate root): RDF graph (Code, C4, or DDD ontology)
+- <code>Entity</code>: Class, Function, Module (as RDF individuals)
+- <code>Relationship</code>: calls, imports, inherits, dependsOn (RDF properties)
+- <code>Pattern</code>: MVC, Layered, Plugin, Repository (detected architectural patterns)
+- <code>InferenceRule</code>: SPARQL CONSTRUCT query deriving new triples</p>
+<p><strong>Key Operations</strong>:
+- <code>load_ontology(ttl_path) -&gt; Ontology</code>
+- <code>ingest_code(analysis_result) -&gt; RDF_triples</code> — map AST → Code ontology
+- <code>detect_patterns(ontology) -&gt; List[Pattern]</code> — SPARQL queries for MVC, Layered, etc.
+- <code>run_inference(rules, ontology) -&gt; new_triples</code> — semantic enrichment
+- <code>query(sparql) -&gt; ResultSet</code> — SPARQL SELECT/CONSTRUCT</p>
+<p><strong>Three-Ontology Architecture</strong> (from Section 15 of <code>formal-foundations-complete.md</code>):
+1. <strong>O_Code</strong>: Low-level (functions, classes, calls, imports)
+2. <strong>O_C4</strong>: Mid-level (components, containers, dependencies) — Simon Brown's C4 model
+3. <strong>O_DDD</strong>: High-level (bounded contexts, aggregates, entities, value objects)</p>
+<p><strong>Cross-Ontology Mapping</strong>:
+<div class="language-sparql highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">CONSTRUCT</span> <span class="p">{</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>  <span class="nv">?component</span> <span class="nn">c4</span><span class="p">:</span><span class="nt">contains</span> <span class="nv">?function</span> <span class="p">.</span>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="p">}</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="k">WHERE</span> <span class="p">{</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a>  <span class="nv">?function</span> <span class="nn">code</span><span class="p">:</span><span class="nt">belongsTo</span> <span class="nv">?module</span> <span class="p">.</span>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>  <span class="nv">?module</span> <span class="nn">code</span><span class="p">:</span><span class="nt">path</span> <span class="nv">?path</span> <span class="p">.</span>
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a>  <span class="nv">?component</span> <span class="nn">c4</span><span class="p">:</span><span class="nt">name</span> <span class="nv">?name</span> <span class="p">.</span>
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>  <span class="k">FILTER</span><span class="p">(</span><span class="nf">STRSTARTS</span><span class="p">(</span><span class="nv">?path</span><span class="p">,</span> <span class="nv">?name</span><span class="p">))</span>
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Technology</strong>:
+- RDFLib (Python RDF library)
+- Oxigraph (embedded triple store, optional for large repos)
+- SHACL validation (pySHACL)
+- Custom SPARQL query engine</p>
+<p><strong>Bounded Context Integration</strong>:
+- <strong>Upstream</strong>: Consumes <code>AnalysisResult</code> from Analysis Context
+- <strong>Downstream</strong>: Publishes <code>Pattern</code> insights to Quality Context (influences Q-score via architectural debt metric)</p>
+<hr/>
+<h3 id="24-integration-context">2.4 Integration Context<a class="headerlink" href="#24-integration-context" title="Permanent link">¶</a></h3>
+<p><strong>Responsibility</strong>: Interface with external systems (Git, CI/CD, CLI, dashboards).</p>
+<p><strong>Core Entities</strong>:
+- <code>CLICommand</code>: <code>gate</code>, <code>verify</code>, <code>meta-self</code>, <code>any2math-normalize</code>, <code>export</code>
+- <code>CIWorkflow</code>: GitHub Actions, GitLab CI integration
+- <code>Dashboard</code>: Web UI for quality trends (future)
+- <code>NotificationChannel</code>: PR comments, Slack, email</p>
+<p><strong>Key Operations</strong>:
+- <code>execute_cli(args) -&gt; ExitCode</code>
+- <code>run_ci_workflow(pr_context) -&gt; CIResult</code>
+- <code>post_pr_comment(pr_id, gate_decision)</code>
+- <code>export_rdf(ontology, format) -&gt; bytes</code></p>
+<p><strong>Technology</strong>:
+- Click (Python CLI framework)
+- GitHub API / GitLab API
+- Jinja2 templates (PR comment formatting)
+- RDF serialization (Turtle, JSON-LD)</p>
+<p><strong>Bounded Context Integration</strong>:
+- <strong>Upstream</strong>: Consumes <code>GateDecision</code>, <code>Certificate</code>, <code>Pattern</code> from Quality/Ontology Contexts
+- <strong>Downstream</strong>: None (exit point to external world)</p>
+<hr/>
+<h2 id="3-context-map">3. Context Map<a class="headerlink" href="#3-context-map" title="Permanent link">¶</a></h2>
+<pre class="mermaid"><code>graph TB
+    subgraph "Analysis Context"
+        A[Repository]
+        B[File]
+        C[Metric]
+        A --&gt;|contains| B
+        B --&gt;|has| C
+    end
+
+    subgraph "Quality Context"
+        D[QualityState]
+        E[AdmissionPolicy]
+        F[GateDecision]
+        G[Certificate]
+        D --&gt;|evaluated by| E
+        E --&gt;|produces| F
+        F --&gt;|embedded in| G
+    end
+
+    subgraph "Ontology Context"
+        H[Code Ontology]
+        I[C4 Ontology]
+        J[DDD Ontology]
+        K[Pattern]
+        H --&gt;|maps to| I
+        I --&gt;|maps to| J
+        H --&gt;|detects| K
+        I --&gt;|detects| K
+    end
+
+    subgraph "Integration Context"
+        L[CLI]
+        M[CI Workflow]
+        N[PR Comment]
+    end
+
+    %% Cross-context relationships
+    A -.-&gt;|AnalysisResult| D
+    A -.-&gt;|AST triples| H
+    D -.-&gt;|GateDecision| L
+    D -.-&gt;|Certificate| M
+    K -.-&gt;|Pattern insights| D
+    F -.-&gt;|Formatted output| N
+
+    style A fill:#e1f5ff
+    style D fill:#fff4e1
+    style H fill:#f0e1ff
+    style L fill:#e1ffe1</code></pre>
+<p><strong>Relationship Types</strong>:
+- <strong>Customer-Supplier</strong>: Analysis → Quality (Quality depends on Analysis output)
+- <strong>Conformist</strong>: Ontology → Analysis (Ontology conforms to Analysis data format)
+- <strong>Shared Kernel</strong>: Quality ↔ Ontology (both share <code>Pattern</code> and <code>QualityState</code> concepts)
+- <strong>Published Language</strong>: Integration → External (uses standard formats: VC, JSON-LD, Turtle)</p>
+<hr/>
+<h2 id="4-ubiquitous-language">4. Ubiquitous Language<a class="headerlink" href="#4-ubiquitous-language" title="Permanent link">¶</a></h2>
+<h3 id="core-terms">Core Terms<a class="headerlink" href="#core-terms" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Term</th>
+<th>Definition</th>
+<th>Context</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Q-metric</strong></td>
+<td>Aggregate quality score: Q = 100 - Σw_i·x_i</td>
+<td>Quality</td>
+<td>Q = 72.5 for commit abc123</td>
+</tr>
+<tr>
+<td><strong>Admission Policy</strong></td>
+<td>Rules defining acceptable ΔQ (ε, τ, hard constraints)</td>
+<td>Quality</td>
+<td>ε=0.3, τ=0.8, tests≥80%</td>
+</tr>
+<tr>
+<td><strong>Gate Decision</strong></td>
+<td>Pass/Fail verdict on PR/commit</td>
+<td>Quality</td>
+<td>FAIL: ΔQ=-2.1 &lt; ε=0.3</td>
+</tr>
+<tr>
+<td><strong>VC (Verifiable Credential)</strong></td>
+<td>W3C standard for cryptographically signed quality certificate</td>
+<td>Quality</td>
+<td>VC with ECDSA signature over Q=85 claim</td>
+</tr>
+<tr>
+<td><strong>PCQ (Piecewise Collective Quality)</strong></td>
+<td>Min aggregator detecting gaming: PCQ = min u_i</td>
+<td>Quality</td>
+<td>PCQ=0.72 (module "auth" is bottleneck)</td>
+</tr>
+<tr>
+<td><strong>PCE (Piecewise Constructive Evidence)</strong></td>
+<td>k-file subset sufficient for improvement</td>
+<td>Quality</td>
+<td>PCE witness: {auth.py, login.py} (k=2)</td>
+</tr>
+<tr>
+<td><strong>ε (epsilon)</strong></td>
+<td>Noise tolerance for ΔQ</td>
+<td>Quality</td>
+<td>ε=0.3 means accept ΔQ ∈ [-0.3, ∞)</td>
+</tr>
+<tr>
+<td><strong>τ (tau)</strong></td>
+<td>PCQ threshold (min acceptable piecewise quality)</td>
+<td>Quality</td>
+<td>τ=0.8 means all modules ≥80%</td>
+</tr>
+<tr>
+<td><strong>Hard Constraint</strong></td>
+<td>Non-negotiable rule (tests, TODOs, hotspots)</td>
+<td>Quality</td>
+<td>tests≥80% is hard constraint</td>
+</tr>
+<tr>
+<td><strong>TRS (Term Rewriting System)</strong></td>
+<td>Formal system for syntactic normalization</td>
+<td>Ontology</td>
+<td>Any2Math uses TRS for deterministic AST canonicalization</td>
+</tr>
+<tr>
+<td><strong>Stratification</strong></td>
+<td>Levels 0-2 for safe self-analysis</td>
+<td>Quality</td>
+<td>Level 0: external code, Level 1: RepoQ, Level 2: meta-analysis</td>
+</tr>
+<tr>
+<td><strong>Code Ontology</strong></td>
+<td>Low-level RDF graph (functions, classes)</td>
+<td>Ontology</td>
+<td><code>:func_login rdf:type code:Function</code></td>
+</tr>
+<tr>
+<td><strong>C4 Ontology</strong></td>
+<td>Mid-level architecture (components, containers)</td>
+<td>Ontology</td>
+<td><code>:auth_service rdf:type c4:Component</code></td>
+</tr>
+<tr>
+<td><strong>DDD Ontology</strong></td>
+<td>High-level design (bounded contexts, aggregates)</td>
+<td>Ontology</td>
+<td><code>:QualityContext rdf:type ddd:BoundedContext</code></td>
+</tr>
+<tr>
+<td><strong>Pattern</strong></td>
+<td>Detected architectural style (MVC, Layered, Plugin)</td>
+<td>Ontology</td>
+<td>Detected: MVC in <code>app/</code> directory</td>
+</tr>
+<tr>
+<td><strong>SPARQL</strong></td>
+<td>RDF query language (SELECT/CONSTRUCT)</td>
+<td>Ontology</td>
+<td><code>SELECT ?func WHERE { ?func rdf:type code:Function }</code></td>
+</tr>
+<tr>
+<td><strong>SHACL</strong></td>
+<td>RDF constraint language for validation</td>
+<td>Ontology</td>
+<td>Shape requires <code>code:Function</code> to have <code>code:name</code></td>
+</tr>
+<tr>
+<td><strong>Hotspot</strong></td>
+<td>File with high churn (frequent changes, high risk)</td>
+<td>Analysis</td>
+<td><code>auth.py</code>: 87 commits in 6 months</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>Cyclomatic complexity (McCabe metric)</td>
+<td>Analysis</td>
+<td><code>process_payment()</code>: complexity=15</td>
+</tr>
+<tr>
+<td><strong>TODO</strong></td>
+<td>Code comment indicating incomplete work</td>
+<td>Analysis</td>
+<td><code># TODO: Add input validation</code> (count=42)</td>
+</tr>
+<tr>
+<td><strong>Coverage</strong></td>
+<td>Test coverage percentage</td>
+<td>Analysis</td>
+<td>78% line coverage (below 80% threshold)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="formal-symbols-from-formal-foundations-completemd">Formal Symbols (from <code>formal-foundations-complete.md</code>)<a class="headerlink" href="#formal-symbols-from-formal-foundations-completemd" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Symbol</th>
+<th>Meaning</th>
+<th>Formula/Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S</strong></td>
+<td>System state (repository at commit)</td>
+<td>S = (codebase, metrics, history)</td>
+</tr>
+<tr>
+<td><strong>x(S)</strong></td>
+<td>Risk vector x ∈ [0,1]^d</td>
+<td>x = (complexity, hotspots, todos, ...)</td>
+</tr>
+<tr>
+<td><strong>Q(S)</strong></td>
+<td>Quality score</td>
+<td>Q = Q_max - Σw_i·x_i - Φ(x)</td>
+</tr>
+<tr>
+<td><strong>Φ(x)</strong></td>
+<td>Nonlinear penalty (optional)</td>
+<td>Φ = λ·max(0, x_complexity - 10)^2</td>
+</tr>
+<tr>
+<td><strong>N: A → A</strong></td>
+<td>TRS normalization</td>
+<td>N(ast) = canonical AST (confluence + termination)</td>
+</tr>
+<tr>
+<td><strong>A(S_t, S)</strong></td>
+<td>Admission predicate</td>
+<td>(H) ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)</td>
+</tr>
+<tr>
+<td><strong>u_i(S)</strong></td>
+<td>Per-module quality</td>
+<td>u_i = local Q score for module i</td>
+</tr>
+<tr>
+<td><strong>W ⊆ U</strong></td>
+<td>PCE witness</td>
+<td>Subset of k files for improvement</td>
+</tr>
+<tr>
+<td><strong>L_0, L_1, L_2</strong></td>
+<td>Stratification levels</td>
+<td>L_0: external, L_1: RepoQ code, L_2: meta-analysis</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="5-domain-entities-relationships">5. Domain Entities &amp; Relationships<a class="headerlink" href="#5-domain-entities-relationships" title="Permanent link">¶</a></h2>
+<h3 id="51-entity-diagram">5.1 Entity Diagram<a class="headerlink" href="#51-entity-diagram" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>erDiagram
+    REPOSITORY ||--o{ COMMIT : contains
+    REPOSITORY ||--o{ FILE : contains
+    COMMIT ||--o{ FILE_CHANGE : modifies
+    FILE ||--|| METRIC_SET : has
+    FILE ||--o{ PATTERN_INSTANCE : exhibits
+
+    QUALITY_STATE ||--|| REPOSITORY : for
+    QUALITY_STATE ||--|| COMMIT : at
+    QUALITY_STATE ||--|| Q_SCORE : has
+    QUALITY_STATE ||--o{ MODULE_QUALITY : decomposed_into
+
+    ADMISSION_POLICY ||--o{ HARD_CONSTRAINT : defines
+    ADMISSION_POLICY ||--|| THRESHOLD_CONFIG : specifies
+
+    GATE_DECISION ||--|| QUALITY_STATE : evaluates
+    GATE_DECISION ||--|| ADMISSION_POLICY : against
+    GATE_DECISION ||--o| PCE_WITNESS : includes
+    GATE_DECISION ||--|| CERTIFICATE : certified_by
+
+    ONTOLOGY ||--o{ ENTITY : contains
+    ONTOLOGY ||--o{ RELATIONSHIP : contains
+    ENTITY ||--o{ PATTERN_INSTANCE : participates_in
+
+    REPOSITORY {
+        string path
+        string url
+        string default_branch
+    }
+
+    COMMIT {
+        string sha
+        datetime timestamp
+        string author
+        string message
+    }
+
+    FILE {
+        string path
+        string language
+        int loc
+        bytes content
+    }
+
+    METRIC_SET {
+        float complexity
+        int hotspot_score
+        int todo_count
+        float coverage
+    }
+
+    QUALITY_STATE {
+        string commit_sha
+        float q_score
+        float pcq_score
+        datetime analyzed_at
+    }
+
+    Q_SCORE {
+        float value
+        dict weights
+        dict risk_vector
+    }
+
+    GATE_DECISION {
+        enum verdict
+        string reason
+        float delta_q
+        bool hard_constraints_pass
+    }
+
+    CERTIFICATE {
+        string id
+        string issuer
+        datetime issued
+        string signature
+        string proof_type
+    }
+
+    PCE_WITNESS {
+        int k
+        list file_paths
+        float estimated_delta_q
+    }
+
+    PATTERN_INSTANCE {
+        string pattern_type
+        float confidence
+        list entities
+    }</code></pre>
+<h3 id="52-key-relationships">5.2 Key Relationships<a class="headerlink" href="#52-key-relationships" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Repository ↔ Commit</strong>: 1-to-many (repository has commit history)</li>
+<li><strong>Commit ↔ QualityState</strong>: 1-to-1 (each commit analyzed once per configuration)</li>
+<li><strong>QualityState ↔ GateDecision</strong>: many-to-many (multiple policies can evaluate same state)</li>
+<li><strong>GateDecision ↔ Certificate</strong>: 1-to-1 (each decision gets one VC)</li>
+<li><strong>File ↔ Pattern</strong>: many-to-many (file participates in multiple patterns, pattern spans multiple files)</li>
+<li><strong>Ontology ↔ Pattern</strong>: 1-to-many (ontology enables pattern detection)</li>
+</ol>
+<hr/>
+<h2 id="6-domain-workflows">6. Domain Workflows<a class="headerlink" href="#6-domain-workflows" title="Permanent link">¶</a></h2>
+<h3 id="61-quality-gate-workflow">6.1 Quality Gate Workflow<a class="headerlink" href="#61-quality-gate-workflow" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Dev as Developer
+    participant Git as Git
+    participant CLI as RepoQ CLI
+    participant Analysis as Analysis Context
+    participant Quality as Quality Context
+    participant Ontology as Ontology Context
+    participant VC as Certificate Generator
+
+    Dev-&gt;&gt;Git: git push origin feature-branch
+    Git-&gt;&gt;CLI: Trigger CI workflow
+    CLI-&gt;&gt;Analysis: analyze_repository(base, head)
+    Analysis-&gt;&gt;Analysis: Calculate metrics (complexity, hotspots, TODOs, coverage)
+    Analysis--&gt;&gt;CLI: AnalysisResult(base_metrics, head_metrics)
+
+    CLI-&gt;&gt;Quality: calculate_q(base_metrics, weights)
+    Quality--&gt;&gt;CLI: Q_base = 75.2
+    CLI-&gt;&gt;Quality: calculate_q(head_metrics, weights)
+    Quality--&gt;&gt;CLI: Q_head = 77.8
+
+    CLI-&gt;&gt;Ontology: ingest_code(head_code)
+    Ontology-&gt;&gt;Ontology: Build RDF graph
+    Ontology-&gt;&gt;Ontology: Detect patterns (MVC, Layered)
+    Ontology--&gt;&gt;CLI: Patterns=[MVC(confidence=0.85)]
+
+    CLI-&gt;&gt;Quality: evaluate_policy(base, head, policy)
+    Quality-&gt;&gt;Quality: Check ΔQ = 77.8 - 75.2 = 2.6 ≥ ε=0.3 ✓
+    Quality-&gt;&gt;Quality: Check hard constraints (tests≥80%) ✓
+    Quality-&gt;&gt;Quality: Calculate PCQ = min(0.82, 0.79, 0.88) = 0.79 &lt; τ=0.8 ✗
+    Quality--&gt;&gt;CLI: GateDecision(FAIL, reason="PCQ below threshold", pce_witness=[auth.py, login.py])
+
+    CLI-&gt;&gt;VC: generate_certificate(decision, key)
+    VC-&gt;&gt;VC: Create W3C VC with Q_base, Q_head, verdict
+    VC-&gt;&gt;VC: Sign with ECDSA
+    VC--&gt;&gt;CLI: Certificate(id=urn:uuid:..., signature=0x...)
+
+    CLI-&gt;&gt;Dev: Exit code 1 (FAIL)
+    CLI-&gt;&gt;Git: Post PR comment with explanation + PCE witness</code></pre>
+<h3 id="62-self-analysis-workflow-stratified">6.2 Self-Analysis Workflow (Stratified)<a class="headerlink" href="#62-self-analysis-workflow-stratified" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant User
+    participant CLI
+    participant SelfGuard as SelfApplicationGuard
+    participant Analysis
+    participant Quality
+    participant MetaAnalyzer
+
+    User-&gt;&gt;CLI: repoq meta-self --level 2
+    CLI-&gt;&gt;SelfGuard: check_stratification(current_level=0, target_level=2)
+    SelfGuard-&gt;&gt;SelfGuard: Verify L_0 → L_1 → L_2 progression (Theorem F)
+    SelfGuard--&gt;&gt;CLI: SAFE (stratification levels valid)
+
+    CLI-&gt;&gt;Analysis: analyze_repository(repoq_codebase, level=1)
+    Analysis-&gt;&gt;Analysis: Extract RepoQ's own metrics
+    Analysis--&gt;&gt;CLI: AnalysisResult(Q_repoq=82.5, patterns=[Layered, Plugin])
+
+    CLI-&gt;&gt;MetaAnalyzer: analyze_meta_properties(repoq_ontology, level=2)
+    MetaAnalyzer-&gt;&gt;MetaAnalyzer: Check if RepoQ's ontology satisfies its own SHACL shapes
+    MetaAnalyzer-&gt;&gt;MetaAnalyzer: Verify TRS confluence (Theorem 15.3)
+    MetaAnalyzer-&gt;&gt;MetaAnalyzer: Validate PCQ computation (Theorem C)
+    MetaAnalyzer--&gt;&gt;CLI: MetaResult(self_consistent=True, violations=[])
+
+    CLI-&gt;&gt;Quality: generate_self_certificate(meta_result)
+    Quality--&gt;&gt;CLI: VC(subject="RepoQ v0.3.0", Q=82.5, self_verified=True)
+
+    CLI-&gt;&gt;User: SUCCESS: RepoQ passes self-analysis ✓
+    CLI-&gt;&gt;User: Certificate: urn:uuid:... (stratification level 2, safe)</code></pre>
+<hr/>
+<h2 id="7-technical-debt-future-extensions">7. Technical Debt &amp; Future Extensions<a class="headerlink" href="#7-technical-debt-future-extensions" title="Permanent link">¶</a></h2>
+<h3 id="71-current-limitations">7.1 Current Limitations<a class="headerlink" href="#71-current-limitations" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Ontology Context</strong>: Partially implemented</li>
+<li>✅ Code ontology schema exists (<code>tmp/repoq-meta-loop-addons/ontologies/code.ttl</code>)</li>
+<li>⚠️ Pattern detection logic incomplete (5-7 patterns planned, 0 implemented)</li>
+<li>
+<p>⚠️ SPARQL inference rules exist but not integrated into gate workflow</p>
+</li>
+<li>
+<p><strong>ZAG PCQ Integration</strong>: Artifacts ready, not wired into gate</p>
+</li>
+<li>✅ PCQ/PCE logic in <code>tmp/zag_repoq-finished/integrations/zag.py</code></li>
+<li>
+<p>⚠️ Not called by <code>repoq/gate.py</code> (currently uses simple ΔQ threshold)</p>
+</li>
+<li>
+<p><strong>Any2Math Normalization</strong>: Design complete, implementation pending</p>
+</li>
+<li>✅ Adapter/Bridge/Scheduler in <code>tmp/repoq-any2math-integration/</code></li>
+<li>⚠️ Lean runtime integration not tested (subprocess isolation)</li>
+<li>
+<p>⚠️ No fallback mode if Lean unavailable</p>
+</li>
+<li>
+<p><strong>Self-Analysis</strong>: Conceptual framework solid, execution minimal</p>
+</li>
+<li>✅ Stratification theory proven (Theorem F)</li>
+<li>✅ SelfApplicationGuard exists (<code>tmp/repoq-meta-loop-addons/trs/engine.py</code>)</li>
+<li>
+<p>⚠️ <code>repoq meta-self</code> CLI command not implemented</p>
+</li>
+<li>
+<p><strong>AI Agent (BAML)</strong>: Design phase only</p>
+</li>
+<li>✅ VDAD Phase 4 spec complete (4 BAML functions)</li>
+<li>⚠️ No code written yet (planned for Phase 5)</li>
+</ol>
+<h3 id="72-roadmap-alignment">7.2 Roadmap Alignment<a class="headerlink" href="#72-roadmap-alignment" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Bounded Context</th>
+<th>Priority</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Basic Q gate</td>
+<td>Quality</td>
+<td>P0</td>
+<td>✅ DONE (Week 1)</td>
+</tr>
+<tr>
+<td>Hard constraints</td>
+<td>Quality</td>
+<td>P0</td>
+<td>✅ DONE</td>
+</tr>
+<tr>
+<td>VC certificates</td>
+<td>Quality</td>
+<td>P0</td>
+<td>✅ DONE</td>
+</tr>
+<tr>
+<td>PCQ min-aggregator</td>
+<td>Quality</td>
+<td>P1</td>
+<td>🔄 IN PROGRESS</td>
+</tr>
+<tr>
+<td>PCE witness</td>
+<td>Quality</td>
+<td>P1</td>
+<td>🔄 IN PROGRESS</td>
+</tr>
+<tr>
+<td>Pattern detection</td>
+<td>Ontology</td>
+<td>P1</td>
+<td>⏸️ BLOCKED (need ontology loader)</td>
+</tr>
+<tr>
+<td>Any2Math normalization</td>
+<td>Quality</td>
+<td>P1</td>
+<td>⏸️ BLOCKED (need Lean runtime)</td>
+</tr>
+<tr>
+<td>Self-analysis (level 2)</td>
+<td>Quality</td>
+<td>P2</td>
+<td>⏸️ BLOCKED (need stratification guard)</td>
+</tr>
+<tr>
+<td>BAML AI agent</td>
+<td>Integration</td>
+<td>P2</td>
+<td>🔮 PLANNED (VDAD Phase 5)</td>
+</tr>
+<tr>
+<td>Dashboard UI</td>
+<td>Integration</td>
+<td>P3</td>
+<td>🔮 PLANNED</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="8-domain-invariants">8. Domain Invariants<a class="headerlink" href="#8-domain-invariants" title="Permanent link">¶</a></h2>
+<h3 id="81-formal-guarantees-from-theorems-a-h-151-153">8.1 Formal Guarantees (from Theorems A-H, 15.1-15.3)<a class="headerlink" href="#81-formal-guarantees-from-theorems-a-h-151-153" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Correctness (Theorem A)</strong>: All metrics x_i(S) ∈ [0,1], Q(S) ∈ [0, Q_max]</li>
+<li><strong>Monotonicity (Theorem B)</strong>: If A(S_base, S_head) holds, then Q(S_head) &gt; Q(S_base)</li>
+<li><strong>PCQ/min Guarantee (Theorem C)</strong>: Gaming detected via PCQ = min u_i &lt; τ</li>
+<li><strong>Anti-Compensation (Theorem D)</strong>: Φ(x) penalty prevents offsetting high risk in one dimension with low risk in another</li>
+<li><strong>Constructive Path (Theorem E)</strong>: PCE witness W ⊆ U exists with |W| ≤ k</li>
+<li><strong>Self-Application Safety (Theorem F)</strong>: Stratification L_0 &lt; L_1 &lt; L_2 prevents paradoxes</li>
+<li><strong>Confluence (Theorem 15.3)</strong>: N(ast1) = N(ast2) if ast1 ≡ ast2 (syntactic equivalence) — deterministic normalization</li>
+<li><strong>Conservative Extension (Theorem 15.1)</strong>: Cross-ontology mappings preserve semantics (no new theorems about old domains)</li>
+</ol>
+<h3 id="82-business-rules">8.2 Business Rules<a class="headerlink" href="#82-business-rules" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Admission Policy Transitivity</strong>: If policy P passes S1→S2 and P passes S2→S3, then P passes S1→S3 (monotonicity chain)</li>
+<li><strong>Hard Constraint Absoluteness</strong>: No ε-tolerance for hard constraints (tests≥80% is binary: pass/fail)</li>
+<li><strong>Certificate Immutability</strong>: Once VC issued, cannot be revoked (only superseded by new analysis)</li>
+<li><strong>Stratification Ordering</strong>: L_i can analyze L_j only if i &gt; j (strict ordering)</li>
+<li><strong>Pattern Confidence Threshold</strong>: Only patterns with confidence ≥0.7 influence Q-score</li>
+</ol>
+<hr/>
+<h2 id="9-integration-with-formal-documentation">9. Integration with Formal Documentation<a class="headerlink" href="#9-integration-with-formal-documentation" title="Permanent link">¶</a></h2>
+<p>This domain model is grounded in:</p>
+<ul>
+<li><strong>formal-foundations-complete.md</strong>: 15 sections, 14 theorems (mathematical foundation)</li>
+<li><strong>tmp-artifacts-inventory.md</strong>: 77 files (implementation blueprints)</li>
+<li><strong>quality-loop-roadmap.md</strong>: MVP/Production/Advanced phases (tactical execution)</li>
+<li><strong>VDAD roadmap</strong>: Phase 1-5 (strategic value alignment)</li>
+</ul>
+<p><strong>Traceability</strong>:
+- Every bounded context → ≥1 tmp/ artifact (e.g., Ontology Context → <code>tmp/repoq-meta-loop-addons/ontologies/</code>)
+- Every ubiquitous term → ≥1 theorem or section in formal-foundations
+- Every workflow → ≥1 CLI command or Python module in codebase</p>
+<hr/>
+<h2 id="10-success-criteria-vdad-phase-1">10. Success Criteria (VDAD Phase 1)<a class="headerlink" href="#10-success-criteria-vdad-phase-1" title="Permanent link">¶</a></h2>
+<ul>
+<li>✅ Domain model complete: 4 bounded contexts documented</li>
+<li>✅ Context Map created: Mermaid diagram with relationships</li>
+<li>✅ Ubiquitous language: 25+ terms defined, aligned with formal docs</li>
+<li>✅ Entity diagram: Core entities + relationships mapped</li>
+<li>✅ Workflows: 2 sequence diagrams (gate, self-analysis)</li>
+<li>✅ Integration: Cross-references to formal-foundations, tmp/ artifacts, roadmap</li>
+<li>⏭️ <strong>Next</strong>: Stakeholder mapping (see <code>phase1-stakeholders.md</code>)</li>
+</ul>
+<hr/>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ol>
+<li>Eric Evans (2003). <em>Domain-Driven Design: Tackling Complexity in the Heart of Software</em>. Addison-Wesley.</li>
+<li>Vaughn Vernon (2013). <em>Implementing Domain-Driven Design</em>. Addison-Wesley.</li>
+<li>Simon Brown (2020). <em>The C4 model for visualising software architecture</em>. <a href="https://c4model.com">c4model.com</a></li>
+<li>RepoQ Project (2025). <em>Formal Foundations Complete</em>. <code>docs/development/formal-foundations-complete.md</code></li>
+<li>RepoQ Project (2025). <em>tmp/ Artifacts Inventory</em>. <code>docs/development/tmp-artifacts-inventory.md</code></li>
+</ol>
+<hr/>
+<p><strong>Document Status</strong>: ✅ COMPLETE<br/>
+<strong>Review</strong>: Pending (stakeholder validation in Phase 2)<br/>
+<strong>Next Steps</strong>: Create <code>phase1-stakeholders.md</code> with personas and value expectations.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2025 RepoQ Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/Repo-Q/repoq" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+<a class="md-social__link" href="https://pypi.org/project/repoq/" rel="noopener" target="_blank" title="pypi.org">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+</body>
+</html>

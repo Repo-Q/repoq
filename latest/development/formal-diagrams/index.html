@@ -1,0 +1,1479 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Revolutionary repository quality analysis with ontological intelligence" name="description"/>
+<meta content="RepoQ Contributors" name="author"/>
+<link href="https://repo-q.github.io/repoq/latest/development/formal-diagrams/" rel="canonical"/>
+<link href="../formal-foundations-complete/" rel="prev"/>
+<link href="../quality-loop-roadmap/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.22" name="generator"/>
+<title>Formal Diagrams - RepoQ - Semantic Meta-Quality Loop</title>
+<link href="../../assets/stylesheets/main.84d31ad4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="amber" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#repoq">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-header__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            RepoQ - Semantic Meta-Quality Loop
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Formal Diagrams
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started/installation/">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../user-guide/usage/">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../architecture/overview/">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../tutorials/01-first-analysis/">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../ontology/meta-loop/">
+          
+  
+  
+    
+  
+  Advanced Topics
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../index.md">
+          
+  
+  
+    
+  
+  Development
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../vdad/phase1-domain-context/">
+          
+  
+  
+    
+  
+  VDAD Process
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../api/reference/">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../about/limitations/">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    RepoQ - Semantic Meta-Quality Loop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/installation/">
+<span class="md-ellipsis">
+    Installation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/quickstart/">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/usage/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/commands/">
+<span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/workflows/">
+<span class="md-ellipsis">
+    Workflows
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/overview/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/trs-framework/">
+<span class="md-ellipsis">
+    TRS Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/rdf-export/">
+<span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/baml-agent/">
+<span class="md-ellipsis">
+    BAML AI Agent
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/analyzer-pipeline/">
+<span class="md-ellipsis">
+    Analyzer Pipeline
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/stratification-guard/">
+<span class="md-ellipsis">
+    Stratification Guard
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/01-first-analysis/">
+<span class="md-ellipsis">
+    First Analysis
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/02-custom-analyzer/">
+<span class="md-ellipsis">
+    Custom Analyzer
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/03-ci-cd-integration/">
+<span class="md-ellipsis">
+    CI/CD Integration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/04-advanced-filtering/">
+<span class="md-ellipsis">
+    Advanced Filtering
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/05-rdf-queries/">
+<span class="md-ellipsis">
+    RDF Queries
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/06-ai-agent-config/">
+<span class="md-ellipsis">
+    AI Agent Configuration
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/meta-loop/">
+<span class="md-ellipsis">
+    Meta-Quality Loop
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/intelligence/">
+<span class="md-ellipsis">
+    Ontological Intelligence
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../index.md">
+<span class="md-ellipsis">
+    Development Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../uv-setup/">
+<span class="md-ellipsis">
+    uv Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../CONTRIBUTING.md">
+<span class="md-ellipsis">
+    Contributing Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../testing.md">
+<span class="md-ellipsis">
+    Testing Strategy
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../mathematical-proof-quality-monotonicity/">
+<span class="md-ellipsis">
+    Mathematical Proof (Quality Monotonicity)
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../formal-foundations-complete/">
+<span class="md-ellipsis">
+    Formal Foundations
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      Обзор
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-meta-quality-loop">
+<span class="md-ellipsis">
+      1. Meta-Quality Loop
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-trs-pipeline-any2math">
+<span class="md-ellipsis">
+      2. TRS Pipeline (Any2Math)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-quality-monotonicity">
+<span class="md-ellipsis">
+      3. Quality Monotonicity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-pcqpce-witness">
+<span class="md-ellipsis">
+      4. PCQ/PCE Witness
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-local-confluence">
+<span class="md-ellipsis">
+      5. Local Confluence (Критические пары)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-stratification-levels">
+<span class="md-ellipsis">
+      6. Stratification Levels
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-liveness-heartbeat">
+<span class="md-ellipsis">
+      7. Liveness: ε-Heartbeat
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8-cross-ontology-mappings">
+<span class="md-ellipsis">
+      8. Cross-Ontology Mappings
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#9-gate-semantics">
+<span class="md-ellipsis">
+      9. Gate Semantics
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      Заключение
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rendering-notes">
+<span class="md-ellipsis">
+      Rendering Notes
+    </span>
+</a>
+<nav aria-label="Rendering Notes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mkdocs-material">
+<span class="md-ellipsis">
+      MkDocs Material
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#github-markdown">
+<span class="md-ellipsis">
+      GitHub Markdown
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      Локальный просмотр
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../quality-loop-roadmap/">
+<span class="md-ellipsis">
+    Quality Loop Roadmap
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../tmp-artifacts-inventory/">
+<span class="md-ellipsis">
+    tmp/ Artifacts Inventory
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+<span class="md-ellipsis">
+    VDAD Process
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            VDAD Process
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase1-domain-context/">
+<span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase1-stakeholders/">
+<span class="md-ellipsis">
+    Phase 1 - Stakeholders
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase2-value-register/">
+<span class="md-ellipsis">
+    Phase 2 - Value Register
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase3-requirements/">
+<span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-architecture-overview/">
+<span class="md-ellipsis">
+    Phase 4 - Architecture Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-c4-diagrams/">
+<span class="md-ellipsis">
+    Phase 4 - C4 Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-adrs/">
+<span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-nfr-realization/">
+<span class="md-ellipsis">
+    Phase 4 - NFR Realization
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../vdad/phase4-baml-agent/">
+<span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    About
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            About
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../about/limitations/">
+<span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_1">
+<span class="md-ellipsis">
+      Обзор
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-meta-quality-loop">
+<span class="md-ellipsis">
+      1. Meta-Quality Loop
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-trs-pipeline-any2math">
+<span class="md-ellipsis">
+      2. TRS Pipeline (Any2Math)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-quality-monotonicity">
+<span class="md-ellipsis">
+      3. Quality Monotonicity
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-pcqpce-witness">
+<span class="md-ellipsis">
+      4. PCQ/PCE Witness
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-local-confluence">
+<span class="md-ellipsis">
+      5. Local Confluence (Критические пары)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-stratification-levels">
+<span class="md-ellipsis">
+      6. Stratification Levels
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-liveness-heartbeat">
+<span class="md-ellipsis">
+      7. Liveness: ε-Heartbeat
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8-cross-ontology-mappings">
+<span class="md-ellipsis">
+      8. Cross-Ontology Mappings
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#9-gate-semantics">
+<span class="md-ellipsis">
+      9. Gate Semantics
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_2">
+<span class="md-ellipsis">
+      Заключение
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rendering-notes">
+<span class="md-ellipsis">
+      Rendering Notes
+    </span>
+</a>
+<nav aria-label="Rendering Notes" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#mkdocs-material">
+<span class="md-ellipsis">
+      MkDocs Material
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#github-markdown">
+<span class="md-ellipsis">
+      GitHub Markdown
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#_3">
+<span class="md-ellipsis">
+      Локальный просмотр
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/edit/main/docs/development/formal-diagrams.md" rel="edit" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"></path></svg>
+</a>
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/raw/main/docs/development/formal-diagrams.md" title="View source of this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg>
+</a>
+<h1 id="repoq">Формальные диаграммы RepoQ<a class="headerlink" href="#repoq" title="Permanent link">¶</a></h1>
+<p><strong>Статус</strong>: 📊 Visual Proof Reference<br/>
+<strong>Цель</strong>: Визуализация формальных концепций из <code>formal-foundations-complete.md</code><br/>
+<strong>Дата создания</strong>: 2025-10-21</p>
+<hr/>
+<h2 id="_1">Обзор<a class="headerlink" href="#_1" title="Permanent link">¶</a></h2>
+<p>Этот документ содержит <strong>9 ключевых диаграмм</strong>, иллюстрирующих формальную основу RepoQ:</p>
+<ol>
+<li><a href="#1-meta-quality-loop">Meta-Quality Loop</a> — Саморефлексия RepoQ (Section 15)</li>
+<li><a href="#2-trs-pipeline-any2math">TRS Pipeline</a> — Конвейер измерений с Any2Math (Section 15.9)</li>
+<li><a href="#3-quality-monotonicity">Quality Monotonicity</a> — Монотонность Q с ε-гейтом (Section 2)</li>
+<li><a href="#4-pcqpce-witness">PCQ/PCE</a> — Порог по «худшему» и witness top-k (Section 2, 4)</li>
+<li><a href="#5-local-confluence-критические-пары">Local Confluence</a> — Ромбы критических пар TRS (Section 1)</li>
+<li><a href="#6-stratification-levels">Stratification</a> — Уровни self-application 0-3 (Section 7)</li>
+<li><a href="#7-liveness-ε-heartbeat">Liveness</a> — ε-heartbeat в CI (Section 10, 15.9)</li>
+<li><a href="#8-cross-ontology-mappings">Cross-Ontology</a> — Межонтологические соответствия (Section 15.3)</li>
+<li><a href="#9-gate-semantics">Gate Semantics</a> — Формула допуска PR (Section 0.5)</li>
+</ol>
+<p><strong>Связь с документацией</strong>:
+- <code>formal-foundations-complete.md</code> — формальные теоремы и доказательства
+- <code>tmp-artifacts-inventory.md</code> — реализация компонентов
+- <code>meta-loop.md</code> — концепция онтологического самопонимания</p>
+<p><strong>Расширенная визуализация</strong> (в разработке):
+- <code>tmp/repoq-geomap/</code> — геометрические диаграммы высокого разрешения:
+  - <code>images/monotone_q.png</code> — монотонная траектория Q со ступенями ≥ ε
+  - <code>images/pcq_pce.png</code> — PCQ с порогом τ и PCE (top-k witness)
+  - <code>images/trs_diamonds.png</code> — ромбы локальной конфлюэнтности TRS
+  - <code>images/pipeline.png</code> — конвейер: артефакты → TRS → нормализация → метрики → (Q, PCQ)
+  - <code>images/stratification.png</code> — стратификация self-application (уровни 0-3)
+  - <code>images/liveness.png</code> — таймлайн ε-шагов (анти-зависание)
+  - <code>dot/apparatus.dot</code> — Graphviz DOT исходники
+  - <code>latex/confluence_diamond.tex</code> — TikZ для LaTeX публикаций</p>
+<blockquote>
+<p>📊 <strong>Примечание</strong>: Полная визуализация будет интегрирована после генерации PNG/SVG из DOT/LaTeX исходников.</p>
+</blockquote>
+<hr/>
+<h2 id="1-meta-quality-loop">1. Meta-Quality Loop<a class="headerlink" href="#1-meta-quality-loop" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>саморефлексии RepoQ</strong> — способности анализировать собственную кодовую базу через онтологии.</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 15</strong>: Meta-Loop Integration
+- <strong>Теорема 15.2</strong>: Безопасная мета-оптимизация (композиция Теорем A, F, B, E, 6.1)
+- <strong>9 компонентов</strong>: A→I цикл (Analysis → Ontologies → Inference → Improvements)</p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'flowchart': { 'curve': 'basis' }}}%%
+flowchart TD
+    A[RepoQ Codebase] --&gt; B[Structure Analysis]
+    B --&gt; C[Ontological Intelligence]
+    C --&gt; D[Concept Extraction]
+    D --&gt; E[Semantic Validation]
+    E --&gt; F[Cross-Ontology Inference]
+    F --&gt; G[Quality Insights]
+    G --&gt; H[Architecture Understanding]
+    H --&gt; I[Self-Improvement Recommendations]
+    I -.feedback.-&gt; A
+
+    classDef code fill:#e1f5fe,stroke:#0277bd,stroke-width:1px;
+    classDef ont  fill:#f3e5f5,stroke:#6a1b9a,stroke-width:1px;
+    classDef inf  fill:#fff3e0,stroke:#ef6c00,stroke-width:1px;
+    classDef imp  fill:#e8f5e8,stroke:#2e7d32,stroke-width:1px;
+    class A code; class C ont; class F inf; class I imp;</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>A (Code)</strong>: Исходная кодовая база (blue) — объект анализа
+- <strong>C (Ontologies)</strong>: Онтологический движок (purple) — извлечение семантики
+- <strong>F (Inference)</strong>: Кросс-онтологический инференс (orange) — связывание концепций
+- <strong>I (Improvements)</strong>: Рекомендации самоулучшения (green) — constructive witness (PCE)
+- <strong>Feedback loop</strong> (dotted): Итеративный цикл самопонимания (стратификация ≤ 2)</p>
+<p><strong>Формальная гарантия</strong>: Теорема 15.2 → композиция A∧F∧B∧E∧6.1 → цикл безопасен.</p>
+<hr/>
+<h2 id="2-trs-pipeline-any2math">2. TRS Pipeline (Any2Math)<a class="headerlink" href="#2-trs-pipeline-any2math" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Конвейер измерений с <strong>детерминированной канонизацией</strong> через Any2Math.</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 15.9</strong>: Any2Math Integration
+- <strong>Теорема 15.3</strong>: Детерминированность + Proof-carrying + Liveness
+- <strong>Теоремы Any2Math.A-C</strong>: Confluence, Correctness, Termination</p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'flowchart': { 'curve': 'basis' }}}%%
+flowchart LR
+    subgraph Inputs
+      A[Artifacts&lt;br/&gt;(SPDX, SemVer, RDF, JSON-LD, Metrics)]
+    end
+    N[[TRS Normalization&lt;br/&gt;(Any2Math, proof)]]
+    NF[Normalized Artifacts]
+    M[[Measurement m&lt;br/&gt;x ∈ [0,1]ᵈ]]
+    Q[Q(x)]
+    PCQ[PCQ(x) = min(uᵢ)]
+    G{{Gate:&lt;br/&gt;hard(H) ∧ PCQ ≥ τ ∧ ΔQ ≥ ε}}
+    Merge[(Merge to main)]
+    Fix([Remediate / revise PR])
+
+    A --&gt; N --&gt; NF --&gt; M
+    M --&gt; Q
+    M --&gt; PCQ
+    Q --&gt; G
+    PCQ --&gt; G
+    G --&gt;|accept| Merge
+    G --&gt;|reject| Fix
+
+    classDef proof fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px;
+    class N proof;</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>A (Inputs)</strong>: Сырые артефакты (SPDX, метрики, RDF)
+- <strong>N (TRS)</strong>: Any2Math нормализатор (green) — гарантия confluence + termination
+- <strong>NF</strong>: Канонические нормальные формы → единственность представления
+- <strong>M</strong>: Измерение risk vector <span class="arithmatex">\(x \in [0,1]^d\)</span>
+- <strong>Q</strong>: Интегральная метрика качества <span class="arithmatex">\(Q(x) = Q_{\max} - \sum w_i \cdot x_i - \Phi(x)\)</span>
+- <strong>PCQ</strong>: Min-агрегатор <span class="arithmatex">\(\text{PCQ}(x) = \min_i u_i(x)\)</span> (ZAG)
+- <strong>G (Gate)</strong>: Формула допуска PR: <span class="arithmatex">\(H \land (PCQ \geq \tau) \land (\Delta Q \geq \varepsilon)\)</span></p>
+<p><strong>Формальная гарантия</strong>: Теорема 15.3 → <span class="arithmatex">\(\text{nf}(t)\)</span> единственна → <span class="arithmatex">\(Q(\text{nf}(S))\)</span> детерминирована.</p>
+<hr/>
+<h2 id="3-quality-monotonicity">3. Quality Monotonicity<a class="headerlink" href="#3-quality-monotonicity" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>монотонного роста качества</strong> с ε-гейтом.</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 2</strong>: Monotonicity (Теорема B)
+- <strong>Section 5</strong>: Noise Robustness (Lemma 5.1)
+- <strong>Admission Policy</strong>: <span class="arithmatex">\(A(S_t, S) \Rightarrow Q(S) &gt; Q(S_t)\)</span></p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+stateDiagram-v2
+    [*] --&gt; S0: Q₀
+    S0 --&gt; S1: ΔQ ≥ ε
+    S1 --&gt; S2: ΔQ ≥ ε
+    S2 --&gt; S3: ΔQ ≥ ε
+    S3 --&gt; S4: ΔQ ≥ ε
+    S4 --&gt; S5: ΔQ ≥ ε
+    S5 --&gt; S6: ΔQ ≥ ε
+    S6 --&gt; [*]</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>S₀</strong>: Начальное состояние с качеством <span class="arithmatex">\(Q_0\)</span>
+- <strong>Sᵢ → Sᵢ₊₁</strong>: Переход допустим только если <span class="arithmatex">\(\Delta Q = Q(S_{i+1}) - Q(S_i) \geq \varepsilon\)</span>
+- <strong>ε</strong>: Минимальный порог прироста (типично ε ∈ [0.2, 0.5])
+- <strong>Монотонность</strong>: <span class="arithmatex">\(Q(S_0) &lt; Q(S_1) &lt; Q(S_2) &lt; \ldots &lt; Q(S_6)\)</span> (строгая)</p>
+<p><strong>Формальная гарантия</strong>: Теорема B + Lemma 5.1 → выбор <span class="arithmatex">\(\varepsilon &gt; 2\Delta_Q\)</span> фильтрует шум.</p>
+<hr/>
+<h2 id="4-pcqpce-witness">4. PCQ/PCE Witness<a class="headerlink" href="#4-pcqpce-witness" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>min-агрегатора PCQ</strong> и <strong>witness-генерации</strong> (top-k худших модулей).</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 2</strong>: PCQ (Теорема C)
+- <strong>Section 4</strong>: PCE (Теорема E — Path Existence)
+- <strong>ZAG Framework</strong>: Zero-Assumptions Guarantee</p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'flowchart': { 'curve': 'basis' }}}%%
+flowchart TB
+    tau[[τ = 0.80]]
+
+    subgraph Modules (uᵢ)
+      m1["m1 = 0.92"]
+      m2["m2 = 0.81"]
+      m3["m3 = 0.65"]
+      m4["m4 = 0.88"]
+      m5["m5 = 0.71"]
+      m6["m6 = 0.60"]
+      m7["m7 = 0.79"]
+      m8["m8 = 0.83"]
+    end
+
+    PCQ{{PCQ = min(uᵢ) = 0.60}}
+    W[[Witness W = {m6, m3}]]
+
+    m1 &amp; m2 &amp; m3 &amp; m4 &amp; m5 &amp; m6 &amp; m7 &amp; m8 --&gt; PCQ
+    PCQ --&gt;|if PCQ &lt; τ| W
+    tau --- PCQ
+
+    classDef good fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px;
+    classDef bad  fill:#ffebee,stroke:#c62828,stroke-width:1px;
+    class m1,m2,m4,m8 good
+    class m3,m5,m6,m7 bad</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>uᵢ</strong>: Utility каждого модуля (normalized quality <span class="arithmatex">\(\in [0,1]\)</span>)
+- <strong>PCQ</strong>: Min-агрегатор → <span class="arithmatex">\(\text{PCQ} = \min(u_1, \ldots, u_8) = 0.60\)</span> (худший модуль m6)
+- <strong>τ = 0.80</strong>: Порог приемлемости (threshold)
+- <strong>Witness W</strong>: Top-k худших модулей (здесь k=2: m6=0.60, m3=0.65)
+- <strong>Green modules</strong>: <span class="arithmatex">\(u_i \geq \tau\)</span> (good quality)
+- <strong>Red modules</strong>: <span class="arithmatex">\(u_i &lt; \tau\)</span> (need remediation)</p>
+<p><strong>Формальная гарантия</strong>:
+- Теорема C: <span class="arithmatex">\(\text{PCQ}(S) \geq \tau \Rightarrow \forall i, u_i(S) \geq \tau\)</span> (no compensation)
+- Теорема E: Witness <span class="arithmatex">\(W\)</span> конструктивен (PCE-path exists)</p>
+<hr/>
+<h2 id="5-local-confluence">5. Local Confluence (Критические пары)<a class="headerlink" href="#5-local-confluence" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>локальной конфлюэнтности</strong> TRS через ромбы критических пар.</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 1</strong>: Correctness (Теорема A)
+- <strong>Newman's Lemma</strong>: Termination + Local Confluence → Confluence
+- <strong>Any2Math</strong>: Доказательство confluence в Lean 4</p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'flowchart': { 'curve': 'basis' }}}%%
+flowchart TB
+    subgraph Diamond 1: add(zero, zero)
+      T1["add(zero, zero)"]
+      S1["zero"]
+      U1["zero"]
+      V1["zero"]
+      T1 --&gt;|add0L| S1
+      T1 --&gt;|add0R| U1
+      S1 --&gt;|id| V1
+      U1 --&gt;|id| V1
+    end
+
+    subgraph Diamond 2: mul(one, one)
+      T2["mul(one, one)"]
+      S2["one"]
+      U2["one"]
+      V2["one"]
+      T2 --&gt;|mul1L| S2
+      T2 --&gt;|mul1R| U2
+      S2 --&gt;|id| V2
+      U2 --&gt;|id| V2
+    end</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>Diamond Property</strong>: <span class="arithmatex">\(t \xrightarrow{r_1} s\)</span> и <span class="arithmatex">\(t \xrightarrow{r_2} u\)</span> сходятся к общему <span class="arithmatex">\(v\)</span>
+- <strong>add0L / add0R</strong>: Правила <span class="arithmatex">\(\text{add}(\text{zero}, x) \to x\)</span> и <span class="arithmatex">\(\text{add}(x, \text{zero}) \to x\)</span>
+- <strong>mul1L / mul1R</strong>: Правила <span class="arithmatex">\(\text{mul}(\text{one}, x) \to x\)</span> и <span class="arithmatex">\(\text{mul}(x, \text{one}) \to x\)</span>
+- <strong>Joinability</strong>: <span class="arithmatex">\(s \xrightarrow{*} v \xleftarrow{*} u\)</span> → критическая пара разрешима</p>
+<p><strong>Формальная гарантия</strong>: Теорема A → все критические пары joinable → confluence → <span class="arithmatex">\(\text{nf}(t)\)</span> единственна.</p>
+<hr/>
+<h2 id="6-stratification-levels">6. Stratification Levels<a class="headerlink" href="#6-stratification-levels" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>стратификации self-application</strong> (предотвращение парадоксов).</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 7</strong>: Self-Application (Теорема F)
+- <strong>Section 15.1</strong>: Stratified Reflection (Table levels 0-2 safe, 3 forbidden)
+- <strong>Russell's Paradox</strong>: Предотвращение через quote/unquote stratification</p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'flowchart': { 'curve': 'basis' }}}%%
+flowchart TB
+    subgraph Level 0 — syntax_only
+      L0[Parsing / AST]
+    end
+    subgraph Level 1 — structure_safe
+      L1[Structure + metrics]
+    end
+    subgraph Level 2 — semantic_limited
+      L2[Ontological mapping bounded]
+    end
+    subgraph Level 3 — full_semantic external only
+      L3[Full reasoning engine]
+    end
+
+    Self[(Self Analysis)] --&gt; L0 --&gt; L1 --&gt; L2 -.forbidden.-&gt; L3
+
+    style L3 fill:#ffebee,stroke:#c62828,stroke-width:2px
+    style L0 fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+    style L1 fill:#e8f5e9,stroke:#2e7d32,stroke-width:1px
+    style L2 fill:#fff3e0,stroke:#ef6c00,stroke-width:1px</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>Level 0 (Safe)</strong>: Только парсинг и AST (без семантики)
+- <strong>Level 1 (Safe)</strong>: Структурный анализ + метрики (без саморефлексии)
+- <strong>Level 2 (Safe with constraints)</strong>: Онтологический маппинг (ограниченный инференс)
+- <strong>Level 3 (Forbidden for Self)</strong>: Полный reasoning engine (риск парадоксов)
+- <strong>Policy</strong>: Self-analysis допустима только на уровнях ≤ 2</p>
+<p><strong>Формальная гарантия</strong>: Теорема F → стратификация <span class="arithmatex">\(\leq 2\)</span> → отсутствие парадоксов Russell-типа.</p>
+<hr/>
+<h2 id="7-liveness-heartbeat">7. Liveness: ε-Heartbeat<a class="headerlink" href="#7-liveness-heartbeat" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>liveness-гарантии</strong> через ε-heartbeat scheduler в CI.</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 10</strong>: LTL Verification (Liveness)
+- <strong>Section 15.9</strong>: Any2Math ε-heartbeat scheduler
+- <strong>Теорема 15.3(3)</strong>: Liveness → нормализация за <span class="arithmatex">\(O(\text{size}(t) \cdot \log(\text{size}(t)))\)</span></p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral'}}%%
+sequenceDiagram
+    participant CI as CI Runner
+    participant TRS as Any2Math Normalizer
+    participant RepoQ as RepoQ Gate
+
+    CI-&gt;&gt;TRS: normalize(expr)
+    loop every ε quantum (5 sec)
+        TRS--&gt;&gt;CI: ε-heartbeat (progress)
+    end
+    TRS--&gt;&gt;CI: normal_form + proof
+    CI-&gt;&gt;RepoQ: measure x, compute Q, PCQ
+    RepoQ--&gt;&gt;CI: Gate decision (accept / reject)</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>CI Runner</strong>: Запускает нормализацию в CI/CD pipeline
+- <strong>TRS (Any2Math)</strong>: Lean-нормализатор с доказательством confluence
+- <strong>ε-heartbeat</strong>: Каждые 5 секунд отчёт о прогрессе (анти-stall)
+- <strong>proof</strong>: SHA-256(proof) добавляется в VC-сертификат
+- <strong>RepoQ Gate</strong>: Принимает решение на основе канонизированных метрик</p>
+<p><strong>Формальная гарантия</strong>: Scheduler → <span class="arithmatex">\(\forall t, \exists n \leq N_{\max}, t \xrightarrow{n} \text{nf}(t)\)</span> за <span class="arithmatex">\(\varepsilon \cdot N_{\max}\)</span> секунд.</p>
+<hr/>
+<h2 id="8-cross-ontology-mappings">8. Cross-Ontology Mappings<a class="headerlink" href="#8-cross-ontology-mappings" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>межонтологических соответствий</strong> (Code ↔ C4 ↔ DDD).</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 15.3</strong>: Three-Ontology Architecture
+- <strong>Теорема 15.1</strong>: Conservative SPARQL CONSTRUCT mappings
+- <strong>Section 15.2</strong>: 9 компонентов мета-петли (ontological intelligence)</p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'flowchart': { 'curve': 'basis' }}}%%
+flowchart LR
+    subgraph Code Ontology
+      cm[code:Module]
+      cc[code:Class]
+      cf[code:Function]
+    end
+    subgraph C4 Model
+      c4c[c4:Component]
+      c4k[c4:Container]
+    end
+    subgraph DDD
+      bc[ddd:BoundedContext]
+      ent[ddd:Entity]
+      vo[ddd:ValueObject]
+    end
+
+    cm -- implements --&gt; c4c
+    cc -- realizes --&gt; ent
+    c4k -- corresponds_to --&gt; bc
+
+    classDef ont1 fill:#e3f2fd,stroke:#1565c0;
+    classDef ont2 fill:#f3e5f5,stroke:#6a1b9a;
+    classDef ont3 fill:#fff3e0,stroke:#ef6c00;
+    class cm,cc,cf ont1
+    class c4c,c4k   ont2
+    class bc,ent,vo ont3</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>Code Ontology (Blue)</strong>: Синтаксические концепции (Module, Class, Function)
+- <strong>C4 Model (Purple)</strong>: Архитектурные концепции (Component, Container)
+- <strong>DDD (Orange)</strong>: Доменные концепции (BoundedContext, Entity, ValueObject)
+- <strong>Mappings</strong>:
+  - <code>code:Module</code> <strong>implements</strong> <code>c4:Component</code> (модуль → компонент)
+  - <code>code:Class</code> <strong>realizes</strong> <code>ddd:Entity</code> (класс → сущность домена)
+  - <code>c4:Container</code> <strong>corresponds_to</strong> <code>ddd:BoundedContext</code> (контейнер → bounded context)</p>
+<p><strong>Формальная гарантия</strong>: Теорема 15.1 → SPARQL CONSTRUCT консервативны (не вводят противоречий).</p>
+<hr/>
+<h2 id="9-gate-semantics">9. Gate Semantics<a class="headerlink" href="#9-gate-semantics" title="Permanent link">¶</a></h2>
+<p><strong>Назначение</strong>: Визуализация <strong>формулы допуска PR</strong> (admission predicate).</p>
+<p><strong>Связь с формальной базой</strong>:
+- <strong>Section 0.5</strong>: Admission Predicate <span class="arithmatex">\(A(S_t, S)\)</span>
+- <strong>Section 2</strong>: Monotonicity (ΔQ ≥ ε)
+- <strong>Section 2</strong>: PCQ Guarantee (PCQ ≥ τ)</p>
+<pre class="mermaid"><code>%%{init: {'theme': 'neutral', 'flowchart': { 'curve': 'basis' }}}%%
+flowchart LR
+    H[hard H: xᵢ HEAD ≤ xᵢ BASE for i∈H]
+    P[PCQ HEAD ≥ τ]
+    Q[ΔQ = Q HEAD - Q BASE ≥ ε]
+    Gate{{ACCEPT if H ∧ P ∧ Q}}
+
+    H --&gt; Gate
+    P --&gt; Gate
+    Q --&gt; Gate
+
+    Gate --&gt;|accept| Merge[(Merge)]
+    Gate --&gt;|reject| Remediate([Fix &amp; resubmit])</code></pre>
+<p><strong>Интерпретация</strong>:
+- <strong>H (Hard Constraints)</strong>: Жёсткие ограничения (tests ≥ 80%, TODO ≤ 100, hotspots ≤ 20)
+  - <span class="arithmatex">\(\forall i \in H, x_i(\text{HEAD}) \leq x_i(\text{BASE})\)</span> (риски не растут)
+- <strong>P (PCQ)</strong>: Min-агрегатор выше порога <span class="arithmatex">\(\tau\)</span> (типично 0.75-0.9)
+  - <span class="arithmatex">\(\text{PCQ}(\text{HEAD}) = \min_j u_j(\text{HEAD}) \geq \tau\)</span>
+- <strong>Q (ΔQ)</strong>: Прирост интегрального качества выше ε (типично 0.2-0.5)
+  - <span class="arithmatex">\(\Delta Q = Q(\text{HEAD}) - Q(\text{BASE}) \geq \varepsilon\)</span>
+- <strong>Gate</strong>: Логическая конъюнкция <span class="arithmatex">\(H \land P \land Q\)</span>
+  - <strong>ACCEPT</strong> → Merge to main
+  - <strong>REJECT</strong> → Remediate and resubmit</p>
+<p><strong>Формальная гарантия</strong>:
+- <span class="arithmatex">\(A(S_t, S) = H(S_t, S) \land (PCQ(S) \geq \tau) \land (Q(S) - Q(S_t) \geq \varepsilon)\)</span>
+- Теорема B: <span class="arithmatex">\(A(S_t, S) \Rightarrow Q(S) &gt; Q(S_t)\)</span> (строгая монотонность)</p>
+<hr/>
+<h2 id="_2">Заключение<a class="headerlink" href="#_2" title="Permanent link">¶</a></h2>
+<p>Эти 9 диаграмм обеспечивают <strong>визуальную верификацию</strong> формальных теорем из <code>formal-foundations-complete.md</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Диаграмма</th>
+<th>Теорема</th>
+<th>Гарантия</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Meta-Loop</td>
+<td>Теорема 15.2</td>
+<td>Безопасная мета-оптимизация</td>
+</tr>
+<tr>
+<td>2. TRS Pipeline</td>
+<td>Теорема 15.3</td>
+<td>Каноничность + proof-carrying</td>
+</tr>
+<tr>
+<td>3. Monotonicity</td>
+<td>Теорема B</td>
+<td>Строгая монотонность Q</td>
+</tr>
+<tr>
+<td>4. PCQ/PCE</td>
+<td>Теоремы C, E</td>
+<td>Min-гарантия + constructive witness</td>
+</tr>
+<tr>
+<td>5. Local Confluence</td>
+<td>Теорема A</td>
+<td>Well-defined metrics</td>
+</tr>
+<tr>
+<td>6. Stratification</td>
+<td>Теорема F</td>
+<td>Отсутствие парадоксов</td>
+</tr>
+<tr>
+<td>7. Liveness</td>
+<td>Теорема 15.3(3)</td>
+<td>Анти-stall в CI</td>
+</tr>
+<tr>
+<td>8. Cross-Ontology</td>
+<td>Теорема 15.1</td>
+<td>Консервативные маппинги</td>
+</tr>
+<tr>
+<td>9. Gate Semantics</td>
+<td>Section 0.5</td>
+<td>Корректная admission policy</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Итого</strong>: Визуальная модель полностью согласована с формальной базой из 14 теорем.</p>
+<hr/>
+<h2 id="rendering-notes">Rendering Notes<a class="headerlink" href="#rendering-notes" title="Permanent link">¶</a></h2>
+<h3 id="mkdocs-material">MkDocs Material<a class="headerlink" href="#mkdocs-material" title="Permanent link">¶</a></h3>
+<p>Для корректного рендеринга Mermaid-диаграмм в MkDocs Material добавьте в <code>mkdocs.yml</code>:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nt">markdown_extensions</span><span class="p">:</span>
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pymdownx.superfences</span><span class="p">:</span>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="w">      </span><span class="nt">custom_fences</span><span class="p">:</span>
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid</span>
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="w">          </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid</span>
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="kt">!!python/name:pymdownx.superfences.fence_code_format</span>
+</span></code></pre></div>
+<h3 id="github-markdown">GitHub Markdown<a class="headerlink" href="#github-markdown" title="Permanent link">¶</a></h3>
+<p>GitHub Flavored Markdown поддерживает Mermaid нативно (с 2022 года). Диаграммы рендерятся автоматически.</p>
+<h3 id="_3">Локальный просмотр<a class="headerlink" href="#_3" title="Permanent link">¶</a></h3>
+<p>Используйте MkDocs для локального рендеринга:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a>python<span class="w"> </span>-m<span class="w"> </span>mkdocs<span class="w"> </span>serve<span class="w"> </span>--dev-addr<span class="w"> </span>localhost:8000
+</span></code></pre></div>
+<p>Откройте <code>http://localhost:8000/development/formal-diagrams/</code> в браузере.</p>
+<hr/>
+<p><strong>Подпись</strong>: URPKS Meta-Programmer<br/>
+<strong>Верификация</strong>: Visual Proofs ✅<br/>
+<strong>Статус</strong>: 📊 Production-Ready Visualization<br/>
+<strong>Версия</strong>: 1.0 (2025-10-21)</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2025 RepoQ Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/Repo-Q/repoq" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+<a class="md-social__link" href="https://pypi.org/project/repoq/" rel="noopener" target="_blank" title="pypi.org">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,2142 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Revolutionary repository quality analysis with ontological intelligence" name="description"/>
+<meta content="RepoQ Contributors" name="author"/>
+<link href="https://repo-q.github.io/repoq/latest/vdad/phase4-baml-agent/" rel="canonical"/>
+<link href="../phase4-nfr-realization/" rel="prev"/>
+<link href="../../api/reference/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.22" name="generator"/>
+<title>Phase 4 - BAML Agent - RepoQ - Semantic Meta-Quality Loop</title>
+<link href="../../assets/stylesheets/main.84d31ad4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="amber" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#vdad-phase-4-baml-ai-agent-specification">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-header__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            RepoQ - Semantic Meta-Quality Loop
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Phase 4 - BAML Agent
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started/installation/">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../user-guide/usage/">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../architecture/overview/">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../tutorials/01-first-analysis/">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../ontology/meta-loop/">
+          
+  
+  
+    
+  
+  Advanced Topics
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../development/index.md">
+          
+  
+  
+    
+  
+  Development
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../phase1-domain-context/">
+          
+  
+  
+    
+  
+  VDAD Process
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../api/reference/">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../about/limitations/">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    RepoQ - Semantic Meta-Quality Loop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/installation/">
+<span class="md-ellipsis">
+    Installation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/quickstart/">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/usage/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/commands/">
+<span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/workflows/">
+<span class="md-ellipsis">
+    Workflows
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/overview/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/trs-framework/">
+<span class="md-ellipsis">
+    TRS Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/rdf-export/">
+<span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/baml-agent/">
+<span class="md-ellipsis">
+    BAML AI Agent
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/analyzer-pipeline/">
+<span class="md-ellipsis">
+    Analyzer Pipeline
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/stratification-guard/">
+<span class="md-ellipsis">
+    Stratification Guard
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/01-first-analysis/">
+<span class="md-ellipsis">
+    First Analysis
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/02-custom-analyzer/">
+<span class="md-ellipsis">
+    Custom Analyzer
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/03-ci-cd-integration/">
+<span class="md-ellipsis">
+    CI/CD Integration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/04-advanced-filtering/">
+<span class="md-ellipsis">
+    Advanced Filtering
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/05-rdf-queries/">
+<span class="md-ellipsis">
+    RDF Queries
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/06-ai-agent-config/">
+<span class="md-ellipsis">
+    AI Agent Configuration
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/meta-loop/">
+<span class="md-ellipsis">
+    Meta-Quality Loop
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/intelligence/">
+<span class="md-ellipsis">
+    Ontological Intelligence
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/index.md">
+<span class="md-ellipsis">
+    Development Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/uv-setup/">
+<span class="md-ellipsis">
+    uv Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/CONTRIBUTING.md">
+<span class="md-ellipsis">
+    Contributing Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/testing.md">
+<span class="md-ellipsis">
+    Testing Strategy
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/mathematical-proof-quality-monotonicity/">
+<span class="md-ellipsis">
+    Mathematical Proof (Quality Monotonicity)
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-foundations-complete/">
+<span class="md-ellipsis">
+    Formal Foundations
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-diagrams/">
+<span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/quality-loop-roadmap/">
+<span class="md-ellipsis">
+    Quality Loop Roadmap
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/tmp-artifacts-inventory/">
+<span class="md-ellipsis">
+    tmp/ Artifacts Inventory
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+<span class="md-ellipsis">
+    VDAD Process
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            VDAD Process
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase1-domain-context/">
+<span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase1-stakeholders/">
+<span class="md-ellipsis">
+    Phase 1 - Stakeholders
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase2-value-register/">
+<span class="md-ellipsis">
+    Phase 2 - Value Register
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase3-requirements/">
+<span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-architecture-overview/">
+<span class="md-ellipsis">
+    Phase 4 - Architecture Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-c4-diagrams/">
+<span class="md-ellipsis">
+    Phase 4 - C4 Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-adrs/">
+<span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-nfr-realization/">
+<span class="md-ellipsis">
+    Phase 4 - NFR Realization
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#executive-summary">
+<span class="md-ellipsis">
+      Executive Summary
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-baml-overview">
+<span class="md-ellipsis">
+      1. BAML Overview
+    </span>
+</a>
+<nav aria-label="1. BAML Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#11-what-is-baml">
+<span class="md-ellipsis">
+      1.1 What is BAML?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#12-why-baml-vs-alternatives">
+<span class="md-ellipsis">
+      1.2 Why BAML vs Alternatives?
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-agent-architecture">
+<span class="md-ellipsis">
+      2. Agent Architecture
+    </span>
+</a>
+<nav aria-label="2. Agent Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#21-system-diagram">
+<span class="md-ellipsis">
+      2.1 System Diagram
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#22-data-flow">
+<span class="md-ellipsis">
+      2.2 Data Flow
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-baml-functions-4-functions">
+<span class="md-ellipsis">
+      3. BAML Functions (4 Functions)
+    </span>
+</a>
+<nav aria-label="3. BAML Functions (4 Functions)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#31-function-1-analyzeprcontext">
+<span class="md-ellipsis">
+      3.1 Function 1: AnalyzePRContext
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#32-function-2-generateexplanation">
+<span class="md-ellipsis">
+      3.2 Function 2: GenerateExplanation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#33-function-3-suggestimprovements">
+<span class="md-ellipsis">
+      3.3 Function 3: SuggestImprovements
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#34-function-4-detectanomalies">
+<span class="md-ellipsis">
+      3.4 Function 4: DetectAnomalies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-security-privacy-boundaries">
+<span class="md-ellipsis">
+      4. Security &amp; Privacy Boundaries
+    </span>
+</a>
+<nav aria-label="4. Security &amp; Privacy Boundaries" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#41-data-minimization">
+<span class="md-ellipsis">
+      4.1 Data Minimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#42-access-controls">
+<span class="md-ellipsis">
+      4.2 Access Controls
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#43-rate-limiting-cost-control">
+<span class="md-ellipsis">
+      4.3 Rate Limiting &amp; Cost Control
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-phased-rollout-strategy">
+<span class="md-ellipsis">
+      5. Phased Rollout Strategy
+    </span>
+</a>
+<nav aria-label="5. Phased Rollout Strategy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-51-experimental-mode-v100-alpha">
+<span class="md-ellipsis">
+      Phase 5.1: Experimental Mode (v1.0.0-alpha)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-52-advisory-mode-v110-beta">
+<span class="md-ellipsis">
+      Phase 5.2: Advisory Mode (v1.1.0-beta)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-53-active-mode-v120">
+<span class="md-ellipsis">
+      Phase 5.3: Active Mode (v1.2.0)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-54-default-on-mode-v200-future">
+<span class="md-ellipsis">
+      Phase 5.4: Default-On Mode (v2.0.0, future)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-testing-strategy">
+<span class="md-ellipsis">
+      6. Testing Strategy
+    </span>
+</a>
+<nav aria-label="6. Testing Strategy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#61-unit-tests-mock-baml">
+<span class="md-ellipsis">
+      6.1 Unit Tests (Mock BAML)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#62-integration-tests-real-llm">
+<span class="md-ellipsis">
+      6.2 Integration Tests (Real LLM)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#63-property-based-tests-hypothesis">
+<span class="md-ellipsis">
+      6.3 Property-Based Tests (Hypothesis)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-monitoring-observability">
+<span class="md-ellipsis">
+      7. Monitoring &amp; Observability
+    </span>
+</a>
+<nav aria-label="7. Monitoring &amp; Observability" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#71-metrics-to-track">
+<span class="md-ellipsis">
+      7.1 Metrics to Track
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#72-logging">
+<span class="md-ellipsis">
+      7.2 Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#73-feedback-loop">
+<span class="md-ellipsis">
+      7.3 Feedback Loop
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8-success-criteria-phase-5">
+<span class="md-ellipsis">
+      8. Success Criteria (Phase 5)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      References
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    About
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            About
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../about/limitations/">
+<span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#executive-summary">
+<span class="md-ellipsis">
+      Executive Summary
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#1-baml-overview">
+<span class="md-ellipsis">
+      1. BAML Overview
+    </span>
+</a>
+<nav aria-label="1. BAML Overview" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#11-what-is-baml">
+<span class="md-ellipsis">
+      1.1 What is BAML?
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#12-why-baml-vs-alternatives">
+<span class="md-ellipsis">
+      1.2 Why BAML vs Alternatives?
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#2-agent-architecture">
+<span class="md-ellipsis">
+      2. Agent Architecture
+    </span>
+</a>
+<nav aria-label="2. Agent Architecture" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#21-system-diagram">
+<span class="md-ellipsis">
+      2.1 System Diagram
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#22-data-flow">
+<span class="md-ellipsis">
+      2.2 Data Flow
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#3-baml-functions-4-functions">
+<span class="md-ellipsis">
+      3. BAML Functions (4 Functions)
+    </span>
+</a>
+<nav aria-label="3. BAML Functions (4 Functions)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#31-function-1-analyzeprcontext">
+<span class="md-ellipsis">
+      3.1 Function 1: AnalyzePRContext
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#32-function-2-generateexplanation">
+<span class="md-ellipsis">
+      3.2 Function 2: GenerateExplanation
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#33-function-3-suggestimprovements">
+<span class="md-ellipsis">
+      3.3 Function 3: SuggestImprovements
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#34-function-4-detectanomalies">
+<span class="md-ellipsis">
+      3.4 Function 4: DetectAnomalies
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#4-security-privacy-boundaries">
+<span class="md-ellipsis">
+      4. Security &amp; Privacy Boundaries
+    </span>
+</a>
+<nav aria-label="4. Security &amp; Privacy Boundaries" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#41-data-minimization">
+<span class="md-ellipsis">
+      4.1 Data Minimization
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#42-access-controls">
+<span class="md-ellipsis">
+      4.2 Access Controls
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#43-rate-limiting-cost-control">
+<span class="md-ellipsis">
+      4.3 Rate Limiting &amp; Cost Control
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#5-phased-rollout-strategy">
+<span class="md-ellipsis">
+      5. Phased Rollout Strategy
+    </span>
+</a>
+<nav aria-label="5. Phased Rollout Strategy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-51-experimental-mode-v100-alpha">
+<span class="md-ellipsis">
+      Phase 5.1: Experimental Mode (v1.0.0-alpha)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-52-advisory-mode-v110-beta">
+<span class="md-ellipsis">
+      Phase 5.2: Advisory Mode (v1.1.0-beta)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-53-active-mode-v120">
+<span class="md-ellipsis">
+      Phase 5.3: Active Mode (v1.2.0)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#phase-54-default-on-mode-v200-future">
+<span class="md-ellipsis">
+      Phase 5.4: Default-On Mode (v2.0.0, future)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#6-testing-strategy">
+<span class="md-ellipsis">
+      6. Testing Strategy
+    </span>
+</a>
+<nav aria-label="6. Testing Strategy" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#61-unit-tests-mock-baml">
+<span class="md-ellipsis">
+      6.1 Unit Tests (Mock BAML)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#62-integration-tests-real-llm">
+<span class="md-ellipsis">
+      6.2 Integration Tests (Real LLM)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#63-property-based-tests-hypothesis">
+<span class="md-ellipsis">
+      6.3 Property-Based Tests (Hypothesis)
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#7-monitoring-observability">
+<span class="md-ellipsis">
+      7. Monitoring &amp; Observability
+    </span>
+</a>
+<nav aria-label="7. Monitoring &amp; Observability" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#71-metrics-to-track">
+<span class="md-ellipsis">
+      7.1 Metrics to Track
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#72-logging">
+<span class="md-ellipsis">
+      7.2 Logging
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#73-feedback-loop">
+<span class="md-ellipsis">
+      7.3 Feedback Loop
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#8-success-criteria-phase-5">
+<span class="md-ellipsis">
+      8. Success Criteria (Phase 5)
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      References
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/edit/main/docs/vdad/phase4-baml-agent.md" rel="edit" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"></path></svg>
+</a>
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/raw/main/docs/vdad/phase4-baml-agent.md" title="View source of this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg>
+</a>
+<h1 id="vdad-phase-4-baml-ai-agent-specification">VDAD Phase 4: BAML AI Agent Specification<a class="headerlink" href="#vdad-phase-4-baml-ai-agent-specification" title="Permanent link">¶</a></h1>
+<p><strong>Status</strong>: ⏸️ PLANNED (Phase 5 Implementation)<br/>
+<strong>Technology</strong>: BAML (BoundaryML) - Type-Safe LLM Framework<br/>
+<strong>Created</strong>: 2025-10-21<br/>
+<strong>Last Updated</strong>: 2025-10-21</p>
+<hr/>
+<h2 id="executive-summary">Executive Summary<a class="headerlink" href="#executive-summary" title="Permanent link">¶</a></h2>
+<p>This document specifies the <strong>optional AI agent</strong> for RepoQ using BAML (BoundaryML), a type-safe LLM framework. The agent provides:
+1. <strong>Semantic Analysis</strong>: Understand developer intent from PR context
+2. <strong>Explanation Generation</strong>: Human-friendly explanations for gate failures
+3. <strong>Improvement Suggestions</strong>: Concrete refactoring recommendations
+4. <strong>Anomaly Detection</strong>: Detect gaming attempts (trivial tests, whitespace commits)</p>
+<p><strong>Key Principles</strong>:
+- <strong>Opt-In Only</strong>: Disabled by default, explicit consent required
+- <strong>Type-Safe</strong>: BAML enforces schemas (no hallucinated JSON)
+- <strong>Privacy-Aware</strong>: Code diffs sent to LLM, but no credentials/secrets
+- <strong>Human-in-Loop</strong>: AI suggestions are advisory (not automated)
+- <strong>Phased Rollout</strong>: Experimental → Advisory → Active modes</p>
+<hr/>
+<h2 id="1-baml-overview">1. BAML Overview<a class="headerlink" href="#1-baml-overview" title="Permanent link">¶</a></h2>
+<h3 id="11-what-is-baml">1.1 What is BAML?<a class="headerlink" href="#11-what-is-baml" title="Permanent link">¶</a></h3>
+<p><strong>BAML (BoundaryML Agent Markup Language)</strong> is a DSL for type-safe LLM interactions. Key features:
+- <strong>Declarative Prompts</strong>: Prompts in <code>.baml</code> files (version-controlled)
+- <strong>Type Safety</strong>: Compile prompts to Python dataclasses (no runtime errors)
+- <strong>Validation</strong>: JSON schema validation for LLM outputs
+- <strong>Multi-Provider</strong>: OpenAI, Anthropic, local LLMs (via Ollama)
+- <strong>Testing</strong>: Mock LLM responses in unit tests</p>
+<h3 id="12-why-baml-vs-alternatives">1.2 Why BAML vs Alternatives?<a class="headerlink" href="#12-why-baml-vs-alternatives" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>BAML</th>
+<th>LangChain</th>
+<th>Raw OpenAI API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Type Safety</strong></td>
+<td>✅ Compile-time checks</td>
+<td>❌ Runtime only</td>
+<td>❌ No types</td>
+</tr>
+<tr>
+<td><strong>Prompt Version Control</strong></td>
+<td>✅ <code>.baml</code> files</td>
+<td>⚠️ In code</td>
+<td>❌ Strings in code</td>
+</tr>
+<tr>
+<td><strong>Validation</strong></td>
+<td>✅ JSON schema</td>
+<td>⚠️ Manual Pydantic</td>
+<td>❌ Manual parsing</td>
+</tr>
+<tr>
+<td><strong>Testing</strong></td>
+<td>✅ Mock responses</td>
+<td>⚠️ Complex mocking</td>
+<td>❌ HTTP mocking</td>
+</tr>
+<tr>
+<td><strong>Complexity</strong></td>
+<td>⚠️ ~50 classes</td>
+<td>❌ ~500 classes</td>
+<td>✅ Minimal</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Decision</strong>: BAML (per ADR-001) for balance of type safety + simplicity.</p>
+<hr/>
+<h2 id="2-agent-architecture">2. Agent Architecture<a class="headerlink" href="#2-agent-architecture" title="Permanent link">¶</a></h2>
+<h3 id="21-system-diagram">2.1 System Diagram<a class="headerlink" href="#21-system-diagram" title="Permanent link">¶</a></h3>
+<pre class="mermaid"><code>graph TB
+    subgraph "RepoQ CLI"
+        GATE[GateCommand]
+        CONFIG[PolicyLoader]
+    end
+
+    subgraph "AI Agent (Optional)"
+        CONSENT[ConsentManager]
+        BAML_CLIENT[BAML Client]
+        CACHE[Response Cache]
+        BAML_FUNC1[AnalyzePRContext]
+        BAML_FUNC2[GenerateExplanation]
+        BAML_FUNC3[SuggestImprovements]
+        BAML_FUNC4[DetectAnomalies]
+    end
+
+    subgraph "LLM Provider"
+        OPENAI[OpenAI GPT-4]
+        ANTHROPIC[Anthropic Claude]
+        OLLAMA[Ollama Local]
+    end
+
+    GATE --&gt;|--enable-ai flag| CONSENT
+    CONSENT --&gt;|consent given| BAML_CLIENT
+    CONFIG --&gt;|ai_agent.provider| BAML_CLIENT
+
+    BAML_CLIENT --&gt; CACHE
+    CACHE --&gt;|cache miss| BAML_FUNC1
+    CACHE --&gt;|cache miss| BAML_FUNC2
+    CACHE --&gt;|cache miss| BAML_FUNC3
+    CACHE --&gt;|cache miss| BAML_FUNC4
+
+    BAML_FUNC1 --&gt;|LLM call| OPENAI
+    BAML_FUNC2 --&gt;|LLM call| ANTHROPIC
+    BAML_FUNC3 --&gt;|LLM call| OLLAMA
+    BAML_FUNC4 --&gt;|LLM call| OPENAI
+
+    OPENAI --&gt;|typed response| BAML_CLIENT
+    ANTHROPIC --&gt;|typed response| BAML_CLIENT
+    OLLAMA --&gt;|typed response| BAML_CLIENT
+
+    BAML_CLIENT --&gt;|AI insights| GATE
+
+    style CONSENT fill:#ffe1e1
+    style BAML_CLIENT fill:#e1f5ff
+    style CACHE fill:#fff4e1</code></pre>
+<h3 id="22-data-flow">2.2 Data Flow<a class="headerlink" href="#22-data-flow" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>User Trigger</strong>: <code>repoq gate --enable-ai</code> (explicit opt-in)</li>
+<li><strong>Consent Check</strong>: Warn user: "Code diffs will be sent to OpenAI. Continue? (y/N)"</li>
+<li><strong>Configuration Load</strong>: Read <code>ai_agent.provider</code>, <code>ai_agent.api_key_env</code> from policy</li>
+<li><strong>BAML Invocation</strong>: Call BAML functions (AnalyzePRContext, etc.)</li>
+<li><strong>LLM Call</strong>: BAML sends prompt to LLM provider (OpenAI/Claude/Ollama)</li>
+<li><strong>Response Validation</strong>: BAML validates LLM response against schema</li>
+<li><strong>Cache Storage</strong>: Cache response by <code>{diff_sha}_{function_name}</code> (avoid re-calling LLM)</li>
+<li><strong>Result Display</strong>: Show AI insights in CLI output (advisory, not blocking)</li>
+</ol>
+<hr/>
+<h2 id="3-baml-functions-4-functions">3. BAML Functions (4 Functions)<a class="headerlink" href="#3-baml-functions-4-functions" title="Permanent link">¶</a></h2>
+<h3 id="31-function-1-analyzeprcontext">3.1 Function 1: AnalyzePRContext<a class="headerlink" href="#31-function-1-analyzeprcontext" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Extract developer intent, design patterns, and risks from PR diff.</p>
+<p><strong>BAML Specification</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>// File: repoq/ai/agent.baml
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>class PRContext {
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>  intent: string @description("What is the developer trying to accomplish?")
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>  patterns: string[] @description("Design patterns used (e.g., Factory, Observer)")
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>  risks: string[] @description("Potential issues (e.g., threading bugs, SQL injection)")
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>  complexity_justified: bool @description("Is high complexity justified by requirements?")
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>  confidence: float @description("Confidence score 0.0-1.0")
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>}
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>function AnalyzePRContext(
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a>  diff: string @description("Git diff of the PR"),
+</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>  metrics: Metrics @description("Computed metrics (complexity, coverage, etc.)")
+</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a>) -&gt; PRContext {
+</span><span id="__span-0-15"><a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a>  client GPT4
+</span><span id="__span-0-16"><a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a>  prompt #"
+</span><span id="__span-0-17"><a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a>    You are a senior code reviewer analyzing a pull request.
+</span><span id="__span-0-18"><a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a>
+</span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a>    **Git Diff**:
+</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a>    ```diff
+</span><span id="__span-0-21"><a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a>    {{ diff }}
+</span><span id="__span-0-22"><a href="#__codelineno-0-22" id="__codelineno-0-22" name="__codelineno-0-22"></a>    ```
+</span><span id="__span-0-23"><a href="#__codelineno-0-23" id="__codelineno-0-23" name="__codelineno-0-23"></a>
+</span><span id="__span-0-24"><a href="#__codelineno-0-24" id="__codelineno-0-24" name="__codelineno-0-24"></a>    **Metrics**:
+</span><span id="__span-0-25"><a href="#__codelineno-0-25" id="__codelineno-0-25" name="__codelineno-0-25"></a>    - Complexity: {{ metrics.complexity }}
+</span><span id="__span-0-26"><a href="#__codelineno-0-26" id="__codelineno-0-26" name="__codelineno-0-26"></a>    - Coverage: {{ metrics.coverage }}%
+</span><span id="__span-0-27"><a href="#__codelineno-0-27" id="__codelineno-0-27" name="__codelineno-0-27"></a>    - Hotspots: {{ metrics.hotspots }}
+</span><span id="__span-0-28"><a href="#__codelineno-0-28" id="__codelineno-0-28" name="__codelineno-0-28"></a>    - TODOs: {{ metrics.todos }}
+</span><span id="__span-0-29"><a href="#__codelineno-0-29" id="__codelineno-0-29" name="__codelineno-0-29"></a>
+</span><span id="__span-0-30"><a href="#__codelineno-0-30" id="__codelineno-0-30" name="__codelineno-0-30"></a>    **Task**: Extract the following:
+</span><span id="__span-0-31"><a href="#__codelineno-0-31" id="__codelineno-0-31" name="__codelineno-0-31"></a>    1. **Intent**: What is the developer trying to accomplish? (1 sentence)
+</span><span id="__span-0-32"><a href="#__codelineno-0-32" id="__codelineno-0-32" name="__codelineno-0-32"></a>    2. **Patterns**: What design patterns are being used? (list)
+</span><span id="__span-0-33"><a href="#__codelineno-0-33" id="__codelineno-0-33" name="__codelineno-0-33"></a>    3. **Risks**: What are potential issues or bugs? (list)
+</span><span id="__span-0-34"><a href="#__codelineno-0-34" id="__codelineno-0-34" name="__codelineno-0-34"></a>    4. **Complexity Justified**: Is the high complexity ({{ metrics.complexity }}) justified by the task? (boolean)
+</span><span id="__span-0-35"><a href="#__codelineno-0-35" id="__codelineno-0-35" name="__codelineno-0-35"></a>    5. **Confidence**: How confident are you in this analysis? (0.0-1.0)
+</span><span id="__span-0-36"><a href="#__codelineno-0-36" id="__codelineno-0-36" name="__codelineno-0-36"></a>
+</span><span id="__span-0-37"><a href="#__codelineno-0-37" id="__codelineno-0-37" name="__codelineno-0-37"></a>    **Output Format**: JSON matching PRContext schema.
+</span><span id="__span-0-38"><a href="#__codelineno-0-38" id="__codelineno-0-38" name="__codelineno-0-38"></a>  "#
+</span><span id="__span-0-39"><a href="#__codelineno-0-39" id="__codelineno-0-39" name="__codelineno-0-39"></a>}
+</span></code></pre></div></p>
+<p><strong>Example Input</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="n">diff</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="s2">diff --git a/auth.py b/auth.py</span>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="s2">+def login(username, password):</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="s2">+    if not validate_input(username, password):</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="s2">+        raise ValueError("Invalid input")</span>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="s2">+    user = db.query(User).filter_by(username=username).first()</span>
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="s2">+    if user and user.check_password(password):</span>
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="s2">+        session['user_id'] = user.id</span>
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a><span class="s2">+        return True</span>
+</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a><span class="s2">+    return False</span>
+</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a><span class="s2">"""</span>
+</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a><span class="n">metrics</span> <span class="o">=</span> <span class="n">Metrics</span><span class="p">(</span><span class="n">complexity</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mi">75</span><span class="p">,</span> <span class="n">hotspots</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">todos</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Example Output</strong>:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p">{</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="w">  </span><span class="nt">"intent"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Implement login functionality with input validation and session management"</span><span class="p">,</span>
+</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="w">  </span><span class="nt">"patterns"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"Repository Pattern (db.query)"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Session Management"</span><span class="p">],</span>
+</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="w">  </span><span class="nt">"risks"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="w">    </span><span class="s2">"SQL injection if validate_input is weak"</span><span class="p">,</span>
+</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="w">    </span><span class="s2">"Session fixation if session not regenerated"</span><span class="p">,</span>
+</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="w">    </span><span class="s2">"Timing attack on password check (constant-time comparison missing)"</span>
+</span><span id="__span-2-8"><a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-2-9"><a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="w">  </span><span class="nt">"complexity_justified"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+</span><span id="__span-2-10"><a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a><span class="w">  </span><span class="nt">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.85</span>
+</span><span id="__span-2-11"><a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Usage in RepoQ</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># repoq/ai/client.py</span>
+</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">baml_client</span><span class="w"> </span><span class="kn">import</span> <span class="n">b</span>
+</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">analyze_pr_context</span><span class="p">(</span><span class="n">diff</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Metrics</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">PRContext</span><span class="p">:</span>
+</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a>    <span class="n">context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">AnalyzePRContext</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="n">diff</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
+</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a>    <span class="k">return</span> <span class="n">context</span>
+</span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="c1"># In gate command</span>
+</span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="k">if</span> <span class="n">enable_ai</span><span class="p">:</span>
+</span><span id="__span-3-11"><a href="#__codelineno-3-11" id="__codelineno-3-11" name="__codelineno-3-11"></a>    <span class="n">pr_context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">analyze_pr_context</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+</span><span id="__span-3-12"><a href="#__codelineno-3-12" id="__codelineno-3-12" name="__codelineno-3-12"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"AI Analysis: </span><span class="si">{</span><span class="n">pr_context</span><span class="o">.</span><span class="n">intent</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-3-13"><a href="#__codelineno-3-13" id="__codelineno-3-13" name="__codelineno-3-13"></a>    <span class="k">if</span> <span class="n">pr_context</span><span class="o">.</span><span class="n">risks</span><span class="p">:</span>
+</span><span id="__span-3-14"><a href="#__codelineno-3-14" id="__codelineno-3-14" name="__codelineno-3-14"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">"⚠️  Potential risks detected:"</span><span class="p">)</span>
+</span><span id="__span-3-15"><a href="#__codelineno-3-15" id="__codelineno-3-15" name="__codelineno-3-15"></a>        <span class="k">for</span> <span class="n">risk</span> <span class="ow">in</span> <span class="n">pr_context</span><span class="o">.</span><span class="n">risks</span><span class="p">:</span>
+</span><span id="__span-3-16"><a href="#__codelineno-3-16" id="__codelineno-3-16" name="__codelineno-3-16"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  - </span><span class="si">{</span><span class="n">risk</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div></p>
+<hr/>
+<h3 id="32-function-2-generateexplanation">3.2 Function 2: GenerateExplanation<a class="headerlink" href="#32-function-2-generateexplanation" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Generate human-friendly explanation for gate failure.</p>
+<p><strong>BAML Specification</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a>class Explanation {
+</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a>  summary: string @description("1-sentence summary of why gate failed")
+</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a>  reasons: string[] @description("Detailed reasons (avoid jargon)")
+</span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a>  affected_files: string[] @description("Files that caused failure")
+</span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a>  fix_steps: string[] @description("Concrete steps to fix (actionable)")
+</span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a>  estimated_time: int @description("Estimated fix time in minutes")
+</span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a>}
+</span><span id="__span-4-8"><a href="#__codelineno-4-8" id="__codelineno-4-8" name="__codelineno-4-8"></a>
+</span><span id="__span-4-9"><a href="#__codelineno-4-9" id="__codelineno-4-9" name="__codelineno-4-9"></a>function GenerateExplanation(
+</span><span id="__span-4-10"><a href="#__codelineno-4-10" id="__codelineno-4-10" name="__codelineno-4-10"></a>  failure: GateFailure @description("Gate failure details")
+</span><span id="__span-4-11"><a href="#__codelineno-4-11" id="__codelineno-4-11" name="__codelineno-4-11"></a>) -&gt; Explanation {
+</span><span id="__span-4-12"><a href="#__codelineno-4-12" id="__codelineno-4-12" name="__codelineno-4-12"></a>  client GPT4
+</span><span id="__span-4-13"><a href="#__codelineno-4-13" id="__codelineno-4-13" name="__codelineno-4-13"></a>  prompt #"
+</span><span id="__span-4-14"><a href="#__codelineno-4-14" id="__codelineno-4-14" name="__codelineno-4-14"></a>    You are a helpful code quality assistant explaining why a quality gate failed.
+</span><span id="__span-4-15"><a href="#__codelineno-4-15" id="__codelineno-4-15" name="__codelineno-4-15"></a>
+</span><span id="__span-4-16"><a href="#__codelineno-4-16" id="__codelineno-4-16" name="__codelineno-4-16"></a>    **Gate Failure**:
+</span><span id="__span-4-17"><a href="#__codelineno-4-17" id="__codelineno-4-17" name="__codelineno-4-17"></a>    - Reason: {{ failure.reason }}
+</span><span id="__span-4-18"><a href="#__codelineno-4-18" id="__codelineno-4-18" name="__codelineno-4-18"></a>    - ΔQ: {{ failure.delta_q }} (threshold: {{ failure.epsilon }})
+</span><span id="__span-4-19"><a href="#__codelineno-4-19" id="__codelineno-4-19" name="__codelineno-4-19"></a>    - PCQ: {{ failure.pcq }} (threshold: {{ failure.tau }})
+</span><span id="__span-4-20"><a href="#__codelineno-4-20" id="__codelineno-4-20" name="__codelineno-4-20"></a>    - Failed Modules: {{ failure.witness | join(", ") }}
+</span><span id="__span-4-21"><a href="#__codelineno-4-21" id="__codelineno-4-21" name="__codelineno-4-21"></a>
+</span><span id="__span-4-22"><a href="#__codelineno-4-22" id="__codelineno-4-22" name="__codelineno-4-22"></a>    **Metrics**:
+</span><span id="__span-4-23"><a href="#__codelineno-4-23" id="__codelineno-4-23" name="__codelineno-4-23"></a>    - Complexity: {{ failure.metrics.complexity }}
+</span><span id="__span-4-24"><a href="#__codelineno-4-24" id="__codelineno-4-24" name="__codelineno-4-24"></a>    - Coverage: {{ failure.metrics.coverage }}%
+</span><span id="__span-4-25"><a href="#__codelineno-4-25" id="__codelineno-4-25" name="__codelineno-4-25"></a>    - Hotspots: {{ failure.metrics.hotspots }}
+</span><span id="__span-4-26"><a href="#__codelineno-4-26" id="__codelineno-4-26" name="__codelineno-4-26"></a>    - TODOs: {{ failure.metrics.todos }}
+</span><span id="__span-4-27"><a href="#__codelineno-4-27" id="__codelineno-4-27" name="__codelineno-4-27"></a>
+</span><span id="__span-4-28"><a href="#__codelineno-4-28" id="__codelineno-4-28" name="__codelineno-4-28"></a>    **Task**: Generate a clear, jargon-free explanation:
+</span><span id="__span-4-29"><a href="#__codelineno-4-29" id="__codelineno-4-29" name="__codelineno-4-29"></a>    1. **Summary**: 1-sentence summary (avoid acronyms like "PCQ", say "quality score")
+</span><span id="__span-4-30"><a href="#__codelineno-4-30" id="__codelineno-4-30" name="__codelineno-4-30"></a>    2. **Reasons**: Detailed reasons (2-4 sentences, plain language)
+</span><span id="__span-4-31"><a href="#__codelineno-4-31" id="__codelineno-4-31" name="__codelineno-4-31"></a>    3. **Affected Files**: Which files caused the failure?
+</span><span id="__span-4-32"><a href="#__codelineno-4-32" id="__codelineno-4-32" name="__codelineno-4-32"></a>    4. **Fix Steps**: Concrete steps to fix (3-5 actionable items)
+</span><span id="__span-4-33"><a href="#__codelineno-4-33" id="__codelineno-4-33" name="__codelineno-4-33"></a>    5. **Estimated Time**: How long will it take to fix? (in minutes)
+</span><span id="__span-4-34"><a href="#__codelineno-4-34" id="__codelineno-4-34" name="__codelineno-4-34"></a>
+</span><span id="__span-4-35"><a href="#__codelineno-4-35" id="__codelineno-4-35" name="__codelineno-4-35"></a>    **Output Format**: JSON matching Explanation schema.
+</span><span id="__span-4-36"><a href="#__codelineno-4-36" id="__codelineno-4-36" name="__codelineno-4-36"></a>  "#
+</span><span id="__span-4-37"><a href="#__codelineno-4-37" id="__codelineno-4-37" name="__codelineno-4-37"></a>}
+</span></code></pre></div></p>
+<p><strong>Example Input</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="n">failure</span> <span class="o">=</span> <span class="n">GateFailure</span><span class="p">(</span>
+</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>    <span class="n">reason</span><span class="o">=</span><span class="s2">"PCQ below threshold"</span><span class="p">,</span>
+</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a>    <span class="n">delta_q</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span>
+</span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a>    <span class="n">epsilon</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+</span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>    <span class="n">pcq</span><span class="o">=</span><span class="mf">0.72</span><span class="p">,</span>
+</span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>    <span class="n">tau</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+</span><span id="__span-5-7"><a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>    <span class="n">witness</span><span class="o">=</span><span class="p">[</span><span class="s2">"auth"</span><span class="p">,</span> <span class="s2">"db"</span><span class="p">,</span> <span class="s2">"api"</span><span class="p">],</span>
+</span><span id="__span-5-8"><a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>    <span class="n">metrics</span><span class="o">=</span><span class="n">Metrics</span><span class="p">(</span><span class="n">complexity</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mi">65</span><span class="p">,</span> <span class="n">hotspots</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">todos</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+</span><span id="__span-5-9"><a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Example Output</strong>:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="p">{</span>
+</span><span id="__span-6-2"><a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="nt">"summary"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Three modules (auth, db, api) have lower quality than required, mainly due to low test coverage and high complexity."</span><span class="p">,</span>
+</span><span id="__span-6-3"><a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span><span class="nt">"reasons"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-6-4"><a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="s2">"Your test coverage is 65%, below the 80% target. Tests are missing for critical authentication logic."</span><span class="p">,</span>
+</span><span id="__span-6-5"><a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="w">    </span><span class="s2">"Three modules (auth, db, api) have high code complexity (McCabe score 12), making them hard to maintain."</span><span class="p">,</span>
+</span><span id="__span-6-6"><a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a><span class="w">    </span><span class="s2">"Eight files have been changed frequently (hotspots), indicating instability or lack of refactoring."</span>
+</span><span id="__span-6-7"><a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-6-8"><a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a><span class="w">  </span><span class="nt">"affected_files"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"auth.py"</span><span class="p">,</span><span class="w"> </span><span class="s2">"db.py"</span><span class="p">,</span><span class="w"> </span><span class="s2">"api.py"</span><span class="p">],</span>
+</span><span id="__span-6-9"><a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a><span class="w">  </span><span class="nt">"fix_steps"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-6-10"><a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a><span class="w">    </span><span class="s2">"Write unit tests for auth.py (focus on login, logout, password validation)"</span><span class="p">,</span>
+</span><span id="__span-6-11"><a href="#__codelineno-6-11" id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="w">    </span><span class="s2">"Refactor db.py to extract complex query logic into separate functions"</span><span class="p">,</span>
+</span><span id="__span-6-12"><a href="#__codelineno-6-12" id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="s2">"Add integration tests for api.py (cover all endpoints)"</span><span class="p">,</span>
+</span><span id="__span-6-13"><a href="#__codelineno-6-13" id="__codelineno-6-13" name="__codelineno-6-13"></a><span class="w">    </span><span class="s2">"Reduce TODO count (15 → 10) by addressing most critical items"</span>
+</span><span id="__span-6-14"><a href="#__codelineno-6-14" id="__codelineno-6-14" name="__codelineno-6-14"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-6-15"><a href="#__codelineno-6-15" id="__codelineno-6-15" name="__codelineno-6-15"></a><span class="w">  </span><span class="nt">"estimated_time"</span><span class="p">:</span><span class="w"> </span><span class="mi">120</span>
+</span><span id="__span-6-16"><a href="#__codelineno-6-16" id="__codelineno-6-16" name="__codelineno-6-16"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Usage in RepoQ</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">if</span> <span class="ow">not</span> <span class="n">verdict</span><span class="o">.</span><span class="n">passed</span> <span class="ow">and</span> <span class="n">enable_ai</span><span class="p">:</span>
+</span><span id="__span-7-2"><a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>    <span class="n">explanation</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">GenerateExplanation</span><span class="p">(</span><span class="n">failure</span><span class="o">=</span><span class="n">verdict</span><span class="o">.</span><span class="n">failure</span><span class="p">)</span>
+</span><span id="__span-7-3"><a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">📖 AI Explanation:"</span><span class="p">)</span>
+</span><span id="__span-7-4"><a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   </span><span class="si">{</span><span class="n">explanation</span><span class="o">.</span><span class="n">summary</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-7-5"><a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">🔧 How to Fix:"</span><span class="p">)</span>
+</span><span id="__span-7-6"><a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">step</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">explanation</span><span class="o">.</span><span class="n">fix_steps</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-7-7"><a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">step</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-7-8"><a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">⏱️  Estimated Time: </span><span class="si">{</span><span class="n">explanation</span><span class="o">.</span><span class="n">estimated_time</span><span class="si">}</span><span class="s2"> minutes"</span><span class="p">)</span>
+</span></code></pre></div></p>
+<hr/>
+<h3 id="33-function-3-suggestimprovements">3.3 Function 3: SuggestImprovements<a class="headerlink" href="#33-function-3-suggestimprovements" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Suggest concrete refactorings to reduce complexity.</p>
+<p><strong>BAML Specification</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a>class Suggestion {
+</span><span id="__span-8-2"><a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>  type: string @description("Type of improvement: 'extract_function', 'simplify_conditional', 'apply_pattern'")
+</span><span id="__span-8-3"><a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a>  description: string @description("Human-readable description")
+</span><span id="__span-8-4"><a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a>  code_snippet: string @description("Example code snippet (optional)")
+</span><span id="__span-8-5"><a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a>  impact: string @description("Expected impact: 'high', 'medium', 'low'")
+</span><span id="__span-8-6"><a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a>}
+</span><span id="__span-8-7"><a href="#__codelineno-8-7" id="__codelineno-8-7" name="__codelineno-8-7"></a>
+</span><span id="__span-8-8"><a href="#__codelineno-8-8" id="__codelineno-8-8" name="__codelineno-8-8"></a>class Suggestions {
+</span><span id="__span-8-9"><a href="#__codelineno-8-9" id="__codelineno-8-9" name="__codelineno-8-9"></a>  suggestions: Suggestion[] @description("List of 3-5 concrete suggestions")
+</span><span id="__span-8-10"><a href="#__codelineno-8-10" id="__codelineno-8-10" name="__codelineno-8-10"></a>  prioritized_suggestion: Suggestion @description("Most impactful suggestion")
+</span><span id="__span-8-11"><a href="#__codelineno-8-11" id="__codelineno-8-11" name="__codelineno-8-11"></a>}
+</span><span id="__span-8-12"><a href="#__codelineno-8-12" id="__codelineno-8-12" name="__codelineno-8-12"></a>
+</span><span id="__span-8-13"><a href="#__codelineno-8-13" id="__codelineno-8-13" name="__codelineno-8-13"></a>function SuggestImprovements(
+</span><span id="__span-8-14"><a href="#__codelineno-8-14" id="__codelineno-8-14" name="__codelineno-8-14"></a>  code: string @description("Source code of the file"),
+</span><span id="__span-8-15"><a href="#__codelineno-8-15" id="__codelineno-8-15" name="__codelineno-8-15"></a>  complexity: int @description("Current complexity score")
+</span><span id="__span-8-16"><a href="#__codelineno-8-16" id="__codelineno-8-16" name="__codelineno-8-16"></a>) -&gt; Suggestions {
+</span><span id="__span-8-17"><a href="#__codelineno-8-17" id="__codelineno-8-17" name="__codelineno-8-17"></a>  client GPT4
+</span><span id="__span-8-18"><a href="#__codelineno-8-18" id="__codelineno-8-18" name="__codelineno-8-18"></a>  prompt #"
+</span><span id="__span-8-19"><a href="#__codelineno-8-19" id="__codelineno-8-19" name="__codelineno-8-19"></a>    You are a senior software engineer suggesting refactorings to reduce code complexity.
+</span><span id="__span-8-20"><a href="#__codelineno-8-20" id="__codelineno-8-20" name="__codelineno-8-20"></a>
+</span><span id="__span-8-21"><a href="#__codelineno-8-21" id="__codelineno-8-21" name="__codelineno-8-21"></a>    **Code**:
+</span><span id="__span-8-22"><a href="#__codelineno-8-22" id="__codelineno-8-22" name="__codelineno-8-22"></a>    ```python
+</span><span id="__span-8-23"><a href="#__codelineno-8-23" id="__codelineno-8-23" name="__codelineno-8-23"></a>    {{ code }}
+</span><span id="__span-8-24"><a href="#__codelineno-8-24" id="__codelineno-8-24" name="__codelineno-8-24"></a>    ```
+</span><span id="__span-8-25"><a href="#__codelineno-8-25" id="__codelineno-8-25" name="__codelineno-8-25"></a>
+</span><span id="__span-8-26"><a href="#__codelineno-8-26" id="__codelineno-8-26" name="__codelineno-8-26"></a>    **Current Complexity**: {{ complexity }} (target: ≤10)
+</span><span id="__span-8-27"><a href="#__codelineno-8-27" id="__codelineno-8-27" name="__codelineno-8-27"></a>
+</span><span id="__span-8-28"><a href="#__codelineno-8-28" id="__codelineno-8-28" name="__codelineno-8-28"></a>    **Task**: Suggest 3-5 concrete refactorings:
+</span><span id="__span-8-29"><a href="#__codelineno-8-29" id="__codelineno-8-29" name="__codelineno-8-29"></a>    1. **Extract Function**: Identify long functions that can be split
+</span><span id="__span-8-30"><a href="#__codelineno-8-30" id="__codelineno-8-30" name="__codelineno-8-30"></a>    2. **Simplify Conditional**: Reduce nested if/else, use guard clauses
+</span><span id="__span-8-31"><a href="#__codelineno-8-31" id="__codelineno-8-31" name="__codelineno-8-31"></a>    3. **Apply Design Pattern**: Suggest patterns (Strategy, Factory, etc.)
+</span><span id="__span-8-32"><a href="#__codelineno-8-32" id="__codelineno-8-32" name="__codelineno-8-32"></a>
+</span><span id="__span-8-33"><a href="#__codelineno-8-33" id="__codelineno-8-33" name="__codelineno-8-33"></a>    For each suggestion:
+</span><span id="__span-8-34"><a href="#__codelineno-8-34" id="__codelineno-8-34" name="__codelineno-8-34"></a>    - **Type**: 'extract_function', 'simplify_conditional', or 'apply_pattern'
+</span><span id="__span-8-35"><a href="#__codelineno-8-35" id="__codelineno-8-35" name="__codelineno-8-35"></a>    - **Description**: Plain language explanation
+</span><span id="__span-8-36"><a href="#__codelineno-8-36" id="__codelineno-8-36" name="__codelineno-8-36"></a>    - **Code Snippet**: Example refactored code (optional)
+</span><span id="__span-8-37"><a href="#__codelineno-8-37" id="__codelineno-8-37" name="__codelineno-8-37"></a>    - **Impact**: 'high', 'medium', or 'low'
+</span><span id="__span-8-38"><a href="#__codelineno-8-38" id="__codelineno-8-38" name="__codelineno-8-38"></a>
+</span><span id="__span-8-39"><a href="#__codelineno-8-39" id="__codelineno-8-39" name="__codelineno-8-39"></a>    **Output Format**: JSON matching Suggestions schema.
+</span><span id="__span-8-40"><a href="#__codelineno-8-40" id="__codelineno-8-40" name="__codelineno-8-40"></a>  "#
+</span><span id="__span-8-41"><a href="#__codelineno-8-41" id="__codelineno-8-41" name="__codelineno-8-41"></a>}
+</span></code></pre></div></p>
+<p><strong>Example Input</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="n">code</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span id="__span-9-2"><a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="s2">def process_payment(order):</span>
+</span><span id="__span-9-3"><a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="s2">    if order.status == 'pending':</span>
+</span><span id="__span-9-4"><a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="s2">        if order.payment_method == 'credit_card':</span>
+</span><span id="__span-9-5"><a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="s2">            if order.amount &gt; 0:</span>
+</span><span id="__span-9-6"><a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="s2">                charge_credit_card(order)</span>
+</span><span id="__span-9-7"><a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="s2">                order.status = 'paid'</span>
+</span><span id="__span-9-8"><a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="s2">            else:</span>
+</span><span id="__span-9-9"><a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="s2">                raise ValueError("Invalid amount")</span>
+</span><span id="__span-9-10"><a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="s2">        elif order.payment_method == 'paypal':</span>
+</span><span id="__span-9-11"><a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="s2">            if order.amount &gt; 0:</span>
+</span><span id="__span-9-12"><a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="s2">                charge_paypal(order)</span>
+</span><span id="__span-9-13"><a href="#__codelineno-9-13" id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="s2">                order.status = 'paid'</span>
+</span><span id="__span-9-14"><a href="#__codelineno-9-14" id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="s2">            else:</span>
+</span><span id="__span-9-15"><a href="#__codelineno-9-15" id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="s2">                raise ValueError("Invalid amount")</span>
+</span><span id="__span-9-16"><a href="#__codelineno-9-16" id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="s2">        else:</span>
+</span><span id="__span-9-17"><a href="#__codelineno-9-17" id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="s2">            raise ValueError("Unknown payment method")</span>
+</span><span id="__span-9-18"><a href="#__codelineno-9-18" id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="s2">    else:</span>
+</span><span id="__span-9-19"><a href="#__codelineno-9-19" id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="s2">        raise ValueError("Order not pending")</span>
+</span><span id="__span-9-20"><a href="#__codelineno-9-20" id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="s2">"""</span>
+</span><span id="__span-9-21"><a href="#__codelineno-9-21" id="__codelineno-9-21" name="__codelineno-9-21"></a>
+</span><span id="__span-9-22"><a href="#__codelineno-9-22" id="__codelineno-9-22" name="__codelineno-9-22"></a><span class="n">complexity</span> <span class="o">=</span> <span class="mi">12</span>
+</span></code></pre></div></p>
+<p><strong>Example Output</strong>:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="p">{</span>
+</span><span id="__span-10-2"><a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="w">  </span><span class="nt">"suggestions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-10-3"><a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-10-4"><a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"extract_function"</span><span class="p">,</span>
+</span><span id="__span-10-5"><a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a><span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Extract payment charging logic into separate functions (charge_credit_card_safe, charge_paypal_safe)"</span><span class="p">,</span>
+</span><span id="__span-10-6"><a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="w">      </span><span class="nt">"code_snippet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"def charge_credit_card_safe(order):\n    if order.amount &lt;= 0:\n        raise ValueError('Invalid amount')\n    charge_credit_card(order)"</span><span class="p">,</span>
+</span><span id="__span-10-7"><a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="w">      </span><span class="nt">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span>
+</span><span id="__span-10-8"><a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-10-9"><a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-10-10"><a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"simplify_conditional"</span><span class="p">,</span>
+</span><span id="__span-10-11"><a href="#__codelineno-10-11" id="__codelineno-10-11" name="__codelineno-10-11"></a><span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Use guard clauses to reduce nesting (early return for invalid cases)"</span><span class="p">,</span>
+</span><span id="__span-10-12"><a href="#__codelineno-10-12" id="__codelineno-10-12" name="__codelineno-10-12"></a><span class="w">      </span><span class="nt">"code_snippet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"if order.status != 'pending':\n    raise ValueError('Order not pending')\nif order.amount &lt;= 0:\n    raise ValueError('Invalid amount')"</span><span class="p">,</span>
+</span><span id="__span-10-13"><a href="#__codelineno-10-13" id="__codelineno-10-13" name="__codelineno-10-13"></a><span class="w">      </span><span class="nt">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span>
+</span><span id="__span-10-14"><a href="#__codelineno-10-14" id="__codelineno-10-14" name="__codelineno-10-14"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-10-15"><a href="#__codelineno-10-15" id="__codelineno-10-15" name="__codelineno-10-15"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-10-16"><a href="#__codelineno-10-16" id="__codelineno-10-16" name="__codelineno-10-16"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"apply_pattern"</span><span class="p">,</span>
+</span><span id="__span-10-17"><a href="#__codelineno-10-17" id="__codelineno-10-17" name="__codelineno-10-17"></a><span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Apply Strategy Pattern for payment methods (PaymentStrategy interface)"</span><span class="p">,</span>
+</span><span id="__span-10-18"><a href="#__codelineno-10-18" id="__codelineno-10-18" name="__codelineno-10-18"></a><span class="w">      </span><span class="nt">"code_snippet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"class CreditCardPayment(PaymentStrategy):\n    def charge(self, order):\n        charge_credit_card(order)"</span><span class="p">,</span>
+</span><span id="__span-10-19"><a href="#__codelineno-10-19" id="__codelineno-10-19" name="__codelineno-10-19"></a><span class="w">      </span><span class="nt">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"medium"</span>
+</span><span id="__span-10-20"><a href="#__codelineno-10-20" id="__codelineno-10-20" name="__codelineno-10-20"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-21"><a href="#__codelineno-10-21" id="__codelineno-10-21" name="__codelineno-10-21"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-10-22"><a href="#__codelineno-10-22" id="__codelineno-10-22" name="__codelineno-10-22"></a><span class="w">  </span><span class="nt">"prioritized_suggestion"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-23"><a href="#__codelineno-10-23" id="__codelineno-10-23" name="__codelineno-10-23"></a><span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"simplify_conditional"</span><span class="p">,</span>
+</span><span id="__span-10-24"><a href="#__codelineno-10-24" id="__codelineno-10-24" name="__codelineno-10-24"></a><span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Use guard clauses to reduce nesting (early return for invalid cases)"</span><span class="p">,</span>
+</span><span id="__span-10-25"><a href="#__codelineno-10-25" id="__codelineno-10-25" name="__codelineno-10-25"></a><span class="w">    </span><span class="nt">"code_snippet"</span><span class="p">:</span><span class="w"> </span><span class="s2">"if order.status != 'pending':\n    raise ValueError('Order not pending')\nif order.amount &lt;= 0:\n    raise ValueError('Invalid amount')"</span><span class="p">,</span>
+</span><span id="__span-10-26"><a href="#__codelineno-10-26" id="__codelineno-10-26" name="__codelineno-10-26"></a><span class="w">    </span><span class="nt">"impact"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span>
+</span><span id="__span-10-27"><a href="#__codelineno-10-27" id="__codelineno-10-27" name="__codelineno-10-27"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-10-28"><a href="#__codelineno-10-28" id="__codelineno-10-28" name="__codelineno-10-28"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Usage in RepoQ</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="k">if</span> <span class="n">high_complexity_files</span> <span class="ow">and</span> <span class="n">enable_ai</span><span class="p">:</span>
+</span><span id="__span-11-2"><a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a>    <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">high_complexity_files</span><span class="p">[:</span><span class="mi">3</span><span class="p">]:</span>  <span class="c1"># Top 3 files</span>
+</span><span id="__span-11-3"><a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>        <span class="n">code</span> <span class="o">=</span> <span class="n">read_file</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">path</span><span class="p">)</span>
+</span><span id="__span-11-4"><a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a>        <span class="n">suggestions</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">SuggestImprovements</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">,</span> <span class="n">complexity</span><span class="o">=</span><span class="n">file</span><span class="o">.</span><span class="n">complexity</span><span class="p">)</span>
+</span><span id="__span-11-5"><a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a href="#__codelineno-11-6" id="__codelineno-11-6" name="__codelineno-11-6"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">💡 Suggestions for </span><span class="si">{</span><span class="n">file</span><span class="o">.</span><span class="n">path</span><span class="si">}</span><span class="s2">:"</span><span class="p">)</span>
+</span><span id="__span-11-7"><a href="#__codelineno-11-7" id="__codelineno-11-7" name="__codelineno-11-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   🎯 Priority: </span><span class="si">{</span><span class="n">suggestions</span><span class="o">.</span><span class="n">prioritized_suggestion</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-11-8"><a href="#__codelineno-11-8" id="__codelineno-11-8" name="__codelineno-11-8"></a>
+</span><span id="__span-11-9"><a href="#__codelineno-11-9" id="__codelineno-11-9" name="__codelineno-11-9"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sug</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">suggestions</span><span class="o">.</span><span class="n">suggestions</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-11-10"><a href="#__codelineno-11-10" id="__codelineno-11-10" name="__codelineno-11-10"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. [</span><span class="si">{</span><span class="n">sug</span><span class="o">.</span><span class="n">impact</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">sug</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span></code></pre></div></p>
+<hr/>
+<h3 id="34-function-4-detectanomalies">3.4 Function 4: DetectAnomalies<a class="headerlink" href="#34-function-4-detectanomalies" title="Permanent link">¶</a></h3>
+<p><strong>Purpose</strong>: Detect gaming attempts (trivial tests, whitespace commits, etc.).</p>
+<p><strong>BAML Specification</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a href="#__codelineno-12-1" id="__codelineno-12-1" name="__codelineno-12-1"></a>class Anomaly {
+</span><span id="__span-12-2"><a href="#__codelineno-12-2" id="__codelineno-12-2" name="__codelineno-12-2"></a>  type: string @description("Type: 'trivial_test', 'whitespace_commit', 'sudden_coverage_spike', 'other'")
+</span><span id="__span-12-3"><a href="#__codelineno-12-3" id="__codelineno-12-3" name="__codelineno-12-3"></a>  description: string @description("Human-readable description")
+</span><span id="__span-12-4"><a href="#__codelineno-12-4" id="__codelineno-12-4" name="__codelineno-12-4"></a>  evidence: string @description("Evidence (file path, commit SHA, etc.)")
+</span><span id="__span-12-5"><a href="#__codelineno-12-5" id="__codelineno-12-5" name="__codelineno-12-5"></a>  severity: string @description("Severity: 'critical', 'high', 'medium', 'low'")
+</span><span id="__span-12-6"><a href="#__codelineno-12-6" id="__codelineno-12-6" name="__codelineno-12-6"></a>  confidence: float @description("Confidence score 0.0-1.0")
+</span><span id="__span-12-7"><a href="#__codelineno-12-7" id="__codelineno-12-7" name="__codelineno-12-7"></a>}
+</span><span id="__span-12-8"><a href="#__codelineno-12-8" id="__codelineno-12-8" name="__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a href="#__codelineno-12-9" id="__codelineno-12-9" name="__codelineno-12-9"></a>class Anomalies {
+</span><span id="__span-12-10"><a href="#__codelineno-12-10" id="__codelineno-12-10" name="__codelineno-12-10"></a>  anomalies: Anomaly[] @description("List of detected anomalies")
+</span><span id="__span-12-11"><a href="#__codelineno-12-11" id="__codelineno-12-11" name="__codelineno-12-11"></a>  is_gaming_suspected: bool @description("Overall verdict: Is gaming suspected?")
+</span><span id="__span-12-12"><a href="#__codelineno-12-12" id="__codelineno-12-12" name="__codelineno-12-12"></a>}
+</span><span id="__span-12-13"><a href="#__codelineno-12-13" id="__codelineno-12-13" name="__codelineno-12-13"></a>
+</span><span id="__span-12-14"><a href="#__codelineno-12-14" id="__codelineno-12-14" name="__codelineno-12-14"></a>function DetectAnomalies(
+</span><span id="__span-12-15"><a href="#__codelineno-12-15" id="__codelineno-12-15" name="__codelineno-12-15"></a>  history: CommitHistory @description("Recent commit history")
+</span><span id="__span-12-16"><a href="#__codelineno-12-16" id="__codelineno-12-16" name="__codelineno-12-16"></a>) -&gt; Anomalies {
+</span><span id="__span-12-17"><a href="#__codelineno-12-17" id="__codelineno-12-17" name="__codelineno-12-17"></a>  client GPT4
+</span><span id="__span-12-18"><a href="#__codelineno-12-18" id="__codelineno-12-18" name="__codelineno-12-18"></a>  prompt #"
+</span><span id="__span-12-19"><a href="#__codelineno-12-19" id="__codelineno-12-19" name="__codelineno-12-19"></a>    You are a security analyst detecting gaming attempts in code quality metrics.
+</span><span id="__span-12-20"><a href="#__codelineno-12-20" id="__codelineno-12-20" name="__codelineno-12-20"></a>
+</span><span id="__span-12-21"><a href="#__codelineno-12-21" id="__codelineno-12-21" name="__codelineno-12-21"></a>    **Commit History** (last 10 commits):
+</span><span id="__span-12-22"><a href="#__codelineno-12-22" id="__codelineno-12-22" name="__codelineno-12-22"></a>    {% for commit in history.commits %}
+</span><span id="__span-12-23"><a href="#__codelineno-12-23" id="__codelineno-12-23" name="__codelineno-12-23"></a>    - {{ commit.sha[:7] }}: {{ commit.message }}
+</span><span id="__span-12-24"><a href="#__codelineno-12-24" id="__codelineno-12-24" name="__codelineno-12-24"></a>      - Files: {{ commit.files | length }}
+</span><span id="__span-12-25"><a href="#__codelineno-12-25" id="__codelineno-12-25" name="__codelineno-12-25"></a>      - +{{ commit.additions }} / -{{ commit.deletions }} lines
+</span><span id="__span-12-26"><a href="#__codelineno-12-26" id="__codelineno-12-26" name="__codelineno-12-26"></a>      - Coverage: {{ commit.coverage }}%
+</span><span id="__span-12-27"><a href="#__codelineno-12-27" id="__codelineno-12-27" name="__codelineno-12-27"></a>    {% endfor %}
+</span><span id="__span-12-28"><a href="#__codelineno-12-28" id="__codelineno-12-28" name="__codelineno-12-28"></a>
+</span><span id="__span-12-29"><a href="#__codelineno-12-29" id="__codelineno-12-29" name="__codelineno-12-29"></a>    **Task**: Detect suspicious patterns:
+</span><span id="__span-12-30"><a href="#__codelineno-12-30" id="__codelineno-12-30" name="__codelineno-12-30"></a>    1. **Trivial Tests**: Tests with only `assert True` or `pass`
+</span><span id="__span-12-31"><a href="#__codelineno-12-31" id="__codelineno-12-31" name="__codelineno-12-31"></a>    2. **Whitespace Commits**: Commits with only whitespace changes (no logic)
+</span><span id="__span-12-32"><a href="#__codelineno-12-32" id="__codelineno-12-32" name="__codelineno-12-32"></a>    3. **Sudden Coverage Spike**: Coverage jumps 20%+ in 1 commit (suspicious)
+</span><span id="__span-12-33"><a href="#__codelineno-12-33" id="__codelineno-12-33" name="__codelineno-12-33"></a>    4. **Commit Message Patterns**: Messages like "increase coverage" without meaningful tests
+</span><span id="__span-12-34"><a href="#__codelineno-12-34" id="__codelineno-12-34" name="__codelineno-12-34"></a>
+</span><span id="__span-12-35"><a href="#__codelineno-12-35" id="__codelineno-12-35" name="__codelineno-12-35"></a>    For each anomaly:
+</span><span id="__span-12-36"><a href="#__codelineno-12-36" id="__codelineno-12-36" name="__codelineno-12-36"></a>    - **Type**: 'trivial_test', 'whitespace_commit', 'sudden_coverage_spike', 'other'
+</span><span id="__span-12-37"><a href="#__codelineno-12-37" id="__codelineno-12-37" name="__codelineno-12-37"></a>    - **Description**: What's suspicious?
+</span><span id="__span-12-38"><a href="#__codelineno-12-38" id="__codelineno-12-38" name="__codelineno-12-38"></a>    - **Evidence**: Which commit/file?
+</span><span id="__span-12-39"><a href="#__codelineno-12-39" id="__codelineno-12-39" name="__codelineno-12-39"></a>    - **Severity**: 'critical', 'high', 'medium', 'low'
+</span><span id="__span-12-40"><a href="#__codelineno-12-40" id="__codelineno-12-40" name="__codelineno-12-40"></a>    - **Confidence**: 0.0-1.0
+</span><span id="__span-12-41"><a href="#__codelineno-12-41" id="__codelineno-12-41" name="__codelineno-12-41"></a>
+</span><span id="__span-12-42"><a href="#__codelineno-12-42" id="__codelineno-12-42" name="__codelineno-12-42"></a>    **Output Format**: JSON matching Anomalies schema.
+</span><span id="__span-12-43"><a href="#__codelineno-12-43" id="__codelineno-12-43" name="__codelineno-12-43"></a>  "#
+</span><span id="__span-12-44"><a href="#__codelineno-12-44" id="__codelineno-12-44" name="__codelineno-12-44"></a>}
+</span></code></pre></div></p>
+<p><strong>Example Input</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a href="#__codelineno-13-1" id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">history</span> <span class="o">=</span> <span class="n">CommitHistory</span><span class="p">(</span><span class="n">commits</span><span class="o">=</span><span class="p">[</span>
+</span><span id="__span-13-2"><a href="#__codelineno-13-2" id="__codelineno-13-2" name="__codelineno-13-2"></a>    <span class="n">Commit</span><span class="p">(</span><span class="n">sha</span><span class="o">=</span><span class="s2">"abc123"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">"increase coverage"</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">[</span><span class="s2">"test_dummy.py"</span><span class="p">],</span> <span class="n">additions</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">deletions</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mi">85</span><span class="p">),</span>
+</span><span id="__span-13-3"><a href="#__codelineno-13-3" id="__codelineno-13-3" name="__codelineno-13-3"></a>    <span class="n">Commit</span><span class="p">(</span><span class="n">sha</span><span class="o">=</span><span class="s2">"def456"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">"fix bug"</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">[</span><span class="s2">"auth.py"</span><span class="p">],</span> <span class="n">additions</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">deletions</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mi">65</span><span class="p">),</span>
+</span><span id="__span-13-4"><a href="#__codelineno-13-4" id="__codelineno-13-4" name="__codelineno-13-4"></a>    <span class="n">Commit</span><span class="p">(</span><span class="n">sha</span><span class="o">=</span><span class="s2">"ghi789"</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">"refactor"</span><span class="p">,</span> <span class="n">files</span><span class="o">=</span><span class="p">[</span><span class="s2">"db.py"</span><span class="p">],</span> <span class="n">additions</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">deletions</span><span class="o">=</span><span class="mi">80</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mi">70</span><span class="p">),</span>
+</span><span id="__span-13-5"><a href="#__codelineno-13-5" id="__codelineno-13-5" name="__codelineno-13-5"></a><span class="p">])</span>
+</span></code></pre></div></p>
+<p><strong>Example Output</strong>:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-14-1"><a href="#__codelineno-14-1" id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="p">{</span>
+</span><span id="__span-14-2"><a href="#__codelineno-14-2" id="__codelineno-14-2" name="__codelineno-14-2"></a><span class="w">  </span><span class="nt">"anomalies"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+</span><span id="__span-14-3"><a href="#__codelineno-14-3" id="__codelineno-14-3" name="__codelineno-14-3"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-14-4"><a href="#__codelineno-14-4" id="__codelineno-14-4" name="__codelineno-14-4"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sudden_coverage_spike"</span><span class="p">,</span>
+</span><span id="__span-14-5"><a href="#__codelineno-14-5" id="__codelineno-14-5" name="__codelineno-14-5"></a><span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Coverage jumped from 65% to 85% (+20%) in commit abc123 with only trivial test file added."</span><span class="p">,</span>
+</span><span id="__span-14-6"><a href="#__codelineno-14-6" id="__codelineno-14-6" name="__codelineno-14-6"></a><span class="w">      </span><span class="nt">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Commit abc123: test_dummy.py added with 50 lines, message 'increase coverage'"</span><span class="p">,</span>
+</span><span id="__span-14-7"><a href="#__codelineno-14-7" id="__codelineno-14-7" name="__codelineno-14-7"></a><span class="w">      </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span><span class="p">,</span>
+</span><span id="__span-14-8"><a href="#__codelineno-14-8" id="__codelineno-14-8" name="__codelineno-14-8"></a><span class="w">      </span><span class="nt">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.92</span>
+</span><span id="__span-14-9"><a href="#__codelineno-14-9" id="__codelineno-14-9" name="__codelineno-14-9"></a><span class="w">    </span><span class="p">},</span>
+</span><span id="__span-14-10"><a href="#__codelineno-14-10" id="__codelineno-14-10" name="__codelineno-14-10"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-14-11"><a href="#__codelineno-14-11" id="__codelineno-14-11" name="__codelineno-14-11"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"trivial_test"</span><span class="p">,</span>
+</span><span id="__span-14-12"><a href="#__codelineno-14-12" id="__codelineno-14-12" name="__codelineno-14-12"></a><span class="w">      </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"File test_dummy.py contains only trivial assertions (assert True, pass)."</span><span class="p">,</span>
+</span><span id="__span-14-13"><a href="#__codelineno-14-13" id="__codelineno-14-13" name="__codelineno-14-13"></a><span class="w">      </span><span class="nt">"evidence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_dummy.py: 10 tests, all with assert True or pass"</span><span class="p">,</span>
+</span><span id="__span-14-14"><a href="#__codelineno-14-14" id="__codelineno-14-14" name="__codelineno-14-14"></a><span class="w">      </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"critical"</span><span class="p">,</span>
+</span><span id="__span-14-15"><a href="#__codelineno-14-15" id="__codelineno-14-15" name="__codelineno-14-15"></a><span class="w">      </span><span class="nt">"confidence"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.98</span>
+</span><span id="__span-14-16"><a href="#__codelineno-14-16" id="__codelineno-14-16" name="__codelineno-14-16"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-14-17"><a href="#__codelineno-14-17" id="__codelineno-14-17" name="__codelineno-14-17"></a><span class="w">  </span><span class="p">],</span>
+</span><span id="__span-14-18"><a href="#__codelineno-14-18" id="__codelineno-14-18" name="__codelineno-14-18"></a><span class="w">  </span><span class="nt">"is_gaming_suspected"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span>
+</span><span id="__span-14-19"><a href="#__codelineno-14-19" id="__codelineno-14-19" name="__codelineno-14-19"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Usage in RepoQ</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-15-1"><a href="#__codelineno-15-1" id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="k">if</span> <span class="n">enable_ai</span><span class="p">:</span>
+</span><span id="__span-15-2"><a href="#__codelineno-15-2" id="__codelineno-15-2" name="__codelineno-15-2"></a>    <span class="n">history</span> <span class="o">=</span> <span class="n">get_commit_history</span><span class="p">(</span><span class="n">last_n</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</span><span id="__span-15-3"><a href="#__codelineno-15-3" id="__codelineno-15-3" name="__codelineno-15-3"></a>    <span class="n">anomalies</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">DetectAnomalies</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">)</span>
+</span><span id="__span-15-4"><a href="#__codelineno-15-4" id="__codelineno-15-4" name="__codelineno-15-4"></a>
+</span><span id="__span-15-5"><a href="#__codelineno-15-5" id="__codelineno-15-5" name="__codelineno-15-5"></a>    <span class="k">if</span> <span class="n">anomalies</span><span class="o">.</span><span class="n">is_gaming_suspected</span><span class="p">:</span>
+</span><span id="__span-15-6"><a href="#__codelineno-15-6" id="__codelineno-15-6" name="__codelineno-15-6"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">⚠️  GAMING SUSPECTED!"</span><span class="p">)</span>
+</span><span id="__span-15-7"><a href="#__codelineno-15-7" id="__codelineno-15-7" name="__codelineno-15-7"></a>        <span class="k">for</span> <span class="n">anomaly</span> <span class="ow">in</span> <span class="n">anomalies</span><span class="o">.</span><span class="n">anomalies</span><span class="p">:</span>
+</span><span id="__span-15-8"><a href="#__codelineno-15-8" id="__codelineno-15-8" name="__codelineno-15-8"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   [</span><span class="si">{</span><span class="n">anomaly</span><span class="o">.</span><span class="n">severity</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">] </span><span class="si">{</span><span class="n">anomaly</span><span class="o">.</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-15-9"><a href="#__codelineno-15-9" id="__codelineno-15-9" name="__codelineno-15-9"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   Evidence: </span><span class="si">{</span><span class="n">anomaly</span><span class="o">.</span><span class="n">evidence</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-15-10"><a href="#__codelineno-15-10" id="__codelineno-15-10" name="__codelineno-15-10"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"   Confidence: </span><span class="si">{</span><span class="n">anomaly</span><span class="o">.</span><span class="n">confidence</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">100</span><span class="si">:</span><span class="s2">.0f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+</span></code></pre></div></p>
+<hr/>
+<h2 id="4-security-privacy-boundaries">4. Security &amp; Privacy Boundaries<a class="headerlink" href="#4-security-privacy-boundaries" title="Permanent link">¶</a></h2>
+<h3 id="41-data-minimization">4.1 Data Minimization<a class="headerlink" href="#41-data-minimization" title="Permanent link">¶</a></h3>
+<p><strong>What is sent to LLM</strong>:
+- ✅ Git diff (code changes only, not entire codebase)
+- ✅ Metrics (complexity, coverage, hotspots, TODOs)
+- ✅ Commit messages (last 10 commits)
+- ✅ File paths (anonymized: <code>auth.py</code> → <code>module_A.py</code>)</p>
+<p><strong>What is NOT sent</strong>:
+- ❌ Environment variables (no secrets)
+- ❌ API keys, database credentials
+- ❌ Production data (no PII, no business logic)
+- ❌ Full codebase (only changed files)</p>
+<h3 id="42-access-controls">4.2 Access Controls<a class="headerlink" href="#42-access-controls" title="Permanent link">¶</a></h3>
+<p><strong>1. Explicit Opt-In</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-16-1"><a href="#__codelineno-16-1" id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="c1"># AI disabled by default</span>
+</span><span id="__span-16-2"><a href="#__codelineno-16-2" id="__codelineno-16-2" name="__codelineno-16-2"></a>repoq<span class="w"> </span>gate<span class="w">  </span><span class="c1"># No AI calls</span>
+</span><span id="__span-16-3"><a href="#__codelineno-16-3" id="__codelineno-16-3" name="__codelineno-16-3"></a>
+</span><span id="__span-16-4"><a href="#__codelineno-16-4" id="__codelineno-16-4" name="__codelineno-16-4"></a><span class="c1"># AI enabled explicitly</span>
+</span><span id="__span-16-5"><a href="#__codelineno-16-5" id="__codelineno-16-5" name="__codelineno-16-5"></a>repoq<span class="w"> </span>gate<span class="w"> </span>--enable-ai<span class="w">  </span><span class="c1"># Prompts for consent</span>
+</span></code></pre></div></p>
+<p><strong>2. Consent Dialog</strong>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a href="#__codelineno-17-1" id="__codelineno-17-1" name="__codelineno-17-1"></a>⚠️  AI Agent Consent Required
+</span><span id="__span-17-2"><a href="#__codelineno-17-2" id="__codelineno-17-2" name="__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a href="#__codelineno-17-3" id="__codelineno-17-3" name="__codelineno-17-3"></a>The AI agent will send code diffs to OpenAI GPT-4 for analysis.
+</span><span id="__span-17-4"><a href="#__codelineno-17-4" id="__codelineno-17-4" name="__codelineno-17-4"></a>
+</span><span id="__span-17-5"><a href="#__codelineno-17-5" id="__codelineno-17-5" name="__codelineno-17-5"></a>Data sent:
+</span><span id="__span-17-6"><a href="#__codelineno-17-6" id="__codelineno-17-6" name="__codelineno-17-6"></a>- Git diff of your PR (changed files only)
+</span><span id="__span-17-7"><a href="#__codelineno-17-7" id="__codelineno-17-7" name="__codelineno-17-7"></a>- Computed metrics (complexity, coverage, etc.)
+</span><span id="__span-17-8"><a href="#__codelineno-17-8" id="__codelineno-17-8" name="__codelineno-17-8"></a>- Commit messages (last 10 commits)
+</span><span id="__span-17-9"><a href="#__codelineno-17-9" id="__codelineno-17-9" name="__codelineno-17-9"></a>
+</span><span id="__span-17-10"><a href="#__codelineno-17-10" id="__codelineno-17-10" name="__codelineno-17-10"></a>Data NOT sent:
+</span><span id="__span-17-11"><a href="#__codelineno-17-11" id="__codelineno-17-11" name="__codelineno-17-11"></a>- Secrets, API keys, credentials
+</span><span id="__span-17-12"><a href="#__codelineno-17-12" id="__codelineno-17-12" name="__codelineno-17-12"></a>- Production data, PII
+</span><span id="__span-17-13"><a href="#__codelineno-17-13" id="__codelineno-17-13" name="__codelineno-17-13"></a>- Full codebase (only changed files)
+</span><span id="__span-17-14"><a href="#__codelineno-17-14" id="__codelineno-17-14" name="__codelineno-17-14"></a>
+</span><span id="__span-17-15"><a href="#__codelineno-17-15" id="__codelineno-17-15" name="__codelineno-17-15"></a>Your code will leave your machine and be processed by OpenAI (US servers).
+</span><span id="__span-17-16"><a href="#__codelineno-17-16" id="__codelineno-17-16" name="__codelineno-17-16"></a>
+</span><span id="__span-17-17"><a href="#__codelineno-17-17" id="__codelineno-17-17" name="__codelineno-17-17"></a>Continue? [y/N]: _
+</span></code></pre></div></p>
+<p><strong>3. API Key Management</strong>:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-18-1"><a href="#__codelineno-18-1" id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="c1"># .github/quality-policy.yml</span>
+</span><span id="__span-18-2"><a href="#__codelineno-18-2" id="__codelineno-18-2" name="__codelineno-18-2"></a><span class="nt">ai_agent</span><span class="p">:</span>
+</span><span id="__span-18-3"><a href="#__codelineno-18-3" id="__codelineno-18-3" name="__codelineno-18-3"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span><span class="w">  </span><span class="c1"># Disabled by default</span>
+</span><span id="__span-18-4"><a href="#__codelineno-18-4" id="__codelineno-18-4" name="__codelineno-18-4"></a><span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">"openai"</span><span class="w">  </span><span class="c1"># or "anthropic", "ollama"</span>
+</span><span id="__span-18-5"><a href="#__codelineno-18-5" id="__codelineno-18-5" name="__codelineno-18-5"></a><span class="w">  </span><span class="nt">api_key_env</span><span class="p">:</span><span class="w"> </span><span class="s">"REPOQ_AI_API_KEY"</span><span class="w">  </span><span class="c1"># Env var (not committed)</span>
+</span><span id="__span-18-6"><a href="#__codelineno-18-6" id="__codelineno-18-6" name="__codelineno-18-6"></a><span class="w">  </span><span class="nt">max_calls</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">10</span><span class="w">  </span><span class="c1"># Budget limit (cost control)</span>
+</span><span id="__span-18-7"><a href="#__codelineno-18-7" id="__codelineno-18-7" name="__codelineno-18-7"></a><span class="w">  </span><span class="nt">timeout</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">30</span><span class="w">  </span><span class="c1"># Seconds per call</span>
+</span></code></pre></div></p>
+<p><strong>4. Anonymization (Optional)</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-19-1"><a href="#__codelineno-19-1" id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="c1"># repoq/ai/anonymizer.py</span>
+</span><span id="__span-19-2"><a href="#__codelineno-19-2" id="__codelineno-19-2" name="__codelineno-19-2"></a>
+</span><span id="__span-19-3"><a href="#__codelineno-19-3" id="__codelineno-19-3" name="__codelineno-19-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">anonymize_diff</span><span class="p">(</span><span class="n">diff</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">dict</span><span class="p">]:</span>
+</span><span id="__span-19-4"><a href="#__codelineno-19-4" id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="w">    </span><span class="sd">"""Replace sensitive names with placeholders."""</span>
+</span><span id="__span-19-5"><a href="#__codelineno-19-5" id="__codelineno-19-5" name="__codelineno-19-5"></a>    <span class="n">mappings</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="__span-19-6"><a href="#__codelineno-19-6" id="__codelineno-19-6" name="__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a href="#__codelineno-19-7" id="__codelineno-19-7" name="__codelineno-19-7"></a>    <span class="c1"># Anonymize variable names</span>
+</span><span id="__span-19-8"><a href="#__codelineno-19-8" id="__codelineno-19-8" name="__codelineno-19-8"></a>    <span class="n">diff</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\b([a-z_]+_key|password|secret)\b'</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">m</span><span class="p">:</span> <span class="n">anonymize_var</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">(),</span> <span class="n">mappings</span><span class="p">),</span> <span class="n">diff</span><span class="p">)</span>
+</span><span id="__span-19-9"><a href="#__codelineno-19-9" id="__codelineno-19-9" name="__codelineno-19-9"></a>
+</span><span id="__span-19-10"><a href="#__codelineno-19-10" id="__codelineno-19-10" name="__codelineno-19-10"></a>    <span class="c1"># Anonymize file paths</span>
+</span><span id="__span-19-11"><a href="#__codelineno-19-11" id="__codelineno-19-11" name="__codelineno-19-11"></a>    <span class="n">diff</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">'auth\.py'</span><span class="p">,</span> <span class="s1">'module_A.py'</span><span class="p">,</span> <span class="n">diff</span><span class="p">)</span>
+</span><span id="__span-19-12"><a href="#__codelineno-19-12" id="__codelineno-19-12" name="__codelineno-19-12"></a>
+</span><span id="__span-19-13"><a href="#__codelineno-19-13" id="__codelineno-19-13" name="__codelineno-19-13"></a>    <span class="k">return</span> <span class="n">diff</span><span class="p">,</span> <span class="n">mappings</span>
+</span><span id="__span-19-14"><a href="#__codelineno-19-14" id="__codelineno-19-14" name="__codelineno-19-14"></a>
+</span><span id="__span-19-15"><a href="#__codelineno-19-15" id="__codelineno-19-15" name="__codelineno-19-15"></a><span class="c1"># Usage</span>
+</span><span id="__span-19-16"><a href="#__codelineno-19-16" id="__codelineno-19-16" name="__codelineno-19-16"></a><span class="n">anonymized_diff</span><span class="p">,</span> <span class="n">mappings</span> <span class="o">=</span> <span class="n">anonymize_diff</span><span class="p">(</span><span class="n">original_diff</span><span class="p">)</span>
+</span><span id="__span-19-17"><a href="#__codelineno-19-17" id="__codelineno-19-17" name="__codelineno-19-17"></a><span class="n">context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">AnalyzePRContext</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="n">anonymized_diff</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
+</span><span id="__span-19-18"><a href="#__codelineno-19-18" id="__codelineno-19-18" name="__codelineno-19-18"></a><span class="c1"># De-anonymize results</span>
+</span><span id="__span-19-19"><a href="#__codelineno-19-19" id="__codelineno-19-19" name="__codelineno-19-19"></a><span class="n">context</span> <span class="o">=</span> <span class="n">de_anonymize</span><span class="p">(</span><span class="n">context</span><span class="p">,</span> <span class="n">mappings</span><span class="p">)</span>
+</span></code></pre></div></p>
+<h3 id="43-rate-limiting-cost-control">4.3 Rate Limiting &amp; Cost Control<a class="headerlink" href="#43-rate-limiting-cost-control" title="Permanent link">¶</a></h3>
+<p><strong>1. Max Calls Per Analysis</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-20-1"><a href="#__codelineno-20-1" id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="c1"># repoq/ai/client.py</span>
+</span><span id="__span-20-2"><a href="#__codelineno-20-2" id="__codelineno-20-2" name="__codelineno-20-2"></a>
+</span><span id="__span-20-3"><a href="#__codelineno-20-3" id="__codelineno-20-3" name="__codelineno-20-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">BAMLClient</span><span class="p">:</span>
+</span><span id="__span-20-4"><a href="#__codelineno-20-4" id="__codelineno-20-4" name="__codelineno-20-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_calls</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+</span><span id="__span-20-5"><a href="#__codelineno-20-5" id="__codelineno-20-5" name="__codelineno-20-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">max_calls</span> <span class="o">=</span> <span class="n">max_calls</span>
+</span><span id="__span-20-6"><a href="#__codelineno-20-6" id="__codelineno-20-6" name="__codelineno-20-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">call_count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-20-7"><a href="#__codelineno-20-7" id="__codelineno-20-7" name="__codelineno-20-7"></a>
+</span><span id="__span-20-8"><a href="#__codelineno-20-8" id="__codelineno-20-8" name="__codelineno-20-8"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">call_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">func_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-20-9"><a href="#__codelineno-20-9" id="__codelineno-20-9" name="__codelineno-20-9"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_count</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_calls</span><span class="p">:</span>
+</span><span id="__span-20-10"><a href="#__codelineno-20-10" id="__codelineno-20-10" name="__codelineno-20-10"></a>            <span class="k">raise</span> <span class="n">RateLimitError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Max </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_calls</span><span class="si">}</span><span class="s2"> AI calls reached. Increase `ai_agent.max_calls` in policy."</span><span class="p">)</span>
+</span><span id="__span-20-11"><a href="#__codelineno-20-11" id="__codelineno-20-11" name="__codelineno-20-11"></a>
+</span><span id="__span-20-12"><a href="#__codelineno-20-12" id="__codelineno-20-12" name="__codelineno-20-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">call_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-20-13"><a href="#__codelineno-20-13" id="__codelineno-20-13" name="__codelineno-20-13"></a>        <span class="k">return</span> <span class="k">await</span> <span class="n">baml_client</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="n">func_name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>2. Timeout</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-21-1"><a href="#__codelineno-21-1" id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">asyncio</span>
+</span><span id="__span-21-2"><a href="#__codelineno-21-2" id="__codelineno-21-2" name="__codelineno-21-2"></a>
+</span><span id="__span-21-3"><a href="#__codelineno-21-3" id="__codelineno-21-3" name="__codelineno-21-3"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">call_with_timeout</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">timeout</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">30</span><span class="p">):</span>
+</span><span id="__span-21-4"><a href="#__codelineno-21-4" id="__codelineno-21-4" name="__codelineno-21-4"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-21-5"><a href="#__codelineno-21-5" id="__codelineno-21-5" name="__codelineno-21-5"></a>        <span class="k">return</span> <span class="k">await</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">wait_for</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+</span><span id="__span-21-6"><a href="#__codelineno-21-6" id="__codelineno-21-6" name="__codelineno-21-6"></a>    <span class="k">except</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">TimeoutError</span><span class="p">:</span>
+</span><span id="__span-21-7"><a href="#__codelineno-21-7" id="__codelineno-21-7" name="__codelineno-21-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"⚠️  AI call timed out after </span><span class="si">{</span><span class="n">timeout</span><span class="si">}</span><span class="s2">s. Skipping."</span><span class="p">)</span>
+</span><span id="__span-21-8"><a href="#__codelineno-21-8" id="__codelineno-21-8" name="__codelineno-21-8"></a>        <span class="k">return</span> <span class="kc">None</span>
+</span></code></pre></div></p>
+<p><strong>3. Cost Tracking</strong>:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-22-1"><a href="#__codelineno-22-1" id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="c1"># repoq/ai/cost_tracker.py</span>
+</span><span id="__span-22-2"><a href="#__codelineno-22-2" id="__codelineno-22-2" name="__codelineno-22-2"></a>
+</span><span id="__span-22-3"><a href="#__codelineno-22-3" id="__codelineno-22-3" name="__codelineno-22-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">CostTracker</span><span class="p">:</span>
+</span><span id="__span-22-4"><a href="#__codelineno-22-4" id="__codelineno-22-4" name="__codelineno-22-4"></a>    <span class="c1"># Pricing (as of 2025-10-21)</span>
+</span><span id="__span-22-5"><a href="#__codelineno-22-5" id="__codelineno-22-5" name="__codelineno-22-5"></a>    <span class="n">PRICES</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-22-6"><a href="#__codelineno-22-6" id="__codelineno-22-6" name="__codelineno-22-6"></a>        <span class="s2">"gpt-4"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"input"</span><span class="p">:</span> <span class="mf">0.03</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">:</span> <span class="mf">0.06</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">},</span>  <span class="c1"># USD per token</span>
+</span><span id="__span-22-7"><a href="#__codelineno-22-7" id="__codelineno-22-7" name="__codelineno-22-7"></a>        <span class="s2">"gpt-4-turbo"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"input"</span><span class="p">:</span> <span class="mf">0.01</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">:</span> <span class="mf">0.03</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">},</span>
+</span><span id="__span-22-8"><a href="#__codelineno-22-8" id="__codelineno-22-8" name="__codelineno-22-8"></a>        <span class="s2">"claude-3-opus"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"input"</span><span class="p">:</span> <span class="mf">0.015</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">:</span> <span class="mf">0.075</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">},</span>
+</span><span id="__span-22-9"><a href="#__codelineno-22-9" id="__codelineno-22-9" name="__codelineno-22-9"></a>    <span class="p">}</span>
+</span><span id="__span-22-10"><a href="#__codelineno-22-10" id="__codelineno-22-10" name="__codelineno-22-10"></a>
+</span><span id="__span-22-11"><a href="#__codelineno-22-11" id="__codelineno-22-11" name="__codelineno-22-11"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">track_cost</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">input_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="__span-22-12"><a href="#__codelineno-22-12" id="__codelineno-22-12" name="__codelineno-22-12"></a>        <span class="n">price</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">PRICES</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="p">{</span><span class="s2">"input"</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">"output"</span><span class="p">:</span> <span class="mi">0</span><span class="p">})</span>
+</span><span id="__span-22-13"><a href="#__codelineno-22-13" id="__codelineno-22-13" name="__codelineno-22-13"></a>        <span class="n">cost</span> <span class="o">=</span> <span class="p">(</span><span class="n">input_tokens</span> <span class="o">*</span> <span class="n">price</span><span class="p">[</span><span class="s2">"input"</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">output_tokens</span> <span class="o">*</span> <span class="n">price</span><span class="p">[</span><span class="s2">"output"</span><span class="p">])</span>
+</span><span id="__span-22-14"><a href="#__codelineno-22-14" id="__codelineno-22-14" name="__codelineno-22-14"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"💰 Cost: $</span><span class="si">{</span><span class="n">cost</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> (model: </span><span class="si">{</span><span class="n">model</span><span class="si">}</span><span class="s2">, tokens: </span><span class="si">{</span><span class="n">input_tokens</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">output_tokens</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
+</span><span id="__span-22-15"><a href="#__codelineno-22-15" id="__codelineno-22-15" name="__codelineno-22-15"></a>        <span class="k">return</span> <span class="n">cost</span>
+</span></code></pre></div></p>
+<hr/>
+<h2 id="5-phased-rollout-strategy">5. Phased Rollout Strategy<a class="headerlink" href="#5-phased-rollout-strategy" title="Permanent link">¶</a></h2>
+<h3 id="phase-51-experimental-mode-v100-alpha">Phase 5.1: Experimental Mode (v1.0.0-alpha)<a class="headerlink" href="#phase-51-experimental-mode-v100-alpha" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Audience</strong>: Internal team only (RepoQ developers)</li>
+<li><strong>Features</strong>: All 4 BAML functions enabled</li>
+<li><strong>Feedback</strong>: Collect feedback on accuracy, usefulness</li>
+<li><strong>Success Criteria</strong>: ≥80% of suggestions are actionable (manual review)</li>
+</ul>
+<h3 id="phase-52-advisory-mode-v110-beta">Phase 5.2: Advisory Mode (v1.1.0-beta)<a class="headerlink" href="#phase-52-advisory-mode-v110-beta" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Audience</strong>: Early adopters (opt-in via <code>--enable-ai</code>)</li>
+<li><strong>Features</strong>: AI suggestions displayed, but not blocking gate</li>
+<li><strong>Feedback</strong>: Track adoption rate, false positive rate</li>
+<li><strong>Success Criteria</strong>: ≥50% of users find AI helpful (survey)</li>
+</ul>
+<h3 id="phase-53-active-mode-v120">Phase 5.3: Active Mode (v1.2.0)<a class="headerlink" href="#phase-53-active-mode-v120" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Audience</strong>: General availability (still opt-in)</li>
+<li><strong>Features</strong>: AI can flag high-confidence anomalies (gaming detection)</li>
+<li><strong>Feedback</strong>: Monitor false positive rate, user satisfaction</li>
+<li><strong>Success Criteria</strong>: FP rate ≤10%, satisfaction ≥4.0/5.0</li>
+</ul>
+<h3 id="phase-54-default-on-mode-v200-future">Phase 5.4: Default-On Mode (v2.0.0, future)<a class="headerlink" href="#phase-54-default-on-mode-v200-future" title="Permanent link">¶</a></h3>
+<ul>
+<li><strong>Audience</strong>: All users (can opt-out via <code>ai_agent.enabled: false</code>)</li>
+<li><strong>Features</strong>: AI fully integrated, with human oversight</li>
+<li><strong>Feedback</strong>: Continuous monitoring, model retraining</li>
+<li><strong>Success Criteria</strong>: ≥70% of users keep AI enabled</li>
+</ul>
+<hr/>
+<h2 id="6-testing-strategy">6. Testing Strategy<a class="headerlink" href="#6-testing-strategy" title="Permanent link">¶</a></h2>
+<h3 id="61-unit-tests-mock-baml">6.1 Unit Tests (Mock BAML)<a class="headerlink" href="#61-unit-tests-mock-baml" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a href="#__codelineno-23-1" id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="c1"># tests/test_ai_agent.py</span>
+</span><span id="__span-23-2"><a href="#__codelineno-23-2" id="__codelineno-23-2" name="__codelineno-23-2"></a>
+</span><span id="__span-23-3"><a href="#__codelineno-23-3" id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">repoq.ai.client</span><span class="w"> </span><span class="kn">import</span> <span class="n">BAMLClient</span>
+</span><span id="__span-23-4"><a href="#__codelineno-23-4" id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">unittest.mock</span><span class="w"> </span><span class="kn">import</span> <span class="n">Mock</span><span class="p">,</span> <span class="n">AsyncMock</span>
+</span><span id="__span-23-5"><a href="#__codelineno-23-5" id="__codelineno-23-5" name="__codelineno-23-5"></a>
+</span><span id="__span-23-6"><a href="#__codelineno-23-6" id="__codelineno-23-6" name="__codelineno-23-6"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_analyze_pr_context</span><span class="p">():</span>
+</span><span id="__span-23-7"><a href="#__codelineno-23-7" id="__codelineno-23-7" name="__codelineno-23-7"></a>    <span class="c1"># Mock BAML client</span>
+</span><span id="__span-23-8"><a href="#__codelineno-23-8" id="__codelineno-23-8" name="__codelineno-23-8"></a>    <span class="n">mock_baml</span> <span class="o">=</span> <span class="n">AsyncMock</span><span class="p">()</span>
+</span><span id="__span-23-9"><a href="#__codelineno-23-9" id="__codelineno-23-9" name="__codelineno-23-9"></a>    <span class="n">mock_baml</span><span class="o">.</span><span class="n">AnalyzePRContext</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="n">PRContext</span><span class="p">(</span>
+</span><span id="__span-23-10"><a href="#__codelineno-23-10" id="__codelineno-23-10" name="__codelineno-23-10"></a>        <span class="n">intent</span><span class="o">=</span><span class="s2">"Implement login"</span><span class="p">,</span>
+</span><span id="__span-23-11"><a href="#__codelineno-23-11" id="__codelineno-23-11" name="__codelineno-23-11"></a>        <span class="n">patterns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Repository Pattern"</span><span class="p">],</span>
+</span><span id="__span-23-12"><a href="#__codelineno-23-12" id="__codelineno-23-12" name="__codelineno-23-12"></a>        <span class="n">risks</span><span class="o">=</span><span class="p">[</span><span class="s2">"SQL injection"</span><span class="p">],</span>
+</span><span id="__span-23-13"><a href="#__codelineno-23-13" id="__codelineno-23-13" name="__codelineno-23-13"></a>        <span class="n">complexity_justified</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-23-14"><a href="#__codelineno-23-14" id="__codelineno-23-14" name="__codelineno-23-14"></a>        <span class="n">confidence</span><span class="o">=</span><span class="mf">0.85</span>
+</span><span id="__span-23-15"><a href="#__codelineno-23-15" id="__codelineno-23-15" name="__codelineno-23-15"></a>    <span class="p">)</span>
+</span><span id="__span-23-16"><a href="#__codelineno-23-16" id="__codelineno-23-16" name="__codelineno-23-16"></a>
+</span><span id="__span-23-17"><a href="#__codelineno-23-17" id="__codelineno-23-17" name="__codelineno-23-17"></a>    <span class="c1"># Test</span>
+</span><span id="__span-23-18"><a href="#__codelineno-23-18" id="__codelineno-23-18" name="__codelineno-23-18"></a>    <span class="n">client</span> <span class="o">=</span> <span class="n">BAMLClient</span><span class="p">(</span><span class="n">baml_client</span><span class="o">=</span><span class="n">mock_baml</span><span class="p">)</span>
+</span><span id="__span-23-19"><a href="#__codelineno-23-19" id="__codelineno-23-19" name="__codelineno-23-19"></a>    <span class="n">context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">analyze_pr_context</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="s2">"..."</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">Metrics</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+</span><span id="__span-23-20"><a href="#__codelineno-23-20" id="__codelineno-23-20" name="__codelineno-23-20"></a>
+</span><span id="__span-23-21"><a href="#__codelineno-23-21" id="__codelineno-23-21" name="__codelineno-23-21"></a>    <span class="k">assert</span> <span class="n">context</span><span class="o">.</span><span class="n">intent</span> <span class="o">==</span> <span class="s2">"Implement login"</span>
+</span><span id="__span-23-22"><a href="#__codelineno-23-22" id="__codelineno-23-22" name="__codelineno-23-22"></a>    <span class="k">assert</span> <span class="s2">"SQL injection"</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">risks</span>
+</span><span id="__span-23-23"><a href="#__codelineno-23-23" id="__codelineno-23-23" name="__codelineno-23-23"></a>    <span class="n">mock_baml</span><span class="o">.</span><span class="n">AnalyzePRContext</span><span class="o">.</span><span class="n">assert_called_once</span><span class="p">()</span>
+</span></code></pre></div>
+<h3 id="62-integration-tests-real-llm">6.2 Integration Tests (Real LLM)<a class="headerlink" href="#62-integration-tests-real-llm" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a href="#__codelineno-24-1" id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="c1"># tests/integration/test_ai_live.py</span>
+</span><span id="__span-24-2"><a href="#__codelineno-24-2" id="__codelineno-24-2" name="__codelineno-24-2"></a>
+</span><span id="__span-24-3"><a href="#__codelineno-24-3" id="__codelineno-24-3" name="__codelineno-24-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
+</span><span id="__span-24-4"><a href="#__codelineno-24-4" id="__codelineno-24-4" name="__codelineno-24-4"></a>
+</span><span id="__span-24-5"><a href="#__codelineno-24-5" id="__codelineno-24-5" name="__codelineno-24-5"></a><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">skipif</span><span class="p">(</span><span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">"OPENAI_API_KEY"</span><span class="p">),</span> <span class="n">reason</span><span class="o">=</span><span class="s2">"No API key"</span><span class="p">)</span>
+</span><span id="__span-24-6"><a href="#__codelineno-24-6" id="__codelineno-24-6" name="__codelineno-24-6"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_live_analyze_pr_context</span><span class="p">():</span>
+</span><span id="__span-24-7"><a href="#__codelineno-24-7" id="__codelineno-24-7" name="__codelineno-24-7"></a>    <span class="c1"># Real LLM call (expensive, skip in CI)</span>
+</span><span id="__span-24-8"><a href="#__codelineno-24-8" id="__codelineno-24-8" name="__codelineno-24-8"></a>    <span class="n">diff</span> <span class="o">=</span> <span class="s2">"""</span>
+</span><span id="__span-24-9"><a href="#__codelineno-24-9" id="__codelineno-24-9" name="__codelineno-24-9"></a><span class="s2">    +def login(username, password):</span>
+</span><span id="__span-24-10"><a href="#__codelineno-24-10" id="__codelineno-24-10" name="__codelineno-24-10"></a><span class="s2">    +    user = db.query(User).filter_by(username=username).first()</span>
+</span><span id="__span-24-11"><a href="#__codelineno-24-11" id="__codelineno-24-11" name="__codelineno-24-11"></a><span class="s2">    +    return user and user.check_password(password)</span>
+</span><span id="__span-24-12"><a href="#__codelineno-24-12" id="__codelineno-24-12" name="__codelineno-24-12"></a><span class="s2">    """</span>
+</span><span id="__span-24-13"><a href="#__codelineno-24-13" id="__codelineno-24-13" name="__codelineno-24-13"></a>
+</span><span id="__span-24-14"><a href="#__codelineno-24-14" id="__codelineno-24-14" name="__codelineno-24-14"></a>    <span class="n">context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">AnalyzePRContext</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="n">diff</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">Metrics</span><span class="p">(</span><span class="n">complexity</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="mi">80</span><span class="p">))</span>
+</span><span id="__span-24-15"><a href="#__codelineno-24-15" id="__codelineno-24-15" name="__codelineno-24-15"></a>
+</span><span id="__span-24-16"><a href="#__codelineno-24-16" id="__codelineno-24-16" name="__codelineno-24-16"></a>    <span class="c1"># Validate output structure</span>
+</span><span id="__span-24-17"><a href="#__codelineno-24-17" id="__codelineno-24-17" name="__codelineno-24-17"></a>    <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">intent</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+</span><span id="__span-24-18"><a href="#__codelineno-24-18" id="__codelineno-24-18" name="__codelineno-24-18"></a>    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">intent</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">10</span>  <span class="c1"># Not empty</span>
+</span><span id="__span-24-19"><a href="#__codelineno-24-19" id="__codelineno-24-19" name="__codelineno-24-19"></a>    <span class="k">assert</span> <span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">context</span><span class="o">.</span><span class="n">confidence</span> <span class="o">&lt;=</span> <span class="mf">1.0</span>
+</span><span id="__span-24-20"><a href="#__codelineno-24-20" id="__codelineno-24-20" name="__codelineno-24-20"></a>    <span class="k">assert</span> <span class="s2">"login"</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">intent</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>  <span class="c1"># Semantic understanding</span>
+</span></code></pre></div>
+<h3 id="63-property-based-tests-hypothesis">6.3 Property-Based Tests (Hypothesis)<a class="headerlink" href="#63-property-based-tests-hypothesis" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a href="#__codelineno-25-1" id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="c1"># tests/test_ai_properties.py</span>
+</span><span id="__span-25-2"><a href="#__codelineno-25-2" id="__codelineno-25-2" name="__codelineno-25-2"></a>
+</span><span id="__span-25-3"><a href="#__codelineno-25-3" id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">hypothesis</span><span class="w"> </span><span class="kn">import</span> <span class="n">given</span><span class="p">,</span> <span class="n">strategies</span> <span class="k">as</span> <span class="n">st</span>
+</span><span id="__span-25-4"><a href="#__codelineno-25-4" id="__codelineno-25-4" name="__codelineno-25-4"></a>
+</span><span id="__span-25-5"><a href="#__codelineno-25-5" id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="nd">@given</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">min_size</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">500</span><span class="p">))</span>
+</span><span id="__span-25-6"><a href="#__codelineno-25-6" id="__codelineno-25-6" name="__codelineno-25-6"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">test_analyze_pr_context_never_crashes</span><span class="p">(</span><span class="n">diff</span><span class="p">):</span>
+</span><span id="__span-25-7"><a href="#__codelineno-25-7" id="__codelineno-25-7" name="__codelineno-25-7"></a><span class="w">    </span><span class="sd">"""Property: AnalyzePRContext should never crash (even on invalid input)."""</span>
+</span><span id="__span-25-8"><a href="#__codelineno-25-8" id="__codelineno-25-8" name="__codelineno-25-8"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-25-9"><a href="#__codelineno-25-9" id="__codelineno-25-9" name="__codelineno-25-9"></a>        <span class="n">context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">AnalyzePRContext</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="n">diff</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">Metrics</span><span class="p">(</span><span class="o">...</span><span class="p">))</span>
+</span><span id="__span-25-10"><a href="#__codelineno-25-10" id="__codelineno-25-10" name="__codelineno-25-10"></a>        <span class="c1"># If it succeeds, validate schema</span>
+</span><span id="__span-25-11"><a href="#__codelineno-25-11" id="__codelineno-25-11" name="__codelineno-25-11"></a>        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">intent</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+</span><span id="__span-25-12"><a href="#__codelineno-25-12" id="__codelineno-25-12" name="__codelineno-25-12"></a>        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">confidence</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+</span><span id="__span-25-13"><a href="#__codelineno-25-13" id="__codelineno-25-13" name="__codelineno-25-13"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-25-14"><a href="#__codelineno-25-14" id="__codelineno-25-14" name="__codelineno-25-14"></a>        <span class="c1"># If it fails, should be a known error (not crash)</span>
+</span><span id="__span-25-15"><a href="#__codelineno-25-15" id="__codelineno-25-15" name="__codelineno-25-15"></a>        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="p">(</span><span class="n">ValidationError</span><span class="p">,</span> <span class="ne">TimeoutError</span><span class="p">,</span> <span class="n">RateLimitError</span><span class="p">))</span>
+</span></code></pre></div>
+<hr/>
+<h2 id="7-monitoring-observability">7. Monitoring &amp; Observability<a class="headerlink" href="#7-monitoring-observability" title="Permanent link">¶</a></h2>
+<h3 id="71-metrics-to-track">7.1 Metrics to Track<a class="headerlink" href="#71-metrics-to-track" title="Permanent link">¶</a></h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Description</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Adoption Rate</strong></td>
+<td>% of users with <code>--enable-ai</code></td>
+<td>≥50%</td>
+</tr>
+<tr>
+<td><strong>Call Success Rate</strong></td>
+<td>% of BAML calls that succeed</td>
+<td>≥95%</td>
+</tr>
+<tr>
+<td><strong>Latency P90</strong></td>
+<td>90<sup>th</sup> percentile latency per call</td>
+<td>≤5 sec</td>
+</tr>
+<tr>
+<td><strong>Cost Per Analysis</strong></td>
+<td>Average cost (USD) per gate run</td>
+<td>≤$0.10</td>
+</tr>
+<tr>
+<td><strong>False Positive Rate</strong></td>
+<td>% of wrong AI suggestions</td>
+<td>≤10%</td>
+</tr>
+<tr>
+<td><strong>User Satisfaction</strong></td>
+<td>Survey rating (1-5 scale)</td>
+<td>≥4.0</td>
+</tr>
+</tbody>
+</table>
+<h3 id="72-logging">7.2 Logging<a class="headerlink" href="#72-logging" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a href="#__codelineno-26-1" id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="c1"># repoq/ai/logging.py</span>
+</span><span id="__span-26-2"><a href="#__codelineno-26-2" id="__codelineno-26-2" name="__codelineno-26-2"></a>
+</span><span id="__span-26-3"><a href="#__codelineno-26-3" id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+</span><span id="__span-26-4"><a href="#__codelineno-26-4" id="__codelineno-26-4" name="__codelineno-26-4"></a>
+</span><span id="__span-26-5"><a href="#__codelineno-26-5" id="__codelineno-26-5" name="__codelineno-26-5"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s2">"repoq.ai"</span><span class="p">)</span>
+</span><span id="__span-26-6"><a href="#__codelineno-26-6" id="__codelineno-26-6" name="__codelineno-26-6"></a>
+</span><span id="__span-26-7"><a href="#__codelineno-26-7" id="__codelineno-26-7" name="__codelineno-26-7"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">log_baml_call</span><span class="p">(</span><span class="n">func_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">input_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_tokens</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">latency</span><span class="p">:</span> <span class="nb">float</span><span class="p">,</span> <span class="n">cost</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+</span><span id="__span-26-8"><a href="#__codelineno-26-8" id="__codelineno-26-8" name="__codelineno-26-8"></a>    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+</span><span id="__span-26-9"><a href="#__codelineno-26-9" id="__codelineno-26-9" name="__codelineno-26-9"></a>        <span class="sa">f</span><span class="s2">"BAML call: </span><span class="si">{</span><span class="n">func_name</span><span class="si">}</span><span class="s2"> | "</span>
+</span><span id="__span-26-10"><a href="#__codelineno-26-10" id="__codelineno-26-10" name="__codelineno-26-10"></a>        <span class="sa">f</span><span class="s2">"tokens: </span><span class="si">{</span><span class="n">input_tokens</span><span class="si">}</span><span class="s2">+</span><span class="si">{</span><span class="n">output_tokens</span><span class="si">}</span><span class="s2"> | "</span>
+</span><span id="__span-26-11"><a href="#__codelineno-26-11" id="__codelineno-26-11" name="__codelineno-26-11"></a>        <span class="sa">f</span><span class="s2">"latency: </span><span class="si">{</span><span class="n">latency</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">s | "</span>
+</span><span id="__span-26-12"><a href="#__codelineno-26-12" id="__codelineno-26-12" name="__codelineno-26-12"></a>        <span class="sa">f</span><span class="s2">"cost: $</span><span class="si">{</span><span class="n">cost</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-26-13"><a href="#__codelineno-26-13" id="__codelineno-26-13" name="__codelineno-26-13"></a>    <span class="p">)</span>
+</span><span id="__span-26-14"><a href="#__codelineno-26-14" id="__codelineno-26-14" name="__codelineno-26-14"></a>
+</span><span id="__span-26-15"><a href="#__codelineno-26-15" id="__codelineno-26-15" name="__codelineno-26-15"></a><span class="c1"># Usage</span>
+</span><span id="__span-26-16"><a href="#__codelineno-26-16" id="__codelineno-26-16" name="__codelineno-26-16"></a><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span id="__span-26-17"><a href="#__codelineno-26-17" id="__codelineno-26-17" name="__codelineno-26-17"></a><span class="n">context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">b</span><span class="o">.</span><span class="n">AnalyzePRContext</span><span class="p">(</span><span class="n">diff</span><span class="o">=</span><span class="n">diff</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
+</span><span id="__span-26-18"><a href="#__codelineno-26-18" id="__codelineno-26-18" name="__codelineno-26-18"></a><span class="n">latency</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</span><span id="__span-26-19"><a href="#__codelineno-26-19" id="__codelineno-26-19" name="__codelineno-26-19"></a><span class="n">log_baml_call</span><span class="p">(</span><span class="s2">"AnalyzePRContext"</span><span class="p">,</span> <span class="n">input_tokens</span><span class="o">=</span><span class="mi">1200</span><span class="p">,</span> <span class="n">output_tokens</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">latency</span><span class="o">=</span><span class="n">latency</span><span class="p">,</span> <span class="n">cost</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="73-feedback-loop">7.3 Feedback Loop<a class="headerlink" href="#73-feedback-loop" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a href="#__codelineno-27-1" id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="c1"># repoq/cli.py</span>
+</span><span id="__span-27-2"><a href="#__codelineno-27-2" id="__codelineno-27-2" name="__codelineno-27-2"></a>
+</span><span id="__span-27-3"><a href="#__codelineno-27-3" id="__codelineno-27-3" name="__codelineno-27-3"></a><span class="nd">@click</span><span class="o">.</span><span class="n">command</span><span class="p">()</span>
+</span><span id="__span-27-4"><a href="#__codelineno-27-4" id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">gate</span><span class="p">(</span><span class="o">...</span><span class="p">,</span> <span class="n">enable_ai</span><span class="p">):</span>
+</span><span id="__span-27-5"><a href="#__codelineno-27-5" id="__codelineno-27-5" name="__codelineno-27-5"></a>    <span class="k">if</span> <span class="n">enable_ai</span><span class="p">:</span>
+</span><span id="__span-27-6"><a href="#__codelineno-27-6" id="__codelineno-27-6" name="__codelineno-27-6"></a>        <span class="n">context</span> <span class="o">=</span> <span class="k">await</span> <span class="n">analyze_pr_context</span><span class="p">(</span><span class="n">diff</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+</span><span id="__span-27-7"><a href="#__codelineno-27-7" id="__codelineno-27-7" name="__codelineno-27-7"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"AI Analysis: </span><span class="si">{</span><span class="n">context</span><span class="o">.</span><span class="n">intent</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-27-8"><a href="#__codelineno-27-8" id="__codelineno-27-8" name="__codelineno-27-8"></a>
+</span><span id="__span-27-9"><a href="#__codelineno-27-9" id="__codelineno-27-9" name="__codelineno-27-9"></a>        <span class="c1"># Feedback prompt</span>
+</span><span id="__span-27-10"><a href="#__codelineno-27-10" id="__codelineno-27-10" name="__codelineno-27-10"></a>        <span class="n">helpful</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">confirm</span><span class="p">(</span><span class="s2">"Was this AI analysis helpful?"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-27-11"><a href="#__codelineno-27-11" id="__codelineno-27-11" name="__codelineno-27-11"></a>        <span class="k">if</span> <span class="n">helpful</span><span class="p">:</span>
+</span><span id="__span-27-12"><a href="#__codelineno-27-12" id="__codelineno-27-12" name="__codelineno-27-12"></a>            <span class="n">log_feedback</span><span class="p">(</span><span class="s2">"AnalyzePRContext"</span><span class="p">,</span> <span class="n">helpful</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-27-13"><a href="#__codelineno-27-13" id="__codelineno-27-13" name="__codelineno-27-13"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-27-14"><a href="#__codelineno-27-14" id="__codelineno-27-14" name="__codelineno-27-14"></a>            <span class="n">reason</span> <span class="o">=</span> <span class="n">click</span><span class="o">.</span><span class="n">prompt</span><span class="p">(</span><span class="s2">"Why not? (optional)"</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+</span><span id="__span-27-15"><a href="#__codelineno-27-15" id="__codelineno-27-15" name="__codelineno-27-15"></a>            <span class="n">log_feedback</span><span class="p">(</span><span class="s2">"AnalyzePRContext"</span><span class="p">,</span> <span class="n">helpful</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reason</span><span class="o">=</span><span class="n">reason</span><span class="p">)</span>
+</span></code></pre></div>
+<hr/>
+<h2 id="8-success-criteria-phase-5">8. Success Criteria (Phase 5)<a class="headerlink" href="#8-success-criteria-phase-5" title="Permanent link">¶</a></h2>
+<ul>
+<li>✅ <strong>4 BAML functions</strong>: AnalyzePRContext, GenerateExplanation, SuggestImprovements, DetectAnomalies</li>
+<li>✅ <strong>Type-safe</strong>: All LLM outputs validated by BAML schemas</li>
+<li>✅ <strong>Opt-in only</strong>: Disabled by default, explicit consent required</li>
+<li>✅ <strong>Privacy-aware</strong>: Data minimization, no secrets sent to LLM</li>
+<li>✅ <strong>Cost-controlled</strong>: Max 10 calls per analysis, timeout 30 sec, budget tracking</li>
+<li>✅ <strong>Tested</strong>: Unit tests (mock), integration tests (real LLM), property tests</li>
+<li>✅ <strong>Monitored</strong>: Adoption rate, success rate, latency, cost, FP rate, satisfaction</li>
+<li>⏭️ <strong>Next</strong>: Phase 5 implementation, experimental rollout, user feedback</li>
+</ul>
+<hr/>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ol>
+<li>BoundaryML (2024). <em>BAML Documentation</em>. <a href="https://boundaryml.com/docs">boundaryml.com/docs</a></li>
+<li>OpenAI (2024). <em>GPT-4 API Reference</em>. <a href="https://platform.openai.com/docs/api-reference">platform.openai.com/docs/api-reference</a></li>
+<li>Anthropic (2024). <em>Claude API</em>. <a href="https://anthropic.com/claude">anthropic.com/claude</a></li>
+<li>RepoQ Project (2025). <em>Phase 3: Requirements</em>. <code>docs/vdad/phase3-requirements.md</code> — FR-15 (AI suggestions), V08 (Actionability)</li>
+<li>RepoQ Project (2025). <em>Phase 4: ADRs</em>. <code>docs/vdad/phase4-adrs.md</code> — ADR-001 (BAML choice)</li>
+</ol>
+<hr/>
+<p><strong>Document Status</strong>: ✅ COMPLETE<br/>
+<strong>Review</strong>: Pending (validate BAML specs with team)<br/>
+<strong>Next Steps</strong>: Phase 5 implementation (BAML integration, experimental rollout).</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2025 RepoQ Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/Repo-Q/repoq" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+<a class="md-social__link" href="https://pypi.org/project/repoq/" rel="noopener" target="_blank" title="pypi.org">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+</body>
+</html>

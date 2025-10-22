@@ -1,0 +1,2977 @@
+
+<!DOCTYPE html>
+
+<html class="no-js" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="Revolutionary repository quality analysis with ontological intelligence" name="description"/>
+<meta content="RepoQ Contributors" name="author"/>
+<link href="https://repo-q.github.io/repoq/latest/vdad/phase4-adrs/" rel="canonical"/>
+<link href="../phase4-c4-diagrams/" rel="prev"/>
+<link href="../phase4-nfr-realization/" rel="next"/>
+<link href="../../assets/images/favicon.png" rel="icon"/>
+<meta content="mkdocs-1.6.1, mkdocs-material-9.6.22" name="generator"/>
+<title>Phase 4 - ADRs - RepoQ - Semantic Meta-Quality Loop</title>
+<link href="../../assets/stylesheets/main.84d31ad4.min.css" rel="stylesheet"/>
+<link href="../../assets/stylesheets/palette.06af60db.min.css" rel="stylesheet"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&amp;display=fallback" rel="stylesheet"/>
+<style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+<link href="../../assets/_mkdocstrings.css" rel="stylesheet"/>
+<link href="../../stylesheets/extra.css" rel="stylesheet"/>
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body data-md-color-accent="amber" data-md-color-primary="deep-purple" data-md-color-scheme="default" dir="ltr">
+<input autocomplete="off" class="md-toggle" data-md-toggle="drawer" id="__drawer" type="checkbox"/>
+<input autocomplete="off" class="md-toggle" data-md-toggle="search" id="__search" type="checkbox"/>
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a class="md-skip" href="#vdad-phase-4-architecture-decision-records-adrs">
+          Skip to content
+        </a>
+</div>
+<div data-md-component="announce">
+</div>
+<div data-md-color-scheme="default" data-md-component="outdated" hidden="">
+</div>
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+<nav aria-label="Header" class="md-header__inner md-grid">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-header__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"></path></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+            RepoQ - Semantic Meta-Quality Loop
+          </span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+            
+              Phase 4 - ADRs
+            
+          </span>
+</div>
+</div>
+</div>
+<form class="md-header__option" data-md-component="palette">
+<input aria-label="Switch to dark mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="default" id="__palette_0" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_1" hidden="" title="Switch to dark mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+<input aria-label="Switch to light mode" class="md-option" data-md-color-accent="amber" data-md-color-media="" data-md-color-primary="deep-purple" data-md-color-scheme="slate" id="__palette_1" name="__palette" type="radio"/>
+<label class="md-header__button md-icon" for="__palette_0" hidden="" title="Switch to light mode">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"></path></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input aria-label="Search" autocapitalize="off" autocomplete="off" autocorrect="off" class="md-search__input" data-md-component="search-query" name="query" placeholder="Search" required="" spellcheck="false" type="text"/>
+<label class="md-search__icon md-icon" for="__search">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"></path></svg>
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"></path></svg>
+</label>
+<nav aria-label="Search" class="md-search__options">
+<a aria-label="Share" class="md-search__icon md-icon" data-clipboard="" data-clipboard-text="" data-md-component="search-share" href="javascript:void(0)" tabindex="-1" title="Share">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"></path></svg>
+</a>
+<button aria-label="Clear" class="md-search__icon md-icon" tabindex="-1" title="Clear" type="reset">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"></path></svg>
+</button>
+</nav>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" data-md-scrollfix="" tabindex="0">
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+            Initializing search
+          </div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="md-header__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+</nav>
+<nav aria-label="Tabs" class="md-tabs" data-md-component="tabs">
+<div class="md-grid">
+<ul class="md-tabs__list">
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../..">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../getting-started/installation/">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../user-guide/usage/">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../architecture/overview/">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../tutorials/01-first-analysis/">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../ontology/meta-loop/">
+          
+  
+  
+    
+  
+  Advanced Topics
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../development/index.md">
+          
+  
+  
+    
+  
+  Development
+
+        </a>
+</li>
+<li class="md-tabs__item md-tabs__item--active">
+<a class="md-tabs__link" href="../phase1-domain-context/">
+          
+  
+  
+    
+  
+  VDAD Process
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../api/reference/">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+</li>
+<li class="md-tabs__item">
+<a class="md-tabs__link" href="../../about/limitations/">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+</li>
+</ul>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Navigation" class="md-nav md-nav--primary md-nav--lifted" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a aria-label="RepoQ - Semantic Meta-Quality Loop" class="md-nav__button md-logo" data-md-component="logo" href="../.." title="RepoQ - Semantic Meta-Quality Loop">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"></path></svg>
+</a>
+    RepoQ - Semantic Meta-Quality Loop
+  </label>
+<div class="md-nav__source">
+<a class="md-source" data-md-component="source" href="https://github.com/Repo-Q/repoq" title="Go to repository">
+<div class="md-source__icon md-icon">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</div>
+<div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+</div>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../..">
+<span class="md-ellipsis">
+    Home
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_2" type="checkbox"/>
+<label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+<span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_2_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_2">
+<span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/installation/">
+<span class="md-ellipsis">
+    Installation
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../getting-started/quickstart/">
+<span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_3" type="checkbox"/>
+<label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+<span class="md-ellipsis">
+    User Guide
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_3_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_3">
+<span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/usage/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/configuration/">
+<span class="md-ellipsis">
+    Configuration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/commands/">
+<span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../user-guide/workflows/">
+<span class="md-ellipsis">
+    Workflows
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_4" type="checkbox"/>
+<label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+<span class="md-ellipsis">
+    Architecture
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_4_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_4">
+<span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/overview/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/trs-framework/">
+<span class="md-ellipsis">
+    TRS Framework
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/rdf-export/">
+<span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/baml-agent/">
+<span class="md-ellipsis">
+    BAML AI Agent
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/analyzer-pipeline/">
+<span class="md-ellipsis">
+    Analyzer Pipeline
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../architecture/stratification-guard/">
+<span class="md-ellipsis">
+    Stratification Guard
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_5" type="checkbox"/>
+<label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+<span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_5_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_5">
+<span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/01-first-analysis/">
+<span class="md-ellipsis">
+    First Analysis
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/02-custom-analyzer/">
+<span class="md-ellipsis">
+    Custom Analyzer
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/03-ci-cd-integration/">
+<span class="md-ellipsis">
+    CI/CD Integration
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/04-advanced-filtering/">
+<span class="md-ellipsis">
+    Advanced Filtering
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/05-rdf-queries/">
+<span class="md-ellipsis">
+    RDF Queries
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../tutorials/06-ai-agent-config/">
+<span class="md-ellipsis">
+    AI Agent Configuration
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_6" type="checkbox"/>
+<label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+<span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_6_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_6">
+<span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/meta-loop/">
+<span class="md-ellipsis">
+    Meta-Quality Loop
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../ontology/intelligence/">
+<span class="md-ellipsis">
+    Ontological Intelligence
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_7" type="checkbox"/>
+<label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+<span class="md-ellipsis">
+    Development
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_7_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_7">
+<span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/index.md">
+<span class="md-ellipsis">
+    Development Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/uv-setup/">
+<span class="md-ellipsis">
+    uv Setup Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/CONTRIBUTING.md">
+<span class="md-ellipsis">
+    Contributing Guide
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/testing.md">
+<span class="md-ellipsis">
+    Testing Strategy
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/mathematical-proof-quality-monotonicity/">
+<span class="md-ellipsis">
+    Mathematical Proof (Quality Monotonicity)
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-foundations-complete/">
+<span class="md-ellipsis">
+    Formal Foundations
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/formal-diagrams/">
+<span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/quality-loop-roadmap/">
+<span class="md-ellipsis">
+    Quality Loop Roadmap
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../development/tmp-artifacts-inventory/">
+<span class="md-ellipsis">
+    tmp/ Artifacts Inventory
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+<input checked="" class="md-nav__toggle md-toggle" id="__nav_8" type="checkbox"/>
+<label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+<span class="md-ellipsis">
+    VDAD Process
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="true" aria-labelledby="__nav_8_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_8">
+<span class="md-nav__icon md-icon"></span>
+            VDAD Process
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase1-domain-context/">
+<span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase1-stakeholders/">
+<span class="md-ellipsis">
+    Phase 1 - Stakeholders
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase2-value-register/">
+<span class="md-ellipsis">
+    Phase 2 - Value Register
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase3-requirements/">
+<span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-architecture-overview/">
+<span class="md-ellipsis">
+    Phase 4 - Architecture Overview
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-c4-diagrams/">
+<span class="md-ellipsis">
+    Phase 4 - C4 Diagrams
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" id="__toc" type="checkbox"/>
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a class="md-nav__link md-nav__link--active" href="./">
+<span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+</a>
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-log">
+<span class="md-ellipsis">
+      ADR Log
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-001-use-baml-for-type-safe-ai-agent">
+<span class="md-ellipsis">
+      ADR-001: Use BAML for Type-Safe AI Agent
+    </span>
+</a>
+<nav aria-label="ADR-001: Use BAML for Type-Safe AI Agent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-002-use-rdflib-optional-oxigraph">
+<span class="md-ellipsis">
+      ADR-002: Use RDFLib + Optional Oxigraph
+    </span>
+</a>
+<nav aria-label="ADR-002: Use RDFLib + Optional Oxigraph" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_1">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_1">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_1">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_1">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_1">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-003-isolate-any2math-in-subprocess">
+<span class="md-ellipsis">
+      ADR-003: Isolate Any2Math in Subprocess
+    </span>
+</a>
+<nav aria-label="ADR-003: Isolate Any2Math in Subprocess" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_2">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_2">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_2">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_2">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_2">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-004-use-arc42-for-architecture-documentation">
+<span class="md-ellipsis">
+      ADR-004: Use arc42 for Architecture Documentation
+    </span>
+</a>
+<nav aria-label="ADR-004: Use arc42 for Architecture Documentation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_3">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_3">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_3">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_3">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_3">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-005-use-mermaid-for-diagrams">
+<span class="md-ellipsis">
+      ADR-005: Use Mermaid for Diagrams
+    </span>
+</a>
+<nav aria-label="ADR-005: Use Mermaid for Diagrams" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_4">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_4">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_4">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_4">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_4">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-006-stratification-levels-0-2">
+<span class="md-ellipsis">
+      ADR-006: Stratification Levels 0-2
+    </span>
+</a>
+<nav aria-label="ADR-006: Stratification Levels 0-2" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_5">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_5">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_5">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_5">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_5">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-007-pcq-min-aggregator-zag-framework">
+<span class="md-ellipsis">
+      ADR-007: PCQ Min-Aggregator (ZAG Framework)
+    </span>
+</a>
+<nav aria-label="ADR-007: PCQ Min-Aggregator (ZAG Framework)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_6">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_6">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_6">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_6">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_6">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-008-sha-based-incremental-caching">
+<span class="md-ellipsis">
+      ADR-008: SHA-Based Incremental Caching
+    </span>
+</a>
+<nav aria-label="ADR-008: SHA-Based Incremental Caching" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_7">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_7">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_7">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_7">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_7">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-009-local-first-zero-network-calls">
+<span class="md-ellipsis">
+      ADR-009: Local-First (Zero Network Calls)
+    </span>
+</a>
+<nav aria-label="ADR-009: Local-First (Zero Network Calls)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_8">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_8">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_8">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_8">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_8">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-010-w3c-verifiable-credentials">
+<span class="md-ellipsis">
+      ADR-010: W3C Verifiable Credentials
+    </span>
+</a>
+<nav aria-label="ADR-010: W3C Verifiable Credentials" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_9">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_9">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_9">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_9">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_9">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-011-python-311-only-no-3839">
+<span class="md-ellipsis">
+      ADR-011: Python 3.11+ Only (No 3.8/3.9)
+    </span>
+</a>
+<nav aria-label="ADR-011: Python 3.11+ Only (No 3.8/3.9)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_10">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_10">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_10">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_10">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_10">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-012-github-actions-for-cicd">
+<span class="md-ellipsis">
+      ADR-012: GitHub Actions for CI/CD
+    </span>
+</a>
+<nav aria-label="ADR-012: GitHub Actions for CI/CD" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_11">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_11">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_11">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_11">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_11">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#success-criteria">
+<span class="md-ellipsis">
+      Success Criteria
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      References
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-nfr-realization/">
+<span class="md-ellipsis">
+    Phase 4 - NFR Realization
+    
+  </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="../phase4-baml-agent/">
+<span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_9" type="checkbox"/>
+<label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+<span class="md-ellipsis">
+    API Reference
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_9_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_9">
+<span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../api/reference/">
+<span class="md-ellipsis">
+    Overview
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item md-nav__item--nested">
+<input class="md-nav__toggle md-toggle md-toggle--indeterminate" id="__nav_10" type="checkbox"/>
+<label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+<span class="md-ellipsis">
+    About
+    
+  </span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<nav aria-expanded="false" aria-labelledby="__nav_10_label" class="md-nav" data-md-level="1">
+<label class="md-nav__title" for="__nav_10">
+<span class="md-nav__icon md-icon"></span>
+            About
+          </label>
+<ul class="md-nav__list" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="../../about/limitations/">
+<span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc">
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav aria-label="Table of contents" class="md-nav md-nav--secondary">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-log">
+<span class="md-ellipsis">
+      ADR Log
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-001-use-baml-for-type-safe-ai-agent">
+<span class="md-ellipsis">
+      ADR-001: Use BAML for Type-Safe AI Agent
+    </span>
+</a>
+<nav aria-label="ADR-001: Use BAML for Type-Safe AI Agent" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-002-use-rdflib-optional-oxigraph">
+<span class="md-ellipsis">
+      ADR-002: Use RDFLib + Optional Oxigraph
+    </span>
+</a>
+<nav aria-label="ADR-002: Use RDFLib + Optional Oxigraph" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_1">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_1">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_1">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_1">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_1">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-003-isolate-any2math-in-subprocess">
+<span class="md-ellipsis">
+      ADR-003: Isolate Any2Math in Subprocess
+    </span>
+</a>
+<nav aria-label="ADR-003: Isolate Any2Math in Subprocess" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_2">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_2">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_2">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_2">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_2">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-004-use-arc42-for-architecture-documentation">
+<span class="md-ellipsis">
+      ADR-004: Use arc42 for Architecture Documentation
+    </span>
+</a>
+<nav aria-label="ADR-004: Use arc42 for Architecture Documentation" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_3">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_3">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_3">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_3">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_3">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-005-use-mermaid-for-diagrams">
+<span class="md-ellipsis">
+      ADR-005: Use Mermaid for Diagrams
+    </span>
+</a>
+<nav aria-label="ADR-005: Use Mermaid for Diagrams" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_4">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_4">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_4">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_4">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_4">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-006-stratification-levels-0-2">
+<span class="md-ellipsis">
+      ADR-006: Stratification Levels 0-2
+    </span>
+</a>
+<nav aria-label="ADR-006: Stratification Levels 0-2" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_5">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_5">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_5">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_5">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_5">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-007-pcq-min-aggregator-zag-framework">
+<span class="md-ellipsis">
+      ADR-007: PCQ Min-Aggregator (ZAG Framework)
+    </span>
+</a>
+<nav aria-label="ADR-007: PCQ Min-Aggregator (ZAG Framework)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_6">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_6">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_6">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_6">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_6">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-008-sha-based-incremental-caching">
+<span class="md-ellipsis">
+      ADR-008: SHA-Based Incremental Caching
+    </span>
+</a>
+<nav aria-label="ADR-008: SHA-Based Incremental Caching" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_7">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_7">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_7">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_7">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_7">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-009-local-first-zero-network-calls">
+<span class="md-ellipsis">
+      ADR-009: Local-First (Zero Network Calls)
+    </span>
+</a>
+<nav aria-label="ADR-009: Local-First (Zero Network Calls)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_8">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_8">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_8">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_8">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_8">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-010-w3c-verifiable-credentials">
+<span class="md-ellipsis">
+      ADR-010: W3C Verifiable Credentials
+    </span>
+</a>
+<nav aria-label="ADR-010: W3C Verifiable Credentials" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_9">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_9">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_9">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_9">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_9">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-011-python-311-only-no-3839">
+<span class="md-ellipsis">
+      ADR-011: Python 3.11+ Only (No 3.8/3.9)
+    </span>
+</a>
+<nav aria-label="ADR-011: Python 3.11+ Only (No 3.8/3.9)" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_10">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_10">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_10">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_10">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_10">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#adr-012-github-actions-for-cicd">
+<span class="md-ellipsis">
+      ADR-012: GitHub Actions for CI/CD
+    </span>
+</a>
+<nav aria-label="ADR-012: GitHub Actions for CI/CD" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_11">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_11">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_11">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_11">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_11">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#success-criteria">
+<span class="md-ellipsis">
+      Success Criteria
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#references">
+<span class="md-ellipsis">
+      References
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/edit/main/docs/vdad/phase4-adrs.md" rel="edit" title="Edit this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"></path></svg>
+</a>
+<a class="md-content__button md-icon" href="https://github.com/Repo-Q/repoq/raw/main/docs/vdad/phase4-adrs.md" title="View source of this page">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"></path></svg>
+</a>
+<h1 id="vdad-phase-4-architecture-decision-records-adrs">VDAD Phase 4: Architecture Decision Records (ADRs)<a class="headerlink" href="#vdad-phase-4-architecture-decision-records-adrs" title="Permanent link">¶</a></h1>
+<p><strong>Status</strong>: ✅ ACTIVE<br/>
+<strong>Format</strong>: Lightweight ADR (Michael Nygard, 2011)<br/>
+<strong>Created</strong>: 2025-10-21<br/>
+<strong>Last Updated</strong>: 2025-10-21</p>
+<hr/>
+<h2 id="adr-log">ADR Log<a class="headerlink" href="#adr-log" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>ADR</th>
+<th>Title</th>
+<th>Status</th>
+<th>Date</th>
+<th>Stakeholders</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ADR-001</td>
+<td>Use BAML for Type-Safe AI Agent</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Developers, Team Leads</td>
+</tr>
+<tr>
+<td>ADR-002</td>
+<td>Use RDFLib + Optional Oxigraph</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Developers, Researchers</td>
+</tr>
+<tr>
+<td>ADR-003</td>
+<td>Isolate Any2Math in Subprocess</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Developers, DevOps</td>
+</tr>
+<tr>
+<td>ADR-004</td>
+<td>Use arc42 for Architecture Docs</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Team Leads, Maintainers</td>
+</tr>
+<tr>
+<td>ADR-005</td>
+<td>Use Mermaid for Diagrams</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Developers, DevOps</td>
+</tr>
+<tr>
+<td>ADR-006</td>
+<td>Stratification Levels 0-2</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Researchers, Maintainers</td>
+</tr>
+<tr>
+<td>ADR-007</td>
+<td>PCQ Min-Aggregator (ZAG)</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Team Leads, Researchers</td>
+</tr>
+<tr>
+<td>ADR-008</td>
+<td>SHA-Based Incremental Caching</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Developers, DevOps</td>
+</tr>
+<tr>
+<td>ADR-009</td>
+<td>Local-First (Zero Network Calls)</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>All Stakeholders</td>
+</tr>
+<tr>
+<td>ADR-010</td>
+<td>W3C Verifiable Credentials</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Team Leads, DevOps</td>
+</tr>
+<tr>
+<td>ADR-011</td>
+<td>Python 3.11+ Only (No 3.8/3.9)</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>Developers, DevOps</td>
+</tr>
+<tr>
+<td>ADR-012</td>
+<td>GitHub Actions for CI/CD</td>
+<td>✅ Accepted</td>
+<td>2025-10-21</td>
+<td>DevOps, Team Leads</td>
+</tr>
+</tbody>
+</table>
+<hr/>
+<h2 id="adr-001-use-baml-for-type-safe-ai-agent">ADR-001: Use BAML for Type-Safe AI Agent<a class="headerlink" href="#adr-001-use-baml-for-type-safe-ai-agent" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Developers, Team Leads<br/>
+<strong>Deciders</strong>: Kirill (Maintainer), Dr. Taylor (Researcher)</p>
+<h3 id="context">Context<a class="headerlink" href="#context" title="Permanent link">¶</a></h3>
+<p>Phase 5 will introduce an optional AI agent for semantic analysis, explanations, and improvement suggestions. We need a framework to:
+1. Call LLMs (GPT-4, Claude, etc.) with structured prompts
+2. Parse LLM outputs into typed Python objects
+3. Handle retries, timeouts, and errors gracefully
+4. Avoid hallucination risks (unvalidated string outputs)</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>LangChain</strong>: Feature-rich but overengineered for our use case (500+ classes, steep learning curve)
+- <strong>Raw OpenAI API</strong>: No type safety, manual prompt engineering, no retry logic
+- <strong>BAML</strong> (BoundaryML): Type-safe DSL, compiles to Python/TypeScript, built-in validation</p>
+<h3 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">¶</a></h3>
+<p><strong>Use BAML (BoundaryML) for the AI agent</strong> with the following functions:
+1. <code>AnalyzePRContext(diff: string, metrics: Metrics) -&gt; PRContext</code>
+2. <code>GenerateExplanation(failure: GateFailure) -&gt; Explanation</code>
+3. <code>SuggestImprovements(code: string, complexity: int) -&gt; Suggestions</code>
+4. <code>DetectAnomalies(history: List[Commit]) -&gt; Anomalies</code></p>
+<h3 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Type Safety</strong>: BAML compiles prompts to Python dataclasses, eliminating runtime errors</li>
+<li><strong>Declarative</strong>: Prompts in <code>.baml</code> files (version-controlled, reviewable)</li>
+<li><strong>Validation</strong>: Built-in JSON schema validation for LLM outputs</li>
+<li><strong>Testability</strong>: Mock LLM responses in unit tests</li>
+<li><strong>Lightweight</strong>: ~50 classes (vs LangChain's 500+)</li>
+</ol>
+<h3 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Structured AI outputs (no free-form strings)
+- ✅ Easy to test (mock BAML client)
+- ✅ Version-controlled prompts (no hidden prompt injection)
+- ✅ Multi-provider support (OpenAI, Anthropic, local LLMs)</p>
+<p><strong>Negative</strong>:
+- ❌ New dependency (BAML ~10MB, acceptable)
+- ❌ Learning curve for BAML DSL (~1 day)
+- ❌ Not as mature as LangChain (v0.x, but stable)</p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: BAML project abandoned → <strong>Mitigation</strong>: Can fall back to raw OpenAI API (BAML is thin wrapper)
+- <strong>R2</strong>: LLM API costs → <strong>Mitigation</strong>: Max 10 calls per analysis, explicit budget controls
+- <strong>R3</strong>: Hallucinations → <strong>Mitigation</strong>: Human-in-loop, experimental mode first</p>
+<h3 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">¶</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>// File: repoq/ai/agent.baml
+</span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a href="#__codelineno-0-3" id="__codelineno-0-3" name="__codelineno-0-3"></a>class PRContext {
+</span><span id="__span-0-4"><a href="#__codelineno-0-4" id="__codelineno-0-4" name="__codelineno-0-4"></a>  intent: string
+</span><span id="__span-0-5"><a href="#__codelineno-0-5" id="__codelineno-0-5" name="__codelineno-0-5"></a>  patterns: string[]
+</span><span id="__span-0-6"><a href="#__codelineno-0-6" id="__codelineno-0-6" name="__codelineno-0-6"></a>  risks: string[]
+</span><span id="__span-0-7"><a href="#__codelineno-0-7" id="__codelineno-0-7" name="__codelineno-0-7"></a>}
+</span><span id="__span-0-8"><a href="#__codelineno-0-8" id="__codelineno-0-8" name="__codelineno-0-8"></a>
+</span><span id="__span-0-9"><a href="#__codelineno-0-9" id="__codelineno-0-9" name="__codelineno-0-9"></a>function AnalyzePRContext(diff: string, metrics: Metrics) -&gt; PRContext {
+</span><span id="__span-0-10"><a href="#__codelineno-0-10" id="__codelineno-0-10" name="__codelineno-0-10"></a>  client GPT4
+</span><span id="__span-0-11"><a href="#__codelineno-0-11" id="__codelineno-0-11" name="__codelineno-0-11"></a>  prompt #"
+</span><span id="__span-0-12"><a href="#__codelineno-0-12" id="__codelineno-0-12" name="__codelineno-0-12"></a>    Analyze this PR:
+</span><span id="__span-0-13"><a href="#__codelineno-0-13" id="__codelineno-0-13" name="__codelineno-0-13"></a>    Diff: {{ diff }}
+</span><span id="__span-0-14"><a href="#__codelineno-0-14" id="__codelineno-0-14" name="__codelineno-0-14"></a>    Metrics: {{ metrics }}
+</span><span id="__span-0-15"><a href="#__codelineno-0-15" id="__codelineno-0-15" name="__codelineno-0-15"></a>
+</span><span id="__span-0-16"><a href="#__codelineno-0-16" id="__codelineno-0-16" name="__codelineno-0-16"></a>    Extract:
+</span><span id="__span-0-17"><a href="#__codelineno-0-17" id="__codelineno-0-17" name="__codelineno-0-17"></a>    - Intent: What is developer trying to accomplish?
+</span><span id="__span-0-18"><a href="#__codelineno-0-18" id="__codelineno-0-18" name="__codelineno-0-18"></a>    - Patterns: Design patterns used?
+</span><span id="__span-0-19"><a href="#__codelineno-0-19" id="__codelineno-0-19" name="__codelineno-0-19"></a>    - Risks: Potential issues?
+</span><span id="__span-0-20"><a href="#__codelineno-0-20" id="__codelineno-0-20" name="__codelineno-0-20"></a>  "#
+</span><span id="__span-0-21"><a href="#__codelineno-0-21" id="__codelineno-0-21" name="__codelineno-0-21"></a>}
+</span></code></pre></div>
+<p><strong>Status</strong>: ⏸️ Planned (Phase 5)</p>
+<hr/>
+<h2 id="adr-002-use-rdflib-optional-oxigraph">ADR-002: Use RDFLib + Optional Oxigraph<a class="headerlink" href="#adr-002-use-rdflib-optional-oxigraph" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Developers, Researchers<br/>
+<strong>Deciders</strong>: Kirill, Dr. Taylor</p>
+<h3 id="context_1">Context<a class="headerlink" href="#context_1" title="Permanent link">¶</a></h3>
+<p>Ontology Intelligence requires an RDF triple store with SPARQL query support. Requirements:
+1. Store Code/C4/DDD ontologies (triples)
+2. SPARQL 1.1 queries (pattern detection)
+3. SHACL validation (shape checking)
+4. Python-native (avoid external servers)
+5. Reasonable performance (&lt;1 sec per query for repos &lt;10K files)</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>RDFLib</strong>: Python-native, standards-compliant, mature (10+ years), but slower for large graphs
+- <strong>Oxigraph</strong>: Rust-based, 10-100x faster than RDFLib, Python bindings, but C++ build dependency
+- <strong>Virtuoso</strong>: High-performance, but external server (violates local-first principle)
+- <strong>Custom</strong>: Reinvent wheel (not feasible)</p>
+<h3 id="decision_1">Decision<a class="headerlink" href="#decision_1" title="Permanent link">¶</a></h3>
+<p><strong>Use RDFLib by default, with Oxigraph as optional optimization</strong>:
+1. <strong>RDFLib</strong> (default): No build dependencies, pure Python, sufficient for &lt;10K files
+2. <strong>Oxigraph</strong> (opt-in): Install via <code>pip install repoq[oxigraph]</code> for large repos (&gt;10K files)</p>
+<h3 id="rationale_1">Rationale<a class="headerlink" href="#rationale_1" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Developer Experience</strong>: RDFLib is pure Python (no C++ toolchain needed)</li>
+<li><strong>Performance</strong>: RDFLib sufficient for 90% of repos (&lt;10K files, &lt;1 sec queries)</li>
+<li><strong>Flexibility</strong>: Oxigraph available for power users (large monorepos)</li>
+<li><strong>Standards Compliance</strong>: Both implement W3C RDF 1.1, SPARQL 1.1</li>
+<li><strong>SHACL Support</strong>: pySHACL works with both (uses RDFLib API)</li>
+</ol>
+<h3 id="consequences_1">Consequences<a class="headerlink" href="#consequences_1" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Easy installation (pure Python by default)
+- ✅ Escape hatch for large repos (Oxigraph)
+- ✅ Standards-compliant (W3C RDF/SPARQL)</p>
+<p><strong>Negative</strong>:
+- ❌ RDFLib slow for large repos (&gt;10K files) → <strong>Mitigation</strong>: Recommend Oxigraph
+- ❌ Two code paths (RDFLib vs Oxigraph) → <strong>Mitigation</strong>: Abstract behind OntologyManager interface</p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: RDFLib performance degrades → <strong>Mitigation</strong>: Profile, optimize, or switch to Oxigraph
+- <strong>R2</strong>: Oxigraph Python bindings break → <strong>Mitigation</strong>: Fall back to RDFLib</p>
+<h3 id="implementation_1">Implementation<a class="headerlink" href="#implementation_1" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># repoq/ontologies/manager.py</span>
+</span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a href="#__codelineno-1-3" id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">abc</span><span class="w"> </span><span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+</span><span id="__span-1-4"><a href="#__codelineno-1-4" id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rdflib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Graph</span><span class="p">,</span> <span class="n">Namespace</span>
+</span><span id="__span-1-5"><a href="#__codelineno-1-5" id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rdflib.plugins.sparql</span><span class="w"> </span><span class="kn">import</span> <span class="n">prepareQuery</span>
+</span><span id="__span-1-6"><a href="#__codelineno-1-6" id="__codelineno-1-6" name="__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a href="#__codelineno-1-7" id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="k">class</span><span class="w"> </span><span class="nc">OntologyManager</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+</span><span id="__span-1-8"><a href="#__codelineno-1-8" id="__codelineno-1-8" name="__codelineno-1-8"></a>    <span class="nd">@abstractmethod</span>
+</span><span id="__span-1-9"><a href="#__codelineno-1-9" id="__codelineno-1-9" name="__codelineno-1-9"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_triple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subject</span><span class="p">,</span> <span class="n">predicate</span><span class="p">,</span> <span class="nb">object</span><span class="p">):</span>
+</span><span id="__span-1-10"><a href="#__codelineno-1-10" id="__codelineno-1-10" name="__codelineno-1-10"></a>        <span class="k">pass</span>
+</span><span id="__span-1-11"><a href="#__codelineno-1-11" id="__codelineno-1-11" name="__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a href="#__codelineno-1-12" id="__codelineno-1-12" name="__codelineno-1-12"></a>    <span class="nd">@abstractmethod</span>
+</span><span id="__span-1-13"><a href="#__codelineno-1-13" id="__codelineno-1-13" name="__codelineno-1-13"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sparql</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="__span-1-14"><a href="#__codelineno-1-14" id="__codelineno-1-14" name="__codelineno-1-14"></a>        <span class="k">pass</span>
+</span><span id="__span-1-15"><a href="#__codelineno-1-15" id="__codelineno-1-15" name="__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a href="#__codelineno-1-16" id="__codelineno-1-16" name="__codelineno-1-16"></a><span class="k">class</span><span class="w"> </span><span class="nc">RDFLibManager</span><span class="p">(</span><span class="n">OntologyManager</span><span class="p">):</span>
+</span><span id="__span-1-17"><a href="#__codelineno-1-17" id="__codelineno-1-17" name="__codelineno-1-17"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-1-18"><a href="#__codelineno-1-18" id="__codelineno-1-18" name="__codelineno-1-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span> <span class="o">=</span> <span class="n">Graph</span><span class="p">()</span>
+</span><span id="__span-1-19"><a href="#__codelineno-1-19" id="__codelineno-1-19" name="__codelineno-1-19"></a>
+</span><span id="__span-1-20"><a href="#__codelineno-1-20" id="__codelineno-1-20" name="__codelineno-1-20"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_triple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+</span><span id="__span-1-21"><a href="#__codelineno-1-21" id="__codelineno-1-21" name="__codelineno-1-21"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span><span class="p">))</span>
+</span><span id="__span-1-22"><a href="#__codelineno-1-22" id="__codelineno-1-22" name="__codelineno-1-22"></a>
+</span><span id="__span-1-23"><a href="#__codelineno-1-23" id="__codelineno-1-23" name="__codelineno-1-23"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sparql</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="__span-1-24"><a href="#__codelineno-1-24" id="__codelineno-1-24" name="__codelineno-1-24"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">graph</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">sparql</span><span class="p">)</span>
+</span><span id="__span-1-25"><a href="#__codelineno-1-25" id="__codelineno-1-25" name="__codelineno-1-25"></a>
+</span><span id="__span-1-26"><a href="#__codelineno-1-26" id="__codelineno-1-26" name="__codelineno-1-26"></a><span class="k">class</span><span class="w"> </span><span class="nc">OxigraphManager</span><span class="p">(</span><span class="n">OntologyManager</span><span class="p">):</span>
+</span><span id="__span-1-27"><a href="#__codelineno-1-27" id="__codelineno-1-27" name="__codelineno-1-27"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-1-28"><a href="#__codelineno-1-28" id="__codelineno-1-28" name="__codelineno-1-28"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">pyoxigraph</span><span class="w"> </span><span class="kn">import</span> <span class="n">Store</span>
+</span><span id="__span-1-29"><a href="#__codelineno-1-29" id="__codelineno-1-29" name="__codelineno-1-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">Store</span><span class="p">()</span>
+</span><span id="__span-1-30"><a href="#__codelineno-1-30" id="__codelineno-1-30" name="__codelineno-1-30"></a>
+</span><span id="__span-1-31"><a href="#__codelineno-1-31" id="__codelineno-1-31" name="__codelineno-1-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_triple</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span><span class="p">):</span>
+</span><span id="__span-1-32"><a href="#__codelineno-1-32" id="__codelineno-1-32" name="__codelineno-1-32"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">add</span><span class="p">((</span><span class="n">s</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">o</span><span class="p">))</span>
+</span><span id="__span-1-33"><a href="#__codelineno-1-33" id="__codelineno-1-33" name="__codelineno-1-33"></a>
+</span><span id="__span-1-34"><a href="#__codelineno-1-34" id="__codelineno-1-34" name="__codelineno-1-34"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sparql</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="__span-1-35"><a href="#__codelineno-1-35" id="__codelineno-1-35" name="__codelineno-1-35"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">sparql</span><span class="p">)</span>
+</span><span id="__span-1-36"><a href="#__codelineno-1-36" id="__codelineno-1-36" name="__codelineno-1-36"></a>
+</span><span id="__span-1-37"><a href="#__codelineno-1-37" id="__codelineno-1-37" name="__codelineno-1-37"></a><span class="c1"># Factory</span>
+</span><span id="__span-1-38"><a href="#__codelineno-1-38" id="__codelineno-1-38" name="__codelineno-1-38"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_ontology_manager</span><span class="p">(</span><span class="n">use_oxigraph</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+</span><span id="__span-1-39"><a href="#__codelineno-1-39" id="__codelineno-1-39" name="__codelineno-1-39"></a>    <span class="k">if</span> <span class="n">use_oxigraph</span><span class="p">:</span>
+</span><span id="__span-1-40"><a href="#__codelineno-1-40" id="__codelineno-1-40" name="__codelineno-1-40"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-1-41"><a href="#__codelineno-1-41" id="__codelineno-1-41" name="__codelineno-1-41"></a>            <span class="k">return</span> <span class="n">OxigraphManager</span><span class="p">()</span>
+</span><span id="__span-1-42"><a href="#__codelineno-1-42" id="__codelineno-1-42" name="__codelineno-1-42"></a>        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span id="__span-1-43"><a href="#__codelineno-1-43" id="__codelineno-1-43" name="__codelineno-1-43"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"Oxigraph not installed, falling back to RDFLib"</span><span class="p">)</span>
+</span><span id="__span-1-44"><a href="#__codelineno-1-44" id="__codelineno-1-44" name="__codelineno-1-44"></a>    <span class="k">return</span> <span class="n">RDFLibManager</span><span class="p">()</span>
+</span></code></pre></div>
+<p><strong>Status</strong>: 🔄 In Progress (RDFLib integrated, Oxigraph pending)</p>
+<hr/>
+<h2 id="adr-003-isolate-any2math-in-subprocess">ADR-003: Isolate Any2Math in Subprocess<a class="headerlink" href="#adr-003-isolate-any2math-in-subprocess" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Developers, DevOps<br/>
+<strong>Deciders</strong>: Kirill, Morgan (Eng Manager)</p>
+<h3 id="context_2">Context<a class="headerlink" href="#context_2" title="Permanent link">¶</a></h3>
+<p>Any2Math (TRS-based AST normalization) uses Lean 4 for formal verification. Challenges:
+1. <strong>Lean Runtime</strong>: Large binary (~500MB), slow startup (~2 sec)
+2. <strong>Memory</strong>: Lean can consume 1-2 GB for large proofs
+3. <strong>Isolation</strong>: Don't want Lean crashes to kill RepoQ process
+4. <strong>Optional</strong>: Not all users need formal verification (overkill for small projects)</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>In-process</strong>: Lean Python bindings (if they existed) → <strong>Not available</strong>
+- <strong>Subprocess</strong>: Call <code>lean verify_trs.lean</code> via <code>subprocess.run()</code> → <strong>Clean isolation</strong>
+- <strong>HTTP Server</strong>: Run Lean as separate service → <strong>Overkill, adds network dependency</strong>
+- <strong>Skip Lean</strong>: Trust TRS implementation without proofs → <strong>Acceptable fallback</strong></p>
+<h3 id="decision_2">Decision<a class="headerlink" href="#decision_2" title="Permanent link">¶</a></h3>
+<p><strong>Isolate Any2Math in subprocess with graceful fallback</strong>:
+1. If Lean installed: Run <code>lean verify_trs.lean</code> as subprocess (optional validation)
+2. If Lean missing: Skip formal verification, trust TRS rules (warn user)
+3. Timeout: 30 seconds per normalization (kill subprocess if hangs)
+4. Caching: Cache normalization results by file SHA (avoid re-running Lean)</p>
+<h3 id="rationale_2">Rationale<a class="headerlink" href="#rationale_2" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Isolation</strong>: Lean crashes don't affect RepoQ (subprocess isolation)</li>
+<li><strong>Performance</strong>: Avoid Lean startup overhead (caching + optional)</li>
+<li><strong>Usability</strong>: RepoQ works without Lean (degraded but functional)</li>
+<li><strong>Security</strong>: Subprocess timeout prevents DoS (malicious TRS rules)</li>
+</ol>
+<h3 id="consequences_2">Consequences<a class="headerlink" href="#consequences_2" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ RepoQ remains lightweight (no mandatory Lean dependency)
+- ✅ Formal verification available for experts (opt-in)
+- ✅ Crash isolation (Lean bugs don't kill RepoQ)</p>
+<p><strong>Negative</strong>:
+- ❌ Subprocess overhead (~2 sec Lean startup) → <strong>Mitigation</strong>: Cache results
+- ❌ Requires Lean installed for full verification → <strong>Mitigation</strong>: Document in README</p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: Subprocess hangs → <strong>Mitigation</strong>: 30 sec timeout + kill
+- <strong>R2</strong>: Lean not found → <strong>Mitigation</strong>: Graceful degradation (warn user)</p>
+<h3 id="implementation_2">Implementation<a class="headerlink" href="#implementation_2" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># repoq/core/any2math.py</span>
+</span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a href="#__codelineno-2-3" id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+</span><span id="__span-2-4"><a href="#__codelineno-2-4" id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+</span><span id="__span-2-5"><a href="#__codelineno-2-5" id="__codelineno-2-5" name="__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="__span-2-6"><a href="#__codelineno-2-6" id="__codelineno-2-6" name="__codelineno-2-6"></a>
+</span><span id="__span-2-7"><a href="#__codelineno-2-7" id="__codelineno-2-7" name="__codelineno-2-7"></a><span class="n">LEAN_TIMEOUT</span> <span class="o">=</span> <span class="mi">30</span>  <span class="c1"># seconds</span>
+</span><span id="__span-2-8"><a href="#__codelineno-2-8" id="__codelineno-2-8" name="__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a href="#__codelineno-2-9" id="__codelineno-2-9" name="__codelineno-2-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">normalize_ast</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">verify</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-2-10"><a href="#__codelineno-2-10" id="__codelineno-2-10" name="__codelineno-2-10"></a>    <span class="c1"># Step 1: Apply TRS rules (deterministic, no Lean needed)</span>
+</span><span id="__span-2-11"><a href="#__codelineno-2-11" id="__codelineno-2-11" name="__codelineno-2-11"></a>    <span class="n">normalized</span> <span class="o">=</span> <span class="n">apply_trs_rules</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+</span><span id="__span-2-12"><a href="#__codelineno-2-12" id="__codelineno-2-12" name="__codelineno-2-12"></a>
+</span><span id="__span-2-13"><a href="#__codelineno-2-13" id="__codelineno-2-13" name="__codelineno-2-13"></a>    <span class="c1"># Step 2: Optional formal verification (Lean)</span>
+</span><span id="__span-2-14"><a href="#__codelineno-2-14" id="__codelineno-2-14" name="__codelineno-2-14"></a>    <span class="k">if</span> <span class="n">verify</span><span class="p">:</span>
+</span><span id="__span-2-15"><a href="#__codelineno-2-15" id="__codelineno-2-15" name="__codelineno-2-15"></a>        <span class="n">cache_key</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">code</span><span class="o">.</span><span class="n">encode</span><span class="p">())</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+</span><span id="__span-2-16"><a href="#__codelineno-2-16" id="__codelineno-2-16" name="__codelineno-2-16"></a>        <span class="n">cache_file</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">f</span><span class="s2">".repoq/cache/lean_</span><span class="si">{</span><span class="n">cache_key</span><span class="si">}</span><span class="s2">.proof"</span><span class="p">)</span>
+</span><span id="__span-2-17"><a href="#__codelineno-2-17" id="__codelineno-2-17" name="__codelineno-2-17"></a>
+</span><span id="__span-2-18"><a href="#__codelineno-2-18" id="__codelineno-2-18" name="__codelineno-2-18"></a>        <span class="k">if</span> <span class="n">cache_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+</span><span id="__span-2-19"><a href="#__codelineno-2-19" id="__codelineno-2-19" name="__codelineno-2-19"></a>            <span class="c1"># Cache hit: Already verified</span>
+</span><span id="__span-2-20"><a href="#__codelineno-2-20" id="__codelineno-2-20" name="__codelineno-2-20"></a>            <span class="k">return</span> <span class="n">normalized</span>
+</span><span id="__span-2-21"><a href="#__codelineno-2-21" id="__codelineno-2-21" name="__codelineno-2-21"></a>
+</span><span id="__span-2-22"><a href="#__codelineno-2-22" id="__codelineno-2-22" name="__codelineno-2-22"></a>        <span class="c1"># Cache miss: Run Lean verification</span>
+</span><span id="__span-2-23"><a href="#__codelineno-2-23" id="__codelineno-2-23" name="__codelineno-2-23"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-2-24"><a href="#__codelineno-2-24" id="__codelineno-2-24" name="__codelineno-2-24"></a>            <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+</span><span id="__span-2-25"><a href="#__codelineno-2-25" id="__codelineno-2-25" name="__codelineno-2-25"></a>                <span class="p">[</span><span class="s2">"lean"</span><span class="p">,</span> <span class="s2">"verify_trs.lean"</span><span class="p">],</span>
+</span><span id="__span-2-26"><a href="#__codelineno-2-26" id="__codelineno-2-26" name="__codelineno-2-26"></a>                <span class="nb">input</span><span class="o">=</span><span class="n">normalized</span><span class="p">,</span>
+</span><span id="__span-2-27"><a href="#__codelineno-2-27" id="__codelineno-2-27" name="__codelineno-2-27"></a>                <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-2-28"><a href="#__codelineno-2-28" id="__codelineno-2-28" name="__codelineno-2-28"></a>                <span class="n">timeout</span><span class="o">=</span><span class="n">LEAN_TIMEOUT</span><span class="p">,</span>
+</span><span id="__span-2-29"><a href="#__codelineno-2-29" id="__codelineno-2-29" name="__codelineno-2-29"></a>                <span class="n">text</span><span class="o">=</span><span class="kc">True</span>
+</span><span id="__span-2-30"><a href="#__codelineno-2-30" id="__codelineno-2-30" name="__codelineno-2-30"></a>            <span class="p">)</span>
+</span><span id="__span-2-31"><a href="#__codelineno-2-31" id="__codelineno-2-31" name="__codelineno-2-31"></a>
+</span><span id="__span-2-32"><a href="#__codelineno-2-32" id="__codelineno-2-32" name="__codelineno-2-32"></a>            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-2-33"><a href="#__codelineno-2-33" id="__codelineno-2-33" name="__codelineno-2-33"></a>                <span class="c1"># Proof successful: Cache result</span>
+</span><span id="__span-2-34"><a href="#__codelineno-2-34" id="__codelineno-2-34" name="__codelineno-2-34"></a>                <span class="n">cache_file</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">"verified"</span><span class="p">)</span>
+</span><span id="__span-2-35"><a href="#__codelineno-2-35" id="__codelineno-2-35" name="__codelineno-2-35"></a>                <span class="k">return</span> <span class="n">normalized</span>
+</span><span id="__span-2-36"><a href="#__codelineno-2-36" id="__codelineno-2-36" name="__codelineno-2-36"></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-2-37"><a href="#__codelineno-2-37" id="__codelineno-2-37" name="__codelineno-2-37"></a>                <span class="c1"># Proof failed: Log error, return original</span>
+</span><span id="__span-2-38"><a href="#__codelineno-2-38" id="__codelineno-2-38" name="__codelineno-2-38"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lean verification failed: </span><span class="si">{</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="__span-2-39"><a href="#__codelineno-2-39" id="__codelineno-2-39" name="__codelineno-2-39"></a>                <span class="k">return</span> <span class="n">code</span>
+</span><span id="__span-2-40"><a href="#__codelineno-2-40" id="__codelineno-2-40" name="__codelineno-2-40"></a>
+</span><span id="__span-2-41"><a href="#__codelineno-2-41" id="__codelineno-2-41" name="__codelineno-2-41"></a>        <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+</span><span id="__span-2-42"><a href="#__codelineno-2-42" id="__codelineno-2-42" name="__codelineno-2-42"></a>            <span class="nb">print</span><span class="p">(</span><span class="s2">"Lean not installed, skipping verification"</span><span class="p">)</span>
+</span><span id="__span-2-43"><a href="#__codelineno-2-43" id="__codelineno-2-43" name="__codelineno-2-43"></a>            <span class="k">return</span> <span class="n">normalized</span>
+</span><span id="__span-2-44"><a href="#__codelineno-2-44" id="__codelineno-2-44" name="__codelineno-2-44"></a>
+</span><span id="__span-2-45"><a href="#__codelineno-2-45" id="__codelineno-2-45" name="__codelineno-2-45"></a>        <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span><span class="p">:</span>
+</span><span id="__span-2-46"><a href="#__codelineno-2-46" id="__codelineno-2-46" name="__codelineno-2-46"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Lean verification timeout (</span><span class="si">{</span><span class="n">LEAN_TIMEOUT</span><span class="si">}</span><span class="s2">s), skipping"</span><span class="p">)</span>
+</span><span id="__span-2-47"><a href="#__codelineno-2-47" id="__codelineno-2-47" name="__codelineno-2-47"></a>            <span class="k">return</span> <span class="n">normalized</span>
+</span><span id="__span-2-48"><a href="#__codelineno-2-48" id="__codelineno-2-48" name="__codelineno-2-48"></a>
+</span><span id="__span-2-49"><a href="#__codelineno-2-49" id="__codelineno-2-49" name="__codelineno-2-49"></a>    <span class="k">return</span> <span class="n">normalized</span>
+</span></code></pre></div>
+<p><strong>Status</strong>: ⏸️ Planned (tmp/any2math design complete, not integrated)</p>
+<hr/>
+<h2 id="adr-004-use-arc42-for-architecture-documentation">ADR-004: Use arc42 for Architecture Documentation<a class="headerlink" href="#adr-004-use-arc42-for-architecture-documentation" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Team Leads, Maintainers<br/>
+<strong>Deciders</strong>: Kirill, Morgan</p>
+<h3 id="context_3">Context<a class="headerlink" href="#context_3" title="Permanent link">¶</a></h3>
+<p>Need a structured format for architecture documentation. Requirements:
+1. Comprehensive (covers context, design, quality, risks)
+2. Stakeholder-friendly (not just diagrams)
+3. Maintainable (template-based, not ad-hoc)
+4. Compatible with C4 diagrams</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>arc42</strong>: Industry-standard template (12 sections), mature, widely adopted
+- <strong>SAD (Software Architecture Document)</strong>: IEEE 1471 standard, too formal/heavyweight
+- <strong>Custom</strong>: Ad-hoc docs, no structure, hard to maintain</p>
+<h3 id="decision_3">Decision<a class="headerlink" href="#decision_3" title="Permanent link">¶</a></h3>
+<p><strong>Use arc42 template for architecture documentation</strong>:
+- Follow 12-section structure (Context, Solution Strategy, Building Blocks, etc.)
+- Integrate C4 diagrams into arc42 sections
+- Store in <code>docs/vdad/phase4-*.md</code> files (modular)</p>
+<h3 id="rationale_3">Rationale<a class="headerlink" href="#rationale_3" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Industry Standard</strong>: arc42 used by Fortune 500 companies (Siemens, BMW, SAP)</li>
+<li><strong>Comprehensive</strong>: Covers all aspects (quality, risks, glossary, not just design)</li>
+<li><strong>Flexible</strong>: Can omit sections, adapt to project size</li>
+<li><strong>Tool Support</strong>: Mermaid, PlantUML, AsciiDoc integrations</li>
+</ol>
+<h3 id="consequences_3">Consequences<a class="headerlink" href="#consequences_3" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Structured documentation (easy to navigate)
+- ✅ Onboarding-friendly (new devs know where to look)
+- ✅ Review-friendly (stakeholders know what to expect)</p>
+<p><strong>Negative</strong>:
+- ❌ 12 sections can be overwhelming → <strong>Mitigation</strong>: Split into modular files
+- ❌ Requires discipline to maintain → <strong>Mitigation</strong>: CI check for outdated docs</p>
+<p><strong>Risks</strong>: None (well-established standard)</p>
+<h3 id="implementation_3">Implementation<a class="headerlink" href="#implementation_3" title="Permanent link">¶</a></h3>
+<p><strong>arc42 Sections Mapped to RepoQ Docs</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>arc42 Section</th>
+<th>RepoQ Document</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Introduction &amp; Goals</td>
+<td><code>phase4-architecture-overview.md</code> §1</td>
+</tr>
+<tr>
+<td>2. Constraints</td>
+<td><code>phase3-requirements.md</code> (NFRs)</td>
+</tr>
+<tr>
+<td>3. Context &amp; Scope</td>
+<td><code>phase4-c4-diagrams.md</code> (Level 1 Context)</td>
+</tr>
+<tr>
+<td>4. Solution Strategy</td>
+<td><code>phase4-architecture-overview.md</code> §2</td>
+</tr>
+<tr>
+<td>5. Building Block View</td>
+<td><code>phase4-c4-diagrams.md</code> (Level 2 Container)</td>
+</tr>
+<tr>
+<td>6. Runtime View</td>
+<td><code>phase4-c4-diagrams.md</code> (Data Flow)</td>
+</tr>
+<tr>
+<td>7. Deployment View</td>
+<td><code>phase4-c4-diagrams.md</code> (Deployment)</td>
+</tr>
+<tr>
+<td>8. Cross-Cutting Concepts</td>
+<td><code>phase4-nfr-realization.md</code></td>
+</tr>
+<tr>
+<td>9. Architectural Decisions</td>
+<td><code>phase4-adrs.md</code> (this file)</td>
+</tr>
+<tr>
+<td>10. Quality Requirements</td>
+<td><code>phase3-requirements.md</code> (NFRs, EVRs)</td>
+</tr>
+<tr>
+<td>11. Risks &amp; Technical Debt</td>
+<td><code>phase4-architecture-overview.md</code> §5.3</td>
+</tr>
+<tr>
+<td>12. Glossary</td>
+<td><code>phase1-domain-context.md</code> (Ubiquitous Language)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Status</strong>: ✅ Complete (implicitly via Phase 4 docs)</p>
+<hr/>
+<h2 id="adr-005-use-mermaid-for-diagrams">ADR-005: Use Mermaid for Diagrams<a class="headerlink" href="#adr-005-use-mermaid-for-diagrams" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Developers, DevOps<br/>
+<strong>Deciders</strong>: Kirill, Casey (DevOps)</p>
+<h3 id="context_4">Context<a class="headerlink" href="#context_4" title="Permanent link">¶</a></h3>
+<p>Architecture diagrams needed for C4 model, data flows, deployment. Requirements:
+1. <strong>Git-friendly</strong>: Text-based (no binary .png/.svg files)
+2. <strong>Reviewable</strong>: Diffs visible in PRs
+3. <strong>Maintainable</strong>: Edit without specialized tools (no Visio/draw.io)
+4. <strong>Rendering</strong>: Works in GitHub, MkDocs, VS Code</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>PlantUML</strong>: Mature, powerful, but requires Java (heavy dependency)
+- <strong>Graphviz</strong>: Low-level, hard to maintain (dot syntax)
+- <strong>Mermaid</strong>: JavaScript-based, GitHub-native, MkDocs plugin available
+- <strong>draw.io</strong>: WYSIWYG, but binary XML (hard to review)</p>
+<h3 id="decision_4">Decision<a class="headerlink" href="#decision_4" title="Permanent link">¶</a></h3>
+<p><strong>Use Mermaid for all diagrams</strong> (C4, sequence, flowchart, ERD).</p>
+<h3 id="rationale_4">Rationale<a class="headerlink" href="#rationale_4" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>GitHub Native</strong>: Renders in GitHub Markdown (no external tools)</li>
+<li><strong>MkDocs Plugin</strong>: <code>mkdocs-mermaid2-plugin</code> renders diagrams in docs</li>
+<li><strong>Text-Based</strong>: Full diff visibility in PRs</li>
+<li><strong>No Dependencies</strong>: JavaScript (runs in browser), no Java/Graphviz</li>
+<li><strong>C4 Support</strong>: <code>C4Context</code>, <code>C4Container</code>, <code>C4Component</code> diagrams</li>
+</ol>
+<h3 id="consequences_4">Consequences<a class="headerlink" href="#consequences_4" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Zero build-time dependencies (Mermaid runs in browser)
+- ✅ Git-friendly (text diffs)
+- ✅ Easy to edit (any text editor)
+- ✅ GitHub/MkDocs rendering</p>
+<p><strong>Negative</strong>:
+- ❌ Less flexible than PlantUML (fewer customization options) → <strong>Acceptable tradeoff</strong>
+- ❌ Layout sometimes suboptimal (auto-layout) → <strong>Mitigation</strong>: Manual hints (<code>UpdateLayoutConfig</code>)</p>
+<p><strong>Risks</strong>: None (widely adopted, GitHub-native)</p>
+<h3 id="implementation_4">Implementation<a class="headerlink" href="#implementation_4" title="Permanent link">¶</a></h3>
+<p><strong>MkDocs Configuration</strong>:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># mkdocs.yml</span>
+</span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">plugins</span><span class="p">:</span>
+</span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid2</span>
+</span><span id="__span-3-4"><a href="#__codelineno-3-4" id="__codelineno-3-4" name="__codelineno-3-4"></a>
+</span><span id="__span-3-5"><a href="#__codelineno-3-5" id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="nt">markdown_extensions</span><span class="p">:</span>
+</span><span id="__span-3-6"><a href="#__codelineno-3-6" id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">pymdownx.superfences</span><span class="p">:</span>
+</span><span id="__span-3-7"><a href="#__codelineno-3-7" id="__codelineno-3-7" name="__codelineno-3-7"></a><span class="w">      </span><span class="nt">custom_fences</span><span class="p">:</span>
+</span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid</span>
+</span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">          </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid</span>
+</span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="kt">!!python/name:pymdownx.superfences.fence_code_format</span>
+</span></code></pre></div></p>
+<p><strong>Example Diagram</strong>:
+<div class="language-markdown highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="sb">```mermaid</span>
+</span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="s">graph LR</span>
+</span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="s">    A[Developer] --&gt; B[RepoQ CLI]</span>
+</span><span id="__span-4-4"><a href="#__codelineno-4-4" id="__codelineno-4-4" name="__codelineno-4-4"></a><span class="s">    B --&gt; C{Gate Passed?}</span>
+</span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="s">    C --&gt;|Yes| D[Merge PR]</span>
+</span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="s">    C --&gt;|No| E[Fix Code]</span>
+</span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="sb">```</span>
+</span></code></pre></div></p>
+<p><strong>Status</strong>: ✅ Complete (all Phase 4 diagrams use Mermaid)</p>
+<hr/>
+<h2 id="adr-006-stratification-levels-0-2">ADR-006: Stratification Levels 0-2<a class="headerlink" href="#adr-006-stratification-levels-0-2" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Researchers, Maintainers<br/>
+<strong>Deciders</strong>: Kirill, Dr. Taylor</p>
+<h3 id="context_5">Context<a class="headerlink" href="#context_5" title="Permanent link">¶</a></h3>
+<p>Self-application (RepoQ analyzing itself) risks paradoxes (Russell's Paradox, Liar's Paradox). Need a safety mechanism. <strong>Theorem F</strong> (from formal docs) requires:
+- <strong>Strict ordering</strong>: L_i can only analyze L_j if i &gt; j
+- <strong>Stratification</strong>: Separate language levels to avoid self-reference</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>No stratification</strong>: Allow RepoQ_0 to analyze itself → <strong>Unsafe (paradoxes)</strong>
+- <strong>Two levels</strong> (L_0, L_1): RepoQ_1 analyzes RepoQ_0 → <strong>Insufficient for meta-meta checks</strong>
+- <strong>Three levels</strong> (L_0, L_1, L_2): RepoQ_2 validates RepoQ_1 validates RepoQ_0 → <strong>Goldilocks zone</strong>
+- <strong>Infinite levels</strong>: Unnecessarily complex, no practical benefit</p>
+<h3 id="decision_5">Decision<a class="headerlink" href="#decision_5" title="Permanent link">¶</a></h3>
+<p><strong>Use 3 stratification levels (L_0, L_1, L_2)</strong>:
+- <strong>L_0 (Object Level)</strong>: User codebases (analyzed by RepoQ)
+- <strong>L_1 (Meta Level)</strong>: RepoQ's own codebase (self-analysis, dogfooding)
+- <strong>L_2 (Meta-Meta Level)</strong>: RepoQ's quality model validation (meta-check)</p>
+<p><strong>Enforcement</strong>: <code>StratificationGuard</code> class enforces i &gt; j and no level skipping.</p>
+<h3 id="rationale_5">Rationale<a class="headerlink" href="#rationale_5" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Soundness</strong>: Theorem F proven for 3-level stratification (Lean proof)</li>
+<li><strong>Practical</strong>: L_2 sufficient for meta-validation (ontology consistency, TRS correctness)</li>
+<li><strong>Usability</strong>: Simple rules (analyze level below, no skipping)</li>
+<li><strong>Future-Proof</strong>: Can add L_3 later if needed (unlikely)</li>
+</ol>
+<h3 id="consequences_5">Consequences<a class="headerlink" href="#consequences_5" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Paradox-free self-application (Theorem F guarantee)
+- ✅ Dogfooding enabled (RepoQ analyzes itself at L_1)
+- ✅ Meta-validation (L_2 checks RepoQ's own quality model)</p>
+<p><strong>Negative</strong>:
+- ❌ User confusion ("Why can't RepoQ analyze itself directly?") → <strong>Mitigation</strong>: Clear error messages
+- ❌ Extra command (<code>repoq meta-self --level 1</code>) → <strong>Acceptable tradeoff</strong></p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: User tries to skip levels → <strong>Mitigation</strong>: Guard enforces strict ordering
+- <strong>R2</strong>: Infinite regress ("Who validates L_2?") → <strong>Mitigation</strong>: L_2 is axiomatic (trusted base)</p>
+<h3 id="implementation_5">Implementation<a class="headerlink" href="#implementation_5" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># repoq/core/stratification.py</span>
+</span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a href="#__codelineno-5-3" id="__codelineno-5-3" name="__codelineno-5-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">StratificationGuard</span><span class="p">:</span>
+</span><span id="__span-5-4"><a href="#__codelineno-5-4" id="__codelineno-5-4" name="__codelineno-5-4"></a>    <span class="n">MAX_LEVEL</span> <span class="o">=</span> <span class="mi">2</span>
+</span><span id="__span-5-5"><a href="#__codelineno-5-5" id="__codelineno-5-5" name="__codelineno-5-5"></a>
+</span><span id="__span-5-6"><a href="#__codelineno-5-6" id="__codelineno-5-6" name="__codelineno-5-6"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_level</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">):</span>
+</span><span id="__span-5-7"><a href="#__codelineno-5-7" id="__codelineno-5-7" name="__codelineno-5-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">current_level</span> <span class="o">=</span> <span class="n">current_level</span>
+</span><span id="__span-5-8"><a href="#__codelineno-5-8" id="__codelineno-5-8" name="__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a href="#__codelineno-5-9" id="__codelineno-5-9" name="__codelineno-5-9"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_level</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="__span-5-10"><a href="#__codelineno-5-10" id="__codelineno-5-10" name="__codelineno-5-10"></a><span class="w">        </span><span class="sd">"""Enforce Theorem F: i &gt; j and no skipping."""</span>
+</span><span id="__span-5-11"><a href="#__codelineno-5-11" id="__codelineno-5-11" name="__codelineno-5-11"></a>        <span class="k">if</span> <span class="n">target_level</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_level</span><span class="p">:</span>
+</span><span id="__span-5-12"><a href="#__codelineno-5-12" id="__codelineno-5-12" name="__codelineno-5-12"></a>            <span class="k">raise</span> <span class="n">StratificationViolation</span><span class="p">(</span>
+</span><span id="__span-5-13"><a href="#__codelineno-5-13" id="__codelineno-5-13" name="__codelineno-5-13"></a>                <span class="sa">f</span><span class="s2">"Cannot analyze L_</span><span class="si">{</span><span class="n">target_level</span><span class="si">}</span><span class="s2"> from L_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_level</span><span class="si">}</span><span class="s2">. "</span>
+</span><span id="__span-5-14"><a href="#__codelineno-5-14" id="__codelineno-5-14" name="__codelineno-5-14"></a>                <span class="sa">f</span><span class="s2">"Theorem F requires strict ordering: i &gt; j."</span>
+</span><span id="__span-5-15"><a href="#__codelineno-5-15" id="__codelineno-5-15" name="__codelineno-5-15"></a>            <span class="p">)</span>
+</span><span id="__span-5-16"><a href="#__codelineno-5-16" id="__codelineno-5-16" name="__codelineno-5-16"></a>
+</span><span id="__span-5-17"><a href="#__codelineno-5-17" id="__codelineno-5-17" name="__codelineno-5-17"></a>        <span class="k">if</span> <span class="n">target_level</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_level</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-5-18"><a href="#__codelineno-5-18" id="__codelineno-5-18" name="__codelineno-5-18"></a>            <span class="k">raise</span> <span class="n">StratificationViolation</span><span class="p">(</span>
+</span><span id="__span-5-19"><a href="#__codelineno-5-19" id="__codelineno-5-19" name="__codelineno-5-19"></a>                <span class="sa">f</span><span class="s2">"Cannot skip levels. Analyze L_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">current_level</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> first."</span>
+</span><span id="__span-5-20"><a href="#__codelineno-5-20" id="__codelineno-5-20" name="__codelineno-5-20"></a>            <span class="p">)</span>
+</span><span id="__span-5-21"><a href="#__codelineno-5-21" id="__codelineno-5-21" name="__codelineno-5-21"></a>
+</span><span id="__span-5-22"><a href="#__codelineno-5-22" id="__codelineno-5-22" name="__codelineno-5-22"></a>        <span class="k">if</span> <span class="n">target_level</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">MAX_LEVEL</span><span class="p">:</span>
+</span><span id="__span-5-23"><a href="#__codelineno-5-23" id="__codelineno-5-23" name="__codelineno-5-23"></a>            <span class="k">raise</span> <span class="n">StratificationViolation</span><span class="p">(</span>
+</span><span id="__span-5-24"><a href="#__codelineno-5-24" id="__codelineno-5-24" name="__codelineno-5-24"></a>                <span class="sa">f</span><span class="s2">"Max level is L_</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">MAX_LEVEL</span><span class="si">}</span><span class="s2">. L_</span><span class="si">{</span><span class="n">target_level</span><span class="si">}</span><span class="s2"> not supported."</span>
+</span><span id="__span-5-25"><a href="#__codelineno-5-25" id="__codelineno-5-25" name="__codelineno-5-25"></a>            <span class="p">)</span>
+</span><span id="__span-5-26"><a href="#__codelineno-5-26" id="__codelineno-5-26" name="__codelineno-5-26"></a>
+</span><span id="__span-5-27"><a href="#__codelineno-5-27" id="__codelineno-5-27" name="__codelineno-5-27"></a>        <span class="k">return</span> <span class="kc">True</span>  <span class="c1"># SAFE</span>
+</span><span id="__span-5-28"><a href="#__codelineno-5-28" id="__codelineno-5-28" name="__codelineno-5-28"></a>
+</span><span id="__span-5-29"><a href="#__codelineno-5-29" id="__codelineno-5-29" name="__codelineno-5-29"></a><span class="c1"># Usage</span>
+</span><span id="__span-5-30"><a href="#__codelineno-5-30" id="__codelineno-5-30" name="__codelineno-5-30"></a><span class="n">guard</span> <span class="o">=</span> <span class="n">StratificationGuard</span><span class="p">(</span><span class="n">current_level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span><span id="__span-5-31"><a href="#__codelineno-5-31" id="__codelineno-5-31" name="__codelineno-5-31"></a><span class="n">guard</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">target_level</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># ✓ SAFE (0 → 1)</span>
+</span><span id="__span-5-32"><a href="#__codelineno-5-32" id="__codelineno-5-32" name="__codelineno-5-32"></a><span class="n">guard</span><span class="o">.</span><span class="n">check</span><span class="p">(</span><span class="n">target_level</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># ✗ FAIL (cannot skip 0 → 2)</span>
+</span></code></pre></div>
+<p><strong>Status</strong>: 🔄 In Progress (guard exists, meta-self command pending)</p>
+<hr/>
+<h2 id="adr-007-pcq-min-aggregator-zag-framework">ADR-007: PCQ Min-Aggregator (ZAG Framework)<a class="headerlink" href="#adr-007-pcq-min-aggregator-zag-framework" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Team Leads, Researchers<br/>
+<strong>Deciders</strong>: Kirill, Dr. Taylor</p>
+<h3 id="context_6">Context<a class="headerlink" href="#context_6" title="Permanent link">¶</a></h3>
+<p>Standard Q-score aggregation (mean/weighted average) allows <strong>compensation</strong>: One excellent module compensates for a bad module. This enables gaming:
+- Developer improves documentation quality (easy) to offset poor code quality (hard)
+- One refactored module "hides" ten legacy modules</p>
+<p><strong>Theorem C</strong> (from formal docs) requires <strong>no compensation</strong>: All modules must meet threshold τ.</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>Mean aggregation</strong>: <code>Q_total = Σ Q_i / n</code> → <strong>Allows compensation</strong>
+- <strong>Weighted average</strong>: <code>Q_total = Σ w_i * Q_i</code> → <strong>Still allows compensation</strong>
+- <strong>Min aggregator (PCQ)</strong>: <code>PCQ = min{Q_i}</code> → <strong>No compensation, all modules ≥τ</strong>
+- <strong>Median aggregator</strong>: <code>Q_total = median{Q_i}</code> → <strong>Still hides bad modules</strong></p>
+<h3 id="decision_6">Decision<a class="headerlink" href="#decision_6" title="Permanent link">¶</a></h3>
+<p><strong>Use PCQ min-aggregator (Zero-Allowance Gate)</strong>:
+- <strong>Formula</strong>: <code>PCQ(S) = min{Q(M_i) for all modules i}</code>
+- <strong>Admission</strong>: <code>PCQ ≥ τ</code> (all modules must meet threshold)
+- <strong>Witness</strong>: If PCQ fails, generate PCE k-repair witness (k lowest modules)</p>
+<h3 id="rationale_6">Rationale<a class="headerlink" href="#rationale_6" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Gaming Resistance</strong>: No compensation (Theorem C)</li>
+<li><strong>Actionability</strong>: PCE witness identifies exact modules to fix (k=3 default)</li>
+<li><strong>Fairness</strong>: All modules judged equally (no favoritism)</li>
+<li><strong>Simplicity</strong>: Easy to understand ("weakest link" analogy)</li>
+</ol>
+<h3 id="consequences_6">Consequences<a class="headerlink" href="#consequences_6" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Gaming-proof (no compensation possible)
+- ✅ Actionable feedback (PCE witness: "fix these 3 modules")
+- ✅ Encourages uniform quality (no "technical debt islands")</p>
+<p><strong>Negative</strong>:
+- ❌ Strict (one bad module → gate fails) → <strong>Mitigation</strong>: Exemptions for legacy code
+- ❌ May discourage experimentation → <strong>Mitigation</strong>: Separate experimental branches</p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: Developers game exemptions → <strong>Mitigation</strong>: Exemptions require expiry dates + rationale
+- <strong>R2</strong>: PCQ too harsh for large codebases → <strong>Mitigation</strong>: Configurable τ (e.g., 0.7 for legacy, 0.9 for greenfield)</p>
+<h3 id="implementation_6">Implementation<a class="headerlink" href="#implementation_6" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># repoq/quality/pcq.py</span>
+</span><span id="__span-6-2"><a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a href="#__codelineno-6-3" id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_pcq</span><span class="p">(</span><span class="n">modules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Module</span><span class="p">],</span> <span class="n">policy</span><span class="p">:</span> <span class="n">Policy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-6-4"><a href="#__codelineno-6-4" id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">    </span><span class="sd">"""Calculate PCQ (min-aggregator)."""</span>
+</span><span id="__span-6-5"><a href="#__codelineno-6-5" id="__codelineno-6-5" name="__codelineno-6-5"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">modules</span><span class="p">:</span>
+</span><span id="__span-6-6"><a href="#__codelineno-6-6" id="__codelineno-6-6" name="__codelineno-6-6"></a>        <span class="k">return</span> <span class="mf">1.0</span>  <span class="c1"># Edge case: No modules → perfect quality</span>
+</span><span id="__span-6-7"><a href="#__codelineno-6-7" id="__codelineno-6-7" name="__codelineno-6-7"></a>
+</span><span id="__span-6-8"><a href="#__codelineno-6-8" id="__codelineno-6-8" name="__codelineno-6-8"></a>    <span class="n">qualities</span> <span class="o">=</span> <span class="p">[</span><span class="n">calculate_q</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">policy</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">]</span>
+</span><span id="__span-6-9"><a href="#__codelineno-6-9" id="__codelineno-6-9" name="__codelineno-6-9"></a>    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">qualities</span><span class="p">)</span>
+</span><span id="__span-6-10"><a href="#__codelineno-6-10" id="__codelineno-6-10" name="__codelineno-6-10"></a>
+</span><span id="__span-6-11"><a href="#__codelineno-6-11" id="__codelineno-6-11" name="__codelineno-6-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_pce_witness</span><span class="p">(</span><span class="n">modules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Module</span><span class="p">],</span> <span class="n">policy</span><span class="p">:</span> <span class="n">Policy</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">Module</span><span class="p">]:</span>
+</span><span id="__span-6-12"><a href="#__codelineno-6-12" id="__codelineno-6-12" name="__codelineno-6-12"></a><span class="w">    </span><span class="sd">"""Generate PCE k-repair witness (k lowest-quality modules)."""</span>
+</span><span id="__span-6-13"><a href="#__codelineno-6-13" id="__codelineno-6-13" name="__codelineno-6-13"></a>    <span class="n">qualities</span> <span class="o">=</span> <span class="p">[(</span><span class="n">m</span><span class="p">,</span> <span class="n">calculate_q</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">policy</span><span class="p">))</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">]</span>
+</span><span id="__span-6-14"><a href="#__codelineno-6-14" id="__codelineno-6-14" name="__codelineno-6-14"></a>    <span class="n">sorted_modules</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">qualities</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># Ascending</span>
+</span><span id="__span-6-15"><a href="#__codelineno-6-15" id="__codelineno-6-15" name="__codelineno-6-15"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="n">q</span> <span class="ow">in</span> <span class="n">sorted_modules</span><span class="p">[:</span><span class="n">k</span><span class="p">]]</span>
+</span><span id="__span-6-16"><a href="#__codelineno-6-16" id="__codelineno-6-16" name="__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a href="#__codelineno-6-17" id="__codelineno-6-17" name="__codelineno-6-17"></a><span class="c1"># Example</span>
+</span><span id="__span-6-18"><a href="#__codelineno-6-18" id="__codelineno-6-18" name="__codelineno-6-18"></a><span class="n">modules</span> <span class="o">=</span> <span class="p">[</span><span class="n">Module</span><span class="p">(</span><span class="s2">"auth"</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mf">0.85</span><span class="p">),</span> <span class="n">Module</span><span class="p">(</span><span class="s2">"db"</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mf">0.72</span><span class="p">),</span> <span class="n">Module</span><span class="p">(</span><span class="s2">"api"</span><span class="p">,</span> <span class="n">Q</span><span class="o">=</span><span class="mf">0.90</span><span class="p">)]</span>
+</span><span id="__span-6-19"><a href="#__codelineno-6-19" id="__codelineno-6-19" name="__codelineno-6-19"></a><span class="n">pcq</span> <span class="o">=</span> <span class="n">calculate_pcq</span><span class="p">(</span><span class="n">modules</span><span class="p">,</span> <span class="n">policy</span><span class="p">)</span>  <span class="c1"># 0.72 (min)</span>
+</span><span id="__span-6-20"><a href="#__codelineno-6-20" id="__codelineno-6-20" name="__codelineno-6-20"></a><span class="n">witness</span> <span class="o">=</span> <span class="n">generate_pce_witness</span><span class="p">(</span><span class="n">modules</span><span class="p">,</span> <span class="n">policy</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>  <span class="c1"># [db, auth]</span>
+</span></code></pre></div>
+<p><strong>Status</strong>: 🔄 In Progress (tmp/zag partially implemented)</p>
+<hr/>
+<h2 id="adr-008-sha-based-incremental-caching">ADR-008: SHA-Based Incremental Caching<a class="headerlink" href="#adr-008-sha-based-incremental-caching" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Developers, DevOps<br/>
+<strong>Deciders</strong>: Kirill, Casey</p>
+<h3 id="context_7">Context<a class="headerlink" href="#context_7" title="Permanent link">¶</a></h3>
+<p>Analyzing large codebases is slow (complexity calculation, AST parsing, coverage). Need caching. Requirements:
+1. <strong>Invalidation</strong>: Re-analyze only if file content changes
+2. <strong>Policy-Aware</strong>: Re-analyze if quality policy changes (weights, thresholds)
+3. <strong>Version-Aware</strong>: Re-analyze if RepoQ version changes (new metrics)
+4. <strong>Performance</strong>: Cache lookup &lt;10ms, no network calls</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>Timestamp-based</strong>: <code>mtime</code> as cache key → <strong>Unreliable (git checkout changes mtime)</strong>
+- <strong>Path-based</strong>: File path as key → <strong>Breaks on renames, no content tracking</strong>
+- <strong>SHA-based</strong>: Git blob SHA as key → <strong>Reliable, content-addressed</strong>
+- <strong>No caching</strong>: Always re-analyze → <strong>Too slow (2-3 min per run)</strong></p>
+<h3 id="decision_7">Decision<a class="headerlink" href="#decision_7" title="Permanent link">¶</a></h3>
+<p><strong>Use SHA-based incremental caching</strong>:
+- <strong>Cache Key</strong>: <code>{file_sha}_{policy_version}_{repoq_version}</code>
+- <strong>Storage</strong>: Disk-backed LRU cache (<code>.repoq/cache/</code>)
+- <strong>Eviction</strong>: LRU, max 10K entries or 1GB disk space
+- <strong>Invalidation</strong>: Policy version change → clear all cache</p>
+<h3 id="rationale_7">Rationale<a class="headerlink" href="#rationale_7" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Content-Addressed</strong>: SHA changes only if file content changes (not mtime/rename)</li>
+<li><strong>Policy-Aware</strong>: Policy version in key → re-analyze on policy change</li>
+<li><strong>Version-Safe</strong>: RepoQ version in key → re-analyze on upgrade</li>
+<li><strong>Fast Lookup</strong>: dict lookup O(1), disk cache with index</li>
+<li><strong>Git-Native</strong>: Use Git's blob SHA (already computed)</li>
+</ol>
+<h3 id="consequences_7">Consequences<a class="headerlink" href="#consequences_7" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Accurate invalidation (no false cache hits)
+- ✅ Fast incremental analysis (only changed files)
+- ✅ Handles renames correctly (content-addressed)
+- ✅ Works offline (no network)</p>
+<p><strong>Negative</strong>:
+- ❌ Disk space usage (~100 KB per cached file) → <strong>Mitigation</strong>: LRU eviction, max 1GB
+- ❌ Policy change clears cache (re-analyze all) → <strong>Mitigation</strong>: Warn user, rare event</p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: Cache corruption → <strong>Mitigation</strong>: Checksum validation, fallback to re-analysis
+- <strong>R2</strong>: Cache grows unbounded → <strong>Mitigation</strong>: LRU eviction, max 10K entries</p>
+<h3 id="implementation_7">Implementation<a class="headerlink" href="#implementation_7" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># repoq/core/cache.py</span>
+</span><span id="__span-7-2"><a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a href="#__codelineno-7-3" id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">diskcache</span>
+</span><span id="__span-7-4"><a href="#__codelineno-7-4" id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+</span><span id="__span-7-5"><a href="#__codelineno-7-5" id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+</span><span id="__span-7-6"><a href="#__codelineno-7-6" id="__codelineno-7-6" name="__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a href="#__codelineno-7-7" id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="n">CACHE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">".repoq/cache"</span><span class="p">)</span>
+</span><span id="__span-7-8"><a href="#__codelineno-7-8" id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="n">MAX_CACHE_SIZE_GB</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span id="__span-7-9"><a href="#__codelineno-7-9" id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="n">MAX_CACHE_ENTRIES</span> <span class="o">=</span> <span class="mi">10_000</span>
+</span><span id="__span-7-10"><a href="#__codelineno-7-10" id="__codelineno-7-10" name="__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a href="#__codelineno-7-11" id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="k">class</span><span class="w"> </span><span class="nc">MetricCache</span><span class="p">:</span>
+</span><span id="__span-7-12"><a href="#__codelineno-7-12" id="__codelineno-7-12" name="__codelineno-7-12"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-7-13"><a href="#__codelineno-7-13" id="__codelineno-7-13" name="__codelineno-7-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span> <span class="o">=</span> <span class="n">diskcache</span><span class="o">.</span><span class="n">Cache</span><span class="p">(</span>
+</span><span id="__span-7-14"><a href="#__codelineno-7-14" id="__codelineno-7-14" name="__codelineno-7-14"></a>            <span class="nb">str</span><span class="p">(</span><span class="n">CACHE_DIR</span><span class="p">),</span>
+</span><span id="__span-7-15"><a href="#__codelineno-7-15" id="__codelineno-7-15" name="__codelineno-7-15"></a>            <span class="n">size_limit</span><span class="o">=</span><span class="n">MAX_CACHE_SIZE_GB</span> <span class="o">*</span> <span class="mi">10</span><span class="o">**</span><span class="mi">9</span><span class="p">,</span>
+</span><span id="__span-7-16"><a href="#__codelineno-7-16" id="__codelineno-7-16" name="__codelineno-7-16"></a>            <span class="n">eviction_policy</span><span class="o">=</span><span class="s1">'least-recently-used'</span>
+</span><span id="__span-7-17"><a href="#__codelineno-7-17" id="__codelineno-7-17" name="__codelineno-7-17"></a>        <span class="p">)</span>
+</span><span id="__span-7-18"><a href="#__codelineno-7-18" id="__codelineno-7-18" name="__codelineno-7-18"></a>
+</span><span id="__span-7-19"><a href="#__codelineno-7-19" id="__codelineno-7-19" name="__codelineno-7-19"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get_cache_key</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_sha</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">policy_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="__span-7-20"><a href="#__codelineno-7-20" id="__codelineno-7-20" name="__codelineno-7-20"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">repoq</span><span class="w"> </span><span class="kn">import</span> <span class="n">__version__</span>
+</span><span id="__span-7-21"><a href="#__codelineno-7-21" id="__codelineno-7-21" name="__codelineno-7-21"></a>        <span class="k">return</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">file_sha</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">policy_version</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">__version__</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="__span-7-22"><a href="#__codelineno-7-22" id="__codelineno-7-22" name="__codelineno-7-22"></a>
+</span><span id="__span-7-23"><a href="#__codelineno-7-23" id="__codelineno-7-23" name="__codelineno-7-23"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_sha</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">policy_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+</span><span id="__span-7-24"><a href="#__codelineno-7-24" id="__codelineno-7-24" name="__codelineno-7-24"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cache_key</span><span class="p">(</span><span class="n">file_sha</span><span class="p">,</span> <span class="n">policy_version</span><span class="p">)</span>
+</span><span id="__span-7-25"><a href="#__codelineno-7-25" id="__codelineno-7-25" name="__codelineno-7-25"></a>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span id="__span-7-26"><a href="#__codelineno-7-26" id="__codelineno-7-26" name="__codelineno-7-26"></a>
+</span><span id="__span-7-27"><a href="#__codelineno-7-27" id="__codelineno-7-27" name="__codelineno-7-27"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_sha</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">policy_version</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+</span><span id="__span-7-28"><a href="#__codelineno-7-28" id="__codelineno-7-28" name="__codelineno-7-28"></a>        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_cache_key</span><span class="p">(</span><span class="n">file_sha</span><span class="p">,</span> <span class="n">policy_version</span><span class="p">)</span>
+</span><span id="__span-7-29"><a href="#__codelineno-7-29" id="__codelineno-7-29" name="__codelineno-7-29"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+</span><span id="__span-7-30"><a href="#__codelineno-7-30" id="__codelineno-7-30" name="__codelineno-7-30"></a>
+</span><span id="__span-7-31"><a href="#__codelineno-7-31" id="__codelineno-7-31" name="__codelineno-7-31"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">clear_all</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span id="__span-7-32"><a href="#__codelineno-7-32" id="__codelineno-7-32" name="__codelineno-7-32"></a><span class="w">        </span><span class="sd">"""Clear entire cache (e.g., after policy change)."""</span>
+</span><span id="__span-7-33"><a href="#__codelineno-7-33" id="__codelineno-7-33" name="__codelineno-7-33"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">cache</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+</span><span id="__span-7-34"><a href="#__codelineno-7-34" id="__codelineno-7-34" name="__codelineno-7-34"></a>
+</span><span id="__span-7-35"><a href="#__codelineno-7-35" id="__codelineno-7-35" name="__codelineno-7-35"></a><span class="c1"># Usage</span>
+</span><span id="__span-7-36"><a href="#__codelineno-7-36" id="__codelineno-7-36" name="__codelineno-7-36"></a><span class="n">cache</span> <span class="o">=</span> <span class="n">MetricCache</span><span class="p">()</span>
+</span><span id="__span-7-37"><a href="#__codelineno-7-37" id="__codelineno-7-37" name="__codelineno-7-37"></a><span class="n">metrics</span> <span class="o">=</span> <span class="n">cache</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">file_sha</span><span class="o">=</span><span class="s2">"abc123"</span><span class="p">,</span> <span class="n">policy_version</span><span class="o">=</span><span class="s2">"1.0"</span><span class="p">)</span>
+</span><span id="__span-7-38"><a href="#__codelineno-7-38" id="__codelineno-7-38" name="__codelineno-7-38"></a><span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-7-39"><a href="#__codelineno-7-39" id="__codelineno-7-39" name="__codelineno-7-39"></a>    <span class="n">metrics</span> <span class="o">=</span> <span class="n">calculate_metrics</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span id="__span-7-40"><a href="#__codelineno-7-40" id="__codelineno-7-40" name="__codelineno-7-40"></a>    <span class="n">cache</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">file_sha</span><span class="o">=</span><span class="s2">"abc123"</span><span class="p">,</span> <span class="n">policy_version</span><span class="o">=</span><span class="s2">"1.0"</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">metrics</span><span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Status</strong>: ⏸️ Planned (design complete, not implemented)</p>
+<hr/>
+<h2 id="adr-009-local-first-zero-network-calls">ADR-009: Local-First (Zero Network Calls)<a class="headerlink" href="#adr-009-local-first-zero-network-calls" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: All Stakeholders<br/>
+<strong>Deciders</strong>: Kirill, Morgan, Casey</p>
+<h3 id="context_8">Context<a class="headerlink" href="#context_8" title="Permanent link">¶</a></h3>
+<p>Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platforms (CodeClimate, SonarCloud). Risks:
+1. <strong>Data leakage</strong>: Proprietary code sent to third parties
+2. <strong>Compliance</strong>: GDPR, HIPAA violations
+3. <strong>Offline</strong>: Cannot work without internet (airport, VPN issues)
+4. <strong>Trust</strong>: Users must trust external service (no verification)</p>
+<h3 id="decision_8">Decision<a class="headerlink" href="#decision_8" title="Permanent link">¶</a></h3>
+<p><strong>Zero network calls in core analysis</strong> (local-first):
+1. All metrics calculated locally (no SaaS APIs)
+2. RDF storage local (no external graph DB)
+3. Certificates stored locally (no external registry)
+4. <strong>Exception</strong>: Optional AI agent (opt-in only, explicit consent)</p>
+<h3 id="rationale_8">Rationale<a class="headerlink" href="#rationale_8" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Privacy</strong>: No code leaves developer's machine (EVR-04)</li>
+<li><strong>Compliance</strong>: GDPR/HIPAA-safe (no third-party data processors)</li>
+<li><strong>Offline</strong>: Works in airplane, behind corporate firewall</li>
+<li><strong>Trust</strong>: Reproducible, auditable (no black-box APIs)</li>
+<li><strong>Speed</strong>: No network latency (faster than SaaS)</li>
+</ol>
+<h3 id="consequences_8">Consequences<a class="headerlink" href="#consequences_8" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Privacy-preserving (no data leakage)
+- ✅ Works offline (no internet required)
+- ✅ Fast (no network latency)
+- ✅ Trust (no black-box APIs)</p>
+<p><strong>Negative</strong>:
+- ❌ No collaborative features (team dashboards) → <strong>Mitigation</strong>: Optional self-hosted registry
+- ❌ No cloud storage (certificates local) → <strong>Mitigation</strong>: Push to Git as artifacts</p>
+<p><strong>Risks</strong>: None (core design principle)</p>
+<h3 id="implementation_8">Implementation<a class="headerlink" href="#implementation_8" title="Permanent link">¶</a></h3>
+<p><strong>CI Check (enforce zero network)</strong>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># .github/workflows/ci.yml</span>
+</span><span id="__span-8-2"><a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>-<span class="w"> </span>name:<span class="w"> </span>Verify<span class="w"> </span>zero<span class="w"> </span>network<span class="w"> </span>calls
+</span><span id="__span-8-3"><a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">  </span>run:<span class="w"> </span><span class="p">|</span>
+</span><span id="__span-8-4"><a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="c1"># Run RepoQ in network-isolated container</span>
+</span><span id="__span-8-5"><a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span>docker<span class="w"> </span>run<span class="w"> </span>--network<span class="o">=</span>none<span class="w"> </span>repoq:latest<span class="w"> </span>repoq<span class="w"> </span>gate<span class="w"> </span>--base<span class="w"> </span>main<span class="w"> </span>--head<span class="w"> </span>HEAD
+</span><span id="__span-8-6"><a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">    </span><span class="c1"># If exit code 0, test passed (no network errors)</span>
+</span></code></pre></div></p>
+<p><strong>Status</strong>: ✅ Complete (core analysis is local-only, AI agent optional)</p>
+<hr/>
+<h2 id="adr-010-w3c-verifiable-credentials">ADR-010: W3C Verifiable Credentials<a class="headerlink" href="#adr-010-w3c-verifiable-credentials" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Team Leads, DevOps<br/>
+<strong>Deciders</strong>: Kirill, Morgan</p>
+<h3 id="context_9">Context<a class="headerlink" href="#context_9" title="Permanent link">¶</a></h3>
+<p>Quality certificates need to be:
+1. <strong>Tamper-proof</strong>: Cannot modify Q-score after issuance
+2. <strong>Verifiable</strong>: Third parties can verify authenticity
+3. <strong>Standards-compliant</strong>: Not a proprietary format
+4. <strong>Portable</strong>: Works with standard tools (JSON-LD, JWS)</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>Plain JSON</strong>: No signature, easy to tamper
+- <strong>JWT</strong>: Non-standard for VCs, harder to extend
+- <strong>W3C Verifiable Credentials</strong>: Standard format (JSON-LD + ECDSA/Ed25519)
+- <strong>Custom format</strong>: Reinvent wheel, no tooling</p>
+<h3 id="decision_9">Decision<a class="headerlink" href="#decision_9" title="Permanent link">¶</a></h3>
+<p><strong>Use W3C Verifiable Credentials with ECDSA signatures</strong>:
+- <strong>Format</strong>: JSON-LD (Linked Data context)
+- <strong>Signature</strong>: ECDSA secp256k1 (same as Bitcoin/Ethereum)
+- <strong>Storage</strong>: Local <code>.repoq/certificates/&lt;commit_sha&gt;.json</code>
+- <strong>Verification</strong>: Public key from issuer DID (Decentralized Identifier)</p>
+<h3 id="rationale_9">Rationale<a class="headerlink" href="#rationale_9" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Standards-Compliant</strong>: W3C Recommendation (2019), widely adopted</li>
+<li><strong>Tamper-Proof</strong>: ECDSA signature (cryptographic integrity)</li>
+<li><strong>Verifiable</strong>: Any party with public key can verify</li>
+<li><strong>Extensible</strong>: JSON-LD allows custom claims (Q-score, PCQ, etc.)</li>
+<li><strong>Tooling</strong>: Libraries available (Python <code>cryptography</code>, <code>pyld</code>)</li>
+</ol>
+<h3 id="consequences_9">Consequences<a class="headerlink" href="#consequences_9" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Tamper-proof (cryptographic signatures)
+- ✅ Standards-compliant (W3C)
+- ✅ Portable (JSON-LD works with many tools)
+- ✅ Future-proof (can add more claims)</p>
+<p><strong>Negative</strong>:
+- ❌ Key management complexity (securely store private key) → <strong>Mitigation</strong>: Use env var or Git Secrets
+- ❌ Larger file size (JSON-LD verbose) → <strong>Acceptable (&lt;10 KB per cert)</strong></p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: Private key leaked → <strong>Mitigation</strong>: Rotate keys, revoke certificates
+- <strong>R2</strong>: JSON-LD context unavailable → <strong>Mitigation</strong>: Embed context in certificate</p>
+<h3 id="implementation_9">Implementation<a class="headerlink" href="#implementation_9" title="Permanent link">¶</a></h3>
+<p><strong>Example Certificate</strong>:
+<div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="p">{</span>
+</span><span id="__span-9-2"><a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span><span class="nt">"@context"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://www.w3.org/2018/credentials/v1"</span><span class="p">],</span>
+</span><span id="__span-9-3"><a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"VerifiableCredential"</span><span class="p">,</span><span class="w"> </span><span class="s2">"QualityAssessmentCredential"</span><span class="p">],</span>
+</span><span id="__span-9-4"><a href="#__codelineno-9-4" id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="w">  </span><span class="nt">"issuer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"did:repoq:v1"</span><span class="p">,</span>
+</span><span id="__span-9-5"><a href="#__codelineno-9-5" id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="w">  </span><span class="nt">"issuanceDate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-10-21T10:30:00Z"</span><span class="p">,</span>
+</span><span id="__span-9-6"><a href="#__codelineno-9-6" id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="w">  </span><span class="nt">"credentialSubject"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-7"><a href="#__codelineno-9-7" id="__codelineno-9-7" name="__codelineno-9-7"></a><span class="w">    </span><span class="nt">"repository"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://github.com/kirill-0440/repoq"</span><span class="p">,</span>
+</span><span id="__span-9-8"><a href="#__codelineno-9-8" id="__codelineno-9-8" name="__codelineno-9-8"></a><span class="w">    </span><span class="nt">"commit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"87b51c0a..."</span><span class="p">,</span>
+</span><span id="__span-9-9"><a href="#__codelineno-9-9" id="__codelineno-9-9" name="__codelineno-9-9"></a><span class="w">    </span><span class="nt">"q_score"</span><span class="p">:</span><span class="w"> </span><span class="mf">82.5</span><span class="p">,</span>
+</span><span id="__span-9-10"><a href="#__codelineno-9-10" id="__codelineno-9-10" name="__codelineno-9-10"></a><span class="w">    </span><span class="nt">"delta_q"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.3</span><span class="p">,</span>
+</span><span id="__span-9-11"><a href="#__codelineno-9-11" id="__codelineno-9-11" name="__codelineno-9-11"></a><span class="w">    </span><span class="nt">"pcq"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.78</span><span class="p">,</span>
+</span><span id="__span-9-12"><a href="#__codelineno-9-12" id="__codelineno-9-12" name="__codelineno-9-12"></a><span class="w">    </span><span class="nt">"verdict"</span><span class="p">:</span><span class="w"> </span><span class="s2">"PASS"</span>
+</span><span id="__span-9-13"><a href="#__codelineno-9-13" id="__codelineno-9-13" name="__codelineno-9-13"></a><span class="w">  </span><span class="p">},</span>
+</span><span id="__span-9-14"><a href="#__codelineno-9-14" id="__codelineno-9-14" name="__codelineno-9-14"></a><span class="w">  </span><span class="nt">"proof"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-15"><a href="#__codelineno-9-15" id="__codelineno-9-15" name="__codelineno-9-15"></a><span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"EcdsaSecp256k1Signature2019"</span><span class="p">,</span>
+</span><span id="__span-9-16"><a href="#__codelineno-9-16" id="__codelineno-9-16" name="__codelineno-9-16"></a><span class="w">    </span><span class="nt">"created"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2025-10-21T10:30:00Z"</span><span class="p">,</span>
+</span><span id="__span-9-17"><a href="#__codelineno-9-17" id="__codelineno-9-17" name="__codelineno-9-17"></a><span class="w">    </span><span class="nt">"proofPurpose"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assertionMethod"</span><span class="p">,</span>
+</span><span id="__span-9-18"><a href="#__codelineno-9-18" id="__codelineno-9-18" name="__codelineno-9-18"></a><span class="w">    </span><span class="nt">"verificationMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"did:repoq:v1#key-1"</span><span class="p">,</span>
+</span><span id="__span-9-19"><a href="#__codelineno-9-19" id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">    </span><span class="nt">"jws"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJhbGc...signature..."</span>
+</span><span id="__span-9-20"><a href="#__codelineno-9-20" id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-9-21"><a href="#__codelineno-9-21" id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="p">}</span>
+</span></code></pre></div></p>
+<p><strong>Status</strong>: ✅ Complete (VC generation implemented)</p>
+<hr/>
+<h2 id="adr-011-python-311-only-no-3839">ADR-011: Python 3.11+ Only (No 3.8/3.9)<a class="headerlink" href="#adr-011-python-311-only-no-3839" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: Developers, DevOps<br/>
+<strong>Deciders</strong>: Kirill, Casey</p>
+<h3 id="context_10">Context<a class="headerlink" href="#context_10" title="Permanent link">¶</a></h3>
+<p>Need to choose minimum Python version. Considerations:
+1. <strong>Features</strong>: 3.11+ has performance improvements (10-25% faster), ExceptionGroups, TypedDict improvements
+2. <strong>Compatibility</strong>: 3.8/3.9 still used in enterprise (RHEL 8, Ubuntu 20.04)
+3. <strong>Maintenance</strong>: Supporting old versions increases complexity
+4. <strong>EOL</strong>: Python 3.8 EOL October 2024, 3.9 EOL October 2025</p>
+<h3 id="decision_10">Decision<a class="headerlink" href="#decision_10" title="Permanent link">¶</a></h3>
+<p><strong>Require Python 3.11+ (drop 3.8/3.9/3.10)</strong>:
+- <strong>Minimum version</strong>: 3.11.0
+- <strong>Recommended</strong>: 3.12+ (for latest performance improvements)
+- <strong>CI Matrix</strong>: Test on 3.11, 3.12, 3.13</p>
+<h3 id="rationale_10">Rationale<a class="headerlink" href="#rationale_10" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Performance</strong>: 3.11 is 10-25% faster (faster startup, better inlining)</li>
+<li><strong>Features</strong>: ExceptionGroups (better error handling), TypedDict improvements (better type hints)</li>
+<li><strong>Maintenance</strong>: Fewer compatibility shims, simpler codebase</li>
+<li><strong>EOL</strong>: 3.8 already EOL (Oct 2024), 3.9 EOL soon (Oct 2025)</li>
+<li><strong>Adoption</strong>: 3.11+ available in GitHub Actions, Docker, major distros</li>
+</ol>
+<h3 id="consequences_10">Consequences<a class="headerlink" href="#consequences_10" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Faster performance (10-25% speedup for free)
+- ✅ Better type hints (TypedDict, Self type)
+- ✅ Simpler code (no compatibility shims)
+- ✅ Smaller maintenance burden</p>
+<p><strong>Negative</strong>:
+- ❌ Excludes users on RHEL 8 (Python 3.6), Ubuntu 20.04 (Python 3.8) → <strong>Mitigation</strong>: Document upgrade path
+- ❌ May break CI for older projects → <strong>Mitigation</strong>: Clear error message in <code>setup.py</code></p>
+<p><strong>Risks</strong>:
+- <strong>R1</strong>: User complaints about old Python → <strong>Mitigation</strong>: Provide Docker image (includes Python 3.12)</p>
+<h3 id="implementation_10">Implementation<a class="headerlink" href="#implementation_10" title="Permanent link">¶</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1"># setup.py / pyproject.toml</span>
+</span><span id="__span-10-2"><a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="p">[</span><span class="n">project</span><span class="p">]</span>
+</span><span id="__span-10-3"><a href="#__codelineno-10-3" id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="n">name</span> <span class="o">=</span> <span class="s2">"repoq"</span>
+</span><span id="__span-10-4"><a href="#__codelineno-10-4" id="__codelineno-10-4" name="__codelineno-10-4"></a><span class="n">requires</span><span class="o">-</span><span class="n">python</span> <span class="o">=</span> <span class="s2">"&gt;=3.11"</span>
+</span><span id="__span-10-5"><a href="#__codelineno-10-5" id="__codelineno-10-5" name="__codelineno-10-5"></a>
+</span><span id="__span-10-6"><a href="#__codelineno-10-6" id="__codelineno-10-6" name="__codelineno-10-6"></a><span class="c1"># CI Matrix</span>
+</span><span id="__span-10-7"><a href="#__codelineno-10-7" id="__codelineno-10-7" name="__codelineno-10-7"></a><span class="c1"># .github/workflows/ci.yml</span>
+</span><span id="__span-10-8"><a href="#__codelineno-10-8" id="__codelineno-10-8" name="__codelineno-10-8"></a><span class="n">strategy</span><span class="p">:</span>
+</span><span id="__span-10-9"><a href="#__codelineno-10-9" id="__codelineno-10-9" name="__codelineno-10-9"></a>  <span class="n">matrix</span><span class="p">:</span>
+</span><span id="__span-10-10"><a href="#__codelineno-10-10" id="__codelineno-10-10" name="__codelineno-10-10"></a>    <span class="n">python</span><span class="o">-</span><span class="n">version</span><span class="p">:</span> <span class="p">[</span><span class="s2">"3.11"</span><span class="p">,</span> <span class="s2">"3.12"</span><span class="p">,</span> <span class="s2">"3.13"</span><span class="p">]</span>
+</span></code></pre></div>
+<p><strong>Status</strong>: ✅ Complete (pyproject.toml already specifies 3.11+)</p>
+<hr/>
+<h2 id="adr-012-github-actions-for-cicd">ADR-012: GitHub Actions for CI/CD<a class="headerlink" href="#adr-012-github-actions-for-cicd" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-21<br/>
+<strong>Stakeholders</strong>: DevOps, Team Leads<br/>
+<strong>Deciders</strong>: Kirill, Casey</p>
+<h3 id="context_11">Context<a class="headerlink" href="#context_11" title="Permanent link">¶</a></h3>
+<p>Need CI/CD pipeline for automated testing, quality gates, PyPI deployment. Requirements:
+1. <strong>Free</strong>: Open-source project (no budget for Jenkins/CircleCI)
+2. <strong>Integrated</strong>: Works with GitHub (where code is hosted)
+3. <strong>Fast</strong>: Parallel jobs, caching
+4. <strong>Flexible</strong>: Custom workflows (not just build/test)</p>
+<p><strong>Alternatives Considered</strong>:
+- <strong>GitHub Actions</strong>: Free for OSS, native integration, 20K+ actions marketplace
+- <strong>GitLab CI</strong>: Good but requires GitLab (we use GitHub)
+- <strong>CircleCI</strong>: Free tier limited (1K min/month), less integration
+- <strong>Jenkins</strong>: Self-hosted (requires maintenance), overkill</p>
+<h3 id="decision_11">Decision<a class="headerlink" href="#decision_11" title="Permanent link">¶</a></h3>
+<p><strong>Use GitHub Actions</strong> with the following workflows:
+1. <strong>CI</strong>: Run tests, linters, coverage on every PR
+2. <strong>Quality Gate</strong>: Run <code>repoq gate</code> on PRs (block merge if fails)
+3. <strong>Deployment</strong>: Publish to PyPI on release tags
+4. <strong>Docs</strong>: Build and deploy MkDocs to GitHub Pages</p>
+<h3 id="rationale_11">Rationale<a class="headerlink" href="#rationale_11" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Free</strong>: Unlimited minutes for public repos</li>
+<li><strong>Integrated</strong>: Native GitHub integration (PR checks, status badges)</li>
+<li><strong>Fast</strong>: Parallel matrix builds, dependency caching</li>
+<li><strong>Marketplace</strong>: 20K+ actions (setup-python, pytest, etc.)</li>
+<li><strong>Workflows</strong>: YAML-based, easy to version control</li>
+</ol>
+<h3 id="consequences_11">Consequences<a class="headerlink" href="#consequences_11" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:
+- ✅ Free for OSS (no cost)
+- ✅ Native integration (PR checks, protected branches)
+- ✅ Fast (parallel jobs, caching)
+- ✅ Large ecosystem (actions marketplace)</p>
+<p><strong>Negative</strong>:
+- ❌ Vendor lock-in (GitHub-specific) → <strong>Acceptable (we use GitHub)</strong>
+- ❌ YAML complexity for complex workflows → <strong>Mitigation</strong>: Modular workflows</p>
+<p><strong>Risks</strong>: None (industry standard)</p>
+<h3 id="implementation_11">Implementation<a class="headerlink" href="#implementation_11" title="Permanent link">¶</a></h3>
+<p><strong>Quality Gate Workflow</strong>:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># .github/workflows/quality-gate.yml</span>
+</span><span id="__span-11-2"><a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Quality Gate</span>
+</span><span id="__span-11-3"><a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a href="#__codelineno-11-4" id="__codelineno-11-4" name="__codelineno-11-4"></a><span class="nt">on</span><span class="p">:</span>
+</span><span id="__span-11-5"><a href="#__codelineno-11-5" id="__codelineno-11-5" name="__codelineno-11-5"></a><span class="w">  </span><span class="nt">pull_request</span><span class="p">:</span>
+</span><span id="__span-11-6"><a href="#__codelineno-11-6" id="__codelineno-11-6" name="__codelineno-11-6"></a><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">main</span><span class="p p-Indicator">]</span>
+</span><span id="__span-11-7"><a href="#__codelineno-11-7" id="__codelineno-11-7" name="__codelineno-11-7"></a>
+</span><span id="__span-11-8"><a href="#__codelineno-11-8" id="__codelineno-11-8" name="__codelineno-11-8"></a><span class="nt">jobs</span><span class="p">:</span>
+</span><span id="__span-11-9"><a href="#__codelineno-11-9" id="__codelineno-11-9" name="__codelineno-11-9"></a><span class="w">  </span><span class="nt">gate</span><span class="p">:</span>
+</span><span id="__span-11-10"><a href="#__codelineno-11-10" id="__codelineno-11-10" name="__codelineno-11-10"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+</span><span id="__span-11-11"><a href="#__codelineno-11-11" id="__codelineno-11-11" name="__codelineno-11-11"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-11-12"><a href="#__codelineno-11-12" id="__codelineno-11-12" name="__codelineno-11-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v4</span>
+</span><span id="__span-11-13"><a href="#__codelineno-11-13" id="__codelineno-11-13" name="__codelineno-11-13"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-11-14"><a href="#__codelineno-11-14" id="__codelineno-11-14" name="__codelineno-11-14"></a><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">  </span><span class="c1"># Full history for git diff</span>
+</span><span id="__span-11-15"><a href="#__codelineno-11-15" id="__codelineno-11-15" name="__codelineno-11-15"></a>
+</span><span id="__span-11-16"><a href="#__codelineno-11-16" id="__codelineno-11-16" name="__codelineno-11-16"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v4</span>
+</span><span id="__span-11-17"><a href="#__codelineno-11-17" id="__codelineno-11-17" name="__codelineno-11-17"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-11-18"><a href="#__codelineno-11-18" id="__codelineno-11-18" name="__codelineno-11-18"></a><span class="w">          </span><span class="nt">python-version</span><span class="p">:</span><span class="w"> </span><span class="s">'3.12'</span>
+</span><span id="__span-11-19"><a href="#__codelineno-11-19" id="__codelineno-11-19" name="__codelineno-11-19"></a>
+</span><span id="__span-11-20"><a href="#__codelineno-11-20" id="__codelineno-11-20" name="__codelineno-11-20"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install RepoQ</span>
+</span><span id="__span-11-21"><a href="#__codelineno-11-21" id="__codelineno-11-21" name="__codelineno-11-21"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install repoq</span>
+</span><span id="__span-11-22"><a href="#__codelineno-11-22" id="__codelineno-11-22" name="__codelineno-11-22"></a>
+</span><span id="__span-11-23"><a href="#__codelineno-11-23" id="__codelineno-11-23" name="__codelineno-11-23"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Quality Gate</span>
+</span><span id="__span-11-24"><a href="#__codelineno-11-24" id="__codelineno-11-24" name="__codelineno-11-24"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-11-25"><a href="#__codelineno-11-25" id="__codelineno-11-25" name="__codelineno-11-25"></a><span class="w">          </span><span class="no">repoq gate \</span>
+</span><span id="__span-11-26"><a href="#__codelineno-11-26" id="__codelineno-11-26" name="__codelineno-11-26"></a><span class="w">            </span><span class="no">--base ${{ github.event.pull_request.base.sha }} \</span>
+</span><span id="__span-11-27"><a href="#__codelineno-11-27" id="__codelineno-11-27" name="__codelineno-11-27"></a><span class="w">            </span><span class="no">--head ${{ github.sha }} \</span>
+</span><span id="__span-11-28"><a href="#__codelineno-11-28" id="__codelineno-11-28" name="__codelineno-11-28"></a><span class="w">            </span><span class="no">--policy .github/quality-policy.yml</span>
+</span><span id="__span-11-29"><a href="#__codelineno-11-29" id="__codelineno-11-29" name="__codelineno-11-29"></a>
+</span><span id="__span-11-30"><a href="#__codelineno-11-30" id="__codelineno-11-30" name="__codelineno-11-30"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Upload Certificate</span>
+</span><span id="__span-11-31"><a href="#__codelineno-11-31" id="__codelineno-11-31" name="__codelineno-11-31"></a><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always()</span>
+</span><span id="__span-11-32"><a href="#__codelineno-11-32" id="__codelineno-11-32" name="__codelineno-11-32"></a><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/upload-artifact@v3</span>
+</span><span id="__span-11-33"><a href="#__codelineno-11-33" id="__codelineno-11-33" name="__codelineno-11-33"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-11-34"><a href="#__codelineno-11-34" id="__codelineno-11-34" name="__codelineno-11-34"></a><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quality-certificate</span>
+</span><span id="__span-11-35"><a href="#__codelineno-11-35" id="__codelineno-11-35" name="__codelineno-11-35"></a><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.repoq/certificates/*.json</span>
+</span></code></pre></div></p>
+<p><strong>Status</strong>: ⏸️ Planned (workflow file to be created)</p>
+<hr/>
+<h2 id="success-criteria">Success Criteria<a class="headerlink" href="#success-criteria" title="Permanent link">¶</a></h2>
+<ul>
+<li>✅ <strong>12 ADRs documented</strong>: All key architectural decisions recorded</li>
+<li>✅ <strong>Lightweight format</strong>: Context, Decision, Rationale, Consequences (not heavyweight IEEE SAD)</li>
+<li>✅ <strong>Stakeholder alignment</strong>: Each ADR lists impacted stakeholders</li>
+<li>✅ <strong>Alternatives considered</strong>: Each ADR evaluates 2-4 alternatives</li>
+<li>✅ <strong>Risks identified</strong>: Each ADR lists mitigation strategies</li>
+<li>✅ <strong>Implementation hints</strong>: Each ADR includes code snippets or config examples</li>
+</ul>
+<hr/>
+<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
+<ol>
+<li>Michael Nygard (2011). <em>Documenting Architecture Decisions</em>. <a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions">cognitect.com</a></li>
+<li>GitHub (2020). <em>ADR GitHub Organization</em>. <a href="https://github.com/joelparkerhenderson/architecture-decision-record">github.com/joelparkerhenderson/architecture-decision-record</a></li>
+<li>arc42 (2024). <em>Architecture Documentation Template</em>. <a href="https://arc42.org/">arc42.org</a></li>
+<li>RepoQ Project (2025). <em>Phase 3: Requirements</em>. <code>docs/vdad/phase3-requirements.md</code></li>
+<li>RepoQ Project (2025). <em>Phase 4: Architecture Overview</em>. <code>docs/vdad/phase4-architecture-overview.md</code></li>
+</ol>
+<hr/>
+<p><strong>Document Status</strong>: ✅ COMPLETE<br/>
+<strong>Review</strong>: Pending (validate decisions with team)<br/>
+<strong>Next Steps</strong>: NFR realization strategies, BAML agent spec in separate documents.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button class="md-top md-icon" data-md-component="top" hidden="" type="button">
+<svg viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"></path></svg>
+  Back to top
+</button>
+</main>
+<footer class="md-footer">
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+      Copyright © 2025 RepoQ Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" rel="noopener" target="_blank">
+      Material for MkDocs
+    </a>
+</div>
+<div class="md-social">
+<a class="md-social__link" href="https://github.com/Repo-Q/repoq" rel="noopener" target="_blank" title="github.com">
+<svg viewbox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"></path></svg>
+</a>
+<a class="md-social__link" href="https://pypi.org/project/repoq/" rel="noopener" target="_blank" title="pypi.org">
+<svg viewbox="0 0 448 512" xmlns="http://www.w3.org/2000/svg"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"></path></svg>
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+<script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+</body>
+</html>

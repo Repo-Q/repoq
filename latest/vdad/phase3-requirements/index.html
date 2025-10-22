@@ -1,0 +1,4751 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Revolutionary repository quality analysis with ontological intelligence">
+      
+      
+        <meta name="author" content="RepoQ Contributors">
+      
+      
+        <link rel="canonical" href="https://repo-q.github.io/repoq/latest/vdad/phase3-requirements/">
+      
+      
+        <link rel="prev" href="../phase2-value-register/">
+      
+      
+        <link rel="next" href="../phase4-architecture-overview/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>Phase 3 - Requirements - RepoQ - Semantic Meta-Quality Loop</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#vdad-phase-3-strategic-decisions-requirements" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+      </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="RepoQ - Semantic Meta-Quality Loop" class="md-header__button md-logo" aria-label="RepoQ - Semantic Meta-Quality Loop" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            RepoQ - Semantic Meta-Quality Loop
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Phase 3 - Requirements
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="deep-purple" data-md-color-accent="amber"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Repo-Q/repoq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../getting-started/installation/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user-guide/usage/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../architecture/overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Architecture
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../tutorials/01-first-analysis/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Tutorials
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../ontology/meta-loop/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Advanced Topics
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../development/index.md" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Development
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../phase1-domain-context/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  VDAD Process
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../api/reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  API Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../about/limitations/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  About
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="RepoQ - Semantic Meta-Quality Loop" class="md-nav__button md-logo" aria-label="RepoQ - Semantic Meta-Quality Loop" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    RepoQ - Semantic Meta-Quality Loop
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Repo-Q/repoq" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Repo-Q/repoq
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Installation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quick Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    User Guide
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/configuration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Commands
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user-guide/workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Workflows
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Architecture
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/trs-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TRS Framework
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/rdf-export/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RDF Export
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/baml-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BAML AI Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/analyzer-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Analyzer Pipeline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/stratification-guard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Stratification Guard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Tutorials
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Tutorials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/01-first-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    First Analysis
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/02-custom-analyzer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Custom Analyzer
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/03-ci-cd-integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CI/CD Integration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/04-advanced-filtering/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Advanced Filtering
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/05-rdf-queries/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RDF Queries
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tutorials/06-ai-agent-config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AI Agent Configuration
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Advanced Topics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Topics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ontology/meta-loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Meta-Quality Loop
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ontology/intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Ontological Intelligence
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Development
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Development
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/index.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Development Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/uv-setup/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    uv Setup Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/CONTRIBUTING.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/testing.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Testing Strategy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/mathematical-proof-quality-monotonicity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mathematical Proof (Quality Monotonicity)
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/formal-foundations-complete/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Formal Foundations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/formal-diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Formal Diagrams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/quality-loop-roadmap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Quality Loop Roadmap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../development/tmp-artifacts-inventory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    tmp/ Artifacts Inventory
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    VDAD Process
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            VDAD Process
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase1-domain-context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 1 - Domain Context
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase1-stakeholders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 1 - Stakeholders
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase2-value-register/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 2 - Value Register
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 3 - Requirements
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executive Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-strategic-decision-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Strategic Decision Log
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Strategic Decision Log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format-adr-inspired" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format (ADR-inspired)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-01-detailed-gate-output-with-q-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-01: Detailed Gate Output with ΔQ Breakdown
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-02-zag-pcq-min-aggregator-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-02: ZAG PCQ Min-Aggregator Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-03-any2math-lean-normalization-for-determinism" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-03: Any2Math Lean Normalization for Determinism
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-04-admission-predicate-with-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-04: Admission Predicate with ε-Tolerance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-05-incremental-analysis-with-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-05: Incremental Analysis with Caching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-06-pce-k-repair-witness-with-exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-06: PCE k-Repair Witness with Exemptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-07-local-analysis-with-optional-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-07: Local Analysis with Optional LLM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-08-stratified-self-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-08: Stratified Self-Application
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Functional Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Functional Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-transparency-output-sd-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Transparency &amp; Output (SD-01)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Transparency &amp; Output (SD-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-01-detailed-gate-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-01: Detailed Gate Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-02-pce-witness-in-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-02: PCE Witness in Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-03-pr-comment-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-03: PR Comment Bot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-gaming-protection-sd-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Gaming Protection (SD-02)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Gaming Protection (SD-02)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-04-pcq-min-aggregator" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-04: PCQ Min-Aggregator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-05-pcq-threshold-in-admission" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-05: PCQ Threshold in Admission
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-correctness-determinism-sd-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Correctness &amp; Determinism (SD-03)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Correctness &amp; Determinism (SD-03)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-06-any2math-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-06: Any2Math Normalization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-07-lean-proof-verification-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-07: Lean Proof Verification (Optional)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-monotonicity-admission-sd-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Monotonicity &amp; Admission (SD-04)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Monotonicity &amp; Admission (SD-04)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-08-admission-predicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-08: Admission Predicate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-09-configurable-and" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-09: Configurable ε and τ
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-speed-performance-sd-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 Speed &amp; Performance (SD-05)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5 Speed &amp; Performance (SD-05)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-10-incremental-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-10: Incremental Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-fairness-actionability-sd-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 Fairness &amp; Actionability (SD-06)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6 Fairness &amp; Actionability (SD-06)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-11-pce-k-repair-witness" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-11: PCE k-Repair Witness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-12-inline-exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-12: Inline Exemptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-13-config-based-exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-13: Config-Based Exemptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-privacy-local-analysis-sd-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7 Privacy &amp; Local Analysis (SD-07)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7 Privacy &amp; Local Analysis (SD-07)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-14-local-only-core-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-14: Local-Only Core Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-15-opt-in-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-15: Opt-In AI Agent
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-safety-self-application-sd-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.8 Safety &amp; Self-Application (SD-08)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.8 Safety &amp; Self-Application (SD-08)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-16-stratified-self-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-16: Stratified Self-Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-17-meta-self-cli-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-17: meta-self CLI Command
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29-integration-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.9 Integration &amp; CI/CD
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.9 Integration &amp; CI/CD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-18-github-actions-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-18: GitHub Actions Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-19-vc-certificate-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-19: VC Certificate Export
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-non-functional-requirements-smart-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Non-Functional Requirements (SMART Format)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Non-Functional Requirements (SMART Format)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Performance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-01-analysis-time-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-01: Analysis Time (Speed)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-02-pcq-computation-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-02: PCQ Computation Overhead
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-correctness-determinism" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Correctness &amp; Determinism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Correctness &amp; Determinism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-03-deterministic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-03: Deterministic Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-04-monotonicity-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-04: Monotonicity Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Reliability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Reliability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-05-false-negative-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-05: False Negative Rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-06-false-positive-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-06: False Positive Rate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-usability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Usability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Usability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-07-time-to-comprehension" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-07: Time to Comprehension
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-08-developer-satisfaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-08: Developer Satisfaction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-security-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Security &amp; Privacy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 Security &amp; Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-09-zero-network-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-09: Zero Network Calls
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-maintainability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6 Maintainability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 Maintainability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-10-test-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-10: Test Coverage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7 Scalability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.7 Scalability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-11-large-repository-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-11: Large Repository Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#38-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8 Compatibility
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.8 Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-12-python-version-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-12: Python Version Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ethical-value-requirements-evr-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Ethical Value Requirements (EVR) — Updated
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Ethical Value Requirements (EVR) — Updated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#evr-01-transparency-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-01: Transparency (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evr-02-gaming-protection-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-02: Gaming Protection (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evr-03-fairness-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-03: Fairness (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evr-04-privacy-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-04: Privacy (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-requirements-traceability-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Requirements Traceability Matrix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-requirements-validation-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Requirements Validation Checklist
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Requirements Validation Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-completeness" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Completeness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-smart-criteria-nfrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 SMART Criteria (NFRs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Consistency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-testability" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Testability
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-success-criteria-vdad-phase-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Success Criteria (VDAD Phase 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-ai-copilot-role-phase-3-retrospective" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. AI Copilot Role (Phase 3 Retrospective)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-architecture-overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - Architecture Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-c4-diagrams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - C4 Diagrams
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-adrs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - ADRs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-nfr-realization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - NFR Realization
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../phase4-baml-agent/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Phase 4 - BAML Agent
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            API Reference
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api/reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    About
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            About
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/limitations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Current Limitations
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#executive-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      Executive Summary
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-strategic-decision-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Strategic Decision Log
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Strategic Decision Log">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#format-adr-inspired" class="md-nav__link">
+    <span class="md-ellipsis">
+      Format (ADR-inspired)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-01-detailed-gate-output-with-q-breakdown" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-01: Detailed Gate Output with ΔQ Breakdown
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-02-zag-pcq-min-aggregator-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-02: ZAG PCQ Min-Aggregator Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-03-any2math-lean-normalization-for-determinism" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-03: Any2Math Lean Normalization for Determinism
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-04-admission-predicate-with-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-04: Admission Predicate with ε-Tolerance
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-05-incremental-analysis-with-caching" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-05: Incremental Analysis with Caching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-06-pce-k-repair-witness-with-exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-06: PCE k-Repair Witness with Exemptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-07-local-analysis-with-optional-llm" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-07: Local Analysis with Optional LLM
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sd-08-stratified-self-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      SD-08: Stratified Self-Application
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-functional-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Functional Requirements
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Functional Requirements">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21-transparency-output-sd-01" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.1 Transparency &amp; Output (SD-01)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 Transparency &amp; Output (SD-01)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-01-detailed-gate-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-01: Detailed Gate Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-02-pce-witness-in-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-02: PCE Witness in Output
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-03-pr-comment-bot" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-03: PR Comment Bot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-gaming-protection-sd-02" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.2 Gaming Protection (SD-02)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.2 Gaming Protection (SD-02)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-04-pcq-min-aggregator" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-04: PCQ Min-Aggregator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-05-pcq-threshold-in-admission" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-05: PCQ Threshold in Admission
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-correctness-determinism-sd-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.3 Correctness &amp; Determinism (SD-03)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Correctness &amp; Determinism (SD-03)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-06-any2math-normalization" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-06: Any2Math Normalization
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-07-lean-proof-verification-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-07: Lean Proof Verification (Optional)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24-monotonicity-admission-sd-04" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.4 Monotonicity &amp; Admission (SD-04)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Monotonicity &amp; Admission (SD-04)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-08-admission-predicate" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-08: Admission Predicate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-09-configurable-and" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-09: Configurable ε and τ
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25-speed-performance-sd-05" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.5 Speed &amp; Performance (SD-05)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.5 Speed &amp; Performance (SD-05)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-10-incremental-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-10: Incremental Analysis
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26-fairness-actionability-sd-06" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.6 Fairness &amp; Actionability (SD-06)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.6 Fairness &amp; Actionability (SD-06)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-11-pce-k-repair-witness" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-11: PCE k-Repair Witness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-12-inline-exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-12: Inline Exemptions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-13-config-based-exemptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-13: Config-Based Exemptions
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27-privacy-local-analysis-sd-07" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.7 Privacy &amp; Local Analysis (SD-07)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.7 Privacy &amp; Local Analysis (SD-07)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-14-local-only-core-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-14: Local-Only Core Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-15-opt-in-ai-agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-15: Opt-In AI Agent
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#28-safety-self-application-sd-08" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.8 Safety &amp; Self-Application (SD-08)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.8 Safety &amp; Self-Application (SD-08)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-16-stratified-self-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-16: Stratified Self-Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-17-meta-self-cli-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-17: meta-self CLI Command
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29-integration-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      2.9 Integration &amp; CI/CD
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.9 Integration &amp; CI/CD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-18-github-actions-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-18: GitHub Actions Integration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-19-vc-certificate-export" class="md-nav__link">
+    <span class="md-ellipsis">
+      FR-19: VC Certificate Export
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-non-functional-requirements-smart-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Non-Functional Requirements (SMART Format)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Non-Functional Requirements (SMART Format)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 Performance
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.1 Performance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-01-analysis-time-speed" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-01: Analysis Time (Speed)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-02-pcq-computation-overhead" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-02: PCQ Computation Overhead
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-correctness-determinism" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 Correctness &amp; Determinism
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.2 Correctness &amp; Determinism">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-03-deterministic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-03: Deterministic Analysis
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-04-monotonicity-guarantee" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-04: Monotonicity Guarantee
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.3 Reliability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.3 Reliability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-05-false-negative-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-05: False Negative Rate
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-06-false-positive-rate" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-06: False Positive Rate
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-usability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.4 Usability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.4 Usability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-07-time-to-comprehension" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-07: Time to Comprehension
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfr-08-developer-satisfaction" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-08: Developer Satisfaction
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-security-privacy" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.5 Security &amp; Privacy
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.5 Security &amp; Privacy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-09-zero-network-calls" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-09: Zero Network Calls
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36-maintainability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.6 Maintainability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.6 Maintainability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-10-test-coverage" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-10: Test Coverage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#37-scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.7 Scalability
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.7 Scalability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-11-large-repository-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-11: Large Repository Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#38-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.8 Compatibility
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3.8 Compatibility">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#nfr-12-python-version-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      NFR-12: Python Version Support
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-ethical-value-requirements-evr-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. Ethical Value Requirements (EVR) — Updated
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Ethical Value Requirements (EVR) — Updated">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#evr-01-transparency-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-01: Transparency (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evr-02-gaming-protection-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-02: Gaming Protection (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evr-03-fairness-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-03: Fairness (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#evr-04-privacy-updated" class="md-nav__link">
+    <span class="md-ellipsis">
+      EVR-04: Privacy (Updated)
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-requirements-traceability-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Requirements Traceability Matrix
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-requirements-validation-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Requirements Validation Checklist
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Requirements Validation Checklist">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-completeness" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 Completeness
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-smart-criteria-nfrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 SMART Criteria (NFRs)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-consistency" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.3 Consistency
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-testability" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.4 Testability
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-success-criteria-vdad-phase-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Success Criteria (VDAD Phase 3)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-ai-copilot-role-phase-3-retrospective" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. AI Copilot Role (Phase 3 Retrospective)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. References
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+    <a href="https://github.com/Repo-Q/repoq/edit/main/docs/vdad/phase3-requirements.md" title="Edit this page" class="md-content__button md-icon" rel="edit">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75z"/></svg>
+    </a>
+  
+  
+    
+      
+    
+    <a href="https://github.com/Repo-Q/repoq/raw/main/docs/vdad/phase3-requirements.md" title="View source of this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5 5 5 0 0 1 5-5 5 5 0 0 1 5 5 5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5"/></svg>
+    </a>
+  
+
+
+<h1 id="vdad-phase-3-strategic-decisions-requirements">VDAD Phase 3: Strategic Decisions &amp; Requirements<a class="headerlink" href="#vdad-phase-3-strategic-decisions-requirements" title="Permanent link">&para;</a></h1>
+<p><strong>Status</strong>: ✅ ACTIVE<br />
+<strong>VDAD Steps</strong>: Step 5 (Digitalization Decision), Step 6 (Requirements Elaboration)<br />
+<strong>Created</strong>: 2025-10-21<br />
+<strong>Last Updated</strong>: 2025-10-21</p>
+<hr />
+<h2 id="executive-summary">Executive Summary<a class="headerlink" href="#executive-summary" title="Permanent link">&para;</a></h2>
+<p>This document translates <strong>8 Tier 1 values</strong> (from Phase 2) into <strong>strategic decisions</strong> (how we'll address each value) and <strong>concrete requirements</strong> (what the system must do). Every requirement is traceable back to a stakeholder value, ensuring value-driven development.</p>
+<p><strong>Key Outcomes</strong>:
+- <strong>8 Strategic Decisions</strong> (one per Tier 1 value)
+- <strong>19 Functional Requirements</strong> (FR-01 to FR-19)
+- <strong>12 Non-Functional Requirements</strong> (NFR-01 to NFR-12), all SMART-compliant
+- <strong>4 Updated EVRs</strong> (EVR-01 to EVR-04) with acceptance criteria
+- <strong>Full Traceability</strong>: Value → Decision → Requirement → Test (no orphaned requirements)</p>
+<p><strong>Requirements Status</strong>: 31 total requirements (19 FR + 12 NFR)
+- ✅ Implemented: 8 requirements (26%)
+- 🔄 In Progress: 6 requirements (19%)
+- ⏸️ Planned: 17 requirements (55%)</p>
+<hr />
+<h2 id="1-strategic-decision-log">1. Strategic Decision Log<a class="headerlink" href="#1-strategic-decision-log" title="Permanent link">&para;</a></h2>
+<h3 id="format-adr-inspired">Format (ADR-inspired)<a class="headerlink" href="#format-adr-inspired" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Decision ID</strong>: SD-XX (Strategic Decision)</li>
+<li><strong>Value</strong>: Which Tier 1 value this addresses</li>
+<li><strong>Context</strong>: Why this decision is needed now</li>
+<li><strong>Decision</strong>: What we're doing</li>
+<li><strong>Rationale</strong>: Why this approach (vs alternatives)</li>
+<li><strong>Alternatives Considered</strong>: What we rejected and why</li>
+<li><strong>Consequences</strong>: Trade-offs (&plusmn;)</li>
+<li><strong>Requirements</strong>: Which FR/NFR implement this decision</li>
+</ul>
+<hr />
+<h3 id="sd-01-detailed-gate-output-with-q-breakdown">SD-01: Detailed Gate Output with ΔQ Breakdown<a class="headerlink" href="#sd-01-detailed-gate-output-with-q-breakdown" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V01 (Transparency)</p>
+<p><strong>Context</strong>: Developers cannot understand gate failures from simple "FAIL: ΔQ=-1.2" output. Need file-level, metric-level breakdown to identify what went wrong.</p>
+<p><strong>Decision</strong>: Implement structured gate output with:
+1. Overall ΔQ (Q_head - Q_base)
+2. Per-metric contributions (complexity, hotspots, TODOs, coverage)
+3. File-level deltas showing which files caused change
+4. Hard constraint status (tests, TODOs, hotspots: pass/fail)
+5. PCE witness (if available): which k files to fix</p>
+<p><strong>Rationale</strong>: 
+- Transparency is <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/Repo-Q/repoq/issues/1" title="GitHub Issue: Repo-Q/repoq #1">#1</a> developer need (from persona interviews)
+- Detailed output reduces time-to-fix (developer can immediately identify problem files)
+- Aligns with EVR-01 (human-readable explanations)</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>Simple pass/fail</strong>: Rejected (too opaque, frustrates developers)
+2. <strong>External dashboard</strong>: Rejected for MVP (adds complexity, slows feedback loop)
+3. <strong>Verbose JSON dump</strong>: Rejected (information overload, poor UX)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Transparency: Developers understand failures
+- ✅ +Actionability: Clear next steps
+- ✅ +Learning: Juniors learn from detailed feedback
+- ⚠️ -Verbosity: Output can be long (mitigate with <code>--format compact</code>)</p>
+<p><strong>Requirements</strong>: FR-01, FR-02, FR-03, NFR-08</p>
+<hr />
+<h3 id="sd-02-zag-pcq-min-aggregator-integration">SD-02: ZAG PCQ Min-Aggregator Integration<a class="headerlink" href="#sd-02-zag-pcq-min-aggregator-integration" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V02 (Gaming Protection)</p>
+<p><strong>Context</strong>: Developers can game Q-score by compensating (one high-quality module offsetting one low-quality module). Average Q looks good but quality is uneven.</p>
+<p><strong>Decision</strong>: Integrate ZAG framework with PCQ min-aggregator:
+1. Decompose repository into modules (directories, architectural layers, or DDD bounded contexts)
+2. Calculate per-module quality u_i(S)
+3. PCQ(S) = min{u_1, u_2, ..., u_n} (bottleneck quality)
+4. Gate requires PCQ ≥ τ (e.g., τ=0.8: all modules ≥80%)</p>
+<p><strong>Rationale</strong>:
+- Mathematically proven anti-gaming (Theorem C: PCQ/min guarantee)
+- Catches "one bad apple" even if average is high
+- Aligns with Team Lead need for fairness across teams/modules</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>Median aggregator</strong>: Rejected (still allows 50% of modules below threshold)
+2. <strong>Weighted average</strong>: Rejected (can still be gamed by inflating one metric)
+3. <strong>Manual code review</strong>: Rejected (not scalable, not objective)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Gaming Protection: Compensation impossible (min blocks it)
+- ✅ +Fairness: All modules held to same standard
+- ✅ +Team Accountability: Identifies weak modules
+- ⚠️ -Strictness: Some PRs may fail that would pass with average (intentional)</p>
+<p><strong>Requirements</strong>: FR-04, FR-05, NFR-02</p>
+<hr />
+<h3 id="sd-03-any2math-lean-normalization-for-determinism">SD-03: Any2Math Lean Normalization for Determinism<a class="headerlink" href="#sd-03-any2math-lean-normalization-for-determinism" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V03 (Correctness), V07 (Reliability)</p>
+<p><strong>Context</strong>: Syntactic variations (whitespace, comment formatting, equivalent AST structures) cause non-deterministic metrics. Same code → different Q scores → developer frustration + flaky gates.</p>
+<p><strong>Decision</strong>: Integrate Any2Math framework:
+1. Parse Python code to AST
+2. Apply TRS normalization: N(AST) → canonical AST
+3. Calculate metrics on canonical AST (deterministic)
+4. Verify TRS properties in Lean: confluence + termination (Theorems 15.3, Any2Math.A-C)</p>
+<p><strong>Rationale</strong>:
+- Formal correctness: Lean proofs guarantee normalization properties
+- Eliminates false positives from formatting changes (whitespace, comments)
+- Unique selling point: First quality tool with mechanized proofs</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>Ignore whitespace manually</strong>: Rejected (incomplete, ad-hoc)
+2. <strong>Use Black formatter</strong>: Rejected (doesn't handle semantic equivalence)
+3. <strong>Heuristic normalization</strong>: Rejected (no formal guarantees)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Correctness: Formal proofs (14 theorems + Lean mechanization)
+- ✅ +Reliability: Deterministic (same code → same Q)
+- ✅ +Innovation: Novel contribution (TRS + Lean + Quality)
+- ⚠️ -Complexity: Lean runtime dependency (mitigate with subprocess isolation)
+- ⚠️ -Performance: Normalization adds overhead (~10-20% analysis time, acceptable)</p>
+<p><strong>Requirements</strong>: FR-06, FR-07, NFR-01, NFR-03</p>
+<hr />
+<h3 id="sd-04-admission-predicate-with-tolerance">SD-04: Admission Predicate with ε-Tolerance<a class="headerlink" href="#sd-04-admission-predicate-with-tolerance" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V04 (Monotonicity)</p>
+<p><strong>Context</strong>: Strict ΔQ &gt; 0 requirement is too fragile (minor noise causes false negatives). Need tolerance for measurement noise while preserving monotonicity guarantee.</p>
+<p><strong>Decision</strong>: Implement admission predicate:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>A(S_base, S_head) ≡ (H) ∧ (ΔQ ≥ ε) ∧ (PCQ ≥ τ)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>where:
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>  H = hard constraints (tests ≥80%, TODO ≤100, hotspots ≤20)
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>  ΔQ = Q(S_head) - Q(S_base)
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  ε ∈ [0.2, 0.5] — configurable noise tolerance
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  τ ∈ [0.75, 0.9] — configurable PCQ threshold
+</span></code></pre></div></p>
+<p><strong>Rationale</strong>:
+- Theorem B: Monotonicity guarantee (if A passes, then Q improves by ≥ε)
+- ε-tolerance prevents false negatives from noise (formatting, minor refactoring)
+- Hard constraints (H) are absolute (no tolerance for low test coverage)</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>Strict ΔQ &gt; 0</strong>: Rejected (too fragile, high false negative rate)
+2. <strong>No ε (always pass)</strong>: Rejected (violates monotonicity, allows regression)
+3. <strong>Adaptive ε</strong>: Rejected for MVP (too complex, unclear benefit)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Monotonicity: Formal guarantee (Theorem B)
+- ✅ +Robustness: Tolerates minor noise (ε=0.3 typical)
+- ✅ +Configurability: Teams can tune ε, τ via policy YAML
+- ⚠️ -Complexity: Requires understanding ε concept (mitigate with docs)</p>
+<p><strong>Requirements</strong>: FR-08, FR-09, NFR-02, NFR-04</p>
+<hr />
+<h3 id="sd-05-incremental-analysis-with-caching">SD-05: Incremental Analysis with Caching<a class="headerlink" href="#sd-05-incremental-analysis-with-caching" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V05 (Speed)</p>
+<p><strong>Context</strong>: Full repository analysis on every PR is slow (5-10 min for large repos). Developers won't use tool if feedback loop &gt;2 min.</p>
+<p><strong>Decision</strong>: Implement incremental analysis:
+1. Cache metrics for unchanged files (keyed by file SHA + config version)
+2. Only re-analyze files in PR diff (<code>git diff --name-only base..head</code>)
+3. Re-aggregate Q from cached + new metrics
+4. Invalidate cache on policy change (weight updates)</p>
+<p><strong>Rationale</strong>:
+- Speed is <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/Repo-Q/repoq/issues/1" title="GitHub Issue: Repo-Q/repoq #1">#1</a> DevOps requirement (CI budget &lt;5 min total)
+- Typical PR changes 5-20 files (not 1000+), so incremental saves 80-90% time
+- Cache correctness guaranteed (SHA-based, policy-versioned)</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>Full re-analysis</strong>: Rejected (too slow for large repos)
+2. <strong>External cache (Redis)</strong>: Rejected for MVP (adds dependency, complexity)
+3. <strong>Pre-computed metrics DB</strong>: Rejected (requires server, not self-hosted)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Speed: 5-10x faster for typical PRs (80-90% cache hit)
+- ✅ +Developer Satisfaction: Fast feedback loop (&lt;2 min)
+- ⚠️ -Storage: Cache grows over time (mitigate with LRU eviction)
+- ⚠️ -Cache Invalidation: Policy changes require full re-analysis (acceptable for rare event)</p>
+<p><strong>Requirements</strong>: FR-10, NFR-05, NFR-06</p>
+<hr />
+<h3 id="sd-06-pce-k-repair-witness-with-exemptions">SD-06: PCE k-Repair Witness with Exemptions<a class="headerlink" href="#sd-06-pce-k-repair-witness-with-exemptions" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V06 (Fairness), V08 (Actionability)</p>
+<p><strong>Context</strong>: Gate blocks PRs with "fix quality" message, but doesn't say <em>how</em>. Developers frustrated by vague feedback. Also, some complexity is necessary (algorithms, state machines) and shouldn't be penalized.</p>
+<p><strong>Decision</strong>: Implement PCE k-repair witness + exemption system:
+1. <strong>PCE Witness</strong>: When gate fails, compute minimal k-file subset that, if improved, would pass gate
+   - Algorithm: Greedy search for k files with highest ΔQ potential
+   - Output: "Fix these k={3,5,8} files: auth.py, login.py, session.py"
+2. <strong>Exemptions</strong>: Allow context-aware exceptions
+   - Inline: <code># repoq: ignore-complexity algorithm</code> (suppresses complexity warning for function)
+   - Config: <code>.github/quality-policy.yml</code> exemptions section (e.g., <code>tests/</code> has lower complexity threshold)
+   - Ontology-based: MVC controllers can have higher complexity than models (pattern-aware)</p>
+<p><strong>Rationale</strong>:
+- PCE is constructive (Theorem E: k-repair witness exists)
+- Exemptions address fairness (don't penalize necessary complexity)
+- Actionability: Developers know <em>exactly</em> what to fix</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>No exemptions</strong>: Rejected (unfair to algorithm-heavy code)
+2. <strong>Manual waiver system</strong>: Rejected (not scalable, requires approval process)
+3. <strong>AI-generated suggestions only</strong>: Rejected (not deterministic, Phase 5 feature)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Actionability: Clear fix path (k files identified)
+- ✅ +Fairness: Necessary complexity not penalized
+- ✅ +Constructiveness: Help improve, not just block
+- ⚠️ -Complexity: Exemption rules need careful design (can be abused)
+- ⚠️ -Computation: PCE witness adds ~5-10% overhead (acceptable)</p>
+<p><strong>Requirements</strong>: FR-11, FR-12, FR-13, NFR-07</p>
+<hr />
+<h3 id="sd-07-local-analysis-with-optional-llm">SD-07: Local Analysis with Optional LLM<a class="headerlink" href="#sd-07-local-analysis-with-optional-llm" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V07 (Reliability), V16 (Privacy, Tier 2 but critical for enterprises)</p>
+<p><strong>Context</strong>: Sending code to external services (SonarCloud, CodeClimate) violates enterprise security policies. Also introduces network dependency (flaky gates).</p>
+<p><strong>Decision</strong>: All analysis local by default, LLM opt-in:
+1. <strong>Core Analysis</strong>: Python-native (AST parsing, radon, git log) — no network calls
+2. <strong>RDF Storage</strong>: Embedded (RDFLib in-memory or Oxigraph local file)
+3. <strong>Any2Math</strong>: Subprocess (Lean runtime local)
+4. <strong>BAML AI Agent</strong> (Phase 5): Opt-in only
+   - Requires <code>--enable-ai</code> flag + API key in env var
+   - Explicit consent in <code>.github/quality-policy.yml</code>
+   - Clear warning: "AI agent will send code snippets to OpenAI API"</p>
+<p><strong>Rationale</strong>:
+- Privacy is hard requirement for 30% of enterprises (from survey)
+- Reliability: No network → no flaky failures
+- Aligns with EVR-04 (Privacy)</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>SaaS-only</strong>: Rejected (violates enterprise policies)
+2. <strong>Self-hosted LLM required</strong>: Rejected (too complex for MVP)
+3. <strong>No AI at all</strong>: Rejected (Phase 5 innovation goal)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Privacy: No data leakage (compliant with GDPR, SOC 2)
+- ✅ +Reliability: No network dependencies
+- ✅ +Enterprise Adoption: Meets security requirements
+- ⚠️ -AI Limited: Optional AI reduces differentiation (mitigate with clear value prop)</p>
+<p><strong>Requirements</strong>: FR-14, FR-15, NFR-09</p>
+<hr />
+<h3 id="sd-08-stratified-self-application">SD-08: Stratified Self-Application<a class="headerlink" href="#sd-08-stratified-self-application" title="Permanent link">&para;</a></h3>
+<p><strong>Value</strong>: V11 (Safety, Tier 2 but architecturally critical)</p>
+<p><strong>Context</strong>: RepoQ should dogfood (analyze itself), but naive self-analysis risks paradoxes (Russell's paradox, Gödel incompleteness analogs). Need formal safety guarantee.</p>
+<p><strong>Decision</strong>: Implement stratified self-application:
+1. <strong>Level 0</strong>: External code (user repositories)
+2. <strong>Level 1</strong>: RepoQ codebase (dogfooding: RepoQ analyzes its own code)
+3. <strong>Level 2</strong>: Meta-analysis (RepoQ checks if its own Q metric is well-formed)
+4. <strong>Guard</strong>: <code>SelfApplicationGuard</code> enforces L_i can only analyze L_j if i &gt; j (strict ordering)
+5. <strong>CLI</strong>: <code>repoq meta-self --level 2</code> runs stratified self-analysis</p>
+<p><strong>Rationale</strong>:
+- Theorem F: Self-application safety proof (stratification prevents paradoxes)
+- Unique innovation: First quality tool with proven safe self-analysis
+- Dogfooding builds confidence (if RepoQ passes its own gate, it's credible)</p>
+<p><strong>Alternatives Considered</strong>:
+1. <strong>No self-analysis</strong>: Rejected (misses dogfooding benefit)
+2. <strong>Naive self-analysis</strong>: Rejected (risk of paradoxes, no formal guarantee)
+3. <strong>External meta-checker</strong>: Rejected (defeats purpose of self-analysis)</p>
+<p><strong>Consequences</strong>:
+- ✅ +Safety: Formal proof (Theorem F)
+- ✅ +Innovation: Novel contribution (safe self-understanding)
+- ✅ +Credibility: Dogfooding proves tool works
+- ⚠️ -Complexity: Stratification concept requires explanation (mitigate with docs, diagrams)</p>
+<p><strong>Requirements</strong>: FR-16, FR-17, NFR-10</p>
+<hr />
+<h2 id="2-functional-requirements">2. Functional Requirements<a class="headerlink" href="#2-functional-requirements" title="Permanent link">&para;</a></h2>
+<h3 id="21-transparency-output-sd-01">2.1 Transparency &amp; Output (SD-01)<a class="headerlink" href="#21-transparency-output-sd-01" title="Permanent link">&para;</a></h3>
+<h4 id="fr-01-detailed-gate-output">FR-01: Detailed Gate Output<a class="headerlink" href="#fr-01-detailed-gate-output" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: <code>repoq gate</code> SHALL output structured report including:
+- Overall verdict (PASS/FAIL)
+- ΔQ = Q(HEAD) - Q(BASE)
+- Per-metric breakdown: complexity, hotspots, TODOs, coverage (individual contributions)
+- Hard constraint status (tests ≥80%, TODO ≤100, hotspots ≤20): ✓/✗ for each
+- File-level deltas (top 10 files by |ΔQ_file|)</p>
+<p><strong>Value</strong>: V01 (Transparency), V08 (Actionability)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented (repoq/gate.py)<br />
+<strong>Test</strong>: <code>tests/test_gate.py::test_detailed_output</code></p>
+<hr />
+<h4 id="fr-02-pce-witness-in-output">FR-02: PCE Witness in Output<a class="headerlink" href="#fr-02-pce-witness-in-output" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: When gate FAILs, output SHALL include PCE k-repair witness:
+- "To pass gate, improve these k files: [file1, file2, ..., file_k]"
+- Estimated ΔQ if witness fixed: "Expected Q improvement: +2.3"
+- k configurable (default: k=3, max: k=8)</p>
+<p><strong>Value</strong>: V08 (Actionability), V10 (Constructiveness)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: 🔄 In Progress (tmp/zag_repoq-finished/integrations/zag.py)<br />
+<strong>Test</strong>: <code>tests/test_gate.py::test_pce_witness</code></p>
+<hr />
+<h4 id="fr-03-pr-comment-bot">FR-03: PR Comment Bot<a class="headerlink" href="#fr-03-pr-comment-bot" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: When running in GitHub Actions, RepoQ SHALL post formatted PR comment with:
+- Gate verdict (✅ PASS / ❌ FAIL)
+- ΔQ summary (colored: green if +, red if -)
+- Breakdown table (metric | base | head | delta)
+- PCE witness (if FAIL)
+- Link to VC certificate (if PASS)</p>
+<p><strong>Value</strong>: V01 (Transparency), V05 (Speed)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_ci_integration.py::test_pr_comment</code></p>
+<hr />
+<h3 id="22-gaming-protection-sd-02">2.2 Gaming Protection (SD-02)<a class="headerlink" href="#22-gaming-protection-sd-02" title="Permanent link">&para;</a></h3>
+<h4 id="fr-04-pcq-min-aggregator">FR-04: PCQ Min-Aggregator<a class="headerlink" href="#fr-04-pcq-min-aggregator" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: System SHALL calculate piecewise collective quality:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">calculate_pcq</span><span class="p">(</span><span class="n">modules</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Module</span><span class="p">],</span> <span class="n">policy</span><span class="p">:</span> <span class="n">Policy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="sd">    PCQ(S) = min_{i ∈ modules} u_i(S)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="sd">    where u_i = per-module Q score</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">module_qualities</span> <span class="o">=</span> <span class="p">[</span><span class="n">calculate_module_q</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">policy</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">]</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">module_qualities</span><span class="p">)</span>
+</span></code></pre></div>
+Modules defined by:
+- Directory structure (default: top-level dirs)
+- Architectural layers (if ontology available: presentation, business, data)
+- DDD bounded contexts (if annotated in config)</p>
+<p><strong>Value</strong>: V02 (Gaming Protection), V04 (Monotonicity), V06 (Fairness)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: 🔄 In Progress (tmp/zag_repoq-finished/integrations/zag.py)<br />
+<strong>Test</strong>: <code>tests/test_pcq.py::test_min_aggregator</code></p>
+<hr />
+<h4 id="fr-05-pcq-threshold-in-admission">FR-05: PCQ Threshold in Admission<a class="headerlink" href="#fr-05-pcq-threshold-in-admission" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: Admission predicate SHALL include PCQ check:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>A(S_base, S_head) ≡ (H) ∧ (ΔQ ≥ ε) ∧ (PCQ(S_head) ≥ τ)
+</span></code></pre></div>
+where τ ∈ [0.75, 0.9] configurable in <code>.github/quality-policy.yml</code>.</p>
+<p>If PCQ &lt; τ, gate FAILs with message:
+"PCQ bottleneck: Module 'auth' has quality {pcq_value:.2f} &lt; threshold {tau:.2f}"</p>
+<p><strong>Value</strong>: V02 (Gaming Protection), V06 (Fairness)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_gate.py::test_pcq_admission</code></p>
+<hr />
+<h3 id="23-correctness-determinism-sd-03">2.3 Correctness &amp; Determinism (SD-03)<a class="headerlink" href="#23-correctness-determinism-sd-03" title="Permanent link">&para;</a></h3>
+<h4 id="fr-06-any2math-normalization">FR-06: Any2Math Normalization<a class="headerlink" href="#fr-06-any2math-normalization" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: System SHALL normalize Python AST before metric calculation:
+1. Parse code to AST (<code>ast.parse(code)</code>)
+2. Apply TRS rewrite rules: N(AST) → canonical AST
+   - Remove redundant nodes (Pass statements, unnecessary parens)
+   - Normalize names (consistent variable ordering in comprehensions)
+   - Canonicalize expressions (a+b == b+a → sorted order)
+3. Calculate metrics on canonical AST
+4. Cache normalized AST (keyed by file SHA + normalization version)</p>
+<p><strong>Value</strong>: V03 (Correctness), V07 (Reliability), V14 (Reproducibility)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned (tmp/repoq-any2math-integration/)<br />
+<strong>Test</strong>: <code>tests/test_any2math.py::test_normalization_deterministic</code></p>
+<hr />
+<h4 id="fr-07-lean-proof-verification-optional">FR-07: Lean Proof Verification (Optional)<a class="headerlink" href="#fr-07-lean-proof-verification-optional" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: System MAY verify TRS properties in Lean:
+- Confluence: ∀ t1, t2: N(t1) = N(t2) if t1 ≡ t2 (syntactic equivalence)
+- Termination: ∀ t: N(t) terminates in finite steps
+- Idempotence: N(N(t)) = N(t)</p>
+<p>If Lean runtime available (<code>lean --version</code> succeeds):
+- Verify proofs on startup (or via <code>repoq verify-proofs</code>)
+- Log verification result (PASS/FAIL/SKIP)</p>
+<p><strong>Value</strong>: V03 (Correctness), V18 (Innovation)<br />
+<strong>Priority</strong>: P2 (Advanced)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_lean_proofs.py::test_confluence_proof</code></p>
+<hr />
+<h3 id="24-monotonicity-admission-sd-04">2.4 Monotonicity &amp; Admission (SD-04)<a class="headerlink" href="#24-monotonicity-admission-sd-04" title="Permanent link">&para;</a></h3>
+<h4 id="fr-08-admission-predicate">FR-08: Admission Predicate<a class="headerlink" href="#fr-08-admission-predicate" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: Gate SHALL evaluate admission predicate:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">admission_predicate</span><span class="p">(</span><span class="n">base</span><span class="p">:</span> <span class="n">QualityState</span><span class="p">,</span> <span class="n">head</span><span class="p">:</span> <span class="n">QualityState</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="n">Policy</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">H</span> <span class="o">=</span> <span class="n">hard_constraints_pass</span><span class="p">(</span><span class="n">head</span><span class="p">,</span> <span class="n">policy</span><span class="p">)</span>  <span class="c1"># tests≥80%, TODO≤100, hotspots≤20</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">delta_q</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="n">q_score</span> <span class="o">-</span> <span class="n">base</span><span class="o">.</span><span class="n">q_score</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">pcq</span> <span class="o">=</span> <span class="n">calculate_pcq</span><span class="p">(</span><span class="n">head</span><span class="o">.</span><span class="n">modules</span><span class="p">,</span> <span class="n">policy</span><span class="p">)</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="k">return</span> <span class="n">H</span> <span class="ow">and</span> <span class="p">(</span><span class="n">delta_q</span> <span class="o">&gt;=</span> <span class="n">policy</span><span class="o">.</span><span class="n">epsilon</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">pcq</span> <span class="o">&gt;=</span> <span class="n">policy</span><span class="o">.</span><span class="n">tau</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p><strong>Value</strong>: V04 (Monotonicity), V02 (Gaming Protection)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented (repoq/gate.py, simplified version without PCQ)<br />
+<strong>Test</strong>: <code>tests/test_gate.py::test_admission_predicate</code></p>
+<hr />
+<h4 id="fr-09-configurable-and">FR-09: Configurable ε and τ<a class="headerlink" href="#fr-09-configurable-and" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: <code>.github/quality-policy.yml</code> SHALL define:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nt">thresholds</span><span class="p">:</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">epsilon</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.3</span><span class="w">        </span><span class="c1"># Noise tolerance (ΔQ ≥ ε)</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">tau</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.8</span><span class="w">            </span><span class="c1"># PCQ threshold (all modules ≥ τ)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="nt">hard_constraints</span><span class="p">:</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">  </span><span class="nt">test_coverage_min</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0.80</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="nt">todo_count_max</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">  </span><span class="nt">hotspot_threshold</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span>
+</span></code></pre></div></p>
+<p>Validation:
+- ε ∈ [0.0, 1.0], recommended [0.2, 0.5]
+- τ ∈ [0.0, 1.0], recommended [0.75, 0.9]
+- If invalid, warn and use defaults</p>
+<p><strong>Value</strong>: V04 (Monotonicity), V06 (Fairness)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_config.py::test_policy_validation</code></p>
+<hr />
+<h3 id="25-speed-performance-sd-05">2.5 Speed &amp; Performance (SD-05)<a class="headerlink" href="#25-speed-performance-sd-05" title="Permanent link">&para;</a></h3>
+<h4 id="fr-10-incremental-analysis">FR-10: Incremental Analysis<a class="headerlink" href="#fr-10-incremental-analysis" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: System SHALL only re-analyze changed files:
+1. Compute file set: <code>changed_files = git diff --name-only base..head</code>
+2. Load cached metrics for unchanged files (cache keyed by <code>{file_sha}_{policy_version}</code>)
+3. Re-analyze changed files only
+4. Aggregate Q from cached + new metrics</p>
+<p>Cache invalidation:
+- Policy change (weights, thresholds) → invalidate all
+- File change (SHA differs) → invalidate file
+- RepoQ version change → invalidate all (safety)</p>
+<p><strong>Value</strong>: V05 (Speed), V07 (Reliability)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_incremental.py::test_cache_hit_rate</code></p>
+<hr />
+<h3 id="26-fairness-actionability-sd-06">2.6 Fairness &amp; Actionability (SD-06)<a class="headerlink" href="#26-fairness-actionability-sd-06" title="Permanent link">&para;</a></h3>
+<h4 id="fr-11-pce-k-repair-witness">FR-11: PCE k-Repair Witness<a class="headerlink" href="#fr-11-pce-k-repair-witness" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: When gate FAILs, compute PCE witness:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">compute_pce_witness</span><span class="p">(</span><span class="n">state</span><span class="p">:</span> <span class="n">QualityState</span><span class="p">,</span> <span class="n">policy</span><span class="p">:</span> <span class="n">Policy</span><span class="p">,</span> <span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="sd">    Find k files that, if improved, would pass gate.</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="sd">    Algorithm: Greedy selection by ΔQ potential.</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">files_by_potential</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">files</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">f</span><span class="p">:</span> <span class="n">f</span><span class="o">.</span><span class="n">delta_q_potential</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="n">witness</span> <span class="o">=</span> <span class="n">files_by_potential</span><span class="p">[:</span><span class="n">k</span><span class="p">]</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">f</span><span class="o">.</span><span class="n">path</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">witness</span><span class="p">]</span>
+</span></code></pre></div></p>
+<p><strong>Value</strong>: V08 (Actionability), V10 (Constructiveness), V17 (Incrementality)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: 🔄 In Progress (tmp/zag_repoq-finished/integrations/zag.py)<br />
+<strong>Test</strong>: <code>tests/test_pce.py::test_witness_generation</code></p>
+<hr />
+<h4 id="fr-12-inline-exemptions">FR-12: Inline Exemptions<a class="headerlink" href="#fr-12-inline-exemptions" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: System SHALL recognize inline exemptions:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># repoq: ignore-complexity algorithm</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">dijkstra_shortest_path</span><span class="p">(</span><span class="n">graph</span><span class="p">,</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="p">):</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="c1"># Complexity naturally high (graph algorithm)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="c1"># ... implementation ...</span>
+</span></code></pre></div></p>
+<p>Exemption types:
+- <code>ignore-complexity</code>: Suppress complexity warnings for function/class
+- <code>ignore-hotspots</code>: Allow high churn (e.g., config files)
+- <code>legacy-module</code>: Temporary lower standards (with expiry date)</p>
+<p><strong>Value</strong>: V06 (Fairness), V17 (Incrementality)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_exemptions.py::test_inline_ignore</code></p>
+<hr />
+<h4 id="fr-13-config-based-exemptions">FR-13: Config-Based Exemptions<a class="headerlink" href="#fr-13-config-based-exemptions" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: <code>.github/quality-policy.yml</code> SHALL support exemptions:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nt">exemptions</span><span class="p">:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">complexity</span><span class="p">:</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;algorithms/*.py&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">      </span><span class="nt">max_complexity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">20</span><span class="w">  </span><span class="c1"># Higher threshold for algorithms</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;tests/&quot;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">      </span><span class="nt">max_complexity</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15</span><span class="w">  </span><span class="c1"># Lower threshold for tests (simpler)</span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">  </span><span class="nt">legacy</span><span class="p">:</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;legacy_module/&quot;</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">      </span><span class="nt">expires</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2026-06-01&quot;</span><span class="w">  </span><span class="c1"># Temporary exemption</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">      </span><span class="nt">reason</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gradual</span><span class="nv"> </span><span class="s">refactoring</span><span class="nv"> </span><span class="s">plan&quot;</span>
+</span></code></pre></div></p>
+<p><strong>Value</strong>: V06 (Fairness), V17 (Incrementality)<br />
+<strong>Priority</strong>: P2 (Advanced)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_exemptions.py::test_config_exemptions</code></p>
+<hr />
+<h3 id="27-privacy-local-analysis-sd-07">2.7 Privacy &amp; Local Analysis (SD-07)<a class="headerlink" href="#27-privacy-local-analysis-sd-07" title="Permanent link">&para;</a></h3>
+<h4 id="fr-14-local-only-core-analysis">FR-14: Local-Only Core Analysis<a class="headerlink" href="#fr-14-local-only-core-analysis" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: Core analysis SHALL NOT make network calls:
+- AST parsing: Python built-in <code>ast</code> module (local)
+- Complexity: <code>radon</code> library (local)
+- Hotspots: <code>git log</code> parsing (local)
+- TODOs: Regex scanning (local)
+- Coverage: <code>coverage.py</code> (local)
+- RDF: RDFLib in-memory or Oxigraph local file (local)</p>
+<p>Network audit test: Assert zero outbound connections during analysis.</p>
+<p><strong>Value</strong>: V16 (Privacy), V07 (Reliability)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented (all analyzers local)<br />
+<strong>Test</strong>: <code>tests/test_privacy.py::test_no_network_calls</code></p>
+<hr />
+<h4 id="fr-15-opt-in-ai-agent">FR-15: Opt-In AI Agent<a class="headerlink" href="#fr-15-opt-in-ai-agent" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: BAML AI agent (Phase 5) SHALL be opt-in only:
+1. Disabled by default (no AI without consent)
+2. Enable via CLI flag: <code>repoq gate --enable-ai</code>
+3. Enable via config:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nt">ai_agent</span><span class="p">:</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;openai&quot;</span><span class="w">  </span><span class="c1"># or &quot;anthropic&quot;, &quot;self-hosted&quot;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">api_key_env</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;REPOQ_AI_API_KEY&quot;</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">consent</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;I</span><span class="nv"> </span><span class="s">understand</span><span class="nv"> </span><span class="s">code</span><span class="nv"> </span><span class="s">snippets</span><span class="nv"> </span><span class="s">will</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">sent</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">external</span><span class="nv"> </span><span class="s">LLM</span><span class="nv"> </span><span class="s">API&quot;</span>
+</span></code></pre></div>
+4. Warning on first run: "AI agent will send code snippets to {provider}. Continue? (y/n)"</p>
+<p><strong>Value</strong>: V16 (Privacy), V12 (Learning)<br />
+<strong>Priority</strong>: P2 (Advanced)<br />
+<strong>Status</strong>: ⏸️ Planned (Phase 5: BAML integration)<br />
+<strong>Test</strong>: <code>tests/test_ai_agent.py::test_opt_in_required</code></p>
+<hr />
+<h3 id="28-safety-self-application-sd-08">2.8 Safety &amp; Self-Application (SD-08)<a class="headerlink" href="#28-safety-self-application-sd-08" title="Permanent link">&para;</a></h3>
+<h4 id="fr-16-stratified-self-analysis">FR-16: Stratified Self-Analysis<a class="headerlink" href="#fr-16-stratified-self-analysis" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: System SHALL enforce stratification for self-analysis:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">SelfApplicationGuard</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">check_stratification</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_level</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">target_level</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>        <span class="k">if</span> <span class="n">target_level</span> <span class="o">&lt;=</span> <span class="n">current_level</span><span class="p">:</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>            <span class="k">raise</span> <span class="n">StratificationViolation</span><span class="p">(</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>                <span class="sa">f</span><span class="s2">&quot;Cannot analyze level </span><span class="si">{</span><span class="n">target_level</span><span class="si">}</span><span class="s2"> from level </span><span class="si">{</span><span class="n">current_level</span><span class="si">}</span><span class="s2">. &quot;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>                <span class="sa">f</span><span class="s2">&quot;Stratification requires target &gt; current.&quot;</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>            <span class="p">)</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        <span class="k">if</span> <span class="n">target_level</span> <span class="o">-</span> <span class="n">current_level</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>            <span class="k">raise</span> <span class="n">StratificationViolation</span><span class="p">(</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>                <span class="sa">f</span><span class="s2">&quot;Cannot skip levels. Analyze level </span><span class="si">{</span><span class="n">current_level</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2"> first.&quot;</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>            <span class="p">)</span>
+</span></code></pre></div></p>
+<p>Levels:
+- L_0: External code (default)
+- L_1: RepoQ codebase (dogfooding)
+- L_2: Meta-analysis (RepoQ's Q metric self-check)</p>
+<p><strong>Value</strong>: V11 (Safety), V18 (Innovation)<br />
+<strong>Priority</strong>: P2 (Advanced)<br />
+<strong>Status</strong>: 🔄 In Progress (tmp/repoq-meta-loop-addons/trs/engine.py)<br />
+<strong>Test</strong>: <code>tests/test_stratification.py::test_guard_violation</code></p>
+<hr />
+<h4 id="fr-17-meta-self-cli-command">FR-17: meta-self CLI Command<a class="headerlink" href="#fr-17-meta-self-cli-command" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: Implement <code>repoq meta-self --level N</code>:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Level 1: Analyze RepoQ&#39;s own code</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>repoq<span class="w"> </span>meta-self<span class="w"> </span>--level<span class="w"> </span><span class="m">1</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># Output: Q(RepoQ) = 82.5, patterns=[Layered, Plugin], violations=[]</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># Level 2: Meta-analysis (check if RepoQ&#39;s Q metric is self-consistent)</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>repoq<span class="w"> </span>meta-self<span class="w"> </span>--level<span class="w"> </span><span class="m">2</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># Output: Meta-check PASS: RepoQ&#39;s ontology satisfies its own SHACL shapes</span>
+</span></code></pre></div></p>
+<p><strong>Value</strong>: V11 (Safety), V18 (Innovation)<br />
+<strong>Priority</strong>: P2 (Advanced)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_meta_self.py::test_level1_dogfooding</code></p>
+<hr />
+<h3 id="29-integration-cicd">2.9 Integration &amp; CI/CD<a class="headerlink" href="#29-integration-cicd" title="Permanent link">&para;</a></h3>
+<h4 id="fr-18-github-actions-integration">FR-18: GitHub Actions Integration<a class="headerlink" href="#fr-18-github-actions-integration" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: Provide <code>.github/workflows/quality-gate.yml</code> template:
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Quality Gate</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">pull_request</span><span class="p p-Indicator">]</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nt">jobs</span><span class="p">:</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="w">  </span><span class="nt">quality-gate</span><span class="p">:</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="w">    </span><span class="nt">steps</span><span class="p">:</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/checkout@v3</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">          </span><span class="nt">fetch-depth</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span><span class="w">  </span><span class="c1"># Full history for hotspot analysis</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Install RepoQ</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pip install repoq</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Run Quality Gate</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="w">          </span><span class="no">repoq gate \</span>
+</span><span id="__span-11-18"><a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="w">            </span><span class="no">--base ${{ github.event.pull_request.base.sha }} \</span>
+</span><span id="__span-11-19"><a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">            </span><span class="no">--head ${{ github.sha }} \</span>
+</span><span id="__span-11-20"><a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a><span class="w">            </span><span class="no">--format pr-comment &gt; gate_output.txt</span>
+</span><span id="__span-11-21"><a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>
+</span><span id="__span-11-22"><a id="__codelineno-11-22" name="__codelineno-11-22" href="#__codelineno-11-22"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Post PR Comment</span>
+</span><span id="__span-11-23"><a id="__codelineno-11-23" name="__codelineno-11-23" href="#__codelineno-11-23"></a><span class="w">        </span><span class="nt">if</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">always()</span>
+</span><span id="__span-11-24"><a id="__codelineno-11-24" name="__codelineno-11-24" href="#__codelineno-11-24"></a><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">actions/github-script@v6</span>
+</span><span id="__span-11-25"><a id="__codelineno-11-25" name="__codelineno-11-25" href="#__codelineno-11-25"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
+</span><span id="__span-11-26"><a id="__codelineno-11-26" name="__codelineno-11-26" href="#__codelineno-11-26"></a><span class="w">          </span><span class="nt">script</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+</span><span id="__span-11-27"><a id="__codelineno-11-27" name="__codelineno-11-27" href="#__codelineno-11-27"></a><span class="w">            </span><span class="no">const fs = require(&#39;fs&#39;);</span>
+</span><span id="__span-11-28"><a id="__codelineno-11-28" name="__codelineno-11-28" href="#__codelineno-11-28"></a><span class="w">            </span><span class="no">const output = fs.readFileSync(&#39;gate_output.txt&#39;, &#39;utf8&#39;);</span>
+</span><span id="__span-11-29"><a id="__codelineno-11-29" name="__codelineno-11-29" href="#__codelineno-11-29"></a><span class="w">            </span><span class="no">github.rest.issues.createComment({</span>
+</span><span id="__span-11-30"><a id="__codelineno-11-30" name="__codelineno-11-30" href="#__codelineno-11-30"></a><span class="w">              </span><span class="no">issue_number: context.issue.number,</span>
+</span><span id="__span-11-31"><a id="__codelineno-11-31" name="__codelineno-11-31" href="#__codelineno-11-31"></a><span class="w">              </span><span class="no">owner: context.repo.owner,</span>
+</span><span id="__span-11-32"><a id="__codelineno-11-32" name="__codelineno-11-32" href="#__codelineno-11-32"></a><span class="w">              </span><span class="no">repo: context.repo.repo,</span>
+</span><span id="__span-11-33"><a id="__codelineno-11-33" name="__codelineno-11-33" href="#__codelineno-11-33"></a><span class="w">              </span><span class="no">body: output</span>
+</span><span id="__span-11-34"><a id="__codelineno-11-34" name="__codelineno-11-34" href="#__codelineno-11-34"></a><span class="w">            </span><span class="no">});</span>
+</span><span id="__span-11-35"><a id="__codelineno-11-35" name="__codelineno-11-35" href="#__codelineno-11-35"></a>
+</span><span id="__span-11-36"><a id="__codelineno-11-36" name="__codelineno-11-36" href="#__codelineno-11-36"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Fail if Gate Blocked</span>
+</span><span id="__span-11-37"><a id="__codelineno-11-37" name="__codelineno-11-37" href="#__codelineno-11-37"></a><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">exit $(cat gate_exit_code.txt)</span>
+</span></code></pre></div></p>
+<p><strong>Value</strong>: V05 (Speed), V13 (Simplicity)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/test_ci_integration.py::test_github_actions_workflow</code></p>
+<hr />
+<h4 id="fr-19-vc-certificate-export">FR-19: VC Certificate Export<a class="headerlink" href="#fr-19-vc-certificate-export" title="Permanent link">&para;</a></h4>
+<p><strong>Description</strong>: System SHALL export W3C Verifiable Credentials:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">generate_certificate</span><span class="p">(</span><span class="n">decision</span><span class="p">:</span> <span class="n">GateDecision</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="n">PrivateKey</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">VC</span><span class="p">:</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="n">vc</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>        <span class="s2">&quot;@context&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;https://www.w3.org/2018/credentials/v1&quot;</span><span class="p">],</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;VerifiableCredential&quot;</span><span class="p">,</span> <span class="s2">&quot;QualityAssessmentCredential&quot;</span><span class="p">],</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>        <span class="s2">&quot;issuer&quot;</span><span class="p">:</span> <span class="s2">&quot;did:repoq:v1&quot;</span><span class="p">,</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>        <span class="s2">&quot;issuanceDate&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="s2">&quot;credentialSubject&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>            <span class="s2">&quot;repository&quot;</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">repo_url</span><span class="p">,</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>            <span class="s2">&quot;commit&quot;</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">commit_sha</span><span class="p">,</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>            <span class="s2">&quot;q_score&quot;</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">q_head</span><span class="p">,</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>            <span class="s2">&quot;delta_q&quot;</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">delta_q</span><span class="p">,</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>            <span class="s2">&quot;verdict&quot;</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">verdict</span><span class="p">,</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>            <span class="s2">&quot;policy_version&quot;</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">policy_version</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>        <span class="p">},</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        <span class="s2">&quot;proof&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>            <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;EcdsaSecp256k1Signature2019&quot;</span><span class="p">,</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>            <span class="s2">&quot;created&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">utcnow</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>            <span class="s2">&quot;proofPurpose&quot;</span><span class="p">:</span> <span class="s2">&quot;assertionMethod&quot;</span><span class="p">,</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>            <span class="s2">&quot;verificationMethod&quot;</span><span class="p">:</span> <span class="s2">&quot;did:repoq:v1#key-1&quot;</span><span class="p">,</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>            <span class="s2">&quot;jws&quot;</span><span class="p">:</span> <span class="n">sign_ecdsa</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">vc_payload</span><span class="p">)</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>        <span class="p">}</span>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>    <span class="p">}</span>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>    <span class="k">return</span> <span class="n">vc</span>
+</span></code></pre></div></p>
+<p><strong>Value</strong>: V09 (Auditability), V03 (Correctness)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented (repoq/core/model.py)<br />
+<strong>Test</strong>: <code>tests/test_vc.py::test_certificate_signature</code></p>
+<hr />
+<h2 id="3-non-functional-requirements-smart-format">3. Non-Functional Requirements (SMART Format)<a class="headerlink" href="#3-non-functional-requirements-smart-format" title="Permanent link">&para;</a></h2>
+<h3 id="31-performance">3.1 Performance<a class="headerlink" href="#31-performance" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-01-analysis-time-speed">NFR-01: Analysis Time (Speed)<a class="headerlink" href="#nfr-01-analysis-time-speed" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: Analysis time SHALL be ≤2 minutes (90<sup>th</sup> percentile) for repositories with &lt;1000 files, and ≤5 minutes for &lt;10,000 files, measured on standard hardware (4-core CPU, 8GB RAM).</p>
+<p><strong>Specific</strong>: Analysis time for repos of varying sizes<br />
+<strong>Measurable</strong>: P90 latency in minutes<br />
+<strong>Agreed</strong>: Validated with DevOps stakeholders<br />
+<strong>Realistic</strong>: Achievable with incremental analysis + caching<br />
+<strong>Time-bound</strong>: Enforced in every release  </p>
+<p><strong>Value</strong>: V05 (Speed)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: 🔄 In Progress (current: ~3 min for 1K files, needs optimization)<br />
+<strong>Test</strong>: <code>tests/performance/test_analysis_time.py::test_p90_latency</code></p>
+<hr />
+<h4 id="nfr-02-pcq-computation-overhead">NFR-02: PCQ Computation Overhead<a class="headerlink" href="#nfr-02-pcq-computation-overhead" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: PCQ min-aggregator SHALL add ≤20% overhead to Q calculation time (measured as: time_with_pcq / time_without_pcq ≤ 1.2).</p>
+<p><strong>Value</strong>: V02 (Gaming Protection), V05 (Speed)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/performance/test_pcq_overhead.py::test_20_percent_overhead</code></p>
+<hr />
+<h3 id="32-correctness-determinism">3.2 Correctness &amp; Determinism<a class="headerlink" href="#32-correctness-determinism" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-03-deterministic-analysis">NFR-03: Deterministic Analysis<a class="headerlink" href="#nfr-03-deterministic-analysis" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: System SHALL produce identical Q scores for identical inputs (same code + policy + RepoQ version) across 100 consecutive runs, with zero variance.</p>
+<p><strong>Value</strong>: V07 (Reliability), V14 (Reproducibility)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented (validated via property-based tests)<br />
+<strong>Test</strong>: <code>tests/test_determinism.py::test_100_runs_identical</code></p>
+<hr />
+<h4 id="nfr-04-monotonicity-guarantee">NFR-04: Monotonicity Guarantee<a class="headerlink" href="#nfr-04-monotonicity-guarantee" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: For any commit sequence S_1 → S_2 → ... → S_n where each transition passes admission predicate, Q(S_i+1) - Q(S_i) ≥ ε SHALL hold for all i ∈ [1, n-1]. Verified via longitudinal study (≥100 commits).</p>
+<p><strong>Value</strong>: V04 (Monotonicity), V03 (Correctness)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented (Theorem B proven, validated empirically)<br />
+<strong>Test</strong>: <code>tests/test_monotonicity.py::test_longitudinal_100_commits</code></p>
+<hr />
+<h3 id="33-reliability">3.3 Reliability<a class="headerlink" href="#33-reliability" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-05-false-negative-rate">NFR-05: False Negative Rate<a class="headerlink" href="#nfr-05-false-negative-rate" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: Gate false negative rate (failing to block quality regression) SHALL be &lt;1%, measured on benchmark dataset of 1000 known-bad commits.</p>
+<p><strong>Value</strong>: V07 (Reliability), V04 (Monotonicity)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned (need benchmark dataset)<br />
+<strong>Test</strong>: <code>tests/test_reliability.py::test_false_negative_rate</code></p>
+<hr />
+<h4 id="nfr-06-false-positive-rate">NFR-06: False Positive Rate<a class="headerlink" href="#nfr-06-false-positive-rate" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: Gate false positive rate (blocking legitimate improvement) SHALL be &lt;5%, measured on benchmark dataset of 1000 known-good commits.</p>
+<p><strong>Value</strong>: V07 (Reliability), V06 (Fairness)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned (need benchmark dataset)<br />
+<strong>Test</strong>: <code>tests/test_reliability.py::test_false_positive_rate</code></p>
+<hr />
+<h3 id="34-usability">3.4 Usability<a class="headerlink" href="#34-usability" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-07-time-to-comprehension">NFR-07: Time to Comprehension<a class="headerlink" href="#nfr-07-time-to-comprehension" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: Developers SHALL be able to identify root cause of gate failure in &lt;30 seconds (median), measured via usability study with ≥20 participants (eye-tracking or self-reported).</p>
+<p><strong>Value</strong>: V01 (Transparency), V08 (Actionability)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned (need user study)<br />
+<strong>Test</strong>: User study protocol in <code>docs/vdad/user-study-protocol.md</code></p>
+<hr />
+<h4 id="nfr-08-developer-satisfaction">NFR-08: Developer Satisfaction<a class="headerlink" href="#nfr-08-developer-satisfaction" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: Developer satisfaction survey SHALL achieve ≥80% agreement on statement: "RepoQ gate output is clear and actionable" (5-point Likert scale, 4-5 = agree).</p>
+<p><strong>Value</strong>: V01 (Transparency), V08 (Actionability), V12 (Learning)<br />
+<strong>Priority</strong>: P1 (Production)<br />
+<strong>Status</strong>: ⏸️ Planned (survey after 6-month deployment)<br />
+<strong>Test</strong>: Survey results in <code>docs/vdad/satisfaction-survey-results.md</code></p>
+<hr />
+<h3 id="35-security-privacy">3.5 Security &amp; Privacy<a class="headerlink" href="#35-security-privacy" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-09-zero-network-calls">NFR-09: Zero Network Calls<a class="headerlink" href="#nfr-09-zero-network-calls" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: Core analysis (levels 0-1) SHALL make zero outbound network connections, verified via network traffic monitoring during analysis (tcpdump or Wireshark).</p>
+<p><strong>Value</strong>: V16 (Privacy), V07 (Reliability)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented<br />
+<strong>Test</strong>: <code>tests/test_privacy.py::test_network_audit</code></p>
+<hr />
+<h3 id="36-maintainability">3.6 Maintainability<a class="headerlink" href="#36-maintainability" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-10-test-coverage">NFR-10: Test Coverage<a class="headerlink" href="#nfr-10-test-coverage" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: Code coverage SHALL be ≥80% line coverage and ≥70% branch coverage, measured via <code>coverage.py</code>, enforced in CI.</p>
+<p><strong>Value</strong>: V03 (Correctness), V07 (Reliability)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: 🔄 In Progress (current: 64%, target: 80%)<br />
+<strong>Test</strong>: CI checks in <code>.github/workflows/ci.yml</code></p>
+<hr />
+<h3 id="37-scalability">3.7 Scalability<a class="headerlink" href="#37-scalability" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-11-large-repository-support">NFR-11: Large Repository Support<a class="headerlink" href="#nfr-11-large-repository-support" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: System SHALL successfully analyze repositories up to 100,000 files within 30 minutes (without incremental analysis), and within 5 minutes (with incremental, assuming 1% churn).</p>
+<p><strong>Value</strong>: V05 (Speed), V23 (Flexibility, Tier 3)<br />
+<strong>Priority</strong>: P2 (Advanced)<br />
+<strong>Status</strong>: ⏸️ Planned<br />
+<strong>Test</strong>: <code>tests/performance/test_large_repo.py::test_100k_files</code></p>
+<hr />
+<h3 id="38-compatibility">3.8 Compatibility<a class="headerlink" href="#38-compatibility" title="Permanent link">&para;</a></h3>
+<h4 id="nfr-12-python-version-support">NFR-12: Python Version Support<a class="headerlink" href="#nfr-12-python-version-support" title="Permanent link">&para;</a></h4>
+<p><strong>Requirement</strong>: RepoQ SHALL support Python 3.9+ (3.9, 3.10, 3.11, 3.12), verified via CI matrix testing on all versions.</p>
+<p><strong>Value</strong>: V13 (Simplicity), V19 (Openness)<br />
+<strong>Priority</strong>: P0 (MVP)<br />
+<strong>Status</strong>: ✅ Implemented (CI matrix covers 3.9-3.12)<br />
+<strong>Test</strong>: <code>.github/workflows/ci.yml</code> (matrix: [3.9, 3.10, 3.11, 3.12])</p>
+<hr />
+<h2 id="4-ethical-value-requirements-evr-updated">4. Ethical Value Requirements (EVR) — Updated<a class="headerlink" href="#4-ethical-value-requirements-evr-updated" title="Permanent link">&para;</a></h2>
+<h3 id="evr-01-transparency-updated">EVR-01: Transparency (Updated)<a class="headerlink" href="#evr-01-transparency-updated" title="Permanent link">&para;</a></h3>
+<p><strong>IEEE 7000 Mapping</strong>: Transparency, Explainability</p>
+<p><strong>Requirement</strong>: System SHALL provide human-readable explanation for every gate rejection, including:
+1. Overall verdict: PASS/FAIL with clear reason
+2. ΔQ breakdown: Per-metric contributions (complexity, hotspots, TODOs, coverage)
+3. File-level analysis: Top 10 files by |ΔQ_file| with individual metrics
+4. Hard constraint status: Tests, TODOs, hotspots (✓/✗ for each)
+5. PCE witness (if FAIL): "Fix these k files: [...]" with estimated ΔQ improvement
+6. Certificate link (if PASS): URL or ID of VC certificate</p>
+<p><strong>Acceptance Criteria</strong>:
+- <strong>AC-01.1</strong>: Developer comprehension survey: ≥90% can identify root cause from output
+- <strong>AC-01.2</strong>: Time to comprehension: Median &lt;30 seconds (eye-tracking or self-report)
+- <strong>AC-01.3</strong>: All gate failures include PCE witness (100% coverage)
+- <strong>AC-01.4</strong>: PR comment format validation: Markdown table with ≥5 columns (metric, base, head, delta, status)</p>
+<p><strong>Supporting Requirements</strong>: FR-01, FR-02, FR-03, NFR-07, NFR-08</p>
+<p><strong>Verification Method</strong>: Usability study (n≥20), Survey, Automated formatting checks</p>
+<hr />
+<h3 id="evr-02-gaming-protection-updated">EVR-02: Gaming Protection (Updated)<a class="headerlink" href="#evr-02-gaming-protection-updated" title="Permanent link">&para;</a></h3>
+<p><strong>IEEE 7000 Mapping</strong>: Accountability, Fairness</p>
+<p><strong>Requirement</strong>: System SHALL detect and block attempts to artificially inflate Q score through:
+1. <strong>Metric compensation</strong>: One high score masking another low score → PCQ min-aggregator prevents (all modules ≥τ)
+2. <strong>Trivial tests</strong>: <code>assert True</code> inflating coverage without real validation → AI agent flags anomalous patterns (Phase 5)
+3. <strong>Syntactic manipulation</strong>: Whitespace, comments, formatting changes → Any2Math normalization eliminates</p>
+<p><strong>Acceptance Criteria</strong>:
+- <strong>AC-02.1</strong>: PCQ prevents compensation: In test cases with one bad module (u_i &lt; τ) and high average Q, gate SHALL FAIL
+- <strong>AC-02.2</strong>: False positive rate for gaming detection: &lt;10% (don't block legitimate code)
+- <strong>AC-02.3</strong>: True positive rate for gaming detection: ≥80% (catch most gaming attempts in controlled experiments)
+- <strong>AC-02.4</strong>: Any2Math normalization: Identical Q for semantically equivalent code (100 test pairs)</p>
+<p><strong>Supporting Requirements</strong>: FR-04, FR-05, FR-06, NFR-02</p>
+<p><strong>Verification Method</strong>: Unit tests (compensation scenarios), Controlled gaming experiments, Normalization test suite</p>
+<hr />
+<h3 id="evr-03-fairness-updated">EVR-03: Fairness (Updated)<a class="headerlink" href="#evr-03-fairness-updated" title="Permanent link">&para;</a></h3>
+<p><strong>IEEE 7000 Mapping</strong>: Fairness, Non-discrimination</p>
+<p><strong>Requirement</strong>: System SHALL NOT penalize developers for:
+1. <strong>Necessary complexity</strong>: Algorithms, state machines, complex business logic → Inline exemptions allowed (<code># repoq: ignore-complexity algorithm</code>)
+2. <strong>Legitimate refactoring</strong>: Temporary churn increase during refactoring → PCE allows multi-step improvement path
+3. <strong>Domain-specific patterns</strong>: Frontend complexity differs from backend → Configurable weights per module/layer
+4. <strong>Legacy code improvement</strong>: Can't fix all debt in one PR → Exemptions with expiry dates, incremental standards</p>
+<p><strong>Acceptance Criteria</strong>:
+- <strong>AC-03.1</strong>: Exemption coverage: ≥90% of algorithm-heavy functions can use inline exemptions without abuse
+- <strong>AC-03.2</strong>: PCE multi-step: For legacy modules with Q &lt; τ, PCE SHALL identify k-file subset for incremental improvement
+- <strong>AC-03.3</strong>: Fairness survey: ≥80% developers agree "Gate is fair" (5-point Likert, 4-5 = agree)
+- <strong>AC-03.4</strong>: No false positives on well-tested complex code: Test suite with 50+ algorithm implementations, zero gate blocks</p>
+<p><strong>Supporting Requirements</strong>: FR-11, FR-12, FR-13, NFR-06</p>
+<p><strong>Verification Method</strong>: Exemption abuse analysis, Developer survey, Algorithm test suite, Case studies</p>
+<hr />
+<h3 id="evr-04-privacy-updated">EVR-04: Privacy (Updated)<a class="headerlink" href="#evr-04-privacy-updated" title="Permanent link">&para;</a></h3>
+<p><strong>IEEE 7000 Mapping</strong>: Privacy, Data Protection</p>
+<p><strong>Requirement</strong>: System SHALL NOT transmit repository contents to external services without explicit user consent:
+1. <strong>Core analysis local</strong>: All AST parsing, metric calculation, git log analysis local (zero network calls)
+2. <strong>RDF storage local</strong>: RDFLib in-memory or Oxigraph embedded (no external DB)
+3. <strong>Optional AI agent</strong>: BAML AI agent (Phase 5) requires:
+   - Explicit opt-in: <code>--enable-ai</code> flag OR config <code>ai_agent.enabled: true</code>
+   - Consent acknowledgment: "I understand code snippets will be sent to {provider}"
+   - API key in env var (not committed to repo): <code>REPOQ_AI_API_KEY</code>
+4. <strong>No telemetry</strong>: No usage data sent to maintainers without opt-in</p>
+<p><strong>Acceptance Criteria</strong>:
+- <strong>AC-04.1</strong>: Network audit: Zero outbound connections during core analysis (tcpdump monitoring)
+- <strong>AC-04.2</strong>: AI opt-in enforcement: Attempting <code>--enable-ai</code> without API key SHALL fail with clear error
+- <strong>AC-04.3</strong>: Compliance validation: GDPR, SOC 2, ISO 27001 compatible (legal review)
+- <strong>AC-04.4</strong>: Data retention: No persistent storage of code beyond local cache (auto-expired after 30 days)</p>
+<p><strong>Supporting Requirements</strong>: FR-14, FR-15, NFR-09</p>
+<p><strong>Verification Method</strong>: Network traffic analysis, Legal compliance audit, Opt-in validation tests</p>
+<hr />
+<h2 id="5-requirements-traceability-matrix">5. Requirements Traceability Matrix<a class="headerlink" href="#5-requirements-traceability-matrix" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Value</th>
+<th>Decision</th>
+<th>Functional Req</th>
+<th>NFR</th>
+<th>EVR</th>
+<th>Test</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>V01 Transparency</strong></td>
+<td>SD-01</td>
+<td>FR-01, FR-02, FR-03</td>
+<td>NFR-07, NFR-08</td>
+<td>EVR-01</td>
+<td>test_detailed_output, test_pce_witness, test_pr_comment, user_study</td>
+<td>✅ FR-01 Done<br>🔄 FR-02/03 In Progress</td>
+</tr>
+<tr>
+<td><strong>V02 Gaming Protection</strong></td>
+<td>SD-02</td>
+<td>FR-04, FR-05</td>
+<td>NFR-02</td>
+<td>EVR-02</td>
+<td>test_min_aggregator, test_pcq_admission, test_gaming_scenarios</td>
+<td>🔄 In Progress</td>
+</tr>
+<tr>
+<td><strong>V03 Correctness</strong></td>
+<td>SD-03</td>
+<td>FR-06, FR-07</td>
+<td>NFR-03, NFR-04</td>
+<td>EVR-02 (partial)</td>
+<td>test_normalization_deterministic, test_confluence_proof, test_monotonicity</td>
+<td>⏸️ Planned (Any2Math)</td>
+</tr>
+<tr>
+<td><strong>V04 Monotonicity</strong></td>
+<td>SD-04</td>
+<td>FR-08, FR-09</td>
+<td>NFR-04</td>
+<td>-</td>
+<td>test_admission_predicate, test_longitudinal_100_commits</td>
+<td>✅ FR-08 Done<br>⏸️ FR-09 Planned</td>
+</tr>
+<tr>
+<td><strong>V05 Speed</strong></td>
+<td>SD-05</td>
+<td>FR-10</td>
+<td>NFR-01, NFR-11</td>
+<td>-</td>
+<td>test_cache_hit_rate, test_p90_latency, test_large_repo</td>
+<td>⏸️ Planned</td>
+</tr>
+<tr>
+<td><strong>V06 Fairness</strong></td>
+<td>SD-06</td>
+<td>FR-11, FR-12, FR-13</td>
+<td>NFR-06</td>
+<td>EVR-03</td>
+<td>test_witness_generation, test_inline_ignore, test_config_exemptions, fairness_survey</td>
+<td>🔄 FR-11 In Progress<br>⏸️ FR-12/13 Planned</td>
+</tr>
+<tr>
+<td><strong>V07 Reliability</strong></td>
+<td>SD-03, SD-07</td>
+<td>FR-06, FR-14</td>
+<td>NFR-03, NFR-05, NFR-06, NFR-09</td>
+<td>-</td>
+<td>test_determinism, test_false_negative_rate, test_network_audit</td>
+<td>✅ FR-14, NFR-03, NFR-09 Done<br>⏸️ Others Planned</td>
+</tr>
+<tr>
+<td><strong>V08 Actionability</strong></td>
+<td>SD-01, SD-06</td>
+<td>FR-01, FR-02, FR-11</td>
+<td>NFR-07</td>
+<td>EVR-01</td>
+<td>test_pce_witness, test_detailed_output, user_study</td>
+<td>✅ FR-01 Done<br>🔄 FR-02/11 In Progress</td>
+</tr>
+<tr>
+<td><strong>V09 Auditability</strong></td>
+<td>-</td>
+<td>FR-19</td>
+<td>-</td>
+<td>-</td>
+<td>test_certificate_signature</td>
+<td>✅ Done</td>
+</tr>
+<tr>
+<td><strong>V11 Safety</strong></td>
+<td>SD-08</td>
+<td>FR-16, FR-17</td>
+<td>NFR-10</td>
+<td>-</td>
+<td>test_guard_violation, test_level1_dogfooding</td>
+<td>🔄 FR-16 In Progress<br>⏸️ FR-17 Planned</td>
+</tr>
+<tr>
+<td><strong>V16 Privacy</strong></td>
+<td>SD-07</td>
+<td>FR-14, FR-15</td>
+<td>NFR-09</td>
+<td>EVR-04</td>
+<td>test_no_network_calls, test_opt_in_required</td>
+<td>✅ FR-14, NFR-09 Done<br>⏸️ FR-15 Planned</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Coverage Summary</strong>:
+- <strong>Values</strong>: 11/27 explicitly traced (all Tier 1 + 3 Tier 2)
+- <strong>Requirements</strong>: 31 total (19 FR + 12 NFR)
+  - ✅ Implemented: 8 (26%)
+  - 🔄 In Progress: 6 (19%)
+  - ⏸️ Planned: 17 (55%)
+- <strong>EVRs</strong>: 4/4 fully detailed with acceptance criteria
+- <strong>Tests</strong>: 25+ test cases identified</p>
+<hr />
+<h2 id="6-requirements-validation-checklist">6. Requirements Validation Checklist<a class="headerlink" href="#6-requirements-validation-checklist" title="Permanent link">&para;</a></h2>
+<h3 id="61-completeness">6.1 Completeness<a class="headerlink" href="#61-completeness" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ All 8 Tier 1 values have ≥1 strategic decision</li>
+<li>✅ All strategic decisions have ≥1 FR or NFR</li>
+<li>✅ All EVRs have ≥2 acceptance criteria</li>
+<li>✅ All requirements traceable to value</li>
+</ul>
+<h3 id="62-smart-criteria-nfrs">6.2 SMART Criteria (NFRs)<a class="headerlink" href="#62-smart-criteria-nfrs" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ <strong>Specific</strong>: All NFRs define exact metrics (e.g., ≤2 min, ≥80% coverage)</li>
+<li>✅ <strong>Measurable</strong>: All NFRs have quantitative acceptance criteria</li>
+<li>✅ <strong>Agreed</strong>: Validated against stakeholder needs (Phase 1-2)</li>
+<li>✅ <strong>Realistic</strong>: Achievable with planned architecture (Phase 4)</li>
+<li>✅ <strong>Time-bound</strong>: Enforced in CI or release milestones</li>
+</ul>
+<h3 id="63-consistency">6.3 Consistency<a class="headerlink" href="#63-consistency" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ No conflicting requirements (e.g., speed vs correctness balanced via tiers)</li>
+<li>✅ EVRs align with IEEE 7000 (transparency, fairness, privacy, accountability)</li>
+<li>✅ Requirements align with formal guarantees (14 theorems)</li>
+</ul>
+<h3 id="64-testability">6.4 Testability<a class="headerlink" href="#64-testability" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ All requirements have identified test cases</li>
+<li>🔄 Benchmark datasets needed (NFR-05, NFR-06) — In Progress</li>
+<li>🔄 User studies needed (NFR-07, NFR-08) — Planned for post-MVP</li>
+</ul>
+<hr />
+<h2 id="7-success-criteria-vdad-phase-3">7. Success Criteria (VDAD Phase 3)<a class="headerlink" href="#7-success-criteria-vdad-phase-3" title="Permanent link">&para;</a></h2>
+<ul>
+<li>✅ <strong>Strategic Decisions</strong>: 8 decisions (one per Tier 1 value)</li>
+<li>✅ <strong>Functional Requirements</strong>: 19 FR (covering all Tier 1 values)</li>
+<li>✅ <strong>Non-Functional Requirements</strong>: 12 NFR (all SMART-compliant)</li>
+<li>✅ <strong>EVRs</strong>: 4 EVRs updated with ≥2 acceptance criteria each</li>
+<li>✅ <strong>Traceability Matrix</strong>: Full chain (Value → Decision → Requirement → Test)</li>
+<li>✅ <strong>Requirements Coverage</strong>: 100% Tier 1 values → ≥1 requirement</li>
+<li>⏭️ <strong>Next</strong>: Phase 4 (Architecture Design) — Design system satisfying all 31 requirements</li>
+</ul>
+<hr />
+<h2 id="8-ai-copilot-role-phase-3-retrospective">8. AI Copilot Role (Phase 3 Retrospective)<a class="headerlink" href="#8-ai-copilot-role-phase-3-retrospective" title="Permanent link">&para;</a></h2>
+<p><strong>What AI Did</strong>:
+1. Extracted 8 Strategic Decisions from Tier 1 values
+2. Designed ADR-style decision records (Context, Decision, Rationale, Alternatives, Consequences)
+3. Generated 19 FR and 12 NFR from decisions
+4. Formulated SMART NFRs (Specific, Measurable, Agreed, Realistic, Time-bound)
+5. Updated 4 EVRs with detailed acceptance criteria (2-4 criteria each)
+6. Created Requirements Traceability Matrix (Value → Decision → Requirement → Test)
+7. Validated requirements against Phase 2 Value Register (100% Tier 1 coverage)</p>
+<p><strong>What AI Should Do Next (Phase 4)</strong>:
+1. Design high-level architecture satisfying all 31 requirements
+2. Create C4 diagrams (Context, Container, Component) showing how components fulfill requirements
+3. Document NFR realization strategies (e.g., caching for NFR-01 Speed)
+4. Generate ADRs for architectural decisions (BAML vs custom AI, RDFLib vs Oxigraph, etc.)
+5. Design BAML AI agent spec (functions, boundaries, rollout plan)</p>
+<hr />
+<h2 id="9-references">9. References<a class="headerlink" href="#9-references" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Stefan Kapferer et al. (2024). <em>Value-Driven Analysis and Design (VDAD)</em>. <a href="https://ethical-se.github.io">ethical-se.github.io</a> — Steps 5-6: Strategic Decisions &amp; Requirements</li>
+<li>IEEE 7000-2021. <em>Standard for Addressing Ethical Concerns during System Design</em>. — EVR framework</li>
+<li>Karl Wiegers &amp; Joy Beatty (2013). <em>Software Requirements (3<sup>rd</sup> ed.)</em>. Microsoft Press — SMART requirements, traceability</li>
+<li>Alistair Cockburn (2001). <em>Writing Effective Use Cases</em>. Addison-Wesley — Acceptance criteria</li>
+<li>Michael Keeling (2017). <em>Design It!</em>. Pragmatic Bookshelf — ADR format, decision rationale</li>
+<li>RepoQ Project (2025). <em>Phase 2: Value Register</em>. <code>docs/vdad/phase2-value-register.md</code> — 27 values, prioritization</li>
+<li>RepoQ Project (2025). <em>Formal Foundations</em>. <code>docs/development/formal-foundations-complete.md</code> — 14 theorems grounding requirements</li>
+</ol>
+<hr />
+<p><strong>Document Status</strong>: ✅ COMPLETE<br />
+<strong>Review</strong>: Pending (validate requirements with stakeholders via workshops)<br />
+<strong>Next Steps</strong>: Create <code>phase4-architecture.md</code> with component design, C4 diagrams, ADRs, NFR realization.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025 RepoQ Contributors
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Repo-Q/repoq" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://pypi.org/project/repoq/" target="_blank" rel="noopener" title="pypi.org" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.8 200.5c-7.7-30.9-22.3-54.2-53.4-54.2h-40.1v47.4c0 36.8-31.2 67.8-66.8 67.8H172.7c-29.2 0-53.4 25-53.4 54.3v101.8c0 29 25.2 46 53.4 54.3 33.8 9.9 66.3 11.7 106.8 0 26.9-7.8 53.4-23.5 53.4-54.3v-40.7H226.2v-13.6h160.2c31.1 0 42.6-21.7 53.4-54.2 11.2-33.5 10.7-65.7 0-108.6M286.2 444.7a20.4 20.4 0 1 1 0-40.7 20.4 20.4 0 1 1 0 40.7M167.8 248.1h106.8c29.7 0 53.4-24.5 53.4-54.3V91.9c0-29-24.4-50.7-53.4-55.6-35.8-5.9-74.7-5.6-106.8.1-45.2 8-53.4 24.7-53.4 55.6v40.7h106.9v13.6h-147c-31.1 0-58.3 18.7-66.8 54.2-9.8 40.7-10.2 66.1 0 108.6 7.6 31.6 25.7 54.2 56.8 54.2H101v-48.8c0-35.3 30.5-66.4 66.8-66.4m-6.6-183.4a20.4 20.4 0 1 1 0 40.8 20.4 20.4 0 1 1 0-40.8"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "search.highlight", "search.share", "header.autohide", "content.code.copy", "content.code.annotate", "content.action.edit", "content.action.view"], "search": "../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"default": "stable", "provider": "mike"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
