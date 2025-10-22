@@ -5,6 +5,55 @@ All notable changes to RepoQ will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-alpha.3] - 2025-01-15
+
+### Added - Phase 5.6: VDAD as RDF (POC) ✅
+
+**New Ontology: `.repoq/ontologies/vdad.ttl`**
+- VDAD meta-ontology (400+ lines) for 5 VDAD phases
+- Phase 1: `Stakeholder` (Developer, TeamLead, DevOps, Researcher), `BoundedContext`
+- Phase 2: `Value` (Tier1Value, Tier2Value)
+- Phase 3: `Requirement` (FunctionalRequirement, NonFunctionalRequirement)
+- Phase 4: `ArchitectureDecisionRecord`, `Theorem`
+- Phase 5: `MigrationPhase`, `Deliverable`
+- Properties: `satisfiedBy`, `implementedBy`, `stakeholder`, `priority` (P0/P1/P2)
+- Traceability chains: Value → Requirement → ADR → MigrationPhase
+
+**New Module: `scripts/extract_vdad_rdf.py`**
+- `parse_phase2_values_markdown()`: Extract values and stakeholders from Markdown
+- `generate_phase2_rdf()`: Generate RDF graph from structured data
+- `extract_phase2_values()`: Full extraction pipeline (Markdown → TTL)
+- Regex-based parsing for values (##V\d+), stakeholders (### Name (Role))
+- Output: `.repoq/vdad/phase2-values.ttl`
+
+**Tests: `tests/vdad/test_vdad_extraction.py`** (13/14 passing)
+- `TestMarkdownParsing`: Parse values, stakeholders, metadata
+- `TestRDFGeneration`: Generate correct RDF structure
+- `TestEndToEnd`: Full extraction pipeline
+- `TestGateVDADExtraction`: Deterministic output, no data loss, valid references
+
+**Architecture Decision: `.repoq/` Unification**
+- All RDF artifacts in `.repoq/` (ontologies, shapes, vdad, story)
+- Replaced `.vdad/` with `.repoq/ontologies/vdad.ttl` + `.repoq/vdad/` for data
+- Updated `.gitignore`: Include `.repoq/ontologies/*.ttl`, `.repoq/shapes/*.ttl`
+
+**Traceability:**
+- V07: Observability (VDAD structure as queryable RDF)
+- FR-10: Reproducible analysis (VDAD versioning + checksums)
+- ADR-013: Incremental migration (Phase 2 POC first)
+
+**Gates:**
+- ✅ Soundness: Valid RDF output (rdflib parsing)
+- ✅ Deterministic: Same Markdown → same TTL (tested)
+- ✅ No data loss: All values/stakeholders preserved
+- ✅ Valid references: Value→stakeholder links verified
+
+**Statistics:**
+- VDAD ontology: 400+ lines TTL
+- Extractor: 250+ lines Python
+- Tests: 14 tests (13 passed, 1 skipped)
+- Commit: `49d6909`
+
 ## [2.0.0-alpha.2] - 2025-01-15
 
 ### Added - Phase 1.5: Story Provenance (POC) ✅
