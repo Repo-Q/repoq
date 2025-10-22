@@ -132,6 +132,7 @@ def export_ttl(
     field33_context: Optional[str] = None,
     enrich_meta: bool = True,
     enrich_test_coverage: bool = False,
+    enrich_trs_rules: bool = False,
     coverage_path: str = "coverage.json",
 ) -> None:
     """Export Project to RDF Turtle format.
@@ -145,6 +146,7 @@ def export_ttl(
         field33_context: Optional Field33 context file
         enrich_meta: If True, enrich with meta-loop ontology triples
         enrich_test_coverage: If True, enrich with test coverage from pytest
+        enrich_trs_rules: If True, enrich with TRS rules from normalize/
         coverage_path: Path to coverage.json file (default: "coverage.json")
 
     Raises:
@@ -186,6 +188,16 @@ def export_ttl(
             except Exception as e:
                 logger.warning(f"Failed to enrich with test coverage: {e}")
 
+        # Enrich with TRS rules
+        if enrich_trs_rules:
+            from .trs_rules import enrich_graph_with_trs_rules
+
+            try:
+                enrich_graph_with_trs_rules(g, project.id)
+                logger.info("Successfully enriched RDF with TRS rules")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with TRS rules: {e}")
+
         g.serialize(destination=ttl_path, format="turtle")
         logger.info(f"Successfully exported canonical RDF Turtle to {ttl_path}")
     except OSError as e:
@@ -203,6 +215,7 @@ def validate_shapes(
     field33_context: Optional[str] = None,
     enrich_meta: bool = True,
     enrich_test_coverage: bool = False,
+    enrich_trs_rules: bool = False,
     coverage_path: str = "coverage.json",
 ) -> dict:
     """Validate Project RDF data against SHACL shapes.
@@ -217,6 +230,7 @@ def validate_shapes(
         field33_context: Optional Field33 context file
         enrich_meta: If True, enrich with meta-loop ontology triples before validation
         enrich_test_coverage: If True, enrich with test coverage from pytest
+        enrich_trs_rules: If True, enrich with TRS rules from normalize/
         coverage_path: Path to coverage.json file (default: "coverage.json")
 
     Returns:
@@ -270,6 +284,16 @@ def validate_shapes(
                 logger.info("Successfully enriched RDF with test coverage for validation")
             except Exception as e:
                 logger.warning(f"Failed to enrich with test coverage: {e}")
+
+        # Enrich with TRS rules
+        if enrich_trs_rules:
+            from .trs_rules import enrich_graph_with_trs_rules
+
+            try:
+                enrich_graph_with_trs_rules(data_graph, project.id)
+                logger.info("Successfully enriched RDF with TRS rules for validation")
+            except Exception as e:
+                logger.warning(f"Failed to enrich with TRS rules: {e}")
 
         shapes_graph = Graph()
         import os
