@@ -565,11 +565,11 @@ class StructureAnalyzer(Analyzer):
 
     def _enrich_with_ontological_analysis(self, project: Project, repo_path: Path) -> None:
         """Enrich project with ontological concept extraction.
-        
+
         Args:
             project: Project model to enrich with ontological insights
             repo_path: Repository root path
-            
+
         Note:
             Mutates project.ontological_analysis in-place
         """

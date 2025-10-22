@@ -48,6 +48,102 @@ Analyze git repositories for code quality metrics, generate reports in multiple 
 )
 
 
+# ==================== Common Helper Functions ====================
+# Extracted to reduce complexity and duplication across commands
+
+
+def _load_jsonld_analysis(path: str | Path) -> dict[str, Any]:
+    """Load and parse JSON-LD analysis file.
+
+    Args:
+        path: Path to JSON-LD file
+
+    Returns:
+        Parsed JSON-LD data as dictionary
+
+    Raises:
+        FileNotFoundError: If file doesn't exist
+        json.JSONDecodeError: If file is not valid JSON
+    """
+    analysis_path = Path(path).resolve()
+    
+    if not analysis_path.exists():
+        raise FileNotFoundError(f"Analysis file not found: {path}")
+    
+    try:
+        with open(analysis_path, "r", encoding="utf-8") as fh:
+            return json.load(fh)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"Invalid JSON in {path}: {e}")
+
+
+def _validate_file_exists(path: str | Path, file_type: str = "File") -> Path:
+    """Validate that a file exists and return resolved path.
+
+    Args:
+        path: Path to validate
+        file_type: Human-readable file type for error messages
+
+    Returns:
+        Resolved absolute Path
+
+    Raises:
+        typer.Exit: If file doesn't exist (exit code 2)
+    """
+    from rich.console import Console
+    
+    console = Console()
+    resolved = Path(path).resolve()
+    
+    if not resolved.exists():
+        console.print(f"[bold red]❌ {file_type} not found: {path}[/bold red]")
+        raise typer.Exit(2)
+    
+    return resolved
+
+
+def _setup_output_paths(
+    output: str | None = None,
+    md: str | None = None,
+    default_output: str = "quality.jsonld",
+    default_md: str = "quality.md",
+) -> tuple[Path, Path]:
+    """Setup output file paths with defaults.
+
+    Args:
+        output: User-specified JSON-LD output path (optional)
+        md: User-specified Markdown output path (optional)
+        default_output: Default JSON-LD filename
+        default_md: Default Markdown filename
+
+    Returns:
+        Tuple of (jsonld_path, markdown_path)
+    """
+    output_path = Path(output).resolve() if output else Path(default_output)
+    md_path = Path(md).resolve() if md else Path(default_md)
+    
+    return output_path, md_path
+
+
+def _format_error(msg: str, hint: str | None = None) -> None:
+    """Format and print error message with optional hint.
+
+    Args:
+        msg: Main error message
+        hint: Optional hint/suggestion for user
+    """
+    from rich.console import Console
+    
+    console = Console()
+    console.print(f"[bold red]❌ {msg}[/bold red]")
+    
+    if hint:
+        console.print(f"\n[yellow]💡 Hint: {hint}[/yellow]")
+
+
+# ==================== End of Helper Functions ====================
+
+
 def _infer_project_id_name(path_or_url: str) -> tuple[str, str]:
     """Infer project ID and name from repository path or URL.
 
@@ -1310,13 +1406,8 @@ def refactor_plan(
     console = Console()
 
     try:
-        analysis_path = Path(analysis).resolve()
-        if not analysis_path.exists():
-            console.print(f"[bold red]❌ Analysis file not found: {analysis}[/bold red]")
-            console.print(
-                "\n[yellow]💡 Hint: Run 'repoq analyze' first to generate analysis data[/yellow]"
-            )
-            raise typer.Exit(2)
+        # Validate analysis file exists (using helper)
+        analysis_path = _validate_file_exists(analysis, "Analysis file")
 
         console.print(f"[bold]🔧 Generating refactoring plan from {analysis_path.name}[/bold]")
         console.print()
@@ -1335,85 +1426,109 @@ def refactor_plan(
             console.print(f"Current Q-score: {plan.baseline_q:.2f}")
             raise typer.Exit(0)
 
-        # Format output
-        if format_type == "markdown":
-            report = plan.to_markdown()
-
-            if output:
-                output_path = Path(output).resolve()
-                output_path.write_text(report, encoding="utf-8")
-                console.print(f"[green]📄 Refactoring plan saved to {output_path}[/green]")
-            else:
-                console.print(Markdown(report))
-
-        elif format_type == "json":
-            import json
-
-            json_data = {
-                "baseline_q": plan.baseline_q,
-                "projected_q": plan.projected_q,
-                "total_delta_q": plan.total_delta_q,
-                "tasks": [task.to_dict() for task in plan.tasks],
-            }
-
-            if output:
-                output_path = Path(output).resolve()
-                output_path.write_text(json.dumps(json_data, indent=2), encoding="utf-8")
-                console.print(f"[green]📄 Refactoring plan saved to {output_path}[/green]")
-            else:
-                console.print_json(data=json_data)
-
-        elif format_type == "github":
-            import json
-
-            github_issues = [task.to_github_issue() for task in plan.tasks]
-
-            if output:
-                output_path = Path(output).resolve()
-                output_path.write_text(json.dumps(github_issues, indent=2), encoding="utf-8")
-                console.print(f"[green]📄 GitHub issues saved to {output_path}[/green]")
-                console.print("\n[yellow]💡 Use gh CLI to create issues:[/yellow]")
-                console.print(f"  cat {output_path} | jq -c '.[]' | while read issue; do")
-                console.print('    gh issue create --body "$(echo $issue | jq -r .body)" \\')
-                console.print('      --title "$(echo $issue | jq -r .title)" \\')
-                console.print('      --label "$(echo $issue | jq -r \'.labels | join(",")\'); done')
-            else:
-                console.print_json(data=github_issues)
-
-        else:
-            console.print(f"[bold red]❌ Unknown format: {format_type}[/bold red]")
-            console.print("[yellow]Supported formats: markdown, json, github[/yellow]")
-            raise typer.Exit(2)
-
-        # Print summary
-        console.print()
-        console.print("[bold]📊 Summary:[/bold]")
-        console.print(f"  • Tasks generated: {len(plan.tasks)}")
-        console.print(f"  • Total ΔQ: +{plan.total_delta_q:.1f}")
-        console.print(f"  • Current Q-score: {plan.baseline_q:.2f}")
-        console.print(f"  • Projected Q-score: {plan.projected_q:.2f}")
-
-        # Priority breakdown
-        priority_counts = {}
-        for task in plan.tasks:
-            priority_counts[task.priority] = priority_counts.get(task.priority, 0) + 1
-
-        if priority_counts:
-            console.print("\n[bold]🎯 Priority breakdown:[/bold]")
-            for priority in ["critical", "high", "medium", "low"]:
-                count = priority_counts.get(priority, 0)
-                if count > 0:
-                    emoji = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}
-                    console.print(f"  {emoji[priority]} {priority.capitalize()}: {count}")
-
-        raise typer.Exit(0)
+        # Format output based on type
+        _handle_refactor_plan_output(plan, format_type, output, console)
 
     except typer.Exit:
         raise
+    except FileNotFoundError:
+        _format_error(
+            f"Analysis file not found: {analysis}",
+            "Run 'repoq analyze' first to generate analysis data"
+        )
+        raise typer.Exit(2)
     except Exception as e:
-        console.print(f"[bold red]❌ Failed to generate refactoring plan: {e}[/bold red]")
+        _format_error(f"Failed to generate refactoring plan: {e}")
         logger.exception("Refactor-plan command failed")
         raise typer.Exit(2)
+
+
+def _handle_refactor_plan_output(
+    plan,
+    format_type: str,
+    output: str | None,
+    console,
+) -> None:
+    """Handle output formatting and file writing for refactor-plan command.
+    
+    Args:
+        plan: RefactoringPlan object
+        format_type: Output format (markdown, json, github)
+        output: Output file path (optional)
+        console: Rich Console for printing
+    """
+    from rich.markdown import Markdown
+    
+    if format_type == "markdown":
+        report = plan.to_markdown()
+
+        if output:
+            output_path = Path(output).resolve()
+            output_path.write_text(report, encoding="utf-8")
+            console.print(f"[green]📄 Refactoring plan saved to {output_path}[/green]")
+        else:
+            console.print(Markdown(report))
+
+    elif format_type == "json":
+        import json
+
+        json_data = {
+            "baseline_q": plan.baseline_q,
+            "projected_q": plan.projected_q,
+            "total_delta_q": plan.total_delta_q,
+            "tasks": [task.to_dict() for task in plan.tasks],
+        }
+
+        if output:
+            output_path = Path(output).resolve()
+            output_path.write_text(json.dumps(json_data, indent=2), encoding="utf-8")
+            console.print(f"[green]📄 Refactoring plan saved to {output_path}[/green]")
+        else:
+            console.print_json(data=json_data)
+
+    elif format_type == "github":
+        import json
+
+        github_issues = [task.to_github_issue() for task in plan.tasks]
+
+        if output:
+            output_path = Path(output).resolve()
+            output_path.write_text(json.dumps(github_issues, indent=2), encoding="utf-8")
+            console.print(f"[green]📄 GitHub issues saved to {output_path}[/green]")
+            console.print("\n[yellow]💡 Use gh CLI to create issues:[/yellow]")
+            console.print(f"  cat {output_path} | jq -c '.[]' | while read issue; do")
+            console.print('    gh issue create --body "$(echo $issue | jq -r .body)" \\')
+            console.print('      --title "$(echo $issue | jq -r .title)" \\')
+            console.print('      --label "$(echo $issue | jq -r \'.labels | join(",")\'); done')
+        else:
+            console.print_json(data=github_issues)
+
+    else:
+        console.print(f"[bold red]❌ Unknown format: {format_type}[/bold red]")
+        console.print("[yellow]Supported formats: markdown, json, github[/yellow]")
+        raise typer.Exit(2)
+
+    # Print summary
+    console.print()
+    console.print("[bold]📊 Summary:[/bold]")
+    console.print(f"  • Tasks generated: {len(plan.tasks)}")
+    console.print(f"  • Total ΔQ: +{plan.total_delta_q:.1f}")
+    console.print(f"  • Current Q-score: {plan.baseline_q:.2f}")
+    console.print(f"  • Projected Q-score: {plan.projected_q:.2f}")
+
+    # Priority breakdown
+    priority_counts = {}
+    for task in plan.tasks:
+        priority_counts[task.priority] = priority_counts.get(task.priority, 0) + 1
+
+    if priority_counts:
+        console.print("\n[bold]🎯 Priority breakdown:[/bold]")
+        for priority in ["critical", "high", "medium", "low"]:
+            count = priority_counts.get(priority, 0)
+            if count > 0:
+                emoji = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}
+                console.print(f"  {emoji[priority]} {priority.capitalize()}: {count}")
+
 
 
 if __name__ == "__main__":

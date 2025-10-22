@@ -13,6 +13,7 @@
 **Язык**: Python 3.9+  
 **Алгоритм**: Greedy k-repair с оценкой ΔQ (expected quality improvement)  
 **Формула**:
+
 ```
 ΔQ(file) = w_complexity × complexity_penalty +
            w_todos × todo_count +
@@ -43,17 +44,20 @@
 ### Вариант 1: CLI команда с множественными форматами ✅ (ВЫБРАН)
 
 **Команда**:
+
 ```bash
 repoq refactor-plan <analysis.jsonld> [options]
 ```
 
 **Опции**:
+
 - `--top-k <N>`: Число задач (default: 10)
 - `--min-delta-q <threshold>`: Минимальный ΔQ для включения (default: 3.0)
 - `--format <type>`: Формат вывода (markdown/json/github)
 - `--output <file>`: Сохранить в файл
 
 **Форматы**:
+
 1. **Markdown**: Human-readable отчёт с приоритетами
 2. **JSON**: Machine-readable для CI/CD интеграции
 3. **GitHub**: Payload для создания issues через gh CLI
@@ -81,6 +85,7 @@ repoq refactor-plan <analysis.jsonld> [options]
 ### 1. Код (400+ LOC)
 
 **repoq/refactoring.py**:
+
 - `RefactoringTask`: Dataclass для одной задачи
 - `RefactoringPlan`: Dataclass для полного плана
 - `calculate_delta_q()`: Расчёт ΔQ по формуле
@@ -90,6 +95,7 @@ repoq refactor-plan <analysis.jsonld> [options]
 - `generate_refactoring_plan()`: Main entry point
 
 **repoq/cli.py** (+150 LOC):
+
 - `@app.command(name="refactor-plan")`: CLI интерфейс
 - Поддержка 3 форматов: markdown, json, github
 - Rich console output с эмодзи и цветами
@@ -97,6 +103,7 @@ repoq refactor-plan <analysis.jsonld> [options]
 ### 2. Тесты (3/3 passing)
 
 **tests/e2e/test_refactor_plan.py**:
+
 - `test_refactor_plan_help()`: Проверка help output
 - `test_refactor_plan_missing_file()`: Error handling
 - `test_refactor_plan_with_baseline()`: Полный цикл с baseline данными
@@ -104,6 +111,7 @@ repoq refactor-plan <analysis.jsonld> [options]
 ### 3. Документация
 
 **README.md** (updated):
+
 - Новая секция "Refactoring Plan Generation"
 - Примеры использования для всех 3 форматов
 - Пример output task
@@ -111,19 +119,23 @@ repoq refactor-plan <analysis.jsonld> [options]
 ### 4. Demo Artifacts
 
 **baseline-quality.jsonld**:
+
 - 88 Python файлов проанализировано
 - Full quality metrics (complexity, LOC, TODOs, issues)
 
 **refactoring-plan.md**:
+
 - Top-5 критических задач
 - Total ΔQ: +768.0 points
 - All tasks priority: CRITICAL 🔴
 
 **refactoring-tasks.json**:
+
 - JSON export для CI/CD
 - Ready for automated processing
 
 **Пример task**:
+
 ```markdown
 ### Task #1: repoq/analyzers/structure.py
 **Priority**: 🔴 CRITICAL
@@ -142,25 +154,33 @@ repoq refactor-plan <analysis.jsonld> [options]
 ## Dogfooding Demo: Использование для самого RepoQ
 
 ### Шаг 1: Baseline Analysis ✅
+
 ```bash
 repoq analyze . -o baseline-quality.jsonld --md baseline-report.md --extensions py
 ```
+
 **Результат**: 88 файлов, baseline Q-score: 0.00 (нужна калибровка)
 
 ### Шаг 2: Generate Refactoring Plan ✅
+
 ```bash
 repoq refactor-plan baseline-quality.jsonld --top-k 5 -o refactoring-plan.md
 ```
+
 **Результат**:
+
 - 5 задач (все CRITICAL 🔴)
 - Total ΔQ: +768.0
 - Top файл: `repoq/analyzers/structure.py` (complexity 48.0)
 
 ### Шаг 3: Export for CI/CD ✅
+
 ```bash
 repoq refactor-plan baseline-quality.jsonld --format json -o refactoring-tasks.json
 ```
+
 **Использование**:
+
 ```python
 import json
 
@@ -176,6 +196,7 @@ for task in plan["tasks"]:
 ```
 
 ### Шаг 4: GitHub Integration (опционально)
+
 ```bash
 repoq refactor-plan baseline-quality.jsonld --format github -o issues.json
 
@@ -210,6 +231,7 @@ done
    - Expected ΔQ: +153.0
 
 **После рефакторинга**:
+
 - Запустить `repoq gate --base main --head HEAD`
 - Проверить: ΔQ ≥ 0, PCQ ≥ 0.8, tests passing
 - Создать final report с before/after метриками
