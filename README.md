@@ -21,6 +21,8 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 - 🔥 **Hotspots**: High-churn + high-complexity problem areas
 - 🌐 **Semantic Export**: JSON-LD and RDF/Turtle with W3C ontologies
 - 📊 **Graphs**: DOT/SVG dependency visualization
+- 🔧 **Refactoring Plan**: Automated actionable tasks based on PCE algorithm
+- ⚙️ **Quality Gates**: CI/CD-ready quality comparison and admission predicates
 
 **In Development:**
 - SHACL validation, Docker container, GitHub Actions
@@ -33,13 +35,58 @@ Modern CLI tool for comprehensive Git repository quality analysis with semantic 
 pip install -e ".[full]"
 
 # Analyze repository
-repoq full ./my-project --format json
+repoq analyze ./my-project -o quality.jsonld --md report.md
 
-# Structure analysis
-repoq structure ./my-project --md report.md
+# Generate refactoring plan
+repoq refactor-plan quality.jsonld --top-k 10 -o refactoring-plan.md
 
-# Export for knowledge graphs  
-repoq full ./my-project --format turtle > quality.ttl
+# Quality gate for CI/CD
+repoq gate --base main --head HEAD --strict
+
+# Self-analysis (dogfooding)
+repoq meta-self --level 1 -o meta-analysis.jsonld
+```
+
+## Refactoring Plan Generation
+
+RepoQ can automatically generate **actionable refactoring tasks** using the PCE (Proof of Correct Execution) algorithm:
+
+```bash
+# Analyze project first
+repoq analyze . -o baseline.jsonld
+
+# Generate top-5 refactoring tasks
+repoq refactor-plan baseline.jsonld --top-k 5
+
+# Export as Markdown
+repoq refactor-plan baseline.jsonld -o plan.md
+
+# Export as JSON for CI/CD
+repoq refactor-plan baseline.jsonld --format json -o tasks.json
+
+# Generate GitHub Issues format
+repoq refactor-plan baseline.jsonld --format github -o issues.json
+```
+
+**Output includes:**
+- 🎯 **Priority-ranked tasks** (critical/high/medium/low)
+- 📈 **Expected ΔQ improvement** per task
+- ⏱️ **Effort estimates** (15 min to 8 hours)
+- 📋 **Specific recommendations** (e.g., "split into smaller functions")
+- 📊 **Current metrics** (complexity, LOC, TODOs, issues)
+
+Example task:
+```markdown
+### Task #1: repoq/analyzers/structure.py
+**Priority**: 🔴 CRITICAL
+**Expected ΔQ**: +218.0 points
+**Estimated effort**: 4-8 hours
+
+**Issues**:
+- High cyclomatic complexity (48.0)
+
+**Recommendations**:
+1. Reduce complexity from 48.0 to <10 (split into smaller functions)
 ```
 
 ## CI/CD Integration

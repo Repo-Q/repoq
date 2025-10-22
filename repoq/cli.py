@@ -18,7 +18,6 @@ from __future__ import annotations
 import json
 import logging
 import os
-import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -683,8 +682,6 @@ def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str,
     try:
         import subprocess
 
-        import pytest
-
         # Run property-based tests for TRS verification
         test_files = [
             "tests/properties/test_metrics_normalization.py",
@@ -761,11 +758,11 @@ def _run_self_application(quiet: bool) -> Dict[str, Any]:
         from .core.model import Project
 
         # Create minimal project
-        project = Project(id="repoq-self", name="repoq", description="Self-application test")
+        Project(id="repoq-self", name="repoq", description="Self-application test")
 
         # Try basic structure analysis
-        analyzer = StructureAnalyzer()
-        repo_dir = str(Path.cwd())
+        StructureAnalyzer()
+        str(Path.cwd())
 
         # Test with minimal config - just check if we can analyze a few Python files
         python_files = list(Path("repoq").glob("*.py"))[:5]  # First 5 files only
@@ -854,71 +851,72 @@ def meta_self(
     ),
 ) -> None:
     """Meta-analysis: RepoQ analyzing itself (dogfooding).
-    
+
     This command performs self-analysis with stratification enforcement
     (Theorem F) to ensure safe self-reference without paradoxes.
-    
+
     Stratification levels:
         L₀: Base reality (no self-analysis)
         L₁: RepoQ analyzing its own codebase (first-order)
         L₂: RepoQ validating its own quality metrics (second-order)
-    
+
     Theorem F Enforcement:
         Can analyze L_j from L_i iff i > j (strict ordering)
         Cannot skip levels (must go L₀ → L₁ → L₂)
-    
+
     Examples:
         # First-order self-analysis (L₀ → L₁)
         repoq meta-self --level 1
-        
+
         # Second-order meta-validation (L₁ → L₂)
         repoq meta-self --level 2
-        
+
         # Save results to file
         repoq meta-self --level 1 --output meta_quality.jsonld
     """
     setup_logging()
-    
+
     from .core.stratification_guard import StratificationGuard
-    
+
     repo_path = Path(repo).resolve()
-    
+
     if not repo_path.exists():
         print(f"[bold red]❌ Repository not found: {repo_path}[/bold red]")
         raise typer.Exit(2)
-    
+
     print(f"[bold]🔄 Meta-Analysis: RepoQ Self-Application (Level {level})[/bold]")
     print(f"📁 Repository: {repo_path}")
     print()
-    
+
     # Initialize stratification guard
     guard = StratificationGuard(max_level=2)
-    
+
     # Check stratification transition
     current_level = 0  # We're at L₀ (base reality)
     target_level = level
-    
+
     print(f"🔒 Stratification check: L₀ → L_{target_level}")
-    
+
     transition = guard.check_transition(current_level, target_level)
-    
+
     if not transition.allowed:
         print(f"[bold red]❌ Stratification violation: {transition.reason}[/bold red]")
         print()
         print("[yellow]Theorem F: Can analyze L_j from L_i iff i > j[/yellow]")
         print(f"[yellow]Cannot skip levels. Please run --level {current_level + 1} first.[/yellow]")
         raise typer.Exit(1)
-    
+
     print(f"[green]✅ Stratification check passed: {transition.reason}[/green]")
     print()
-    
+
     try:
         # Run analysis on RepoQ's own codebase
         print("📊 Analyzing RepoQ codebase...")
-        
+
         import time
+
         start_time = time.time()
-        
+
         # Create project instance
         pid = str(repo_path)
         project = Project(
@@ -926,66 +924,74 @@ def meta_self(
             name=f"RepoQ-L{level}",
             repository_url=None,
         )
-        
+
         # Set metadata
         project.analyzed_at = datetime.now(timezone.utc).isoformat()
         project.repoq_version = __version__
         project.meta_level = level
         project.meta_target = "self"
-        
+
         # Run analyzers
         cfg = AnalyzeConfig(mode="full")
-        
+
         from .analyzers.ci_qm import CIQualityAnalyzer
         from .analyzers.complexity import ComplexityAnalyzer
         from .analyzers.history import HistoryAnalyzer
         from .analyzers.hotspots import HotspotsAnalyzer
         from .analyzers.structure import StructureAnalyzer
         from .analyzers.weakness import WeaknessAnalyzer
-        
+
         with Progress() as progress:
             task = progress.add_task("Meta-analysis...", total=6)
-            
+
             StructureAnalyzer().run(project, repo_path, cfg)
             progress.advance(task)
-            
+
             ComplexityAnalyzer().run(project, repo_path, cfg)
             progress.advance(task)
-            
+
             WeaknessAnalyzer().run(project, repo_path, cfg)
             progress.advance(task)
-            
+
             CIQualityAnalyzer().run(project, repo_path, cfg)
             progress.advance(task)
-            
+
             HistoryAnalyzer().run(project, repo_path, cfg)
             progress.advance(task)
-            
+
             HotspotsAnalyzer().run(project, repo_path, cfg)
             progress.advance(task)
-        
+
         analysis_time = time.time() - start_time
-        
+
         print(f"\n⏱️  Analysis time: {analysis_time:.2f}s")
         print(f"✅ Meta-analysis L_{level} complete")
-        
+
         # Print summary
         print("\n📊 Quality Metrics:")
-        if hasattr(project, 'files') and project.files:
-            file_count = len(project.files) if isinstance(project.files, list) else len(project.files.values())
+        if hasattr(project, "files") and project.files:
+            file_count = (
+                len(project.files)
+                if isinstance(project.files, list)
+                else len(project.files.values())
+            )
             print(f"  📁 Files analyzed: {file_count}")
-        
-        if hasattr(project, 'modules') and project.modules:
-            module_count = len(project.modules) if isinstance(project.modules, list) else len(project.modules.values())
+
+        if hasattr(project, "modules") and project.modules:
+            module_count = (
+                len(project.modules)
+                if isinstance(project.modules, list)
+                else len(project.modules.values())
+            )
             print(f"  📦 Modules found: {module_count}")
-        
+
         # Save output if requested
         if output:
             from .core.jsonld import export_to_jsonld
-            
+
             output_path = Path(output)
             output_path.parent.mkdir(parents=True, exist_ok=True)
-            
+
             jsonld_data = export_to_jsonld(project)
             jsonld_data["meta"] = {
                 "level": level,
@@ -993,13 +999,13 @@ def meta_self(
                 "stratification_check": "passed",
                 "theorem_f": "enforced",
             }
-            
+
             output_path.write_text(json.dumps(jsonld_data, indent=2))
             print(f"\n💾 Meta-analysis results saved: {output_path}")
-        
+
         print("\n[bold green]✅ Self-application successful (no paradoxes detected)[/bold green]")
         raise typer.Exit(0)
-    
+
     except Exception as e:
         print(f"[bold red]❌ Error during meta-analysis: {e}[/bold red]")
         logger.exception("Meta-self command failed")
@@ -1039,40 +1045,40 @@ def gate(
     ),
 ) -> None:
     """Quality gate: compare BASE vs HEAD metrics.
-    
+
     This command analyzes both BASE and HEAD revisions, computes Q-scores,
     checks hard constraints, and evaluates the admission predicate.
-    
+
     Exit codes:
         0: Gate PASSED (all constraints satisfied)
         1: Gate FAILED (constraint violations)
         2: Error during analysis
-    
+
     Examples:
         # Compare current branch with main
         repoq gate --base main --head HEAD
-        
+
         # Compare two specific commits
         repoq gate --base abc123 --head def456
-        
+
         # Compare PR base with PR head (GitHub Actions)
         repoq gate --base ${{ github.event.pull_request.base.sha }} --head ${{ github.sha }}
-        
+
         # Warn-only mode (don't fail CI)
         repoq gate --no-strict --base main --head HEAD
     """
     setup_logging()
-    
+
     repo_path = Path(repo).resolve()
-    
+
     if not repo_path.exists():
         print(f"[bold red]❌ Repository not found: {repo_path}[/bold red]")
         raise typer.Exit(2)
-    
+
     print(f"[bold]⚙️  Quality Gate: {base} → {head}[/bold]")
     print(f"📁 Repository: {repo_path}")
     print()
-    
+
     try:
         # Run quality gate
         result = run_quality_gate(
@@ -1081,11 +1087,11 @@ def gate(
             head_ref=head,
             strict=strict,
         )
-        
+
         # Format and print report
         report = format_gate_report(result)
         print(report)
-        
+
         # Save to file if requested
         if output:
             output_path = Path(output)
@@ -1110,10 +1116,10 @@ def gate(
                 "deltas": result.deltas,
                 "violations": result.violations,
             }
-            
+
             output_path.write_text(json.dumps(output_data, indent=2))
             print(f"\n💾 Gate report saved: {output_path}")
-        
+
         # Exit with appropriate code
         if result.passed:
             print("\n[bold green]✅ Quality gate PASSED[/bold green]")
@@ -1124,7 +1130,7 @@ def gate(
                 print("[yellow]⚠️  Running in non-strict mode (not failing CI)[/yellow]")
                 raise typer.Exit(0)
             raise typer.Exit(1)
-    
+
     except Exception as e:
         print(f"[bold red]❌ Error during gate analysis: {e}[/bold red]")
         logger.exception("Gate command failed")
@@ -1170,10 +1176,11 @@ def verify(
           1. Signature verification failed (invalid signature)
     """
     from pathlib import Path
+
     from rich.console import Console
     from rich.markdown import Markdown
 
-    from repoq.vc_verification import verify_vc, format_verification_report
+    from repoq.vc_verification import format_verification_report, verify_vc
 
     console = Console()
 
@@ -1219,6 +1226,193 @@ def verify(
     except Exception as e:
         console.print(f"[bold red]❌ Verification failed: {e}[/bold red]")
         logger.exception("Verify command failed")
+        raise typer.Exit(2)
+
+
+@app.command(name="refactor-plan")
+def refactor_plan(
+    analysis: str = typer.Argument(
+        "baseline-quality.jsonld",
+        help="Path to JSON-LD analysis file (default: baseline-quality.jsonld)",
+    ),
+    output: str = typer.Option(
+        None,
+        "--output",
+        "-o",
+        help="Save refactoring plan to file (Markdown format)",
+    ),
+    top_k: int = typer.Option(
+        10,
+        "--top-k",
+        "-k",
+        help="Number of top refactoring tasks to generate (default: 10)",
+    ),
+    min_delta_q: float = typer.Option(
+        3.0,
+        "--min-delta-q",
+        help="Minimum ΔQ threshold for task inclusion (default: 3.0)",
+    ),
+    format_type: str = typer.Option(
+        "markdown",
+        "--format",
+        "-f",
+        help="Output format: markdown, json, github (default: markdown)",
+    ),
+) -> None:
+    """Generate actionable refactoring plan from quality analysis.
+
+    This command uses the PCE (Proof of Correct Execution) algorithm to generate
+    prioritized refactoring tasks based on expected quality improvement (ΔQ).
+
+    Algorithm:
+        1. Load quality metrics from analysis file
+        2. Calculate ΔQ for each file (impact of fixing issues)
+        3. Greedily select top-k files by ΔQ impact
+        4. Generate specific recommendations and effort estimates
+        5. Assign priorities (critical/high/medium/low)
+
+    ΔQ Formula:
+        ΔQ = w_complexity × complexity_penalty +
+             w_todos × todo_count +
+             w_issues × issue_count +
+             w_hotspot × hotspot_penalty
+
+    Exit codes:
+        0: Plan generated successfully
+        1: No tasks found (quality already high)
+        2: Error during generation
+
+    Args:
+        analysis: Path to JSON-LD quality analysis file
+        output: Save plan to file (default: print to console)
+        top_k: Maximum number of tasks to generate
+        min_delta_q: Minimum ΔQ threshold for inclusion
+        format_type: Output format (markdown, json, github)
+
+    Examples:
+        # Generate plan from baseline analysis
+        $ repoq refactor-plan baseline-quality.jsonld
+
+        # Save to file with top-5 tasks
+        $ repoq refactor-plan baseline-quality.jsonld -o plan.md --top-k 5
+
+        # Export as JSON for CI/CD integration
+        $ repoq refactor-plan baseline-quality.jsonld --format json -o tasks.json
+
+        # Generate GitHub Issues format
+        $ repoq refactor-plan baseline-quality.jsonld --format github -o issues.json
+    """
+    from rich.console import Console
+    from rich.markdown import Markdown
+
+    from repoq.refactoring import generate_refactoring_plan
+
+    console = Console()
+
+    try:
+        analysis_path = Path(analysis).resolve()
+        if not analysis_path.exists():
+            console.print(f"[bold red]❌ Analysis file not found: {analysis}[/bold red]")
+            console.print(
+                "\n[yellow]💡 Hint: Run 'repoq analyze' first to generate analysis data[/yellow]"
+            )
+            raise typer.Exit(2)
+
+        console.print(f"[bold]🔧 Generating refactoring plan from {analysis_path.name}[/bold]")
+        console.print()
+
+        # Generate plan
+        plan = generate_refactoring_plan(
+            jsonld_path=analysis_path,
+            top_k=top_k,
+            min_delta_q=min_delta_q,
+        )
+
+        if not plan.tasks:
+            console.print("[bold green]✅ No refactoring needed - quality is already high![/bold green]")
+            console.print(f"Current Q-score: {plan.baseline_q:.2f}")
+            raise typer.Exit(0)
+
+        # Format output
+        if format_type == "markdown":
+            report = plan.to_markdown()
+
+            if output:
+                output_path = Path(output).resolve()
+                output_path.write_text(report, encoding="utf-8")
+                console.print(f"[green]📄 Refactoring plan saved to {output_path}[/green]")
+            else:
+                console.print(Markdown(report))
+
+        elif format_type == "json":
+            import json
+
+            json_data = {
+                "baseline_q": plan.baseline_q,
+                "projected_q": plan.projected_q,
+                "total_delta_q": plan.total_delta_q,
+                "tasks": [task.to_dict() for task in plan.tasks],
+            }
+
+            if output:
+                output_path = Path(output).resolve()
+                output_path.write_text(json.dumps(json_data, indent=2), encoding="utf-8")
+                console.print(f"[green]📄 Refactoring plan saved to {output_path}[/green]")
+            else:
+                console.print_json(data=json_data)
+
+        elif format_type == "github":
+            import json
+
+            github_issues = [task.to_github_issue() for task in plan.tasks]
+
+            if output:
+                output_path = Path(output).resolve()
+                output_path.write_text(json.dumps(github_issues, indent=2), encoding="utf-8")
+                console.print(f"[green]📄 GitHub issues saved to {output_path}[/green]")
+                console.print(
+                    "\n[yellow]💡 Use gh CLI to create issues:[/yellow]"
+                )
+                console.print(f"  cat {output_path} | jq -c '.[]' | while read issue; do")
+                console.print("    gh issue create --body \"$(echo $issue | jq -r .body)\" \\")
+                console.print("      --title \"$(echo $issue | jq -r .title)\" \\")
+                console.print("      --label \"$(echo $issue | jq -r '.labels | join(\",\")'); done")
+            else:
+                console.print_json(data=github_issues)
+
+        else:
+            console.print(f"[bold red]❌ Unknown format: {format_type}[/bold red]")
+            console.print("[yellow]Supported formats: markdown, json, github[/yellow]")
+            raise typer.Exit(2)
+
+        # Print summary
+        console.print()
+        console.print(f"[bold]📊 Summary:[/bold]")
+        console.print(f"  • Tasks generated: {len(plan.tasks)}")
+        console.print(f"  • Total ΔQ: +{plan.total_delta_q:.1f}")
+        console.print(f"  • Current Q-score: {plan.baseline_q:.2f}")
+        console.print(f"  • Projected Q-score: {plan.projected_q:.2f}")
+
+        # Priority breakdown
+        priority_counts = {}
+        for task in plan.tasks:
+            priority_counts[task.priority] = priority_counts.get(task.priority, 0) + 1
+
+        if priority_counts:
+            console.print(f"\n[bold]🎯 Priority breakdown:[/bold]")
+            for priority in ["critical", "high", "medium", "low"]:
+                count = priority_counts.get(priority, 0)
+                if count > 0:
+                    emoji = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "🟢"}
+                    console.print(f"  {emoji[priority]} {priority.capitalize()}: {count}")
+
+        raise typer.Exit(0)
+
+    except typer.Exit:
+        raise
+    except Exception as e:
+        console.print(f"[bold red]❌ Failed to generate refactoring plan: {e}[/bold red]")
+        logger.exception("Refactor-plan command failed")
         raise typer.Exit(2)
 
 

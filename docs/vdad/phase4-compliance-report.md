@@ -200,6 +200,7 @@ def run_quality_gate(...):
 ```
 
 **Consequence**:
+
 - ⚠️ FR-04 (Gaming-resistant PCQ) не реализован → риск "gaming" метрик через перераспределение нагрузки между модулями
 - ⚠️ FR-02 (Constructive Feedback) без PCE → пользователи не получают k-repair пути
 
@@ -300,6 +301,7 @@ def run_quality_gate(...):
 ```
 
 **Consequence**:
+
 - ⚠️ FR-06 (Any2Math normalization) не выполнен → синтаксический "gaming" возможен
 - ⚠️ NFR-03 (Confluence provably guaranteed) частично (только для 5 специализированных TRS)
 
@@ -518,22 +520,26 @@ exemptions:
 **Цель**: Закрыть критические разрывы минимальными усилиями
 
 **Действия**:
+
 1. Интегрировать `repoq/gate.py` в Typer CLI → `repoq gate` (2 часа)
 2. Перенести StratificationGuard CLI из tmp/ → main (4 часа)
 3. Добавить базовый MetricCache (SHA-based dict) без LRU (6 часов)
 4. Документировать риски отсутствия Any2Math/PCQ (2 часа)
 
 **Плюсы**:
+
 - Быстрая реализация (14 часов)
 - Закрывает CLI-разрыв
 - Частично решает NFR-01 (cache)
 
 **Минусы**:
+
 - PCQ/PCE остаются не реализованными (FR-04, FR-02)
 - Any2Math не интегрирован (FR-06)
 - Performance gain ограничен (dict без LRU)
 
 **Риски**:
+
 - Cache без eviction → memory leak на больших репозиториях
 - Gaming риск остаётся (no PCQ)
 
@@ -544,6 +550,7 @@ exemptions:
 **Цель**: Закрыть все разрывы через интеграцию WIP-кода из tmp/
 
 **Действия**:
+
 1. Интегрировать tmp/zag_repoq-finished/ → PCQ/PCE (16 часов)
 2. Интегрировать tmp/repoq-any2math-integration/ → AST normalizer (24 часа)
 3. Интегрировать tmp/repoq-meta-loop-addons/ → meta-self CLI (8 часов)
@@ -551,16 +558,19 @@ exemptions:
 5. Добавить LRU MetricCache (8 часов)
 
 **Плюсы**:
+
 - Полное соответствие Phase 4 архитектуре
 - Закрывает FR-04, FR-06, FR-02, FR-10, NFR-01
 - Eliminates gaming риски
 
 **Минусы**:
+
 - Высокая сложность интеграции (68 часов)
 - Риски конфликтов между tmp/ и main кодом
 - Требуется обширное тестирование
 
 **Риски**:
+
 - Интеграция Any2Math может привести к regression (сложный TRS engine)
 - PCQ/PCE требуют валидацию корректности min-aggregator
 
@@ -571,30 +581,36 @@ exemptions:
 **Цель**: Закрывать разрывы по приоритетам в 3 спринта
 
 **Sprint 1 (Critical Gaps — 2 недели)**:
+
 1. MetricCache + IncrementalAnalyzer (NFR-01)
 2. Интегрировать gate CLI (FR-08)
 3. Добавить meta-self CLI (FR-16)
 
 **Sprint 2 (Gaming Protection — 2 недели)**:
+
 1. Интегрировать PCQ из tmp/zag (FR-04)
 2. Реализовать PCE WitnessGenerator (FR-02)
 3. Тестирование gaming scenarios
 
 **Sprint 3 (Normalization — 3 недели)**:
+
 1. Интегрировать Any2Math AST normalizer (FR-06)
 2. Добавить Lean bridge (optional, NFR-03)
 3. Performance benchmarking
 
 **Плюсы**:
+
 - Постепенное снижение рисков
 - Тестирование после каждого спринта
 - Приоритизация критических функций
 
 **Минусы**:
+
 - Более длинный timeline (7 недель)
 - Требуется coordination между спринтами
 
 **Риски**:
+
 - Scope creep в Sprint 2/3
 - Dependencies между компонентами могут блокировать progress
 
@@ -617,16 +633,19 @@ exemptions:
 ### Worst-case сценарии
 
 **Вариант 1**:
+
 - ⚠️ Cache без LRU → memory exhaustion на >10K файлов
 - ⚠️ Отсутствие PCQ → gaming через локализацию complexity в одном модуле
 - ⚠️ Отсутствие Any2Math → syntactic gaming (rename refactoring без семантических изменений)
 
 **Вариант 2**:
+
 - 🔴 Интеграция Any2Math → regression в existing analyzers (breaking changes)
 - 🔴 PCQ min-aggregator → неправильная реализация может блокировать все PRs (false negatives)
 - 🔴 Сложность интеграции → deadline slip (68 часов → 100+ часов реально)
 
 **Вариант 3**:
+
 - ⚠️ Sprint 2 dependency on Sprint 1 → блокировка при cache issues
 - ⚠️ Scope creep → Sprint 3 может растянуться до 5 недель
 - ⚠️ Any2Math в Sprint 3 → мало времени на stabilization
@@ -636,6 +655,7 @@ exemptions:
 **✅ Вариант 3 (Staged) — ОПТИМАЛЬНЫЙ**
 
 **Обоснование**:
+
 1. **Soundness**: Высокая (0.85) через постепенную валидацию
 2. **Completeness**: Достаточная (0.8) при завершении всех спринтов
 3. **Risk Mitigation**: Staged testing снижает worst-case риски
@@ -675,6 +695,7 @@ exemptions:
 | **NFR-12** | Extensibility | Ontology Engine | ✅ | manager.py:33 | Pluggable ontologies |
 
 **Итого**:
+
 - ✅ **Полностью реализовано**: 11/31 (35%)
 - 🔄 **Частично реализовано**: 7/31 (23%)
 - ⏸️ **В разработке (tmp/)**: 7/31 (23%)
@@ -687,6 +708,7 @@ exemptions:
 **Цель**: Закрыть performance и CLI gaps
 
 **Задачи**:
+
 1. ✅ **MetricCache** (SHA-based + LRU eviction)
    - Файл: `repoq/core/metric_cache.py`
    - Ключ: `f"{file_sha}_{policy_ver}_{repoq_ver}"`
@@ -708,6 +730,7 @@ exemptions:
    - Тесты: Stratification violations
 
 **Acceptance Criteria**:
+
 - Performance: P90 ≤2 min для <1K файлов
 - CLI: `repoq gate` и `repoq meta-self` работают
 - Tests: 300+ тестов (coverage ≥80%)
@@ -719,6 +742,7 @@ exemptions:
 **Цель**: Закрыть FR-04 (PCQ) и FR-02 (PCE)
 
 **Задачи**:
+
 1. ✅ **PCQ MinAggregator**
    - Источник: `tmp/zag_repoq-finished/repoq/integrations/zag.py`
    - Интеграция: `repoq/quality.py:calculate_pcq()`
@@ -738,6 +762,7 @@ exemptions:
    - Тесты: Gate scenarios с PCQ violations
 
 **Acceptance Criteria**:
+
 - PCQ: Min-aggregator корректно вычисляется
 - PCE: k-repair witness генерируется (k≤8)
 - Gate: Admission predicate с epsilon/tau thresholds
@@ -749,6 +774,7 @@ exemptions:
 **Цель**: Закрыть FR-06 (Any2Math) и NFR-03 (Confluence)
 
 **Задачи**:
+
 1. ⚠️ **Any2Math AST Normalizer**
    - Источник: `tmp/repoq-any2math-integration/`
    - Интеграция: `repoq/normalize/ast_normalizer.py`
@@ -768,6 +794,7 @@ exemptions:
    - Report: `docs/benchmarks/phase4-performance.md`
 
 **Acceptance Criteria**:
+
 - Any2Math: AST normalizer интегрирован и протестирован
 - Confluence: Property-based тесты для всех TRS (включая Any2Math)
 - Performance: P90 ≤2 min (verified через benchmark)
@@ -787,17 +814,20 @@ exemptions:
 ### 4. Следующие шаги
 
 **Immediate Actions (до начала Sprint 1)**:
+
 1. ✅ Code review текущей реализации (этот отчёт)
 2. ⏭️ Создать GitHub Issues для 11 задач (Sprint 1-3)
 3. ⏭️ Setup benchmarking инфраструктуры
 4. ⏭️ Документировать API контракты для MetricCache/PCQ/PCE
 
 **Sprint 1 Kickoff (Week 1)**:
+
 1. ⏭️ Implement MetricCache (TDD approach)
 2. ⏭️ Write property-based tests (Hypothesis)
 3. ⏭️ Integrate gate CLI (2 hours work)
 
 **Documentation**:
+
 1. ⏭️ Update `README.md` с реальным статусом (не Phase 4 doc)
 2. ⏭️ Создать `docs/architecture/compliance-status.md` (этот отчёт)
 3. ⏭️ Документировать gaps в `docs/roadmap/phase4-remaining.md`
@@ -811,6 +841,7 @@ exemptions:
 **RepoQ v2.0.0** демонстрирует **солидную реализацию** (52% completion) заявленной Phase 4 архитектуры:
 
 ✅ **Сильные стороны**:
+
 - Analysis Engine полностью реализован (6 analyzers)
 - Ontology Engine с triple-ontology архитектурой
 - TRS framework (5 систем) с property-based тестами
@@ -819,6 +850,7 @@ exemptions:
 - 285 тестов (100% pass)
 
 ⚠️ **Критические gaps**:
+
 - Отсутствие MetricCache + IncrementalAnalyzer → NFR-01 (Performance) под угрозой
 - PCQ/PCE в tmp/ → FR-04 (Gaming protection) не активен
 - Any2Math в tmp/ → FR-06 (Normalization) не интегрирован

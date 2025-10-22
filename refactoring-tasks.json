@@ -1,0 +1,104 @@
+{
+  "baseline_q": 0,
+  "projected_q": 100.0,
+  "total_delta_q": 768.0,
+  "tasks": [
+    {
+      "id": 1,
+      "file_path": "repoq/analyzers/structure.py",
+      "priority": "critical",
+      "delta_q": 218.0,
+      "current_metrics": {
+        "Complexity": 48.0,
+        "LOC": 469,
+        "TODOs": 0,
+        "Issues": 1
+      },
+      "issues": [
+        "High cyclomatic complexity (48.0)"
+      ],
+      "recommendations": [
+        "\ud83d\udd34 **Critical**: Reduce cyclomatic complexity from 48.0 to <10 (split into smaller functions)"
+      ],
+      "estimated_effort": "4-8 hours (complex refactoring)"
+    },
+    {
+      "id": 2,
+      "file_path": "tmp/zag_repoq-finished/repoq/cli.py",
+      "priority": "critical",
+      "delta_q": 153.0,
+      "current_metrics": {
+        "Complexity": 35.0,
+        "LOC": 250,
+        "TODOs": 0,
+        "Issues": 1
+      },
+      "issues": [
+        "High cyclomatic complexity (35.0)"
+      ],
+      "recommendations": [
+        "\ud83d\udd34 **Critical**: Reduce cyclomatic complexity from 35.0 to <10 (split into smaller functions)",
+        "\ud83d\udd25 Reduce change frequency (refactor to stabilize)"
+      ],
+      "estimated_effort": "4-8 hours (complex refactoring)"
+    },
+    {
+      "id": 3,
+      "file_path": "repoq/analyzers/history.py",
+      "priority": "critical",
+      "delta_q": 153.0,
+      "current_metrics": {
+        "Complexity": 35.0,
+        "LOC": 311,
+        "TODOs": 0,
+        "Issues": 1
+      },
+      "issues": [
+        "High cyclomatic complexity (35.0)"
+      ],
+      "recommendations": [
+        "\ud83d\udd34 **Critical**: Reduce cyclomatic complexity from 35.0 to <10 (split into smaller functions)"
+      ],
+      "estimated_effort": "4-8 hours (complex refactoring)"
+    },
+    {
+      "id": 4,
+      "file_path": "repoq/core/jsonld.py",
+      "priority": "critical",
+      "delta_q": 136.0,
+      "current_metrics": {
+        "Complexity": 31.0,
+        "LOC": 379,
+        "TODOs": 0,
+        "Issues": 2
+      },
+      "issues": [
+        "High cyclomatic complexity (31.0)"
+      ],
+      "recommendations": [
+        "\ud83d\udd34 **Critical**: Reduce cyclomatic complexity from 31.0 to <10 (split into smaller functions)"
+      ],
+      "estimated_effort": "4-8 hours (complex refactoring)"
+    },
+    {
+      "id": 5,
+      "file_path": "tmp/zag_repoq-finished/repoq/certs/quality.py",
+      "priority": "critical",
+      "delta_q": 108.0,
+      "current_metrics": {
+        "Complexity": 26.0,
+        "LOC": 85,
+        "TODOs": 0,
+        "Issues": 1
+      },
+      "issues": [
+        "High cyclomatic complexity (26.0)"
+      ],
+      "recommendations": [
+        "\ud83d\udd34 **Critical**: Reduce cyclomatic complexity from 26.0 to <10 (split into smaller functions)",
+        "\ud83d\udd25 Reduce change frequency (refactor to stabilize)"
+      ],
+      "estimated_effort": "4-8 hours (complex refactoring)"
+    }
+  ]
+}

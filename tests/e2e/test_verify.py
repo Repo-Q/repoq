@@ -13,7 +13,6 @@ from typer.testing import CliRunner
 
 from repoq.cli import app
 
-
 runner = CliRunner()
 
 
@@ -37,11 +36,11 @@ def valid_vc_file(tmp_path: Path) -> Path:
             "jws": "eyJhbGciOiJFUzI1NksifQ.eyJzdWJqZWN0Ijp7ImlkIjoicmVwbyJ9fQ.VALID_SIG",
         },
     }
-    
+
     vc_file = tmp_path / "valid_vc.json"
     with open(vc_file, "w") as f:
         json.dump(vc, f, indent=2)
-    
+
     return vc_file
 
 
@@ -54,18 +53,18 @@ def malformed_vc_file(tmp_path: Path) -> Path:
         "issuer": "did:repoq:v1",
         "credentialSubject": {"qualityScore": 85.0},
     }
-    
+
     vc_file = tmp_path / "malformed_vc.json"
     with open(vc_file, "w") as f:
         json.dump(vc, f, indent=2)
-    
+
     return vc_file
 
 
 def test_verify_help():
     """Test verify command shows help."""
     result = runner.invoke(app, ["verify", "--help"])
-    
+
     assert result.exit_code == 0
     assert "verify" in result.stdout.lower() or "credential" in result.stdout.lower()
 
@@ -73,7 +72,7 @@ def test_verify_help():
 def test_verify_malformed_vc(malformed_vc_file: Path):
     """Test verify command with malformed VC."""
     result = runner.invoke(app, ["verify", str(malformed_vc_file)])
-    
+
     # Should fail due to structure validation
     assert result.exit_code in [1, 2]
 
@@ -81,8 +80,6 @@ def test_verify_malformed_vc(malformed_vc_file: Path):
 def test_verify_file_not_found():
     """Test verify command with non-existent file."""
     result = runner.invoke(app, ["verify", "/nonexistent/vc.json"])
-    
+
     assert result.exit_code == 2
     assert "not found" in result.stdout.lower() or "❌" in result.stdout
-
-

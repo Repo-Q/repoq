@@ -10,7 +10,7 @@
 
 Реализованы **критические компоненты** для полного соответствия Phase 4 архитектуре:
 
-### ✅ COMPLETED (7 задач):
+### ✅ COMPLETED (7 задач)
 
 1. **MetricCache** (SHA-based + LRU eviction) → `repoq/core/metric_cache.py`
 2. **IncrementalAnalyzer** (git diff parsing) → `repoq/analyzers/incremental.py`
@@ -20,7 +20,7 @@
 6. **PCE WitnessGenerator** (k-repair feedback) → `repoq/quality.py:generate_pce_witness()`
 7. **AdmissionPredicate** (H ∧ ΔQ≥ε ∧ PCQ≥τ) → `repoq/gate.py:run_quality_gate()`
 
-### ⏸️ REMAINING (2 задачи):
+### ⏸️ REMAINING (2 задачи)
 
 8. **verify command** (W3C VC validation) — Phase 5 priority
 9. **E2E tests** (gate/meta-self coverage) — Next sprint
@@ -34,12 +34,14 @@
 **Файл**: `repoq/core/metric_cache.py` (380 LOC)
 
 **Ключевые функции**:
+
 - `MetricCache(max_size=10000)` — LRU-кэш с автоматической эвикцией
 - `get_or_compute()` — основной entry point для cache-aware analysis
 - `_make_key()` — генерация ключей: `{file_sha}_{policy_ver}_{repoq_ver}`
 - `save()/load()` — сохранение кэша на диск (JSON)
 
 **Архитектурное решение**:
+
 ```python
 cache_key = f"{file_sha}_{policy_version}_{repoq_version}"
 if cache_key in cache:
@@ -51,6 +53,7 @@ else:
 ```
 
 **Свойства**:
+
 - ✅ **Thread-safe**: `threading.Lock()` на всех операциях
 - ✅ **Content-addressable**: SHA256-based keys
 - ✅ **Bounded memory**: LRU eviction при превышении `max_size`
@@ -65,12 +68,14 @@ else:
 **Файл**: `repoq/analyzers/incremental.py` (285 LOC)
 
 **Ключевые функции**:
+
 - `get_changed_files(base_ref, head_ref)` — парсинг git diff
 - `filter_python_files()` — фильтрация по расширению
 - `should_use_incremental(threshold=0.3)` — автоматический выбор режима
 - `analyze_with_cache()` — анализ файла с cache lookup
 
 **Алгоритм**:
+
 ```python
 # 1. Determine changed files
 changes = incremental.get_changed_files("main", "HEAD")  # O(git diff)
@@ -89,6 +94,7 @@ for change in python_changes:
 ```
 
 **Performance**:
+
 - **Before**: O(n) где n = total files → ~3 min для 1K файлов
 - **After**: O(Δn) где Δn = changed files → ~20 sec для 50 changed files
 - **Improvement**: 9x speedup для типичного PR (5% changed files)
@@ -102,6 +108,7 @@ for change in python_changes:
 **Файл**: `repoq/cli.py:gate()` (115 LOC)
 
 **Интерфейс**:
+
 ```bash
 repoq gate --base main --head HEAD
 repoq gate --base abc123 --head def456 --no-strict
@@ -109,11 +116,13 @@ repoq gate --base origin/main --head . --output gate_report.json
 ```
 
 **Exit codes**:
+
 - `0`: Gate PASSED (all constraints satisfied)
 - `1`: Gate FAILED (constraint violations)
 - `2`: Error during analysis
 
 **Интеграция**:
+
 - ✅ Экспортирован в Typer app (`@app.command()`)
 - ✅ Rich formatting (progress bars, color output)
 - ✅ JSON output (`--output` flag)
@@ -128,6 +137,7 @@ repoq gate --base origin/main --head . --output gate_report.json
 **Файл**: `repoq/cli.py:meta_self()` (100 LOC)
 
 **Интерфейс**:
+
 ```bash
 repoq meta-self --level 1              # L₀ → L₁ (RepoQ analyzing itself)
 repoq meta-self --level 2              # L₁ → L₂ (Meta-validation)
@@ -135,6 +145,7 @@ repoq meta-self --level 1 --output meta.jsonld
 ```
 
 **Theorem F Enforcement**:
+
 ```python
 guard = StratificationGuard(max_level=2)
 transition = guard.check_transition(current_level=0, target_level=level)
@@ -145,6 +156,7 @@ if not transition.allowed:
 ```
 
 **Свойства**:
+
 - ✅ **Soundness**: Theorem F enforced (i > j, no level skipping)
 - ✅ **Safety**: Невозможны циклы self-reference
 - ✅ **Termination**: Ограничение уровней (L₀, L₁, L₂)
@@ -158,11 +170,13 @@ if not transition.allowed:
 **Файл**: `repoq/quality.py:calculate_pcq()` (50 LOC)
 
 **Формула**:
+
 ```python
 PCQ(S) = min_{m∈modules} Q(m)
 ```
 
 **Архитектурное решение**:
+
 ```python
 def calculate_pcq(project: Project, module_type: str = "directory") -> float:
     module_scores = []
@@ -180,6 +194,7 @@ def calculate_pcq(project: Project, module_type: str = "directory") -> float:
 ```
 
 **Gaming Scenario Prevention**:
+
 ```
 Before PCQ (vulnerable):
   Module A: Q=95  ✓ (simple code)
@@ -201,6 +216,7 @@ After PCQ (resistant):
 **Файл**: `repoq/quality.py:generate_pce_witness()` (70 LOC)
 
 **Алгоритм** (greedy k-repair):
+
 ```python
 def generate_pce_witness(project: Project, target_score: float, k: int = 8):
     repair_candidates = []
@@ -227,6 +243,7 @@ def generate_pce_witness(project: Project, target_score: float, k: int = 8):
 ```
 
 **Output Example**:
+
 ```
 💡 Constructive Feedback (PCE k-Repair Witness)
 
@@ -250,6 +267,7 @@ def generate_pce_witness(project: Project, target_score: float, k: int = 8):
 **Файл**: `repoq/gate.py:run_quality_gate()` (обновлено)
 
 **Формула** (Phase 4 spec):
+
 ```python
 def admission(base: State, head: State, policy: Policy) -> bool:
     H = hard_constraints_pass(head)    # tests≥80%, TODOs≤100, hotspots≤20
@@ -261,6 +279,7 @@ def admission(base: State, head: State, policy: Policy) -> bool:
 ```
 
 **Реализация**:
+
 ```python
 # 1. Hard constraints H (fail-fast)
 violations = []
@@ -286,6 +305,7 @@ passed = len(violations) == 0
 ```
 
 **Parameters**:
+
 - `epsilon`: ΔQ noise tolerance (default: 0.3 points)
 - `tau`: PCQ threshold ratio (default: 0.8 = 80%)
 
@@ -387,6 +407,7 @@ passed = len(violations) == 0
 **Файл**: `repoq/cli.py` (новая команда)
 
 **Алгоритм**:
+
 ```python
 @app.command()
 def verify_vc(
@@ -423,6 +444,7 @@ def verify_vc(
 **Файлы**: `tests/e2e/test_gate.py`, `tests/e2e/test_meta_self.py`
 
 **Coverage**:
+
 ```python
 def test_gate_pass(tmp_git_repo):
     """Test gate PASS scenario."""
