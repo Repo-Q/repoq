@@ -1,0 +1,399 @@
+@prefix license: <http://example.org/vocab/license#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix spdx: <http://spdx.org/rdf/terms#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/license#> a owl:Ontology ;
+    dcterms:title "RepoQ License Compliance Ontology" ;
+    dcterms:description """
+        Ontology for software license compliance, compatibility, and policy enforcement.
+        Supports SPDX license identification and compatibility checking.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "License compliance ontology with SPDX integration" ;
+    owl:imports <http://spdx.org/rdf/terms> .
+
+# ============================================================================
+# LICENSE CONCEPTS
+# ============================================================================
+
+license:License a owl:Class ;
+    rdfs:label "Software License" ;
+    rdfs:comment """
+        Legal terms under which software can be used, modified, distributed.
+        Can be permissive, copyleft, proprietary, or public domain.
+    """ ;
+    rdfs:seeAlso <https://spdx.org/licenses/> .
+
+license:PermissiveLicense a owl:Class ;
+    rdfs:subClassOf license:License ;
+    rdfs:label "Permissive License" ;
+    rdfs:comment """
+        License allowing broad usage with minimal restrictions.
+        Examples: MIT, Apache-2.0, BSD-3-Clause.
+    """ .
+
+license:CopyleftLicense a owl:Class ;
+    rdfs:subClassOf license:License ;
+    rdfs:label "Copyleft License" ;
+    rdfs:comment """
+        License requiring derivatives to use same license.
+        Examples: GPL-3.0, AGPL-3.0, LGPL-3.0.
+    """ ;
+    rdfs:seeAlso <https://www.gnu.org/licenses/copyleft.en.html> .
+
+license:ProprietaryLicense a owl:Class ;
+    rdfs:subClassOf license:License ;
+    rdfs:label "Proprietary License" ;
+    rdfs:comment """
+        Commercial license with usage restrictions.
+        Cannot be freely modified or distributed.
+    """ .
+
+license:PublicDomain a owl:Class ;
+    rdfs:subClassOf license:License ;
+    rdfs:label "Public Domain" ;
+    rdfs:comment """
+        No copyright restrictions.
+        Examples: CC0, Unlicense.
+    """ .
+
+# ============================================================================
+# LICENSE POLICY
+# ============================================================================
+
+license:Policy a owl:Class ;
+    rdfs:label "License Policy" ;
+    rdfs:comment """
+        Organization's rules for acceptable licenses.
+        Defines allowed, restricted, and forbidden licenses.
+    """ .
+
+license:AllowedLicense a owl:Class ;
+    rdfs:label "Allowed License" ;
+    rdfs:comment """
+        License approved for use in project.
+        Example: MIT, Apache-2.0 allowed in commercial product.
+    """ .
+
+license:RestrictedLicense a owl:Class ;
+    rdfs:label "Restricted License" ;
+    rdfs:comment """
+        License requiring legal review before use.
+        Example: GPL-3.0 restricted due to copyleft obligations.
+    """ .
+
+license:ForbiddenLicense a owl:Class ;
+    rdfs:label "Forbidden License" ;
+    rdfs:comment """
+        License prohibited by policy.
+        Example: AGPL-3.0 forbidden in SaaS product.
+    """ .
+
+# ============================================================================
+# COMPATIBILITY
+# ============================================================================
+
+license:Compatibility a owl:Class ;
+    rdfs:label "License Compatibility" ;
+    rdfs:comment """
+        Relationship describing if licenses can be combined.
+        Example: MIT compatible with GPL-3.0, but not vice versa.
+    """ .
+
+license:Compatible a owl:Class ;
+    rdfs:subClassOf license:Compatibility ;
+    rdfs:label "Compatible" ;
+    rdfs:comment "Licenses can be combined in same project" .
+
+license:Incompatible a owl:Class ;
+    rdfs:subClassOf license:Compatibility ;
+    rdfs:label "Incompatible" ;
+    rdfs:comment "Licenses cannot be combined (legal conflict)" .
+
+license:ConditionallyCompatible a owl:Class ;
+    rdfs:subClassOf license:Compatibility ;
+    rdfs:label "Conditionally Compatible" ;
+    rdfs:comment "Compatible under specific conditions (e.g., dynamic linking)" .
+
+# ============================================================================
+# ISSUE TYPES (for LicenseComplianceAnalyzer)
+# ============================================================================
+
+license:IncompatibleLicense a owl:Class ;
+    rdfs:label "Incompatible License" ;
+    rdfs:comment """
+        Dependency with license incompatible with project license.
+        Example: MIT project using GPL-3.0 dependency.
+        Generated by LicenseComplianceAnalyzer.
+    """ .
+
+license:UnknownLicense a owl:Class ;
+    rdfs:label "Unknown License" ;
+    rdfs:comment """
+        Dependency with unrecognized or missing license.
+        Requires manual legal review.
+        Generated by LicenseComplianceAnalyzer.
+    """ .
+
+license:ForbiddenLicenseViolation a owl:Class ;
+    rdfs:label "Forbidden License Violation" ;
+    rdfs:comment """
+        Dependency uses license forbidden by policy.
+        Example: AGPL-3.0 dependency in commercial SaaS.
+        Generated by LicenseComplianceAnalyzer.
+    """ .
+
+license:RestrictedLicenseWarning a owl:Class ;
+    rdfs:label "Restricted License Warning" ;
+    rdfs:comment """
+        Dependency uses license requiring legal review.
+        Not forbidden, but needs approval.
+        Generated by LicenseComplianceAnalyzer.
+    """ .
+
+license:MissingLicenseNotice a owl:Class ;
+    rdfs:label "Missing License Notice" ;
+    rdfs:comment """
+        Project missing LICENSE file or license headers.
+        Generated by LicenseComplianceAnalyzer.
+    """ .
+
+license:LicenseMismatch a owl:Class ;
+    rdfs:label "License Mismatch" ;
+    rdfs:comment """
+        License in metadata differs from LICENSE file.
+        Example: pyproject.toml says MIT, LICENSE file says Apache-2.0.
+        Generated by LicenseComplianceAnalyzer.
+    """ .
+
+# ============================================================================
+# PROPERTIES
+# ============================================================================
+
+license:hasLicense a owl:ObjectProperty ;
+    rdfs:domain spdx:Package ;
+    rdfs:range license:License ;
+    rdfs:label "Has License" ;
+    rdfs:comment "Package is distributed under this license" .
+
+license:hasSPDXIdentifier a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:string ;
+    rdfs:label "Has SPDX Identifier" ;
+    rdfs:comment "SPDX license identifier (e.g., 'MIT', 'Apache-2.0')" ;
+    rdfs:seeAlso <https://spdx.org/licenses/> .
+
+license:hasOSIApproval a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Has OSI Approval" ;
+    rdfs:comment "True if approved by Open Source Initiative" ;
+    rdfs:seeAlso <https://opensource.org/licenses> .
+
+license:isCopyleft a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Is Copyleft" ;
+    rdfs:comment "True if license has copyleft obligations" .
+
+license:hasAllowedLicense a owl:ObjectProperty ;
+    rdfs:domain license:Policy ;
+    rdfs:range license:License ;
+    rdfs:label "Has Allowed License" .
+
+license:hasRestrictedLicense a owl:ObjectProperty ;
+    rdfs:domain license:Policy ;
+    rdfs:range license:License ;
+    rdfs:label "Has Restricted License" .
+
+license:hasForbiddenLicense a owl:ObjectProperty ;
+    rdfs:domain license:Policy ;
+    rdfs:range license:License ;
+    rdfs:label "Has Forbidden License" .
+
+license:compatibleWith a owl:ObjectProperty ;
+    rdfs:domain license:License ;
+    rdfs:range license:License ;
+    rdfs:label "Compatible With" ;
+    rdfs:comment "This license can be combined with target license" .
+
+license:incompatibleWith a owl:ObjectProperty ;
+    rdfs:domain license:License ;
+    rdfs:range license:License ;
+    rdfs:label "Incompatible With" ;
+    rdfs:comment "This license cannot be combined with target license" .
+
+license:requiresAttribution a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Requires Attribution" ;
+    rdfs:comment "True if license requires attribution in distributions" .
+
+license:allowsCommercialUse a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Allows Commercial Use" ;
+    rdfs:comment "True if license permits commercial use" .
+
+license:allowsModification a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Allows Modification" ;
+    rdfs:comment "True if license permits modifications" .
+
+license:allowsDistribution a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Allows Distribution" ;
+    rdfs:comment "True if license permits distribution" .
+
+license:requiresSourceDisclosure a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain license:License ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Requires Source Disclosure" ;
+    rdfs:comment "True if license requires source code disclosure (copyleft)" .
+
+license:packageName a owl:DatatypeProperty ;
+    rdfs:domain license:IncompatibleLicense ;
+    rdfs:range xsd:string ;
+    rdfs:label "Package Name" ;
+    rdfs:comment "Name of package with incompatible license" .
+
+license:declaredLicense a owl:DatatypeProperty ;
+    rdfs:domain license:IncompatibleLicense ;
+    rdfs:range xsd:string ;
+    rdfs:label "Declared License" ;
+    rdfs:comment "License declared by dependency" .
+
+license:projectLicense a owl:DatatypeProperty ;
+    rdfs:domain license:IncompatibleLicense ;
+    rdfs:range xsd:string ;
+    rdfs:label "Project License" ;
+    rdfs:comment "License of main project" .
+
+license:compatibilityReason a owl:DatatypeProperty ;
+    rdfs:domain license:IncompatibleLicense ;
+    rdfs:range xsd:string ;
+    rdfs:label "Compatibility Reason" ;
+    rdfs:comment "Explanation of why licenses are incompatible" .
+
+# ============================================================================
+# AXIOMS
+# ============================================================================
+
+# Every license should have SPDX identifier (if known)
+license:License rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty license:hasSPDXIdentifier ;
+    owl:maxCardinality 1
+] .
+
+# IncompatibleLicense must specify package and licenses
+license:IncompatibleLicense rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty license:packageName ;
+    owl:cardinality 1
+] .
+
+license:IncompatibleLicense rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty license:declaredLicense ;
+    owl:cardinality 1
+] .
+
+# Copyleft licenses require source disclosure
+license:CopyleftLicense rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty license:requiresSourceDisclosure ;
+    owl:hasValue true
+] .
+
+# compatibleWith is NOT symmetric (MIT compatible with GPL, but not reverse)
+# This is intentional - compatibility is directional
+
+# incompatibleWith IS symmetric
+license:incompatibleWith a owl:SymmetricProperty .
+
+# ============================================================================
+# COMMON LICENSES (Pre-defined instances)
+# ============================================================================
+
+license:MIT a license:PermissiveLicense ;
+    license:hasSPDXIdentifier "MIT" ;
+    license:hasOSIApproval true ;
+    license:isCopyleft false ;
+    license:requiresAttribution true ;
+    license:allowsCommercialUse true ;
+    license:allowsModification true ;
+    license:allowsDistribution true ;
+    license:requiresSourceDisclosure false ;
+    rdfs:label "MIT License" .
+
+license:Apache-2.0 a license:PermissiveLicense ;
+    license:hasSPDXIdentifier "Apache-2.0" ;
+    license:hasOSIApproval true ;
+    license:isCopyleft false ;
+    license:requiresAttribution true ;
+    license:allowsCommercialUse true ;
+    license:allowsModification true ;
+    license:allowsDistribution true ;
+    license:requiresSourceDisclosure false ;
+    rdfs:label "Apache License 2.0" .
+
+license:GPL-3.0 a license:CopyleftLicense ;
+    license:hasSPDXIdentifier "GPL-3.0" ;
+    license:hasOSIApproval true ;
+    license:isCopyleft true ;
+    license:requiresAttribution true ;
+    license:allowsCommercialUse true ;
+    license:allowsModification true ;
+    license:allowsDistribution true ;
+    license:requiresSourceDisclosure true ;
+    rdfs:label "GNU General Public License 3.0" .
+
+license:BSD-3-Clause a license:PermissiveLicense ;
+    license:hasSPDXIdentifier "BSD-3-Clause" ;
+    license:hasOSIApproval true ;
+    license:isCopyleft false ;
+    license:requiresAttribution true ;
+    license:allowsCommercialUse true ;
+    license:allowsModification true ;
+    license:allowsDistribution true ;
+    license:requiresSourceDisclosure false ;
+    rdfs:label "BSD 3-Clause License" .
+
+# ============================================================================
+# COMPATIBILITY RULES (Examples)
+# ============================================================================
+
+# MIT is compatible with most licenses (permissive → anything)
+license:MIT license:compatibleWith license:GPL-3.0 ,
+                                    license:Apache-2.0 ,
+                                    license:BSD-3-Clause .
+
+# Apache-2.0 compatible with GPL-3.0 (but not GPL-2.0)
+license:Apache-2.0 license:compatibleWith license:GPL-3.0 .
+
+# GPL-3.0 is NOT compatible with permissive (copyleft constraint)
+license:GPL-3.0 license:incompatibleWith license:MIT ,
+                                         license:Apache-2.0 ,
+                                         license:BSD-3-Clause .
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+license:Licensing a owl:AnnotationProperty ;
+    rdfs:label "Licensing reference" ;
+    rdfs:seeAlso <https://spdx.org/licenses/> ,
+                 <https://choosealicense.com/> ,
+                 <https://opensource.org/licenses> ,
+                 <https://tldrlegal.com/> .

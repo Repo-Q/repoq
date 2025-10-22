@@ -1,0 +1,365 @@
+@prefix security: <http://example.org/vocab/security#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/security#> a owl:Ontology ;
+    dcterms:title "RepoQ Security Ontology" ;
+    dcterms:description """
+        Ontology for security vulnerabilities, CVEs, secret leaks, and threat modeling.
+        Supports CVE tracking, secret detection, dependency security analysis.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "Security ontology with CVE and secret leak support" .
+
+# ============================================================================
+# VULNERABILITY CONCEPTS
+# ============================================================================
+
+security:Vulnerability a owl:Class ;
+    rdfs:label "Security Vulnerability" ;
+    rdfs:comment """
+        A security weakness in code or dependencies.
+        Can be CVE, secret leak, or custom vulnerability type.
+    """ .
+
+security:CVE a owl:Class ;
+    rdfs:subClassOf security:Vulnerability ;
+    rdfs:label "Common Vulnerabilities and Exposures" ;
+    rdfs:comment """
+        Publicly disclosed security vulnerability with CVE ID.
+        Tracked by NVD (National Vulnerability Database).
+        Example: CVE-2024-1234 in dependency requests==2.25.0
+    """ ;
+    rdfs:seeAlso <https://cve.mitre.org/> .
+
+security:SecretLeak a owl:Class ;
+    rdfs:subClassOf security:Vulnerability ;
+    rdfs:label "Secret Leak" ;
+    rdfs:comment """
+        Exposed secret in source code (API key, token, password).
+        Detected by pattern matching or entropy analysis.
+    """ .
+
+security:DependencyVulnerability a owl:Class ;
+    rdfs:subClassOf security:Vulnerability ;
+    rdfs:label "Dependency Vulnerability" ;
+    rdfs:comment """
+        Vulnerability in third-party dependency.
+        Detected by pip-audit, safety, or other SCA tools.
+    """ .
+
+security:ConfigurationWeakness a owl:Class ;
+    rdfs:subClassOf security:Vulnerability ;
+    rdfs:label "Configuration Weakness" ;
+    rdfs:comment """
+        Insecure configuration (e.g., DEBUG=True in production).
+        Misconfigured security settings.
+    """ .
+
+# ============================================================================
+# SECRET TYPES
+# ============================================================================
+
+security:Secret a owl:Class ;
+    rdfs:label "Secret" ;
+    rdfs:comment """
+        Sensitive credential or key that should not be in source code.
+    """ .
+
+security:APIKey a owl:Class ;
+    rdfs:subClassOf security:Secret ;
+    rdfs:label "API Key" ;
+    rdfs:comment "Third-party service API key (AWS, OpenAI, Stripe, etc.)" .
+
+security:Password a owl:Class ;
+    rdfs:subClassOf security:Secret ;
+    rdfs:label "Password" ;
+    rdfs:comment "Hardcoded password or authentication credential" .
+
+security:PrivateKey a owl:Class ;
+    rdfs:subClassOf security:Secret ;
+    rdfs:label "Private Key" ;
+    rdfs:comment "SSH private key, RSA key, certificate" .
+
+security:Token a owl:Class ;
+    rdfs:subClassOf security:Secret ;
+    rdfs:label "Token" ;
+    rdfs:comment "OAuth token, JWT, session token, etc." .
+
+security:DatabaseCredential a owl:Class ;
+    rdfs:subClassOf security:Secret ;
+    rdfs:label "Database Credential" ;
+    rdfs:comment "Database connection string with embedded password" .
+
+# ============================================================================
+# SEVERITY LEVELS
+# ============================================================================
+
+security:Severity a rdfs:Datatype ;
+    rdfs:label "Severity Level" ;
+    rdfs:comment "CVSS-inspired severity classification" ;
+    owl:oneOf ("critical" "high" "medium" "low" "info") .
+
+security:CriticalSeverity a owl:Class ;
+    rdfs:label "Critical Severity" ;
+    rdfs:comment "CVSS 9.0-10.0: Immediate action required" .
+
+security:HighSeverity a owl:Class ;
+    rdfs:label "High Severity" ;
+    rdfs:comment "CVSS 7.0-8.9: Action required soon" .
+
+security:MediumSeverity a owl:Class ;
+    rdfs:label "Medium Severity" ;
+    rdfs:comment "CVSS 4.0-6.9: Plan to fix" .
+
+security:LowSeverity a owl:Class ;
+    rdfs:label "Low Severity" ;
+    rdfs:comment "CVSS 0.1-3.9: Fix when convenient" .
+
+# ============================================================================
+# ISSUE TYPES (for SecretLeakAnalyzer, DependencyHealthAnalyzer)
+# ============================================================================
+
+security:ExposedAPIKey a owl:Class ;
+    rdfs:label "Exposed API Key" ;
+    rdfs:comment """
+        API key found in source code.
+        Generated by SecretLeakAnalyzer when pattern matches known API key formats.
+    """ .
+
+security:ExposedPassword a owl:Class ;
+    rdfs:label "Exposed Password" ;
+    rdfs:comment """
+        Hardcoded password in source code.
+        Generated by SecretLeakAnalyzer.
+    """ .
+
+security:ExposedPrivateKey a owl:Class ;
+    rdfs:label "Exposed Private Key" ;
+    rdfs:comment """
+        Private key (SSH, RSA, etc.) found in repository.
+        Generated by SecretLeakAnalyzer.
+    """ .
+
+security:HighEntropyString a owl:Class ;
+    rdfs:label "High Entropy String" ;
+    rdfs:comment """
+        String with high Shannon entropy (likely secret).
+        Generated by SecretLeakAnalyzer with entropy-based detection.
+    """ .
+
+security:VulnerableDependency a owl:Class ;
+    rdfs:label "Vulnerable Dependency" ;
+    rdfs:comment """
+        Dependency with known CVE.
+        Generated by DependencyHealthAnalyzer after pip-audit scan.
+    """ .
+
+security:OutdatedDependency a owl:Class ;
+    rdfs:label "Outdated Dependency" ;
+    rdfs:comment """
+        Dependency with available security updates.
+        Generated by DependencyHealthAnalyzer.
+    """ .
+
+security:UnmaintainedDependency a owl:Class ;
+    rdfs:label "Unmaintained Dependency" ;
+    rdfs:comment """
+        Dependency with no recent updates (>2 years).
+        Generated by DependencyHealthAnalyzer.
+    """ .
+
+# ============================================================================
+# PROPERTIES
+# ============================================================================
+
+security:hasCVEID a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain security:CVE ;
+    rdfs:range xsd:string ;
+    rdfs:label "Has CVE ID" ;
+    rdfs:comment "CVE identifier (e.g., 'CVE-2024-1234')" .
+
+security:hasCVSSScore a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain security:CVE ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Has CVSS Score" ;
+    rdfs:comment "Common Vulnerability Scoring System score (0.0-10.0)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 10.0 .
+
+security:hasSeverity a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain security:Vulnerability ;
+    rdfs:range security:Severity ;
+    rdfs:label "Has Severity" ;
+    rdfs:comment "Severity level: critical, high, medium, low, info" .
+
+security:affectsPackage a owl:DatatypeProperty ;
+    rdfs:domain security:DependencyVulnerability ;
+    rdfs:range xsd:string ;
+    rdfs:label "Affects Package" ;
+    rdfs:comment "Name of affected package (e.g., 'requests')" .
+
+security:affectsVersion a owl:DatatypeProperty ;
+    rdfs:domain security:DependencyVulnerability ;
+    rdfs:range xsd:string ;
+    rdfs:label "Affects Version" ;
+    rdfs:comment "Version of affected package (e.g., '2.25.0')" .
+
+security:fixedInVersion a owl:DatatypeProperty ;
+    rdfs:domain security:DependencyVulnerability ;
+    rdfs:range xsd:string ;
+    rdfs:label "Fixed In Version" ;
+    rdfs:comment "Version where vulnerability is fixed (e.g., '2.26.0')" .
+
+security:secretPattern a owl:DatatypeProperty ;
+    rdfs:domain security:SecretLeak ;
+    rdfs:range xsd:string ;
+    rdfs:label "Secret Pattern" ;
+    rdfs:comment "Regex pattern that matched the secret" .
+
+security:secretLocation a owl:DatatypeProperty ;
+    rdfs:domain security:SecretLeak ;
+    rdfs:range xsd:string ;
+    rdfs:label "Secret Location" ;
+    rdfs:comment "File path and line number where secret was found" .
+
+security:entropyScore a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain security:SecretLeak ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Entropy Score" ;
+    rdfs:comment "Shannon entropy of detected string (higher = more likely secret)" ;
+    owl:minInclusive 0.0 .
+
+security:exploitAvailable a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain security:CVE ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Exploit Available" ;
+    rdfs:comment "True if public exploit exists for this CVE" .
+
+security:exploitabilityScore a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain security:Vulnerability ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Exploitability Score" ;
+    rdfs:comment "CVSS exploitability subscore (0.0-10.0)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 10.0 .
+
+security:affectsFile a owl:ObjectProperty ;
+    rdfs:domain security:Vulnerability ;
+    rdfs:range repo:File ;
+    rdfs:label "Affects File" ;
+    rdfs:comment "File containing vulnerability or using vulnerable dependency" .
+
+security:detectedBy a owl:ObjectProperty ;
+    rdfs:domain security:Vulnerability ;
+    rdfs:range prov:Agent ;
+    rdfs:label "Detected By" ;
+    rdfs:comment "Analyzer or tool that detected this vulnerability" .
+
+security:mitigationStrategy a owl:DatatypeProperty ;
+    rdfs:domain security:Vulnerability ;
+    rdfs:range xsd:string ;
+    rdfs:label "Mitigation Strategy" ;
+    rdfs:comment "Recommended mitigation or fix (e.g., 'Upgrade to 2.26.0')" .
+
+# ============================================================================
+# REMEDIATION
+# ============================================================================
+
+security:Remediation a owl:Class ;
+    rdfs:label "Remediation" ;
+    rdfs:comment """
+        Action to fix or mitigate vulnerability.
+        Can be upgrade, patch, workaround, or configuration change.
+    """ .
+
+security:Upgrade a owl:Class ;
+    rdfs:subClassOf security:Remediation ;
+    rdfs:label "Upgrade" ;
+    rdfs:comment "Upgrade dependency to fixed version" .
+
+security:Patch a owl:Class ;
+    rdfs:subClassOf security:Remediation ;
+    rdfs:label "Patch" ;
+    rdfs:comment "Apply security patch without full upgrade" .
+
+security:Workaround a owl:Class ;
+    rdfs:subClassOf security:Remediation ;
+    rdfs:label "Workaround" ;
+    rdfs:comment "Temporary workaround (e.g., disable feature)" .
+
+security:ConfigurationChange a owl:Class ;
+    rdfs:subClassOf security:Remediation ;
+    rdfs:label "Configuration Change" ;
+    rdfs:comment "Change configuration to mitigate vulnerability" .
+
+security:hasRemediation a owl:ObjectProperty ;
+    rdfs:domain security:Vulnerability ;
+    rdfs:range security:Remediation ;
+    rdfs:label "Has Remediation" .
+
+security:remediationEffort a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain security:Remediation ;
+    rdfs:range xsd:string ;
+    rdfs:label "Remediation Effort" ;
+    rdfs:comment "Estimated effort: 'low', 'medium', 'high'" ;
+    owl:oneOf ("low" "medium" "high") .
+
+# ============================================================================
+# AXIOMS
+# ============================================================================
+
+# Every CVE must have CVE ID
+security:CVE rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty security:hasCVEID ;
+    owl:cardinality 1
+] .
+
+# Every CVE should have CVSS score
+security:CVE rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty security:hasCVSSScore ;
+    owl:maxCardinality 1
+] .
+
+# Every vulnerability must have severity
+security:Vulnerability rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty security:hasSeverity ;
+    owl:cardinality 1
+] .
+
+# SecretLeak must have location
+security:SecretLeak rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty security:secretLocation ;
+    owl:minCardinality 1
+] .
+
+# DependencyVulnerability must affect package
+security:DependencyVulnerability rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty security:affectsPackage ;
+    owl:minCardinality 1
+] .
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+security:Security a owl:AnnotationProperty ;
+    rdfs:label "Security reference" ;
+    rdfs:seeAlso <https://cve.mitre.org/> ,
+                 <https://nvd.nist.gov/> ,
+                 <https://www.first.org/cvss/> ,
+                 <https://pypi.org/project/pip-audit/> ,
+                 <https://github.com/trufflesecurity/trufflehog> .

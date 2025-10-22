@@ -1,0 +1,424 @@
+@prefix api: <http://example.org/vocab/api#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/api#> a owl:Ontology ;
+    dcterms:title "RepoQ API Ontology" ;
+    dcterms:description """
+        Ontology for API contracts, versioning, and breaking change detection.
+        Supports semantic versioning and API compatibility analysis.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "API ontology with breaking change detection" .
+
+# ============================================================================
+# API CONCEPTS
+# ============================================================================
+
+api:API a owl:Class ;
+    rdfs:label "Application Programming Interface" ;
+    rdfs:comment """
+        Programmatic interface for interacting with software.
+        Can be public (for users) or internal (for modules).
+    """ .
+
+api:PublicAPI a owl:Class ;
+    rdfs:subClassOf api:API ;
+    rdfs:label "Public API" ;
+    rdfs:comment """
+        API exposed to external users.
+        Breaking changes require major version bump (semver).
+    """ .
+
+api:InternalAPI a owl:Class ;
+    rdfs:subClassOf api:API ;
+    rdfs:label "Internal API" ;
+    rdfs:comment """
+        API for internal use within project.
+        Breaking changes allowed with minor version bump.
+    """ .
+
+api:ExperimentalAPI a owl:Class ;
+    rdfs:subClassOf api:API ;
+    rdfs:label "Experimental API" ;
+    rdfs:comment """
+        Unstable API under development.
+        No stability guarantees.
+    """ .
+
+# ============================================================================
+# API COMPONENTS
+# ============================================================================
+
+api:Contract a owl:Class ;
+    rdfs:label "API Contract" ;
+    rdfs:comment """
+        Formal specification of API behavior.
+        Includes signatures, types, pre/postconditions, invariants.
+    """ .
+
+api:Function a owl:Class ;
+    rdfs:label "API Function" ;
+    rdfs:comment "Callable function or method in API" .
+
+api:Class a owl:Class ;
+    rdfs:label "API Class" ;
+    rdfs:comment "Class exposed in API" .
+
+api:Parameter a owl:Class ;
+    rdfs:label "API Parameter" ;
+    rdfs:comment "Function/method parameter" .
+
+api:ReturnValue a owl:Class ;
+    rdfs:label "API Return Value" ;
+    rdfs:comment "Function/method return value" .
+
+api:Exception a owl:Class ;
+    rdfs:label "API Exception" ;
+    rdfs:comment "Exception that can be raised by API" .
+
+# ============================================================================
+# VERSIONING
+# ============================================================================
+
+api:Version a owl:Class ;
+    rdfs:label "API Version" ;
+    rdfs:comment """
+        Specific version of API (follows semantic versioning).
+        Format: MAJOR.MINOR.PATCH
+    """ ;
+    rdfs:seeAlso <https://semver.org/> .
+
+api:MajorVersion a owl:Class ;
+    rdfs:subClassOf api:Version ;
+    rdfs:label "Major Version" ;
+    rdfs:comment "Incompatible API changes (breaking)" .
+
+api:MinorVersion a owl:Class ;
+    rdfs:subClassOf api:Version ;
+    rdfs:label "Minor Version" ;
+    rdfs:comment "Backwards-compatible new features" .
+
+api:PatchVersion a owl:Class ;
+    rdfs:subClassOf api:Version ;
+    rdfs:label "Patch Version" ;
+    rdfs:comment "Backwards-compatible bug fixes" .
+
+# ============================================================================
+# CHANGES
+# ============================================================================
+
+api:Change a owl:Class ;
+    rdfs:label "API Change" ;
+    rdfs:comment """
+        Modification to API between versions.
+    """ .
+
+api:BreakingChange a owl:Class ;
+    rdfs:subClassOf api:Change ;
+    rdfs:label "Breaking Change" ;
+    rdfs:comment """
+        Change breaking backwards compatibility.
+        Requires major version bump.
+        Examples: remove function, change signature, rename parameter.
+    """ .
+
+api:NonBreakingChange a owl:Class ;
+    rdfs:subClassOf api:Change ;
+    rdfs:label "Non-Breaking Change" ;
+    rdfs:comment """
+        Change preserving backwards compatibility.
+        Allows minor version bump.
+        Examples: add function, add optional parameter, add return field.
+    """ .
+
+api:Deprecation a owl:Class ;
+    rdfs:subClassOf api:Change ;
+    rdfs:label "Deprecation" ;
+    rdfs:comment """
+        Marking API element as deprecated.
+        Will be removed in future major version.
+    """ .
+
+# ============================================================================
+# BREAKING CHANGE TYPES
+# ============================================================================
+
+api:FunctionRemoved a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Function Removed" ;
+    rdfs:comment "Public function deleted from API" .
+
+api:FunctionRenamed a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Function Renamed" ;
+    rdfs:comment "Public function name changed" .
+
+api:SignatureChanged a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Signature Changed" ;
+    rdfs:comment """
+        Function signature modified (parameters added/removed/reordered).
+    """ .
+
+api:ReturnTypeChanged a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Return Type Changed" ;
+    rdfs:comment "Function return type changed incompatibly" .
+
+api:ParameterRemoved a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Parameter Removed" ;
+    rdfs:comment "Required parameter removed" .
+
+api:ParameterTypeChanged a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Parameter Type Changed" ;
+    rdfs:comment "Parameter type changed incompatibly" .
+
+api:ClassRemoved a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Class Removed" ;
+    rdfs:comment "Public class deleted" .
+
+api:MethodRemoved a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Method Removed" ;
+    rdfs:comment "Public method removed from class" .
+
+api:AttributeRemoved a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Attribute Removed" ;
+    rdfs:comment "Public attribute removed from class" .
+
+api:ExceptionAdded a owl:Class ;
+    rdfs:subClassOf api:BreakingChange ;
+    rdfs:label "Exception Added" ;
+    rdfs:comment "New exception added to function (breaking for callers)" .
+
+# ============================================================================
+# ISSUE TYPES (for APIBreakingChangeAnalyzer)
+# ============================================================================
+
+api:BreakingChangeDetected a owl:Class ;
+    rdfs:label "Breaking Change Detected" ;
+    rdfs:comment """
+        Breaking change detected between versions.
+        Generated by APIBreakingChangeAnalyzer.
+    """ .
+
+api:DeprecatedAPI a owl:Class ;
+    rdfs:label "Deprecated API" ;
+    rdfs:comment """
+        Usage of deprecated API element.
+        Generated by APIBreakingChangeAnalyzer.
+    """ .
+
+api:MissingAPIDocumentation a owl:Class ;
+    rdfs:label "Missing API Documentation" ;
+    rdfs:comment """
+        Public API without documentation.
+        Generated by APIBreakingChangeAnalyzer.
+    """ .
+
+api:VersionMismatch a owl:Class ;
+    rdfs:label "Version Mismatch" ;
+    rdfs:comment """
+        Breaking change without major version bump.
+        Violates semantic versioning.
+        Generated by APIBreakingChangeAnalyzer.
+    """ .
+
+api:UndocumentedBreakingChange a owl:Class ;
+    rdfs:label "Undocumented Breaking Change" ;
+    rdfs:comment """
+        Breaking change not mentioned in changelog.
+        Generated by APIBreakingChangeAnalyzer.
+    """ .
+
+# ============================================================================
+# PROPERTIES
+# ============================================================================
+
+api:hasVersion a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:API ;
+    rdfs:range xsd:string ;
+    rdfs:label "Has Version" ;
+    rdfs:comment "Semantic version string (e.g., '1.2.3')" .
+
+api:majorVersion a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Version ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Major Version" .
+
+api:minorVersion a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Version ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Minor Version" .
+
+api:patchVersion a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Version ;
+    rdfs:range xsd:nonNegativeInteger ;
+    rdfs:label "Patch Version" .
+
+api:isPublic a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Function ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Is Public" ;
+    rdfs:comment "True if function is part of public API" .
+
+api:isDeprecated a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Function ;
+    rdfs:range xsd:boolean ;
+    rdfs:label "Is Deprecated" .
+
+api:deprecationMessage a owl:DatatypeProperty ;
+    rdfs:domain api:Deprecation ;
+    rdfs:range xsd:string ;
+    rdfs:label "Deprecation Message" ;
+    rdfs:comment "Message explaining deprecation and replacement" .
+
+api:deprecatedSince a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Deprecation ;
+    rdfs:range xsd:string ;
+    rdfs:label "Deprecated Since" ;
+    rdfs:comment "Version when deprecation was introduced (e.g., '2.1.0')" .
+
+api:removedIn a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Deprecation ;
+    rdfs:range xsd:string ;
+    rdfs:label "Removed In" ;
+    rdfs:comment "Version when deprecated element will be removed (e.g., '3.0.0')" .
+
+api:hasContract a owl:ObjectProperty ;
+    rdfs:domain api:Function ;
+    rdfs:range api:Contract ;
+    rdfs:label "Has Contract" .
+
+api:hasParameter a owl:ObjectProperty ;
+    rdfs:domain api:Function ;
+    rdfs:range api:Parameter ;
+    rdfs:label "Has Parameter" .
+
+api:hasReturnValue a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain api:Function ;
+    rdfs:range api:ReturnValue ;
+    rdfs:label "Has Return Value" .
+
+api:raisesException a owl:ObjectProperty ;
+    rdfs:domain api:Function ;
+    rdfs:range api:Exception ;
+    rdfs:label "Raises Exception" .
+
+api:changedFrom a owl:ObjectProperty ;
+    rdfs:domain api:Change ;
+    rdfs:range api:Version ;
+    rdfs:label "Changed From" ;
+    rdfs:comment "Previous version" .
+
+api:changedTo a owl:ObjectProperty ;
+    rdfs:domain api:Change ;
+    rdfs:range api:Version ;
+    rdfs:label "Changed To" ;
+    rdfs:comment "New version" .
+
+api:affectsFunction a owl:ObjectProperty ;
+    rdfs:domain api:Change ;
+    rdfs:range api:Function ;
+    rdfs:label "Affects Function" .
+
+api:changeDescription a owl:DatatypeProperty ;
+    rdfs:domain api:Change ;
+    rdfs:range xsd:string ;
+    rdfs:label "Change Description" .
+
+api:oldSignature a owl:DatatypeProperty ;
+    rdfs:domain api:SignatureChanged ;
+    rdfs:range xsd:string ;
+    rdfs:label "Old Signature" .
+
+api:newSignature a owl:DatatypeProperty ;
+    rdfs:domain api:SignatureChanged ;
+    rdfs:range xsd:string ;
+    rdfs:label "New Signature" .
+
+api:mitigationStrategy a owl:DatatypeProperty ;
+    rdfs:domain api:BreakingChange ;
+    rdfs:range xsd:string ;
+    rdfs:label "Mitigation Strategy" ;
+    rdfs:comment "How to migrate from old to new API" .
+
+# ============================================================================
+# AXIOMS
+# ============================================================================
+
+# Every version must have major/minor/patch
+api:Version rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:majorVersion ;
+    owl:cardinality 1
+] .
+
+api:Version rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:minorVersion ;
+    owl:cardinality 1
+] .
+
+api:Version rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:patchVersion ;
+    owl:cardinality 1
+] .
+
+# Breaking changes must specify affected version
+api:BreakingChange rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:changedFrom ;
+    owl:minCardinality 1
+] .
+
+api:BreakingChange rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:changedTo ;
+    owl:minCardinality 1
+] .
+
+# Deprecations must have deprecation message
+api:Deprecation rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:deprecationMessage ;
+    owl:minCardinality 1
+] .
+
+# SignatureChanged must have old/new signatures
+api:SignatureChanged rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:oldSignature ;
+    owl:cardinality 1
+] .
+
+api:SignatureChanged rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty api:newSignature ;
+    owl:cardinality 1
+] .
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+api:APIDesign a owl:AnnotationProperty ;
+    rdfs:label "API Design reference" ;
+    rdfs:seeAlso <https://semver.org/> ,
+                 <https://www.python.org/dev/peps/pep-0387/> ,
+                 <https://docs.openstack.org/api-ref/> ,
+                 <https://swagger.io/specification/> .

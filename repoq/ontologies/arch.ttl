@@ -1,0 +1,370 @@
+@prefix arch: <http://example.org/vocab/arch#> .
+@prefix repo: <http://example.org/vocab/repo#> .
+@prefix quality: <http://example.org/vocab/quality#> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+<http://example.org/vocab/arch#> a owl:Ontology ;
+    dcterms:title "RepoQ Architecture Ontology" ;
+    dcterms:description """
+        Ontology for software architecture concepts, layers, patterns, and violations.
+        Supports architecture drift detection, layer enforcement, and dependency rules.
+    """ ;
+    dcterms:creator "RepoQ Contributors" ;
+    dcterms:created "2025-10-22"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment "Architecture ontology with layer and pattern support" .
+
+# ============================================================================
+# ARCHITECTURE CONCEPTS
+# ============================================================================
+
+arch:ArchitectureModel a owl:Class ;
+    rdfs:label "Architecture Model" ;
+    rdfs:comment """
+        High-level description of system architecture.
+        Defines layers, components, boundaries, and rules.
+    """ .
+
+arch:Layer a owl:Class ;
+    rdfs:label "Architecture Layer" ;
+    rdfs:comment """
+        Horizontal slice of system (e.g., presentation, domain, infrastructure).
+        Layers have dependency rules (e.g., domain cannot depend on infra).
+        Example: Hexagonal Architecture with domain core and adapters.
+    """ ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Multitier_architecture> .
+
+arch:Component a owl:Class ;
+    rdfs:label "Architecture Component" ;
+    rdfs:comment """
+        Logical unit of system (module, package, service).
+        Components can have explicit interfaces and dependencies.
+    """ .
+
+arch:Boundary a owl:Class ;
+    rdfs:label "Architecture Boundary" ;
+    rdfs:comment """
+        Explicit boundary between components or layers.
+        Enforces encapsulation and information hiding.
+    """ .
+
+# ============================================================================
+# LAYER TYPES
+# ============================================================================
+
+arch:PresentationLayer a owl:Class ;
+    rdfs:subClassOf arch:Layer ;
+    rdfs:label "Presentation Layer" ;
+    rdfs:comment "UI, CLI, API controllers (outermost layer)" .
+
+arch:ApplicationLayer a owl:Class ;
+    rdfs:subClassOf arch:Layer ;
+    rdfs:label "Application Layer" ;
+    rdfs:comment "Use cases, orchestration, application services" .
+
+arch:DomainLayer a owl:Class ;
+    rdfs:subClassOf arch:Layer ;
+    rdfs:label "Domain Layer" ;
+    rdfs:comment "Business logic, entities, domain services (core)" .
+
+arch:InfrastructureLayer a owl:Class ;
+    rdfs:subClassOf arch:Layer ;
+    rdfs:label "Infrastructure Layer" ;
+    rdfs:comment "Persistence, external services, frameworks" .
+
+# ============================================================================
+# ARCHITECTURE PATTERNS
+# ============================================================================
+
+arch:ArchitecturePattern a owl:Class ;
+    rdfs:label "Architecture Pattern" ;
+    rdfs:comment """
+        Reusable architectural solution (e.g., Hexagonal, Clean, MVC).
+    """ .
+
+arch:HexagonalArchitecture a owl:Class ;
+    rdfs:subClassOf arch:ArchitecturePattern ;
+    rdfs:label "Hexagonal Architecture" ;
+    rdfs:comment """
+        Ports and adapters pattern.
+        Domain core isolated from external dependencies.
+    """ ;
+    rdfs:seeAlso <https://alistair.cockburn.us/hexagonal-architecture/> .
+
+arch:CleanArchitecture a owl:Class ;
+    rdfs:subClassOf arch:ArchitecturePattern ;
+    rdfs:label "Clean Architecture" ;
+    rdfs:comment """
+        Concentric circles with dependencies pointing inward.
+        Entities → Use Cases → Interface Adapters → Frameworks.
+    """ ;
+    rdfs:seeAlso <https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html> .
+
+arch:LayeredArchitecture a owl:Class ;
+    rdfs:subClassOf arch:ArchitecturePattern ;
+    rdfs:label "Layered Architecture" ;
+    rdfs:comment """
+        Traditional N-tier architecture with strict layer dependencies.
+    """ .
+
+# ============================================================================
+# ARCHITECTURE RULES
+# ============================================================================
+
+arch:ArchitectureRule a owl:Class ;
+    rdfs:label "Architecture Rule" ;
+    rdfs:comment """
+        Constraint on architecture (e.g., "domain cannot import infra").
+        Violations detected by ArchitectureDriftAnalyzer.
+    """ .
+
+arch:LayerDependencyRule a owl:Class ;
+    rdfs:subClassOf arch:ArchitectureRule ;
+    rdfs:label "Layer Dependency Rule" ;
+    rdfs:comment """
+        Rule constraining which layers can depend on which.
+        Example: Presentation → Application → Domain (no backwards deps).
+    """ .
+
+arch:ForbiddenImportRule a owl:Class ;
+    rdfs:subClassOf arch:ArchitectureRule ;
+    rdfs:label "Forbidden Import Rule" ;
+    rdfs:comment """
+        Rule forbidding specific imports.
+        Example: "domain.* cannot import infra.*"
+    """ .
+
+arch:CyclicDependencyRule a owl:Class ;
+    rdfs:subClassOf arch:ArchitectureRule ;
+    rdfs:label "Cyclic Dependency Rule" ;
+    rdfs:comment """
+        Rule forbidding cycles in dependency graph.
+        Ensures DAG structure at module/component level.
+    """ .
+
+arch:InterfaceSegregationRule a owl:Class ;
+    rdfs:subClassOf arch:ArchitectureRule ;
+    rdfs:label "Interface Segregation Rule" ;
+    rdfs:comment """
+        Rule enforcing interface segregation (ISP).
+        Components depend on specific interfaces, not implementations.
+    """ .
+
+# ============================================================================
+# ISSUE TYPES (for ArchitectureDriftAnalyzer)
+# ============================================================================
+
+arch:LayerViolation a owl:Class ;
+    rdfs:label "Layer Violation" ;
+    rdfs:comment """
+        Violation of layer dependency rule.
+        Example: Domain layer imports from Infrastructure layer.
+        Generated by ArchitectureDriftAnalyzer.
+    """ .
+
+arch:ForbiddenImport a owl:Class ;
+    rdfs:label "Forbidden Import" ;
+    rdfs:comment """
+        Import that violates forbidden import rule.
+        Example: domain/order.py imports infra/db.py
+        Generated by ArchitectureDriftAnalyzer.
+    """ .
+
+arch:CyclicDependency a owl:Class ;
+    rdfs:label "Cyclic Dependency" ;
+    rdfs:comment """
+        Circular dependency between modules/components.
+        Example: A → B → C → A
+        Generated by ArchitectureDriftAnalyzer.
+    """ .
+
+arch:BoundaryViolation a owl:Class ;
+    rdfs:label "Boundary Violation" ;
+    rdfs:comment """
+        Component crosses architecture boundary improperly.
+        Example: Direct database access from presentation layer.
+        Generated by ArchitectureDriftAnalyzer.
+    """ .
+
+arch:GodClass a owl:Class ;
+    rdfs:label "God Class" ;
+    rdfs:comment """
+        Class with too many responsibilities (SRP violation).
+        Detected by high coupling + low cohesion.
+        Generated by ArchitectureDriftAnalyzer.
+    """ .
+
+arch:StrayModule a owl:Class ;
+    rdfs:label "Stray Module" ;
+    rdfs:comment """
+        Module not assigned to any layer.
+        Indicates unclear architecture.
+        Generated by ArchitectureDriftAnalyzer.
+    """ .
+
+# ============================================================================
+# PROPERTIES
+# ============================================================================
+
+arch:hasLayer a owl:ObjectProperty ;
+    rdfs:domain arch:ArchitectureModel ;
+    rdfs:range arch:Layer ;
+    rdfs:label "Has Layer" .
+
+arch:hasComponent a owl:ObjectProperty ;
+    rdfs:domain arch:Layer ;
+    rdfs:range arch:Component ;
+    rdfs:label "Has Component" .
+
+arch:belongsToLayer a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:domain repo:Module ;
+    rdfs:range arch:Layer ;
+    rdfs:label "Belongs To Layer" ;
+    rdfs:comment "Module is part of this architecture layer" .
+
+arch:dependsOn a owl:ObjectProperty ;
+    rdfs:domain arch:Component ;
+    rdfs:range arch:Component ;
+    rdfs:label "Depends On" ;
+    rdfs:comment "Component has dependency on another component" .
+
+arch:allowedDependency a owl:ObjectProperty ;
+    rdfs:domain arch:Layer ;
+    rdfs:range arch:Layer ;
+    rdfs:label "Allowed Dependency" ;
+    rdfs:comment "Layer A is allowed to depend on Layer B" .
+
+arch:forbiddenDependency a owl:ObjectProperty ;
+    rdfs:domain arch:Layer ;
+    rdfs:range arch:Layer ;
+    rdfs:label "Forbidden Dependency" ;
+    rdfs:comment "Layer A is forbidden to depend on Layer B" .
+
+arch:hasConstraint a owl:ObjectProperty ;
+    rdfs:domain arch:ArchitectureModel ;
+    rdfs:range arch:ArchitectureRule ;
+    rdfs:label "Has Constraint" .
+
+arch:violatesRule a owl:ObjectProperty ;
+    rdfs:domain repo:File ;
+    rdfs:range arch:ArchitectureRule ;
+    rdfs:label "Violates Rule" ;
+    rdfs:comment "File contains code violating architecture rule" .
+
+arch:importPath a owl:DatatypeProperty ;
+    rdfs:domain arch:ForbiddenImport ;
+    rdfs:range xsd:string ;
+    rdfs:label "Import Path" ;
+    rdfs:comment "Forbidden import statement (e.g., 'from infra.db import')" .
+
+arch:fromModule a owl:DatatypeProperty ;
+    rdfs:domain arch:LayerViolation ;
+    rdfs:range xsd:string ;
+    rdfs:label "From Module" ;
+    rdfs:comment "Module that violates rule" .
+
+arch:toModule a owl:DatatypeProperty ;
+    rdfs:domain arch:LayerViolation ;
+    rdfs:range xsd:string ;
+    rdfs:label "To Module" ;
+    rdfs:comment "Module being improperly imported" .
+
+arch:cyclePath a owl:DatatypeProperty ;
+    rdfs:domain arch:CyclicDependency ;
+    rdfs:range xsd:string ;
+    rdfs:label "Cycle Path" ;
+    rdfs:comment "Cycle in dependency graph (e.g., 'A → B → C → A')" .
+
+arch:couplingScore a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain arch:Component ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Coupling Score" ;
+    rdfs:comment "Afferent + efferent coupling (0.0-1.0)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 1.0 .
+
+arch:cohesionScore a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain arch:Component ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Cohesion Score" ;
+    rdfs:comment "Measure of internal cohesion (0.0-1.0)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 1.0 .
+
+arch:instability a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain arch:Component ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Instability" ;
+    rdfs:comment "I = Ce / (Ca + Ce), where Ca=afferent, Ce=efferent" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 1.0 .
+
+arch:abstractness a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain arch:Component ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Abstractness" ;
+    rdfs:comment "A = interfaces / (interfaces + classes)" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 1.0 .
+
+arch:distanceFromMainSequence a owl:DatatypeProperty , owl:FunctionalProperty ;
+    rdfs:domain arch:Component ;
+    rdfs:range xsd:decimal ;
+    rdfs:label "Distance from Main Sequence" ;
+    rdfs:comment "D = |A + I - 1|, ideal = 0" ;
+    owl:minInclusive 0.0 ;
+    owl:maxInclusive 1.0 .
+
+# ============================================================================
+# AXIOMS
+# ============================================================================
+
+# Every layer must belong to architecture model
+arch:Layer rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty [owl:inverseOf arch:hasLayer] ;
+    owl:minCardinality 1
+] .
+
+# LayerViolation must specify from/to modules
+arch:LayerViolation rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty arch:fromModule ;
+    owl:cardinality 1
+] .
+
+arch:LayerViolation rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty arch:toModule ;
+    owl:cardinality 1
+] .
+
+# CyclicDependency must have cycle path
+arch:CyclicDependency rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty arch:cyclePath ;
+    owl:minCardinality 1
+] .
+
+# ForbiddenImport must have import path
+arch:ForbiddenImport rdfs:subClassOf [
+    a owl:Restriction ;
+    owl:onProperty arch:importPath ;
+    owl:minCardinality 1
+] .
+
+# ============================================================================
+# DOCUMENTATION
+# ============================================================================
+
+arch:Architecture a owl:AnnotationProperty ;
+    rdfs:label "Architecture reference" ;
+    rdfs:seeAlso <https://en.wikipedia.org/wiki/Software_architecture> ,
+                 <https://alistair.cockburn.us/hexagonal-architecture/> ,
+                 <https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html> ,
+                 <https://martinfowler.com/architecture/> .
