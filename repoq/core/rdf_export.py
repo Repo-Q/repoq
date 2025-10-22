@@ -11,11 +11,14 @@ from __future__ import annotations
 
 import json
 import logging
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 
 from ..normalize.rdf_trs import canonicalize_rdf
 from .jsonld import to_jsonld
 from .model import Project
+
+if TYPE_CHECKING:
+    from rdflib import Graph
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +28,173 @@ TEST_NS = "http://example.org/vocab/test#"
 TRS_NS = "http://example.org/vocab/trs#"
 QUALITY_NS = "http://example.org/vocab/quality#"
 DOCS_NS = "http://example.org/vocab/docs#"
+
+
+def _build_data_graph(
+    project: Project,
+    context_file: Optional[str],
+    field33_context: Optional[str],
+) -> "Graph":
+    """Build RDF data graph from project JSON-LD.
+    
+    Args:
+        project: Project model
+        context_file: Optional JSON-LD context file
+        field33_context: Optional Field33 context file
+        
+    Returns:
+        RDFLib Graph with project data
+        
+    Raises:
+        ImportError: If rdflib not available
+    """
+    from rdflib import Graph
+    
+    data_graph = Graph()
+    data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
+    
+    # Canonicalize JSON-LD for consistent validation
+    canonical_data = canonicalize_rdf(data)
+    data_graph.parse(data=json.dumps(canonical_data), format="json-ld")
+    
+    return data_graph
+
+
+def _apply_enrichments(
+    data_graph: "Graph",
+    project: Project,
+    enrich_meta: bool,
+    enrich_test_coverage: bool,
+    enrich_trs_rules: bool,
+    enrich_quality_recommendations: bool,
+    enrich_self_analysis: bool,
+    coverage_path: str,
+    top_k_recommendations: int,
+    min_delta_q: float,
+    stratification_level: int,
+    analyzed_commit: Optional[str],
+) -> None:
+    """Apply all requested enrichments to data graph.
+    
+    Args:
+        data_graph: RDFLib Graph to enrich (modified in-place)
+        project: Project model
+        enrich_meta: Enable meta-loop ontology enrichment
+        enrich_test_coverage: Enable test coverage enrichment
+        enrich_trs_rules: Enable TRS rules enrichment
+        enrich_quality_recommendations: Enable quality recommendations
+        enrich_self_analysis: Enable self-analysis validation
+        coverage_path: Path to coverage.json
+        top_k_recommendations: Number of top recommendations
+        min_delta_q: Minimum ΔQ threshold
+        stratification_level: Stratification level (0-2)
+        analyzed_commit: Git commit SHA
+    """
+    if enrich_meta:
+        _enrich_graph_with_meta_ontologies(data_graph, project)
+
+    if enrich_test_coverage:
+        from .test_coverage import enrich_graph_with_test_coverage
+        try:
+            enrich_graph_with_test_coverage(data_graph, project.id, coverage_path)
+            logger.info("Successfully enriched RDF with test coverage for validation")
+        except Exception as e:
+            logger.warning(f"Failed to enrich with test coverage: {e}")
+
+    if enrich_trs_rules:
+        from .trs_rules import enrich_graph_with_trs_rules
+        try:
+            enrich_graph_with_trs_rules(data_graph, project.id)
+            logger.info("Successfully enriched RDF with TRS rules for validation")
+        except Exception as e:
+            logger.warning(f"Failed to enrich with TRS rules: {e}")
+
+    if enrich_quality_recommendations:
+        from .quality_recommendations import enrich_graph_with_quality_recommendations
+        try:
+            enrich_graph_with_quality_recommendations(
+                data_graph, project, top_k=top_k_recommendations, min_delta_q=min_delta_q
+            )
+            logger.info("Successfully enriched RDF with quality recommendations for validation")
+        except Exception as e:
+            logger.warning(f"Failed to enrich with quality recommendations: {e}")
+
+    if enrich_self_analysis:
+        from .meta_validation import enrich_graph_with_self_analysis
+        try:
+            enrich_graph_with_self_analysis(
+                data_graph, project, stratification_level=stratification_level, analyzed_commit=analyzed_commit
+            )
+            logger.info("Successfully enriched RDF with self-analysis for validation")
+        except Exception as e:
+            logger.warning(f"Failed to enrich with self-analysis: {e}")
+
+
+def _load_shapes_graph(shapes_dir: str) -> "Graph":
+    """Load SHACL shapes from directory into RDF graph.
+    
+    Args:
+        shapes_dir: Directory containing .ttl/.rdf/.nt shape files
+        
+    Returns:
+        RDFLib Graph with all loaded shapes
+        
+    Raises:
+        OSError: If shapes directory cannot be read
+    """
+    from rdflib import Graph
+    import os
+    
+    shapes_graph = Graph()
+    
+    for fn in os.listdir(shapes_dir):
+        if fn.endswith(".ttl") or fn.endswith(".rdf") or fn.endswith(".nt"):
+            shape_path = os.path.join(shapes_dir, fn)
+            try:
+                shapes_graph.parse(shape_path)
+                logger.debug(f"Loaded SHACL shape: {fn}")
+            except Exception as e:
+                logger.warning(f"Failed to parse shape file {fn}: {e}")
+    
+    return shapes_graph
+
+
+def _extract_violations(report_graph: "Graph") -> list[dict]:
+    """Extract violation details from SHACL validation report.
+    
+    Args:
+        report_graph: RDFLib Graph with validation results
+        
+    Returns:
+        List of violation dicts with focusNode, message, severity, value
+    """
+    violations = []
+    
+    query = """
+    PREFIX sh: <http://www.w3.org/ns/shacl#>
+    SELECT ?focusNode ?message ?severity ?value WHERE {
+        ?result a sh:ValidationResult .
+        ?result sh:focusNode ?focusNode .
+        ?result sh:resultMessage ?message .
+        ?result sh:resultSeverity ?severity .
+        OPTIONAL { ?result sh:value ?value }
+    }
+    """
+    
+    try:
+        for row in report_graph.query(query):
+            violations.append(
+                {
+                    "focusNode": str(row.focusNode),
+                    "message": str(row.message),
+                    "severity": str(row.severity).split("#")[-1],  # Extract "Violation", "Warning", etc.
+                    "value": str(row.value) if row.value else None,
+                }
+            )
+    except Exception as e:
+        logger.warning(f"Failed to extract violations: {e}")
+    
+    return violations
 
 
 def _enrich_graph_with_meta_ontologies(graph, project: Project) -> None:
@@ -310,106 +480,39 @@ def validate_shapes(
         raise RuntimeError("Validation library import failed") from e
 
     try:
-        data_graph = Graph()
-        data = to_jsonld(project, context_file=context_file, field33_context=field33_context)
-
-        # Canonicalize JSON-LD for consistent validation
-        canonical_data = canonicalize_rdf(data)
-
-        data_graph.parse(data=json.dumps(canonical_data), format="json-ld")
-
-        # Enrich with meta-loop ontologies before validation
-        if enrich_meta:
-            _enrich_graph_with_meta_ontologies(data_graph, project)
-
-        # Enrich with test coverage data
-        if enrich_test_coverage:
-            from .test_coverage import enrich_graph_with_test_coverage
-
-            try:
-                enrich_graph_with_test_coverage(data_graph, project.id, coverage_path)
-                logger.info("Successfully enriched RDF with test coverage for validation")
-            except Exception as e:
-                logger.warning(f"Failed to enrich with test coverage: {e}")
-
-        # Enrich with TRS rules
-        if enrich_trs_rules:
-            from .trs_rules import enrich_graph_with_trs_rules
-
-            try:
-                enrich_graph_with_trs_rules(data_graph, project.id)
-                logger.info("Successfully enriched RDF with TRS rules for validation")
-            except Exception as e:
-                logger.warning(f"Failed to enrich with TRS rules: {e}")
-
-        # Enrich with quality recommendations
-        if enrich_quality_recommendations:
-            from .quality_recommendations import enrich_graph_with_quality_recommendations
-
-            try:
-                enrich_graph_with_quality_recommendations(
-                    data_graph, project, top_k=top_k_recommendations, min_delta_q=min_delta_q
-                )
-                logger.info("Successfully enriched RDF with quality recommendations for validation")
-            except Exception as e:
-                logger.warning(f"Failed to enrich with quality recommendations: {e}")
-
-        # Enrich with self-analysis validation
-        if enrich_self_analysis:
-            from .meta_validation import enrich_graph_with_self_analysis
-
-            try:
-                enrich_graph_with_self_analysis(
-                    data_graph, project, stratification_level=stratification_level, analyzed_commit=analyzed_commit
-                )
-                logger.info("Successfully enriched RDF with self-analysis for validation")
-            except Exception as e:
-                logger.warning(f"Failed to enrich with self-analysis: {e}")
-
-        shapes_graph = Graph()
-        import os
-
-        for fn in os.listdir(shapes_dir):
-            if fn.endswith(".ttl") or fn.endswith(".rdf") or fn.endswith(".nt"):
-                shape_path = os.path.join(shapes_dir, fn)
-                try:
-                    shapes_graph.parse(shape_path)
-                    logger.debug(f"Loaded SHACL shape: {fn}")
-                except Exception as e:
-                    logger.warning(f"Failed to parse shape file {fn}: {e}")
-
+        # Build data graph from project
+        data_graph = _build_data_graph(project, context_file, field33_context)
+        
+        # Apply all enrichments
+        _apply_enrichments(
+            data_graph,
+            project,
+            enrich_meta,
+            enrich_test_coverage,
+            enrich_trs_rules,
+            enrich_quality_recommendations,
+            enrich_self_analysis,
+            coverage_path,
+            top_k_recommendations,
+            min_delta_q,
+            stratification_level,
+            analyzed_commit,
+        )
+        
+        # Load SHACL shapes
+        shapes_graph = _load_shapes_graph(shapes_dir)
+        
+        # Perform validation
+        from pyshacl import validate
         conforms, report_graph, report_text = validate(
             data_graph, shacl_graph=shapes_graph, inference="rdfs", debug=False
         )
-
-        # Extract violations
+        
+        # Extract violations if any
         violations = []
         if not conforms and report_graph:
-            query = """
-            PREFIX sh: <http://www.w3.org/ns/shacl#>
-            SELECT ?focusNode ?message ?severity ?value WHERE {
-                ?result a sh:ValidationResult .
-                ?result sh:focusNode ?focusNode .
-                ?result sh:resultMessage ?message .
-                ?result sh:resultSeverity ?severity .
-                OPTIONAL { ?result sh:value ?value }
-            }
-            """
-            try:
-                for row in report_graph.query(query):
-                    violations.append(
-                        {
-                            "focusNode": str(row.focusNode),
-                            "message": str(row.message),
-                            "severity": str(row.severity).split("#")[
-                                -1
-                            ],  # Extract "Violation", "Warning", etc.
-                            "value": str(row.value) if row.value else None,
-                        }
-                    )
-            except Exception as e:
-                logger.warning(f"Failed to extract violations: {e}")
-
+            violations = _extract_violations(report_graph)
+        
         result = {"conforms": bool(conforms), "report": str(report_text), "violations": violations}
 
         if conforms:
