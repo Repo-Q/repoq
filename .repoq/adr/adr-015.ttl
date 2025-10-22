@@ -1,0 +1,165 @@
+@prefix adr: <https://repoq.dev/ontology/adr#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+# ============================================================================
+# ADR-015: Digital Twin Architecture
+# ============================================================================
+# Decision: Hybrid approach for .repoq/ digital twin
+# Date: 2025-10-22
+# Status: Accepted
+# Supersedes: None
+# Related: ADR-014 (SSoT)
+# ============================================================================
+
+<https://repoq.dev/adr/ADR-015> a adr:ArchitectureDecisionRecord ;
+    adr:id "ADR-015" ;
+    adr:title "Digital Twin Architecture (Hybrid ABox)" ;
+    adr:status adr:StatusAccepted ;
+    adr:date "2025-10-22"^^xsd:date ;
+    adr:context <https://repoq.dev/adr/ADR-015#context> ;
+    adr:decision <https://repoq.dev/adr/ADR-015#decision> ;
+    adr:consequence <https://repoq.dev/adr/ADR-015#con1> ,
+                    <https://repoq.dev/adr/ADR-015#con2> ,
+                    <https://repoq.dev/adr/ADR-015#con3> ,
+                    <https://repoq.dev/adr/ADR-015#con4> ,
+                    <https://repoq.dev/adr/ADR-015#con5> ,
+                    <https://repoq.dev/adr/ADR-015#con6> ,
+                    <https://repoq.dev/adr/ADR-015#con7> ;
+    adr:alternative <https://repoq.dev/adr/ADR-015#alt1> ,
+                    <https://repoq.dev/adr/ADR-015#alt2> ;
+    adr:relatedTo <https://repoq.dev/adr/ADR-014> ;
+    adr:implements <https://repoq.dev/value/V07> ,
+                   <https://repoq.dev/requirement/FR-10> ;
+    adr:traces <https://repoq.dev/theorem/TheoremA> .
+
+# Context
+# ============================================================================
+<https://repoq.dev/adr/ADR-015#context> a adr:Context ;
+    adr:problem """The .repoq/ directory must serve as a digital twin of the repository, 
+capturing both TBox (ontologies/schemas) and ABox (facts/instances) in RDF/TTL format. 
+The digital twin should enable:
+1. Traceability queries (code → tests → ADR → requirements)
+2. Quality gate validation through SHACL
+3. Automated metrics extraction
+4. Historical evolution tracking
+
+The key question is: should ABox facts be static (stored) or dynamic (generated)?""" ;
+    adr:constraint "Performance: Large repositories (1000+ commits, 10000+ files) → millions of RDF triples" ;
+    adr:constraint "Freshness: Static data can become stale if not synchronized with git" ;
+    adr:constraint "Storage: Storing full history in TTL would bloat .repoq/ directory" ;
+    adr:constraint "Query capability: Need SPARQL queries across code, tests, docs, and metadata" .
+
+# Decision
+# ============================================================================
+<https://repoq.dev/adr/ADR-015#decision> a adr:Decision ;
+    adr:description """Hybrid approach: Separate static ABox (manual artifacts) from dynamic ABox (auto-generated).
+
+Directory structure:
+```
+.repoq/
+  ontologies/         # TBox (schemas) - STATIC
+    story.ttl
+    vdad.ttl
+    adr.ttl
+    changelog.ttl
+    repo.ttl          # NEW: Git repository ontology
+    code.ttl          # NEW: Code structure ontology
+    test.ttl          # NEW: Test ontology
+  
+  data/               # ABox (manual facts) - STATIC
+    story/*.ttl       # Development story (phases, artifacts)
+    adr/*.ttl         # Architecture decisions
+    changelog/*.ttl   # Release history
+  
+  shapes/             # SHACL validation - STATIC
+    story-shape.ttl
+    adr-shape.ttl
+    changelog-shape.ttl
+    repo-shape.ttl    # NEW
+  
+  certificates/       # Validation certificates - GENERATED
+    validation-*.ttl
+```
+
+Python API for dynamic facts:
+```python
+from repoq.core.digital_twin import DigitalTwin
+
+twin = DigitalTwin(workspace_path)
+
+# Generate RDF on-demand
+commits_graph = twin.get_commits_rdf(since='2025-01-01', limit=100)
+files_graph = twin.get_files_rdf(pattern='*.py')
+tests_graph = twin.get_tests_rdf()
+
+# Combined query
+full_graph = twin.get_complete_graph()  # static + dynamic
+results = full_graph.query('SELECT ?file WHERE { ?commit :modifies ?file }')
+
+# Export snapshot for CI/archival
+twin.export_snapshot('baseline-2025-10-22.ttl')
+```
+
+Rationale:
+- Static: Manual artifacts (story, ADR, changelog) stay in .repoq/data/
+- Dynamic: Automated facts (commits, files, tests) generated on-demand
+- Snapshots: Can export combined graph for CI validation or archival
+- Scalability: Only load what's needed, avoid storing millions of triples
+- Freshness: Dynamic data always reflects current git/fs state""" ;
+    adr:rationale "Balances storage efficiency with query power, avoids drift between git and .repoq/" .
+
+# Consequences
+# ============================================================================
+<https://repoq.dev/adr/ADR-015#con1> a adr:Consequence ;
+    adr:description "Clear separation of concerns: TBox vs static ABox vs dynamic ABox" ;
+    adr:type "positive" ;
+    adr:impact "high" .
+
+<https://repoq.dev/adr/ADR-015#con2> a adr:Consequence ;
+    adr:description "Dynamic data always fresh (no sync issues)" ;
+    adr:type "positive" ;
+    adr:impact "high" .
+
+<https://repoq.dev/adr/ADR-015#con3> a adr:Consequence ;
+    adr:description "Scalable to large repositories (on-demand generation)" ;
+    adr:type "positive" ;
+    adr:impact "high" .
+
+<https://repoq.dev/adr/ADR-015#con4> a adr:Consequence ;
+    adr:description "SPARQL queries across all dimensions (code + docs + metadata)" ;
+    adr:type "positive" ;
+    adr:impact "high" .
+
+<https://repoq.dev/adr/ADR-015#con5> a adr:Consequence ;
+    adr:description "Can snapshot for CI validation or archival purposes" ;
+    adr:type "positive" ;
+    adr:impact "medium" .
+
+<https://repoq.dev/adr/ADR-015#con6> a adr:Consequence ;
+    adr:description "Requires DigitalTwin API implementation (~500 lines)" ;
+    adr:type "negative" ;
+    adr:impact "medium" .
+
+<https://repoq.dev/adr/ADR-015#con7> a adr:Consequence ;
+    adr:description "Dynamic generation may be slower than pre-computed static data" ;
+    adr:type "negative" ;
+    adr:impact "low" .
+
+# Alternatives
+# ============================================================================
+<https://repoq.dev/adr/ADR-015#alt1> a adr:Alternative ;
+    adr:description "Full static ABox: Store all commits/files/tests in .repoq/data/" ;
+    adr:rationale """Rejected because:
+- Bloats .repoq/ directory (millions of triples for large repos)
+- Requires sync mechanism (git hooks or manual refresh)
+- Risk of drift between git state and .repoq/ state
+- No benefit over dynamic generation for most use cases""" .
+
+<https://repoq.dev/adr/ADR-015#alt2> a adr:Alternative ;
+    adr:description "Minimal static: Only store manual artifacts (current state)" ;
+    adr:rationale """Rejected because:
+- Loses ability to query code structure via SPARQL
+- Cannot trace implementation → test → ADR links
+- Reduces value of digital twin concept
+- Makes quality gates less comprehensive""" .

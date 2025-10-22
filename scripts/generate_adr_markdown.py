@@ -15,7 +15,7 @@ from pathlib import Path
 from rdflib import RDF, Graph, Namespace
 
 # Namespaces
-ADR = Namespace("https://repoq.io/adr#")
+ADR = Namespace("https://repoq.dev/ontology/adr#")
 
 
 def generate_adr_markdown(rdf_path: Path, output_path: Path) -> int:

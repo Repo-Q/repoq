@@ -1,5 +1,5 @@
-@prefix adr: <https://repoq.io/adr#> .
-@prefix vdad: <https://repoq.io/vdad#> .
+@prefix adr: <https://repoq.dev/ontology/adr#> .
+@prefix vdad: <https://repoq.dev/ontology/vdad#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -7,10 +7,10 @@
 # ADR-014: Single Source of Truth — .repoq/ for all RDF artifacts
 # ============================================================================
 
-adr:adr-014 a adr:ArchitectureDecisionRecord ;
-    adr:id "adr-014" ;
+<https://repoq.dev/adr/ADR-014> a adr:ArchitectureDecisionRecord ;
+    adr:id "ADR-014" ;
     adr:title "Single Source of Truth — .repoq/ for all RDF artifacts" ;
-    adr:status adr:accepted ;
+    adr:status adr:StatusAccepted ;
     adr:date "2025-01-15"^^xsd:date ;
 
     # Context
@@ -45,38 +45,90 @@ Workflow:
     # Consequences
     adr:consequence [
         a adr:Consequence ;
-        adr:pros "Single Source of Truth: Один источник истины для всех данных" ;
-        adr:pros "Reproducibility: manifest.json содержит checksums всех .repoq/**/*.ttl" ;
-        adr:pros "Versioning: RDF эволюционирует вместе с кодом" ;
-        adr:pros "Traceability: Все артефакты трассируются через RDF" ;
-        adr:pros "SPARQL Queries: Единая база данных для запросов" ;
-        adr:pros "Multi-format Export: RDF → Markdown, HTML, PDF, LaTeX, диаграммы" ;
-        adr:pros "No Drift: Markdown всегда синхронизирован с RDF (generated)" ;
-        adr:pros "Deterministic: RDF → Markdown преобразование детерминированное" ;
-
-        adr:cons "Обучение: Разработчики должны работать с RDF напрямую" ;
-        adr:cons "Tooling: Нужны RDF editors (Protégé, VS Code extensions)" ;
-        adr:cons "Bootstrap: Первоначальная миграция Markdown → RDF (один раз)"
+        adr:description "Single Source of Truth: Один источник истины для всех данных" ;
+        adr:type "positive" ;
+        adr:impact "high"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Reproducibility: manifest.json содержит checksums всех .repoq/**/*.ttl" ;
+        adr:type "positive" ;
+        adr:impact "high"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Versioning: RDF эволюционирует вместе с кодом" ;
+        adr:type "positive" ;
+        adr:impact "high"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Traceability: Все артефакты трассируются через RDF" ;
+        adr:type "positive" ;
+        adr:impact "high"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "SPARQL Queries: Единая база данных для запросов" ;
+        adr:type "positive" ;
+        adr:impact "high"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Multi-format Export: RDF → Markdown, HTML, PDF, LaTeX, диаграммы" ;
+        adr:type "positive" ;
+        adr:impact "medium"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "No Drift: Markdown всегда синхронизирован с RDF (generated)" ;
+        adr:type "positive" ;
+        adr:impact "high"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Deterministic: RDF → Markdown преобразование детерминированное" ;
+        adr:type "positive" ;
+        adr:impact "medium"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Обучение: Разработчики должны работать с RDF напрямую" ;
+        adr:type "negative" ;
+        adr:impact "medium"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Tooling: Нужны RDF editors (Protégé, VS Code extensions)" ;
+        adr:type "negative" ;
+        adr:impact "low"
+    ] ,
+    [
+        a adr:Consequence ;
+        adr:description "Bootstrap: Первоначальная миграция Markdown → RDF (один раз)" ;
+        adr:type "negative" ;
+        adr:impact "medium"
     ] ;
 
     # Alternatives
     adr:alternative [
         a adr:Alternative ;
-        adr:alternativeName "Markdown as SSoT" ;
-        adr:alternativeRationale "Отклонено: сложно делать SPARQL queries, трассировку, валидацию"
+        adr:description "Markdown as SSoT: Хранить документацию в Markdown, генерировать RDF" ;
+        adr:rationale "Отклонено: сложно делать SPARQL queries, трассировку, валидацию из Markdown"
     ] ,
     [
         a adr:Alternative ;
-        adr:alternativeName "Dual SSoT (Markdown + RDF sidecars)" ;
-        adr:alternativeRationale "Отклонено: риск рассинхронизации, дублирование"
+        adr:description "Dual SSoT (Markdown + RDF sidecars): Оба формата как источники истины" ;
+        adr:rationale "Отклонено: риск рассинхронизации между форматами, дублирование"
     ] ;
 
     # Traceability
-    adr:implements vdad:fr-10 ;  # FR-10: Reproducible analysis
-    adr:implements vdad:v07 ;    # V07: Observability
-    adr:traces vdad:theorem-a ;  # Theorem A: Reproducibility
+    adr:implements <https://repoq.dev/requirement/FR-10> ,
+                   <https://repoq.dev/value/V07> ;
+    adr:traces <https://repoq.dev/theorem/TheoremA> .
 
-    # Related ADRs
-    adr:relatedTo adr:adr-008 ;  # .repoq/ workspace structure
-    adr:relatedTo adr:adr-010 ;  # Ontology-driven validation
-    adr:relatedTo adr:adr-013 .  # Incremental migration strategy
+    # Related ADRs: Commented out until ADR-008/010/013 are created
+    # adr:relatedTo <https://repoq.dev/adr/ADR-008> ,  # .repoq/ workspace structure
+    #               <https://repoq.dev/adr/ADR-010> ,  # Ontology-driven validation
+    #               <https://repoq.dev/adr/ADR-013> .  # Incremental migration strategy
+
