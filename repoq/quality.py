@@ -54,6 +54,91 @@ class QualityMetrics:
         assert self.grade in {"A", "B", "C", "D", "E", "F"}, f"Invalid grade {self.grade}"
 
 
+def _compute_complexity_metric(files: list) -> float:
+    """Compute normalized complexity metric ∈ [0, 5].
+    
+    Args:
+        files: List of File objects
+        
+    Returns:
+        Normalized complexity score
+    """
+    complexities = [f.complexity or 0.0 for f in files]
+    max_cplx = max(complexities) if complexities else 1.0
+    avg_cplx = sum(complexities) / len(files)
+    return (avg_cplx / max_cplx * 5.0) if max_cplx > 0 else 0.0
+
+
+def _count_quality_issues(files: list) -> tuple[int, int]:
+    """Count hotspots and TODOs across all files.
+    
+    Args:
+        files: List of File objects
+        
+    Returns:
+        Tuple of (hotspots_count, todos_count)
+    """
+    hotspots_count = sum(1 for f in files if (f.hotness or 0.0) > 0.66)
+    
+    todos_count = sum(
+        1 for f in files for issue in getattr(f, "issues", []) if "todo" in issue.type.lower()
+    )
+    
+    return hotspots_count, todos_count
+
+
+def _calculate_q_score(
+    normalized_complexity: float,
+    hotspots_count: int,
+    todos_count: int,
+) -> float:
+    """Calculate Q-score using weighted formula.
+    
+    Formula: Q = 100 - 20×complexity - 30×hotspots - 10×todos
+    
+    Args:
+        normalized_complexity: Complexity metric ∈ [0, 5]
+        hotspots_count: Number of hotspot files
+        todos_count: Number of TODO items
+        
+    Returns:
+        Quality score ∈ [0, 100]
+    """
+    # Normalize hotspots and todos to [0, 1] range
+    hotspots_norm = min(1.0, hotspots_count / 20.0)  # Cap at 20
+    todos_norm = min(1.0, todos_count / 10.0)  # Cap at 10
+
+    score = 100.0
+    score -= 20.0 * (normalized_complexity / 5.0)  # Max penalty 20
+    score -= 30.0 * hotspots_norm  # Max penalty 30
+    score -= 10.0 * todos_norm  # Max penalty 10
+
+    # Clamp to [0, 100]
+    return max(0.0, min(100.0, score))
+
+
+def _check_quality_constraints(
+    tests_coverage: float,
+    todos_count: int,
+    hotspots_count: int,
+) -> dict[str, bool]:
+    """Check hard quality constraints.
+    
+    Args:
+        tests_coverage: Test coverage ratio
+        todos_count: Number of TODOs
+        hotspots_count: Number of hotspots
+        
+    Returns:
+        Dictionary of constraint check results
+    """
+    return {
+        "tests_coverage_ge_80": tests_coverage >= 0.8,
+        "todos_le_100": todos_count <= 100,
+        "hotspots_le_20": hotspots_count <= 20,
+    }
+
+
 def compute_quality_score(project: Project) -> QualityMetrics:
     """Compute Q-metric for a project.
 
@@ -94,46 +179,20 @@ def compute_quality_score(project: Project) -> QualityMetrics:
             },
         )
 
-    # 1. Normalize complexity ∈ [0, 5]
-    complexities = [f.complexity or 0.0 for f in files]
-    max_cplx = max(complexities) if complexities else 1.0
-    avg_cplx = sum(complexities) / len(files)
-    normalized_complexity = (avg_cplx / max_cplx * 5.0) if max_cplx > 0 else 0.0
-
-    # 2. Count hotspots (hotness > 0.66)
-    hotspots_count = sum(1 for f in files if (f.hotness or 0.0) > 0.66)
-
-    # 3. Count TODOs
-    todos_count = sum(
-        1 for f in files for issue in getattr(f, "issues", []) if "todo" in issue.type.lower()
-    )
-
-    # 4. Tests coverage (heuristic: test_files / total_files)
+    # Compute metrics
+    normalized_complexity = _compute_complexity_metric(files)
+    hotspots_count, todos_count = _count_quality_issues(files)
+    
+    # Tests coverage (heuristic: test_files / total_files)
     test_files = sum(1 for f in files if f.test_file)
     tests_coverage = test_files / len(files) if files else 0.0
 
-    # 5. Compute Q = 100 - 20×complexity - 30×hotspots - 10×todos
-    #    Normalize hotspots and todos to [0, 1] range
-    hotspots_norm = min(1.0, hotspots_count / 20.0)  # Cap at 20
-    todos_norm = min(1.0, todos_count / 10.0)  # Cap at 10
-
-    score = 100.0
-    score -= 20.0 * (normalized_complexity / 5.0)  # Max penalty 20
-    score -= 30.0 * hotspots_norm  # Max penalty 30
-    score -= 10.0 * todos_norm  # Max penalty 10
-
-    # Clamp to [0, 100]
-    score = max(0.0, min(100.0, score))
-
-    # 6. Grade
+    # Calculate Q-score
+    score = _calculate_q_score(normalized_complexity, hotspots_count, todos_count)
+    
+    # Grade and constraints
     grade = _compute_grade(score)
-
-    # 7. Hard constraints
-    constraints = {
-        "tests_coverage_ge_80": tests_coverage >= 0.8,
-        "todos_le_100": todos_count <= 100,
-        "hotspots_le_20": hotspots_count <= 20,
-    }
+    constraints = _check_quality_constraints(tests_coverage, todos_count, hotspots_count)
 
     return QualityMetrics(
         score=score,
