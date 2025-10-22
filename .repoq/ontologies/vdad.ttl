@@ -1,0 +1,330 @@
+@prefix vdad: <https://repoq.io/vdad#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+
+# ============================================================================
+# VDAD Meta-Ontology - Value-Driven Architecture Design Methodology
+# ============================================================================
+# Purpose: Formal ontology for VDAD methodology (5 phases)
+# Version: 1.0.0 (POC - Phase 5.6)
+# Authors: Field33 Engineering
+# License: MIT
+# ============================================================================
+
+<https://repoq.io/vdad> a owl:Ontology ;
+    dcterms:title "VDAD Meta-Ontology" ;
+    dcterms:description """
+    Ontology for Value-Driven Architecture Design (VDAD) methodology.
+    Captures 5 phases: Domain Context, Values, Requirements, Architecture, Migration.
+    """ ;
+    dcterms:created "2025-01-15"^^xsd:date ;
+    owl:versionInfo "1.0.0" ;
+    rdfs:comment """
+    This ontology defines the structure of VDAD documentation:
+    - Phase 1: Stakeholders, Bounded Contexts, Ubiquitous Language
+    - Phase 2: Core Values (Tier 1) and derived values (Tier 2-3)
+    - Phase 3: Requirements (FR, NFR) derived from values
+    - Phase 4: Architecture Decisions (ADRs) implementing requirements
+    - Phase 5: Migration roadmap with phases and deliverables
+    """ .
+
+# ============================================================================
+# Core Classes - VDAD Phases
+# ============================================================================
+
+vdad:Phase a owl:Class ;
+    rdfs:label "VDAD Phase" ;
+    rdfs:comment "One of the 5 VDAD methodology phases" .
+
+vdad:Phase1 a vdad:Phase ;
+    rdfs:label "Phase 1: Domain Context" ;
+    vdad:deliverables "Stakeholder Map, Bounded Contexts, Ubiquitous Language" .
+
+vdad:Phase2 a vdad:Phase ;
+    rdfs:label "Phase 2: Value Register" ;
+    vdad:deliverables "Core Values (Tier 1), Value Tree, Traceability Matrix" .
+
+vdad:Phase3 a vdad:Phase ;
+    rdfs:label "Phase 3: Requirements" ;
+    vdad:deliverables "Functional Requirements (FR), Non-Functional Requirements (NFR)" .
+
+vdad:Phase4 a vdad:Phase ;
+    rdfs:label "Phase 4: Architecture" ;
+    vdad:deliverables "Architecture Decision Records (ADRs), C4 Diagrams" .
+
+vdad:Phase5 a vdad:Phase ;
+    rdfs:label "Phase 5: Migration Roadmap" ;
+    vdad:deliverables "Migration Phases, Deliverables, Timeline" .
+
+# ============================================================================
+# Phase 1 Classes - Domain Context
+# ============================================================================
+
+vdad:Stakeholder a owl:Class ;
+    rdfs:label "Stakeholder" ;
+    rdfs:comment "Person or group with interest in the project" .
+
+vdad:Developer a owl:Class ;
+    rdfs:subClassOf vdad:Stakeholder ;
+    rdfs:label "Developer" .
+
+vdad:TeamLead a owl:Class ;
+    rdfs:subClassOf vdad:Stakeholder ;
+    rdfs:label "Team Lead" .
+
+vdad:DevOps a owl:Class ;
+    rdfs:subClassOf vdad:Stakeholder ;
+    rdfs:label "DevOps Engineer" .
+
+vdad:Researcher a owl:Class ;
+    rdfs:subClassOf vdad:Stakeholder ;
+    rdfs:label "Research Scientist" .
+
+vdad:BoundedContext a owl:Class ;
+    rdfs:label "Bounded Context" ;
+    rdfs:comment "DDD Bounded Context (subdomain with clear boundaries)" .
+
+# ============================================================================
+# Phase 2 Classes - Value Register
+# ============================================================================
+
+vdad:Value a owl:Class ;
+    rdfs:label "Core Value" ;
+    rdfs:comment "A value from the Value Register (Tier 1-3)" .
+
+vdad:Tier1Value a owl:Class ;
+    rdfs:subClassOf vdad:Value ;
+    rdfs:label "Tier 1 Value" ;
+    rdfs:comment "Core value (directly from stakeholders)" .
+
+vdad:Tier2Value a owl:Class ;
+    rdfs:subClassOf vdad:Value ;
+    rdfs:label "Tier 2 Value" ;
+    rdfs:comment "Derived value (from Tier 1)" .
+
+# ============================================================================
+# Phase 3 Classes - Requirements
+# ============================================================================
+
+vdad:Requirement a owl:Class ;
+    rdfs:label "Requirement" ;
+    rdfs:comment "Functional or non-functional requirement" .
+
+vdad:FunctionalRequirement a owl:Class ;
+    rdfs:subClassOf vdad:Requirement ;
+    rdfs:label "Functional Requirement (FR)" ;
+    rdfs:comment "Functional requirement (what the system does)" .
+
+vdad:NonFunctionalRequirement a owl:Class ;
+    rdfs:subClassOf vdad:Requirement ;
+    rdfs:label "Non-Functional Requirement (NFR)" ;
+    rdfs:comment "Non-functional requirement (quality attributes)" .
+
+# ============================================================================
+# Phase 4 Classes - Architecture
+# ============================================================================
+
+vdad:ArchitectureDecisionRecord a owl:Class ;
+    rdfs:label "Architecture Decision Record (ADR)" ;
+    rdfs:comment "Formal architecture decision with rationale" .
+
+vdad:Theorem a owl:Class ;
+    rdfs:label "Formal Theorem" ;
+    rdfs:comment "Formally proven theorem (mathematical guarantee)" .
+
+# ============================================================================
+# Phase 5 Classes - Migration
+# ============================================================================
+
+vdad:MigrationPhase a owl:Class ;
+    rdfs:label "Migration Phase" ;
+    rdfs:comment "A phase in the migration roadmap" .
+
+vdad:Deliverable a owl:Class ;
+    rdfs:label "Deliverable" ;
+    rdfs:comment "Concrete artifact to be delivered" .
+
+# ============================================================================
+# Properties - General
+# ============================================================================
+
+vdad:phase a owl:ObjectProperty ;
+    rdfs:label "belongs to phase" ;
+    rdfs:range vdad:Phase ;
+    rdfs:comment "Which VDAD phase this entity belongs to" .
+
+vdad:description a owl:DatatypeProperty ;
+    rdfs:label "description" ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Human-readable description" .
+
+vdad:priority a owl:DatatypeProperty ;
+    rdfs:label "priority" ;
+    rdfs:range vdad:Priority ;
+    rdfs:comment "Priority level (P0, P1, P2)" .
+
+vdad:Priority a rdfs:Datatype ;
+    rdfs:label "Priority Level" ;
+    owl:oneOf (vdad:P0 vdad:P1 vdad:P2) .
+
+vdad:P0 a vdad:Priority ;
+    rdfs:label "P0 (Critical)" .
+
+vdad:P1 a vdad:Priority ;
+    rdfs:label "P1 (High)" .
+
+vdad:P2 a vdad:Priority ;
+    rdfs:label "P2 (Medium)" .
+
+# ============================================================================
+# Properties - Stakeholders
+# ============================================================================
+
+vdad:role a owl:DatatypeProperty ;
+    rdfs:label "role" ;
+    rdfs:domain vdad:Stakeholder ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Stakeholder's role in the project" .
+
+vdad:interests a owl:DatatypeProperty ;
+    rdfs:label "interests" ;
+    rdfs:domain vdad:Stakeholder ;
+    rdfs:range xsd:string ;
+    rdfs:comment "What the stakeholder cares about" .
+
+vdad:concerns a owl:DatatypeProperty ;
+    rdfs:label "concerns" ;
+    rdfs:domain vdad:Stakeholder ;
+    rdfs:range xsd:string ;
+    rdfs:comment "What the stakeholder is worried about" .
+
+# ============================================================================
+# Properties - Values
+# ============================================================================
+
+vdad:tier a owl:DatatypeProperty ;
+    rdfs:label "tier" ;
+    rdfs:domain vdad:Value ;
+    rdfs:range xsd:integer ;
+    rdfs:comment "Value tier (1=core, 2=derived, 3=operational)" .
+
+vdad:stakeholder a owl:ObjectProperty ;
+    rdfs:label "interested stakeholder" ;
+    rdfs:range vdad:Stakeholder ;
+    rdfs:comment "Stakeholder interested in this value" .
+
+vdad:satisfiedBy a owl:ObjectProperty ;
+    rdfs:label "satisfied by" ;
+    rdfs:domain vdad:Value ;
+    rdfs:range vdad:Requirement ;
+    rdfs:comment "Value is satisfied by one or more requirements" .
+
+# ============================================================================
+# Properties - Requirements
+# ============================================================================
+
+vdad:satisfies a owl:ObjectProperty ;
+    rdfs:label "satisfies value" ;
+    rdfs:domain vdad:Requirement ;
+    rdfs:range vdad:Value ;
+    rdfs:comment "Requirement satisfies a value" ;
+    owl:inverseOf vdad:satisfiedBy .
+
+vdad:implementedBy a owl:ObjectProperty ;
+    rdfs:label "implemented by" ;
+    rdfs:domain vdad:Requirement ;
+    rdfs:range vdad:ArchitectureDecisionRecord ;
+    rdfs:comment "Requirement is implemented by ADR" .
+
+vdad:testedBy a owl:ObjectProperty ;
+    rdfs:label "tested by" ;
+    rdfs:domain vdad:Requirement ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Test file that validates this requirement" .
+
+# ============================================================================
+# Properties - Architecture
+# ============================================================================
+
+vdad:implements a owl:ObjectProperty ;
+    rdfs:label "implements requirement" ;
+    rdfs:domain vdad:ArchitectureDecisionRecord ;
+    rdfs:range vdad:Requirement ;
+    rdfs:comment "ADR implements a requirement" ;
+    owl:inverseOf vdad:implementedBy .
+
+vdad:decision a owl:DatatypeProperty ;
+    rdfs:label "decision" ;
+    rdfs:domain vdad:ArchitectureDecisionRecord ;
+    rdfs:range xsd:string ;
+    rdfs:comment "The decision made in this ADR" .
+
+vdad:rationale a owl:DatatypeProperty ;
+    rdfs:label "rationale" ;
+    rdfs:domain vdad:ArchitectureDecisionRecord ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Why this decision was made" .
+
+vdad:alternatives a owl:DatatypeProperty ;
+    rdfs:label "alternatives" ;
+    rdfs:domain vdad:ArchitectureDecisionRecord ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Alternative options considered" .
+
+vdad:status a owl:DatatypeProperty ;
+    rdfs:label "status" ;
+    rdfs:domain vdad:ArchitectureDecisionRecord ;
+    rdfs:range vdad:ADRStatus ;
+    rdfs:comment "ADR status (proposed, accepted, deprecated, superseded)" .
+
+vdad:ADRStatus a rdfs:Datatype ;
+    owl:oneOf ("proposed" "accepted" "deprecated" "superseded") .
+
+# ============================================================================
+# Properties - Migration
+# ============================================================================
+
+vdad:deliverable a owl:ObjectProperty ;
+    rdfs:label "has deliverable" ;
+    rdfs:domain vdad:MigrationPhase ;
+    rdfs:range vdad:Deliverable ;
+    rdfs:comment "Migration phase has deliverable" .
+
+vdad:duration a owl:DatatypeProperty ;
+    rdfs:label "duration" ;
+    rdfs:range xsd:duration ;
+    rdfs:comment "Estimated duration (ISO 8601)" .
+
+vdad:effort a owl:DatatypeProperty ;
+    rdfs:label "effort" ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Effort estimate (e.g., '3-5 days', '2 weeks')" .
+
+# ============================================================================
+# Traceability (cross-phase links)
+# ============================================================================
+
+vdad:traces a owl:ObjectProperty ;
+    rdfs:label "traces to" ;
+    rdfs:comment "Generic traceability link between VDAD entities" .
+
+# Value → Requirement → ADR → Migration chain
+# value --satisfiedBy--> requirement --implementedBy--> ADR --delivered in--> MigrationPhase
+
+# ============================================================================
+# Individuals (for validation/examples)
+# ============================================================================
+
+vdad:example-value a vdad:Tier1Value ;
+    rdfs:label "Example Value" ;
+    vdad:tier 1 ;
+    vdad:phase vdad:Phase2 ;
+    rdfs:comment "Example value for ontology validation" .
+
+vdad:example-stakeholder a vdad:Developer ;
+    foaf:name "Example Developer" ;
+    vdad:role "Software Engineer" ;
+    rdfs:comment "Example stakeholder for ontology validation" .

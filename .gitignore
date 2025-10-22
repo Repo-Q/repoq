@@ -64,7 +64,11 @@ htmlcov/
 artifacts/
 quality.md
 .repoq/
-# But keep story files (provenance)
+# But keep ontologies, shapes, and story files (provenance + meta)
+!.repoq/ontologies/
+!.repoq/ontologies/*.ttl
+!.repoq/shapes/
+!.repoq/shapes/*.ttl
 !.repoq/story/
 !.repoq/story/*.ttl
 
