@@ -599,6 +599,139 @@ def diff(
             raise typer.Exit(code=2)
 
 
+def _run_analysis_pipeline(project: Project, repo_dir: str, cfg: AnalyzeConfig, progress, task_id):
+    """Execute analysis pipeline based on mode configuration.
+    
+    Args:
+        project: Project model to populate
+        repo_dir: Repository directory path
+        cfg: Analysis configuration
+        progress: Rich Progress instance for UI
+        task_id: Progress task ID for advancement
+    """
+    mode = cfg.mode
+    
+    if mode in ("structure", "full"):
+        from .analyzers.ci_qm import CIQualityAnalyzer
+        from .analyzers.complexity import ComplexityAnalyzer
+        from .analyzers.structure import StructureAnalyzer
+        from .analyzers.weakness import WeaknessAnalyzer
+
+        StructureAnalyzer().run(project, repo_dir, cfg)
+        ComplexityAnalyzer().run(project, repo_dir, cfg)
+        WeaknessAnalyzer().run(project, repo_dir, cfg)
+        CIQualityAnalyzer().run(project, repo_dir, cfg)
+    progress.advance(task_id)
+
+    if mode in ("history", "full"):
+        from .analyzers.history import HistoryAnalyzer
+
+        HistoryAnalyzer().run(project, repo_dir, cfg)
+    progress.advance(task_id)
+
+    if mode in ("full",):
+        from .analyzers.hotspots import HotspotsAnalyzer
+
+        HotspotsAnalyzer().run(project, repo_dir, cfg)
+    progress.advance(task_id)
+
+
+def _export_results(project: Project, cfg: AnalyzeConfig, output: str, md: str | None, 
+                    ttl: str | None, graphs: str | None, progress, task_id):
+    """Export analysis results to various formats.
+    
+    Args:
+        project: Analyzed project model
+        cfg: Analysis configuration
+        output: JSON-LD output path
+        md: Optional markdown report path
+        ttl: Optional RDF Turtle export path
+        graphs: Optional directory for dependency graphs
+        progress: Rich Progress instance
+        task_id: Progress task ID
+    """
+    if graphs:
+        from .reporting.graphviz import export_graphs
+
+        export_graphs(project, graphs)
+    progress.advance(task_id)
+
+    # JSON-LD export
+    from .core.jsonld import dump_jsonld
+
+    dump_jsonld(
+        project, output, context_file=cfg.context_file, field33_context=cfg.field33_context
+    )
+    print(f"[green]JSON‑LD сохранён в[/green] {output}")
+    
+    # Markdown report
+    if md:
+        from .reporting.markdown import render_markdown
+
+        report = render_markdown(project)
+        _save_md(report, md)
+        print(f"[green]Markdown‑отчёт сохранён в[/green] {md}")
+
+    # RDF Turtle export
+    if ttl:
+        from .core.rdf_export import export_ttl
+
+        export_ttl(
+            project, ttl, context_file=cfg.context_file, field33_context=cfg.field33_context
+        )
+        print(f"[green]TTL сохранён в[/green] {ttl}")
+
+
+def _run_shacl_validation(project: Project, cfg: AnalyzeConfig):
+    """Run SHACL shapes validation if enabled.
+    
+    Args:
+        project: Analyzed project model
+        cfg: Analysis configuration with validation settings
+    """
+    if not cfg.validate_shapes:
+        return
+    
+    shapes = cfg.shapes_dir or os.path.join(os.path.dirname(__file__), "shapes")
+    from .core.rdf_export import validate_shapes
+
+    res = validate_shapes(
+        project,
+        shapes,
+        context_file=cfg.context_file,
+        field33_context=cfg.field33_context,
+    )
+    print(f"[bold]{'✔' if res['conforms'] else '✖'} SHACL/Shapes validation[/bold]")
+    print(res["report"])
+
+
+def _check_fail_on_issues(project: Project, cfg: AnalyzeConfig):
+    """Check if issues exceed configured severity threshold for CI failure.
+    
+    Args:
+        project: Analyzed project model
+        cfg: Analysis configuration with fail_on_issues setting
+    
+    Raises:
+        typer.Exit: If issues at or above threshold severity are found
+    """
+    if not cfg.fail_on_issues:
+        return
+    
+    sev_order = {"low": 1, "medium": 2, "high": 3}
+    min_level = sev_order.get(cfg.fail_on_issues, 3)
+    worst = 0
+    
+    for issue in project.issues.values():
+        worst = max(worst, sev_order.get(issue.severity, 1))
+    
+    if worst >= min_level:
+        print(
+            f"[red]Достигнут уровень проблем: {cfg.fail_on_issues}. Завершаем с ошибкой.[/red]"
+        )
+        raise typer.Exit(code=2)
+
+
 def _run_command(
     repo: str,
     mode: str,
@@ -694,84 +827,19 @@ def _run_command(
     try:
         with Progress() as progress:
             t = progress.add_task("Анализ...", total=5 if mode == "full" else 3)
-            if mode in ("structure", "full"):
-                from .analyzers.ci_qm import CIQualityAnalyzer
-                from .analyzers.complexity import ComplexityAnalyzer
-                from .analyzers.structure import StructureAnalyzer
-                from .analyzers.weakness import WeaknessAnalyzer
-
-                StructureAnalyzer().run(project, repo_dir, cfg)
-                ComplexityAnalyzer().run(project, repo_dir, cfg)
-                WeaknessAnalyzer().run(project, repo_dir, cfg)
-                CIQualityAnalyzer().run(project, repo_dir, cfg)
-            progress.advance(t)
-
-            if mode in ("history", "full"):
-                from .analyzers.history import HistoryAnalyzer
-
-                HistoryAnalyzer().run(project, repo_dir, cfg)
-            progress.advance(t)
-
-            if mode in ("full",):
-                from .analyzers.hotspots import HotspotsAnalyzer
-
-                HotspotsAnalyzer().run(project, repo_dir, cfg)
-            progress.advance(t)
-
-            if graphs:
-                from .reporting.graphviz import export_graphs
-
-                export_graphs(project, graphs)
-            progress.advance(t)
-
-            # Export
-            from .core.jsonld import dump_jsonld
-
-            dump_jsonld(
-                project, output, context_file=cfg.context_file, field33_context=cfg.field33_context
-            )
-            print(f"[green]JSON‑LD сохранён в[/green] {output}")
-            if md:
-                from .reporting.markdown import render_markdown
-
-                report = render_markdown(project)
-                _save_md(report, md)
-                print(f"[green]Markdown‑отчёт сохранён в[/green] {md}")
-
-            if ttl:
-                from .core.rdf_export import export_ttl
-
-                export_ttl(
-                    project, ttl, context_file=cfg.context_file, field33_context=cfg.field33_context
-                )
-                print(f"[green]TTL сохранён в[/green] {ttl}")
-
-            if cfg.validate_shapes:
-                shapes = cfg.shapes_dir or os.path.join(os.path.dirname(__file__), "shapes")
-                from .core.rdf_export import validate_shapes
-
-                res = validate_shapes(
-                    project,
-                    shapes,
-                    context_file=cfg.context_file,
-                    field33_context=cfg.field33_context,
-                )
-                print(f"[bold]{'✔' if res['conforms'] else '✖'} SHACL/Shapes validation[/bold]")
-                print(res["report"])
-
+            
+            # Run analysis pipeline
+            _run_analysis_pipeline(project, repo_dir, cfg, progress, t)
+            
+            # Export results
+            _export_results(project, cfg, output, md, ttl, graphs, progress, t)
+            
+            # SHACL validation
+            _run_shacl_validation(project, cfg)
+            
             # CI: fail on issues by severity
-            if cfg.fail_on_issues:
-                sev_order = {"low": 1, "medium": 2, "high": 3}
-                min_level = sev_order.get(cfg.fail_on_issues, 3)
-                worst = 0
-                for issue in project.issues.values():
-                    worst = max(worst, sev_order.get(issue.severity, 1))
-                if worst >= min_level:
-                    print(
-                        f"[red]Достигнут уровень проблем: {cfg.fail_on_issues}. Завершаем с ошибкой.[/red]"
-                    )
-                    raise typer.Exit(code=2)
-
+            _check_fail_on_issues(project, cfg)
+            
             progress.advance(t)
 
     finally:
