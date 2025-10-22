@@ -288,82 +288,99 @@ def _get_function_priority(delta_q: float) -> str:
         return "low"
 
 
-def generate_recommendations(file_data: dict) -> List[str]:
-    """Generate specific refactoring recommendations based on metrics.
-
+def _generate_function_recommendations(
+    functions: List[dict], loc: int, complexity: float
+) -> List[str]:
+    """Generate per-function refactoring recommendations with ΔQ estimation.
+    
     Args:
-        file_data: File metrics dictionary
-
+        functions: List of function metrics dicts
+        loc: Total file LOC for impact calculation
+        complexity: File-level complexity for fallback validation
+    
     Returns:
-        List of actionable recommendations
+        List of formatted recommendations for complex functions
     """
     recommendations = []
-    complexity = file_data.get("complexity", 0) or 0
-    loc = file_data.get("linesOfCode", 0) or 0
-    todos = len(file_data.get("todos", [])) if isinstance(file_data.get("todos"), list) else 0
-    issues = file_data.get("issues", [])
-    functions = file_data.get("functions", [])
-
-    # NEW: Per-function recommendations with ΔQ estimation (T1.3)
-    if functions:
-        complex_funcs = [f for f in functions if f.get("cyclomaticComplexity", 0) >= 10]
-        if complex_funcs:
-            # Calculate ΔQ for each function
-            file_delta_q_total = 0.0
-            for func in complex_funcs:
-                delta_q = _estimate_function_delta_q(func, loc)
-                func["_delta_q"] = delta_q  # Store for sorting
-                file_delta_q_total += delta_q
-            
-            # Sort by ΔQ descending (highest impact first)
-            complex_funcs.sort(key=lambda f: f.get("_delta_q", 0), reverse=True)
-            
-            for func in complex_funcs[:3]:  # Top 3 highest impact
-                fname = func.get("name", "unknown")
-                fccn = func.get("cyclomaticComplexity", 0)
-                flines = f"{func.get('startLine', '?')}-{func.get('endLine', '?')}"
-                floc = func.get("linesOfCode", 0)
-                delta_q = func.get("_delta_q", 0.0)
-                
-                # Calculate percentage of file's total potential
-                pct = int((delta_q / file_delta_q_total * 100)) if file_delta_q_total > 0 else 0
-                
-                # Priority indicator
-                priority = _get_function_priority(delta_q)
-                priority_emoji = {
-                    "critical": "🔴",
-                    "high": "🟠", 
-                    "medium": "🟡",
-                    "low": "🟢"
-                }.get(priority, "⚪")
-                
-                # Estimate effort (simplified for per-function)
-                if fccn >= 20:
-                    effort_str = "3-4 hours"
-                elif fccn >= 15:
-                    effort_str = "2-3 hours"
-                elif fccn >= 10:
-                    effort_str = "1-2 hours"
-                else:
-                    effort_str = "30-60 min"
-                
-                recommendations.append(
-                    f"{priority_emoji} Refactor function `{fname}` "
-                    f"(CCN={fccn}, LOC={floc}, lines {flines})\n"
-                    f"   → Expected ΔQ: +{delta_q:.1f} points ({pct}% of file's potential)\n"
-                    f"   → Estimated effort: {effort_str}"
-                )
-        
-        # If functions available but none complex, note the file-level complexity
-        if not complex_funcs and complexity >= 10:
-            # File complexity high but no individual function >10
-            # This is unusual - likely aggregation issue
+    complex_funcs = [f for f in functions if f.get("cyclomaticComplexity", 0) >= 10]
+    
+    if not complex_funcs:
+        # If file complexity high but no individual function >10
+        if complexity >= 10:
             recommendations.append(
                 f"⚠️ File complexity={complexity} but no function >10 "
                 "(verify metrics or refactor distributed complexity)"
             )
-    else:
-        # Fallback: File-level recommendations (old behavior)
+        return recommendations
+    
+    # Calculate ΔQ for each function
+    file_delta_q_total = 0.0
+    for func in complex_funcs:
+        delta_q = _estimate_function_delta_q(func, loc)
+        func["_delta_q"] = delta_q
+        file_delta_q_total += delta_q
+    
+    # Sort by ΔQ descending (highest impact first)
+    complex_funcs.sort(key=lambda f: f.get("_delta_q", 0), reverse=True)
+    
+    # Generate recommendations for top 3 highest impact functions
+    for func in complex_funcs[:3]:
+        fname = func.get("name", "unknown")
+        fccn = func.get("cyclomaticComplexity", 0)
+        flines = f"{func.get('startLine', '?')}-{func.get('endLine', '?')}"
+        floc = func.get("linesOfCode", 0)
+        delta_q = func.get("_delta_q", 0.0)
+        
+        # Calculate percentage of file's total potential
+        pct = int((delta_q / file_delta_q_total * 100)) if file_delta_q_total > 0 else 0
+        
+        # Priority indicator
+        priority = _get_function_priority(delta_q)
+        priority_emoji = {
+            "critical": "🔴",
+            "high": "🟠", 
+            "medium": "🟡",
+            "low": "🟢"
+        }.get(priority, "⚪")
+        
+        # Estimate effort
+        if fccn >= 20:
+            effort_str = "3-4 hours"
+        elif fccn >= 15:
+            effort_str = "2-3 hours"
+        elif fccn >= 10:
+            effort_str = "1-2 hours"
+        else:
+            effort_str = "30-60 min"
+        
+        recommendations.append(
+            f"{priority_emoji} Refactor function `{fname}` "
+            f"(CCN={fccn}, LOC={floc}, lines {flines})\n"
+            f"   → Expected ΔQ: +{delta_q:.1f} points ({pct}% of file's potential)\n"
+            f"   → Estimated effort: {effort_str}"
+        )
+    
+    return recommendations
+
+
+def _generate_file_level_recommendations(
+    complexity: float, loc: int, todos: int, functions: List[dict]
+) -> List[str]:
+    """Generate file-level refactoring recommendations (fallback when no functions).
+    
+    Args:
+        complexity: File-level cyclomatic complexity
+        loc: Lines of code
+        todos: Number of TODO comments
+        functions: List of function metrics (used to check if fallback needed)
+    
+    Returns:
+        List of file-level recommendations
+    """
+    recommendations = []
+    
+    # Complexity recommendations (only if no per-function analysis)
+    if not functions:
         if complexity >= 10:
             recommendations.append(
                 f"🔴 **Critical**: Reduce cyclomatic complexity from {complexity} to <10 "
@@ -373,20 +390,33 @@ def generate_recommendations(file_data: dict) -> List[str]:
             recommendations.append(
                 f"🟡 Extract complex logic into helper functions (current: {complexity})"
             )
-
+    
     # LOC recommendations
     if loc > 500:
         recommendations.append(
             f"📏 Consider splitting file ({loc} LOC) into smaller modules (<300 LOC)"
         )
-
+    
     # TODO recommendations
     if todos >= 5:
         recommendations.append(f"📝 Resolve {todos} TODO comments (prioritize blocking issues)")
     elif todos > 0:
         recommendations.append(f"📝 Address {todos} TODO comment(s)")
+    
+    return recommendations
 
-    # Issue-specific recommendations
+
+def _generate_issue_recommendations(issues: List) -> List[str]:
+    """Generate issue-specific refactoring recommendations.
+    
+    Args:
+        issues: List of issue identifiers or dicts
+    
+    Returns:
+        List of issue-specific recommendations
+    """
+    recommendations = []
+    
     for issue in issues:
         if isinstance(issue, str):
             # Parse issue ID to get type
@@ -394,11 +424,43 @@ def generate_recommendations(file_data: dict) -> List[str]:
                 recommendations.append("🔥 Reduce change frequency (refactor to stabilize)")
             elif "complexity" in issue:
                 recommendations.append("🔧 Simplify control flow (reduce nested logic)")
+    
+    return recommendations
 
-    # Default recommendation if no specific issues
+
+def generate_recommendations(file_data: dict) -> List[str]:
+    """Generate specific refactoring recommendations based on metrics.
+
+    Args:
+        file_data: File metrics dictionary
+
+    Returns:
+        List of actionable recommendations (limited to top 5)
+    """
+    # Extract metrics
+    complexity = file_data.get("complexity", 0) or 0
+    loc = file_data.get("linesOfCode", 0) or 0
+    todos = len(file_data.get("todos", [])) if isinstance(file_data.get("todos"), list) else 0
+    issues = file_data.get("issues", [])
+    functions = file_data.get("functions", [])
+    
+    # Generate recommendations from different analyzers
+    recommendations = []
+    
+    # 1. Per-function analysis (highest priority)
+    if functions:
+        recommendations.extend(_generate_function_recommendations(functions, loc, complexity))
+    
+    # 2. File-level metrics (LOC, TODOs, complexity fallback)
+    recommendations.extend(_generate_file_level_recommendations(complexity, loc, todos, functions))
+    
+    # 3. Issue-specific recommendations
+    recommendations.extend(_generate_issue_recommendations(issues))
+    
+    # 4. Default if no recommendations generated
     if not recommendations:
         recommendations.append("✅ Maintain current quality (minor cleanup possible)")
-
+    
     return recommendations[:5]  # Limit to top 5
 
 
