@@ -10,7 +10,7 @@ from pathlib import Path
 from textwrap import dedent
 
 import pytest
-from rdflib import RDF, RDFS, Graph, Literal, Namespace
+from rdflib import RDF, RDFS, XSD, Graph, Literal, Namespace
 
 from scripts.extract_vdad_rdf import (
     StakeholderInfo,
@@ -265,7 +265,7 @@ class TestEndToEnd:
         assert len(v01.stakeholders) > 0
 
     def test_extract_to_repoq_directory(self, sample_phase2_markdown: Path) -> None:
-        """Should extract to .repoq/vdad/ directory."""
+        """Should extract to .repoq/vdad/ directory (Single Source of Truth)."""
         output_path = Path(".repoq/vdad/test-phase2.ttl")
         output_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -273,9 +273,93 @@ class TestEndToEnd:
             count = extract_phase2_values(sample_phase2_markdown, output_path)
             assert output_path.exists()
             assert count > 0
+
+            # Verify SSoT: RDF stored in .repoq/, not in docs/
+            assert ".repoq" in str(output_path)
+            assert "docs" not in str(output_path)
         finally:
             if output_path.exists():
                 output_path.unlink()
+
+
+class TestMarkdownGeneration:
+    """Test RDF → Markdown generation (Single Source of Truth)."""
+
+    def test_generate_markdown_from_rdf(self, tmp_path: Path) -> None:
+        """Should generate Markdown from RDF (SSoT: RDF → Markdown)."""
+        from scripts.generate_vdad_markdown import generate_phase2_markdown
+
+        # Create test RDF
+        rdf_path = tmp_path / "test.ttl"
+        graph = Graph()
+        graph.bind("vdad", VDAD)
+        graph.bind("foaf", FOAF)
+
+        # Add test value
+        v01 = VDAD["v01"]
+        graph.add((v01, RDF.type, VDAD.Tier1Value))
+        graph.add((v01, RDF.type, VDAD.Value))
+        graph.add((v01, RDFS.label, Literal("V01: Test Value")))
+        graph.add((v01, VDAD.description, Literal("Test description")))
+        graph.add((v01, VDAD.tier, Literal(1, datatype=XSD.integer)))
+        graph.add((v01, VDAD.priority, VDAD["P0"]))
+
+        # Add test stakeholder
+        alex = VDAD["alex"]
+        graph.add((alex, RDF.type, VDAD.Developer))
+        graph.add((alex, RDF.type, VDAD.Stakeholder))
+        graph.add((alex, FOAF.name, Literal("Alex")))
+        graph.add((alex, VDAD.role, Literal("Developer")))
+        graph.add((alex, VDAD.interests, Literal("Quality")))
+
+        # Link value → stakeholder
+        graph.add((v01, VDAD.stakeholder, alex))
+
+        # Save RDF
+        graph.serialize(destination=rdf_path, format="turtle")
+
+        # Generate Markdown
+        md_path = tmp_path / "test.md"
+        lines = generate_phase2_markdown(rdf_path, md_path)
+
+        assert md_path.exists()
+        assert lines > 0
+
+        # Verify content
+        content = md_path.read_text()
+        assert "# Phase 2: Value Register" in content
+        assert "V01: Test Value" in content
+        assert "Test description" in content
+        assert "**Tier**: 1" in content
+        assert "**Priority**: P0" in content
+        assert "Alex" in content
+        assert "Generated from RDF" in content  # SSoT marker
+
+    def test_ssot_principle_enforced(self, tmp_path: Path) -> None:
+        """Should enforce SSoT principle: RDF in .repoq/, Markdown in docs/."""
+        from scripts.generate_vdad_markdown import generate_phase2_markdown
+
+        # Create minimal RDF
+        rdf_path = tmp_path / ".repoq" / "vdad" / "test.ttl"
+        rdf_path.parent.mkdir(parents=True, exist_ok=True)
+
+        graph = Graph()
+        graph.bind("vdad", VDAD)
+        v01 = VDAD["v01"]
+        graph.add((v01, RDF.type, VDAD.Tier1Value))
+        graph.add((v01, RDFS.label, Literal("V01: Test")))
+        graph.add((v01, VDAD.description, Literal("Test")))
+        graph.add((v01, VDAD.tier, Literal(1, datatype=XSD.integer)))
+        graph.serialize(destination=rdf_path, format="turtle")
+
+        # Generate to docs/
+        md_path = tmp_path / "docs" / "vdad" / "test.md"
+        lines = generate_phase2_markdown(rdf_path, md_path)
+
+        # Verify paths follow SSoT principle
+        assert ".repoq" in str(rdf_path)  # Source in .repoq/
+        assert "docs" in str(md_path)  # Generated in docs/
+        assert lines > 0
 
 
 class TestGateVDADExtraction:

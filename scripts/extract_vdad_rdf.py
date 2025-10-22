@@ -236,9 +236,12 @@ def generate_phase2_rdf(values: list[ValueInfo], stakeholders: list[StakeholderI
 def extract_phase2_values(markdown_path: Path, output_path: Path) -> int:
     """Extract Phase 2 Values from Markdown and save as TTL.
 
+    Single Source of Truth: .repoq/ stores all RDF data.
+    docs/ contains only human-readable Markdown (generated from RDF).
+
     Args:
-        markdown_path: Path to phase2-values.md
-        output_path: Path to output .ttl file
+        markdown_path: Path to phase2-values.md (source for extraction)
+        output_path: Path to output .ttl file (should be in .repoq/vdad/)
 
     Returns:
         Number of triples generated
@@ -246,7 +249,7 @@ def extract_phase2_values(markdown_path: Path, output_path: Path) -> int:
     Example:
         >>> count = extract_phase2_values(
         ...     Path("docs/vdad/phase2-values.md"),
-        ...     Path("docs/vdad/phase2-values.ttl")
+        ...     Path(".repoq/vdad/phase2-values.ttl")
         ... )
         >>> print(f"Generated {count} triples")
         Generated 120 triples
