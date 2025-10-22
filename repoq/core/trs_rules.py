@@ -178,6 +178,37 @@ def extract_trs_systems(normalize_dir: Path) -> List[TRSSystem]:
     return systems
 
 
+def _mark_systems_with_property(
+    systems: List[TRSSystem],
+    test_content: str,
+    test_patterns: List[str],
+    property_name: str,
+) -> None:
+    """Mark systems that have a verified property.
+
+    Args:
+        systems: List of TRS systems to update
+        test_content: Content of test file
+        test_patterns: Test function patterns to search for
+        property_name: Property to set ('confluence_proven' or 'termination_proven')
+    """
+    # Check if this test file contains relevant tests
+    if not any(pattern in test_content for pattern in test_patterns):
+        return
+
+    # Extract which module is being tested
+    module_match = re.search(r"from repoq\.normalize\.(\w+)", test_content)
+    if not module_match:
+        return
+
+    module_name = module_match.group(1)
+
+    # Mark corresponding systems
+    for system in systems:
+        if system.id.endswith(module_name):
+            setattr(system, property_name, True)
+
+
 def enrich_with_verification_data(
     systems: List[TRSSystem], tests_dir: Optional[Path] = None
 ) -> None:
@@ -201,27 +232,15 @@ def enrich_with_verification_data(
     for test_file in tests_dir.glob("test_*.py"):
         content = test_file.read_text()
 
-        # Look for confluence tests
-        if "test_confluence" in content or "test_critical_pairs" in content:
-            # Extract which system is being tested
-            module_match = re.search(r"from repoq\.normalize\.(\w+)", content)
-            if module_match:
-                module_name = module_match.group(1)
+        # Mark confluence property
+        _mark_systems_with_property(
+            systems, content, ["test_confluence", "test_critical_pairs"], "confluence_proven"
+        )
 
-                # Find corresponding system
-                for system in systems:
-                    if system.id.endswith(module_name):
-                        system.confluence_proven = True
-
-        # Look for termination tests
-        if "test_termination" in content or "test_idempotence" in content:
-            module_match = re.search(r"from repoq\.normalize\.(\w+)", content)
-            if module_match:
-                module_name = module_match.group(1)
-
-                for system in systems:
-                    if system.id.endswith(module_name):
-                        system.termination_proven = True
+        # Mark termination property
+        _mark_systems_with_property(
+            systems, content, ["test_termination", "test_idempotence"], "termination_proven"
+        )
 
 
 def export_trs_systems_rdf(graph: Graph, systems: List[TRSSystem], project_id: str) -> None:
