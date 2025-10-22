@@ -677,246 +677,6 @@ def _run_command(
             shutil.rmtree(cleanup, ignore_errors=True)
 
 
-@app.command()
-def verify(
-    mode: str = typer.Option(
-        "trs",
-        "--mode",
-        help="Verification mode: 'trs' (TRS properties), 'self' (self-application), 'all' (both)",
-    ),
-    level: str = typer.Option(
-        "standard", "--level", help="Verification level: 'basic', 'standard', 'advanced'"
-    ),
-    output: str = typer.Option(
-        None, "-o", "--output", help="Save verification results to JSON file"
-    ),
-    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress output except errors"),
-    fail_fast: bool = typer.Option(True, "--fail-fast", help="Stop on first verification failure"),
-):
-    """
-    🔍 Verify TRS mathematical properties and system soundness.
-
-    This command verifies the mathematical correctness of RepoQ's Term Rewriting Systems (TRS):
-    - Idempotence: f(f(x)) = f(x)
-    - Confluence: equivalent inputs produce identical outputs
-    - Termination: all rewriting chains halt
-    - Soundness: semantic meaning preserved
-
-    Examples:
-        repoq verify --mode trs --level standard
-        repoq verify --mode self --output verification.json
-        repoq verify --mode all --quiet
-    """
-    import time
-
-    if not quiet:
-        print("[bold blue]🔍 RepoQ TRS Verification[/bold blue]")
-        print(f"Mode: {mode}, Level: {level}")
-        print()
-
-    all_results = {}
-    exit_code = 0
-
-    try:
-        # TRS Property Verification
-        if mode in ["trs", "all"]:
-            if not quiet:
-                print("[bold]📋 TRS Property Verification[/bold]")
-
-            start_time = time.time()
-            trs_results = _run_trs_verification(level, quiet, fail_fast)
-            verification_time = time.time() - start_time
-
-            all_results["trs_verification"] = trs_results
-
-            if not quiet:
-                _print_trs_summary(trs_results, verification_time)
-
-            # Check if verification passed
-            if not trs_results.get("all_passed", False):
-                exit_code = 1
-                if fail_fast and mode == "all":
-                    if not quiet:
-                        print("❌ TRS verification failed, skipping self-application")
-                    return exit_code
-
-        # Self-Application Analysis
-        if mode in ["self", "all"]:
-            if not quiet:
-                print("\n[bold]🔄 Self-Application Analysis[/bold]")
-
-            start_time = time.time()
-            self_results = _run_self_application(quiet)
-            self_time = time.time() - start_time
-
-            all_results["self_application"] = self_results
-
-            if not quiet:
-                _print_self_summary(self_results, self_time)
-
-            # Check if self-application passed
-            if not self_results.get("success", False):
-                exit_code = 1
-
-        # Save results
-        if output:
-            output_path = Path(output)
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-
-            with open(output_path, "w") as f:
-                json.dump(all_results, f, indent=2, default=str)
-
-            if not quiet:
-                print(f"\n📁 Results saved to: {output_path}")
-
-    except Exception as e:
-        print(f"❌ Verification error: {e}")
-        exit_code = 1
-
-    if not quiet:
-        status = "✅ SUCCESS" if exit_code == 0 else "❌ FAILURE"
-        print(f"\n{status}")
-
-    if exit_code != 0:
-        raise typer.Exit(exit_code)
-
-
-@app.command()
-def gate(
-    repo: str = typer.Argument(
-        ".", help="Path to repository to analyze (default: current directory)"
-    ),
-    base: str = typer.Option(
-        "main", "--base", "-b", help="Baseline Git reference (branch, tag, SHA) for comparison"
-    ),
-    head: str = typer.Option(
-        ".", "--head", "-h", help="Current Git reference (default: . = working tree)"
-    ),
-    strict: bool = typer.Option(
-        True,
-        "--strict/--no-strict",
-        help="Fail on any constraint violation (strict) or warn only (no-strict)",
-    ),
-    output: str = typer.Option(None, "-o", "--output", help="Save gate results to JSON file"),
-    quiet: bool = typer.Option(False, "--quiet", "-q", help="Suppress output except final status"),
-):
-    """
-    🚦 Quality Gate: Compare BASE vs HEAD metrics.
-
-    This command implements the Quality Gate MVP:
-    - Analyzes BASE revision (e.g., main branch)
-    - Analyzes HEAD revision (current working tree)
-    - Computes Q-metrics: Q = 100 - 20×complexity - 30×hotspots - 10×todos
-    - Checks hard constraints:
-        • Tests coverage ≥ 80%
-        • TODOs count ≤ 100
-        • Hotspots count ≤ 20
-        • Score delta ≤ -5.0
-    - Returns exit code 0 (PASS) or 1 (FAIL)
-
-    Examples:
-        repoq gate --base main --head .
-        repoq gate --base origin/main --no-strict
-        repoq gate . --base v1.0.0 --output gate-results.json
-    """
-    import time
-
-    repo_path = Path(repo).resolve()
-
-    if not repo_path.exists():
-        print(f"❌ Repository not found: {repo_path}")
-        raise typer.Exit(code=1)
-
-    if not (repo_path / ".git").exists():
-        print(f"❌ Not a git repository: {repo_path}")
-        raise typer.Exit(code=1)
-
-    if not quiet:
-        print("[bold blue]🚦 RepoQ Quality Gate[/bold blue]")
-        print(f"Repository: {repo_path}")
-        print(f"BASE: {base}")
-        print(f"HEAD: {head}")
-        print(f"Mode: {'strict' if strict else 'lenient'}")
-        print()
-
-    try:
-        start_time = time.time()
-
-        # Run quality gate
-        result = run_quality_gate(
-            repo_path=repo_path,
-            base_ref=base,
-            head_ref=head,
-            strict=strict,
-        )
-
-        gate_time = time.time() - start_time
-
-        # Print report
-        if not quiet:
-            report = format_gate_report(result)
-            print(report)
-            print()
-            print(f"⏱️  Gate execution time: {gate_time:.2f}s")
-
-        # Save results if requested
-        if output:
-            output_path = Path(output)
-            output_path.parent.mkdir(parents=True, exist_ok=True)
-
-            with output_path.open("w", encoding="utf-8") as f:
-                json.dump(
-                    {
-                        "passed": result.passed,
-                        "base_metrics": {
-                            "score": result.base_metrics.score,
-                            "complexity": result.base_metrics.complexity,
-                            "hotspots": result.base_metrics.hotspots,
-                            "todos": result.base_metrics.todos,
-                            "tests_coverage": result.base_metrics.tests_coverage,
-                            "grade": result.base_metrics.grade,
-                        },
-                        "head_metrics": {
-                            "score": result.head_metrics.score,
-                            "complexity": result.head_metrics.complexity,
-                            "hotspots": result.head_metrics.hotspots,
-                            "todos": result.head_metrics.todos,
-                            "tests_coverage": result.head_metrics.tests_coverage,
-                            "grade": result.head_metrics.grade,
-                        },
-                        "deltas": result.deltas,
-                        "violations": result.violations,
-                        "execution_time": gate_time,
-                    },
-                    f,
-                    indent=2,
-                )
-
-            if not quiet:
-                print(f"💾 Results saved to: {output}")
-
-        # Exit with appropriate code
-        exit_code = 0 if result.passed else 1
-
-        if not quiet:
-            status = "✅ Quality Gate PASSED" if result.passed else "❌ Quality Gate FAILED"
-            print()
-            print(f"[bold]{'green' if result.passed else 'red'}]{status}[/bold]")
-
-        raise typer.Exit(code=exit_code)
-
-    except subprocess.CalledProcessError as e:
-        print(f"❌ Git command failed: {e.stderr if hasattr(e, 'stderr') else str(e)}")
-        raise typer.Exit(code=2)
-    except Exception as e:
-        print(f"❌ Gate execution failed: {e}")
-        if not quiet:
-            import traceback
-
-            traceback.print_exc()
-        raise typer.Exit(code=2)
-
-
 def _run_trs_verification(level: str, quiet: bool, fail_fast: bool) -> Dict[str, Any]:
     """Run TRS property verification."""
     # Import here to avoid circular dependencies
@@ -1070,6 +830,396 @@ def _print_self_summary(results: Dict[str, Any], self_time: float) -> None:
 
     if "error" in results:
         print(f"  ❌ Error: {results['error']}")
+
+
+@app.command()
+def meta_self(
+    level: int = typer.Option(
+        1,
+        "--level",
+        "-l",
+        help="Stratification level (1 or 2, enforces Theorem F)",
+    ),
+    repo: str = typer.Option(
+        ".",
+        "--repo",
+        "-r",
+        help="Path to RepoQ repository to analyze",
+    ),
+    output: str = typer.Option(
+        None,
+        "--output",
+        "-o",
+        help="Save meta-analysis results to file (JSON-LD format)",
+    ),
+) -> None:
+    """Meta-analysis: RepoQ analyzing itself (dogfooding).
+    
+    This command performs self-analysis with stratification enforcement
+    (Theorem F) to ensure safe self-reference without paradoxes.
+    
+    Stratification levels:
+        L₀: Base reality (no self-analysis)
+        L₁: RepoQ analyzing its own codebase (first-order)
+        L₂: RepoQ validating its own quality metrics (second-order)
+    
+    Theorem F Enforcement:
+        Can analyze L_j from L_i iff i > j (strict ordering)
+        Cannot skip levels (must go L₀ → L₁ → L₂)
+    
+    Examples:
+        # First-order self-analysis (L₀ → L₁)
+        repoq meta-self --level 1
+        
+        # Second-order meta-validation (L₁ → L₂)
+        repoq meta-self --level 2
+        
+        # Save results to file
+        repoq meta-self --level 1 --output meta_quality.jsonld
+    """
+    setup_logging()
+    
+    from .core.stratification_guard import StratificationGuard
+    
+    repo_path = Path(repo).resolve()
+    
+    if not repo_path.exists():
+        print(f"[bold red]❌ Repository not found: {repo_path}[/bold red]")
+        raise typer.Exit(2)
+    
+    print(f"[bold]🔄 Meta-Analysis: RepoQ Self-Application (Level {level})[/bold]")
+    print(f"📁 Repository: {repo_path}")
+    print()
+    
+    # Initialize stratification guard
+    guard = StratificationGuard(max_level=2)
+    
+    # Check stratification transition
+    current_level = 0  # We're at L₀ (base reality)
+    target_level = level
+    
+    print(f"🔒 Stratification check: L₀ → L_{target_level}")
+    
+    transition = guard.check_transition(current_level, target_level)
+    
+    if not transition.allowed:
+        print(f"[bold red]❌ Stratification violation: {transition.reason}[/bold red]")
+        print()
+        print("[yellow]Theorem F: Can analyze L_j from L_i iff i > j[/yellow]")
+        print(f"[yellow]Cannot skip levels. Please run --level {current_level + 1} first.[/yellow]")
+        raise typer.Exit(1)
+    
+    print(f"[green]✅ Stratification check passed: {transition.reason}[/green]")
+    print()
+    
+    try:
+        # Run analysis on RepoQ's own codebase
+        print("📊 Analyzing RepoQ codebase...")
+        
+        import time
+        start_time = time.time()
+        
+        # Create project instance
+        pid = str(repo_path)
+        project = Project(
+            id=pid,
+            name=f"RepoQ-L{level}",
+            repository_url=None,
+        )
+        
+        # Set metadata
+        project.analyzed_at = datetime.now(timezone.utc).isoformat()
+        project.repoq_version = __version__
+        project.meta_level = level
+        project.meta_target = "self"
+        
+        # Run analyzers
+        cfg = AnalyzeConfig(mode="full")
+        
+        from .analyzers.ci_qm import CIQualityAnalyzer
+        from .analyzers.complexity import ComplexityAnalyzer
+        from .analyzers.history import HistoryAnalyzer
+        from .analyzers.hotspots import HotspotsAnalyzer
+        from .analyzers.structure import StructureAnalyzer
+        from .analyzers.weakness import WeaknessAnalyzer
+        
+        with Progress() as progress:
+            task = progress.add_task("Meta-analysis...", total=6)
+            
+            StructureAnalyzer().run(project, repo_path, cfg)
+            progress.advance(task)
+            
+            ComplexityAnalyzer().run(project, repo_path, cfg)
+            progress.advance(task)
+            
+            WeaknessAnalyzer().run(project, repo_path, cfg)
+            progress.advance(task)
+            
+            CIQualityAnalyzer().run(project, repo_path, cfg)
+            progress.advance(task)
+            
+            HistoryAnalyzer().run(project, repo_path, cfg)
+            progress.advance(task)
+            
+            HotspotsAnalyzer().run(project, repo_path, cfg)
+            progress.advance(task)
+        
+        analysis_time = time.time() - start_time
+        
+        print(f"\n⏱️  Analysis time: {analysis_time:.2f}s")
+        print(f"✅ Meta-analysis L_{level} complete")
+        
+        # Print summary
+        print("\n📊 Quality Metrics:")
+        if hasattr(project, 'files') and project.files:
+            file_count = len(project.files) if isinstance(project.files, list) else len(project.files.values())
+            print(f"  📁 Files analyzed: {file_count}")
+        
+        if hasattr(project, 'modules') and project.modules:
+            module_count = len(project.modules) if isinstance(project.modules, list) else len(project.modules.values())
+            print(f"  📦 Modules found: {module_count}")
+        
+        # Save output if requested
+        if output:
+            from .core.jsonld import export_to_jsonld
+            
+            output_path = Path(output)
+            output_path.parent.mkdir(parents=True, exist_ok=True)
+            
+            jsonld_data = export_to_jsonld(project)
+            jsonld_data["meta"] = {
+                "level": level,
+                "target": "self",
+                "stratification_check": "passed",
+                "theorem_f": "enforced",
+            }
+            
+            output_path.write_text(json.dumps(jsonld_data, indent=2))
+            print(f"\n💾 Meta-analysis results saved: {output_path}")
+        
+        print("\n[bold green]✅ Self-application successful (no paradoxes detected)[/bold green]")
+        raise typer.Exit(0)
+    
+    except Exception as e:
+        print(f"[bold red]❌ Error during meta-analysis: {e}[/bold red]")
+        logger.exception("Meta-self command failed")
+        raise typer.Exit(2)
+
+
+@app.command()
+def gate(
+    base: str = typer.Option(
+        "main",
+        "--base",
+        "-b",
+        help="Base git reference (e.g., 'main', 'origin/main', SHA)",
+    ),
+    head: str = typer.Option(
+        "HEAD",
+        "--head",
+        "-h",
+        help="Head git reference (default: HEAD = current commit)",
+    ),
+    repo: str = typer.Option(
+        ".",
+        "--repo",
+        "-r",
+        help="Path to repository (default: current directory)",
+    ),
+    strict: bool = typer.Option(
+        True,
+        "--strict/--no-strict",
+        help="Fail on any constraint violation (strict mode)",
+    ),
+    output: str = typer.Option(
+        None,
+        "--output",
+        "-o",
+        help="Save gate report to file (JSON format)",
+    ),
+) -> None:
+    """Quality gate: compare BASE vs HEAD metrics.
+    
+    This command analyzes both BASE and HEAD revisions, computes Q-scores,
+    checks hard constraints, and evaluates the admission predicate.
+    
+    Exit codes:
+        0: Gate PASSED (all constraints satisfied)
+        1: Gate FAILED (constraint violations)
+        2: Error during analysis
+    
+    Examples:
+        # Compare current branch with main
+        repoq gate --base main --head HEAD
+        
+        # Compare two specific commits
+        repoq gate --base abc123 --head def456
+        
+        # Compare PR base with PR head (GitHub Actions)
+        repoq gate --base ${{ github.event.pull_request.base.sha }} --head ${{ github.sha }}
+        
+        # Warn-only mode (don't fail CI)
+        repoq gate --no-strict --base main --head HEAD
+    """
+    setup_logging()
+    
+    repo_path = Path(repo).resolve()
+    
+    if not repo_path.exists():
+        print(f"[bold red]❌ Repository not found: {repo_path}[/bold red]")
+        raise typer.Exit(2)
+    
+    print(f"[bold]⚙️  Quality Gate: {base} → {head}[/bold]")
+    print(f"📁 Repository: {repo_path}")
+    print()
+    
+    try:
+        # Run quality gate
+        result = run_quality_gate(
+            repo_path=repo_path,
+            base_ref=base,
+            head_ref=head,
+            strict=strict,
+        )
+        
+        # Format and print report
+        report = format_gate_report(result)
+        print(report)
+        
+        # Save to file if requested
+        if output:
+            output_path = Path(output)
+            output_data = {
+                "base_ref": base,
+                "head_ref": head,
+                "passed": result.passed,
+                "base_metrics": {
+                    "q_score": result.base_metrics.q_score,
+                    "tests_coverage": result.base_metrics.tests_coverage,
+                    "complexity": result.base_metrics.avg_complexity,
+                    "hotspots": result.base_metrics.hotspots,
+                    "todos": result.base_metrics.todos,
+                },
+                "head_metrics": {
+                    "q_score": result.head_metrics.q_score,
+                    "tests_coverage": result.head_metrics.tests_coverage,
+                    "complexity": result.head_metrics.avg_complexity,
+                    "hotspots": result.head_metrics.hotspots,
+                    "todos": result.head_metrics.todos,
+                },
+                "deltas": result.deltas,
+                "violations": result.violations,
+            }
+            
+            output_path.write_text(json.dumps(output_data, indent=2))
+            print(f"\n💾 Gate report saved: {output_path}")
+        
+        # Exit with appropriate code
+        if result.passed:
+            print("\n[bold green]✅ Quality gate PASSED[/bold green]")
+            raise typer.Exit(0)
+        else:
+            print("\n[bold red]❌ Quality gate FAILED[/bold red]")
+            if not strict:
+                print("[yellow]⚠️  Running in non-strict mode (not failing CI)[/yellow]")
+                raise typer.Exit(0)
+            raise typer.Exit(1)
+    
+    except Exception as e:
+        print(f"[bold red]❌ Error during gate analysis: {e}[/bold red]")
+        logger.exception("Gate command failed")
+        raise typer.Exit(2)
+
+
+@app.command()
+def verify(
+    vc_file: str = typer.Argument(..., help="Path to W3C Verifiable Credential JSON file"),
+    public_key: str = typer.Option(
+        None, "--public-key", help="Path to public key PEM file (optional)"
+    ),
+    output: str = typer.Option(None, "--output", "-o", help="Export report to file"),
+):
+    """Verify W3C Verifiable Credential signature.
+
+    Verifies ECDSA signature of a W3C Verifiable Credential (VC)
+    following the QualityAssessmentCredential specification.
+
+    Verification steps:
+        1. Load VC from JSON file
+        2. Validate VC structure (required fields)
+        3. Check expiration (if present)
+        4. Verify ECDSA signature using public key
+
+    Exit codes:
+        0: VC is valid (signature verified)
+        1: VC is invalid (signature failed or structure errors)
+        2: Execution error (file not found, etc.)
+
+    Args:
+        vc_file: Path to VC JSON file to verify
+        public_key: Path to public key PEM file (ECDSA secp256k1)
+        output: Export verification report to file
+
+    Example:
+        $ repoq verify quality_cert.json --public-key public_key.pem
+        ✅ Verifiable Credential: VALID
+
+        $ repoq verify tampered_cert.json --public-key public_key.pem
+        ❌ Verifiable Credential: INVALID
+        Errors:
+          1. Signature verification failed (invalid signature)
+    """
+    from pathlib import Path
+    from rich.console import Console
+    from rich.markdown import Markdown
+
+    from repoq.vc_verification import verify_vc, format_verification_report
+
+    console = Console()
+
+    try:
+        vc_path = Path(vc_file).resolve()
+        if not vc_path.exists():
+            console.print(f"[bold red]❌ File not found: {vc_file}[/bold red]")
+            raise typer.Exit(2)
+
+        public_key_path = Path(public_key).resolve() if public_key else None
+        if public_key and public_key_path and not public_key_path.exists():
+            console.print(f"[bold red]❌ Public key not found: {public_key}[/bold red]")
+            raise typer.Exit(2)
+
+        # Verify VC
+        result = verify_vc(vc_path, public_key_path)
+
+        # Format report
+        report = format_verification_report(result)
+
+        # Print to console
+        console.print(Markdown(report))
+
+        # Export to file if requested
+        if output:
+            output_path = Path(output).resolve()
+            with open(output_path, "w", encoding="utf-8") as f:
+                # Remove Rich formatting for file export
+                clean_report = report.replace("[bold green]", "").replace("[/bold green]", "")
+                clean_report = clean_report.replace("[bold red]", "").replace("[/bold red]", "")
+                clean_report = clean_report.replace("[bold]", "").replace("[/bold]", "")
+                f.write(clean_report)
+            console.print(f"\n📄 Report exported to: {output_path}")
+
+        # Exit with appropriate code
+        if result.valid:
+            raise typer.Exit(0)
+        else:
+            raise typer.Exit(1)
+
+    except typer.Exit:
+        raise
+    except Exception as e:
+        console.print(f"[bold red]❌ Verification failed: {e}[/bold red]")
+        logger.exception("Verify command failed")
+        raise typer.Exit(2)
 
 
 if __name__ == "__main__":

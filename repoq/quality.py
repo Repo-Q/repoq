@@ -194,3 +194,154 @@ def compare_metrics(base: QualityMetrics, head: QualityMetrics) -> Dict[str, flo
         "tests_coverage_delta": head.tests_coverage - base.tests_coverage,
         "grade_delta": ord(base.grade) - ord(head.grade),  # Negative = better grade
     }
+
+
+def calculate_pcq(project: Project, module_type: str = "directory") -> float:
+    """Calculate Per-Component Quality (PCQ) with min-aggregation.
+    
+    PCQ implements gaming resistance through minimum aggregation:
+        PCQ(S) = min_{m∈modules} Q(m)
+    
+    This prevents "compensation gaming" where developers hide complexity
+    in one module while improving others.
+    
+    Args:
+        project: Project with modules/files
+        module_type: "directory", "layer", or "bounded_context"
+    
+    Returns:
+        PCQ score ∈ [0, 100], the minimum quality across all modules
+    
+    Example:
+        >>> pcq = calculate_pcq(project, module_type="directory")
+        >>> assert 0 <= pcq <= 100
+        >>> # If any module has low quality, PCQ reflects that
+    """
+    if not project.modules:
+        # No modules: use global quality
+        metrics = compute_quality_score(project)
+        return metrics.score
+    
+    # Compute quality for each module
+    module_scores = []
+    
+    for module_id, module in project.modules.items():
+        # Create mini-project for this module
+        module_project = Project(
+            id=f"{project.id}/{module_id}",
+            name=module.name,
+        )
+        
+        # Filter files belonging to this module
+        module_files = {}
+        for file_id, file_obj in project.files.items():
+            if file_obj.path.startswith(module.path):
+                module_files[file_id] = file_obj
+        
+        module_project.files = module_files
+        
+        # Compute quality for this module
+        if module_files:
+            metrics = compute_quality_score(module_project)
+            module_scores.append(metrics.score)
+    
+    if not module_scores:
+        # No modules with files: return perfect score
+        return 100.0
+    
+    # PCQ = minimum quality across modules (gaming-resistant)
+    pcq = min(module_scores)
+    
+    return pcq
+
+
+def generate_pce_witness(
+    project: Project,
+    target_score: float,
+    k: int = 8,
+) -> list[dict]:
+    """Generate Per-Component Evidence (PCE) k-repair witness.
+    
+    PCE provides constructive feedback: which files to improve
+    to reach the target quality score.
+    
+    Algorithm (greedy):
+        1. Compute ΔQ_i = improvement potential for each file i
+        2. Sort files by ΔQ_i descending (highest impact first)
+        3. Select top-k files
+        4. Return witness with file + action + expected Δ score
+    
+    Args:
+        project: Project to analyze
+        target_score: Target quality score (e.g., 80.0)
+        k: Maximum number of repair actions (default: 8)
+    
+    Returns:
+        List of repair actions sorted by impact:
+        [{"file": path, "action": description, "delta_q": expected_improvement}]
+    
+    Example:
+        >>> witness = generate_pce_witness(project, target_score=80.0, k=5)
+        >>> # Top 5 files to fix with expected improvement
+        >>> for action in witness:
+        ...     print(f"{action['file']}: {action['action']} (+{action['delta_q']:.1f})")
+    """
+    current_metrics = compute_quality_score(project)
+    current_score = current_metrics.score
+    
+    if current_score >= target_score:
+        # Already at target: no repairs needed
+        return []
+    
+    gap = target_score - current_score
+    
+    # Compute improvement potential for each file
+    repair_candidates = []
+    
+    for file_id, file_obj in project.files.items():
+        actions = []
+        
+        # Action 1: Reduce complexity
+        if (file_obj.complexity or 0) > 10:
+            delta_q = (file_obj.complexity - 10) * 0.5  # Heuristic
+            actions.append({
+                "file": file_obj.path,
+                "action": f"Reduce complexity from {file_obj.complexity:.1f} to 10",
+                "delta_q": min(delta_q, gap),
+                "priority": "high" if file_obj.complexity > 20 else "medium",
+            })
+        
+        # Action 2: Resolve TODOs
+        todo_count = sum(
+            1 for issue in getattr(file_obj, "issues", [])
+            if "todo" in issue.type.lower()
+        )
+        if todo_count > 0:
+            delta_q = todo_count * 0.1  # Heuristic: 0.1 point per TODO
+            actions.append({
+                "file": file_obj.path,
+                "action": f"Resolve {todo_count} TODO(s)",
+                "delta_q": min(delta_q, gap),
+                "priority": "low",
+            })
+        
+        # Action 3: Reduce hotspot (if applicable)
+        if (file_obj.hotness or 0) > 0.66:
+            delta_q = 1.5  # Heuristic: 1.5 points per hotspot resolved
+            actions.append({
+                "file": file_obj.path,
+                "action": f"Refactor hotspot (hotness={file_obj.hotness:.2f})",
+                "delta_q": min(delta_q, gap),
+                "priority": "high",
+            })
+        
+        repair_candidates.extend(actions)
+    
+    # Sort by delta_q descending (highest impact first)
+    repair_candidates.sort(key=lambda x: x["delta_q"], reverse=True)
+    
+    # Select top-k actions
+    witness = repair_candidates[:k]
+    
+    return witness
+

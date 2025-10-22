@@ -36,6 +36,7 @@ full = [
   "pyshacl>=0.23.0",
   "tree-sitter>=0.20",             # AST parsing for filters_trs
   "tree-sitter-python>=0.20",      # Python grammar for tree-sitter
+  "cryptography>=42.0",            # ECDSA signatures for W3C VC
 ]
 dev = [
   "pytest>=8.0",
