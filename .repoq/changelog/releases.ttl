@@ -1,0 +1,89 @@
+@prefix changelog: <https://repoq.io/changelog#> .
+@prefix adr: <https://repoq.io/adr#> .
+@prefix vdad: <https://repoq.io/vdad#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# RepoQ Releases (Changelog SSoT)
+# ============================================================================
+
+changelog:v2-0-0-alpha-5 a changelog:Release ;
+    changelog:version "2.0.0-alpha.5" ;
+    changelog:date "2025-01-15"^^xsd:date ;
+    changelog:tag "v2.0.0-alpha.5" ;
+    changelog:summary "SSoT Enforcement: RDF-only workflow" ;
+
+    changelog:change [
+        a changelog:Change ;
+        changelog:changeType changelog:removed ;
+        changelog:description "Removed scripts/extract_vdad_rdf.py (violates SSoT principle)" ;
+        changelog:breakingChange true ;
+        changelog:commit "a011822" ;
+        changelog:linesRemoved 250 ;
+        changelog:implements adr:adr-014
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:removed ;
+        changelog:description "Removed tests/vdad/test_vdad_extraction.py (obsolete)" ;
+        changelog:breakingChange false ;
+        changelog:commit "a011822" ;
+        changelog:linesRemoved 300
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:added ;
+        changelog:description "Added tests/vdad/test_vdad_generation.py (RDF → Markdown tests)" ;
+        changelog:breakingChange false ;
+        changelog:commit "a011822" ;
+        changelog:linesAdded 200 ;
+        changelog:testsAdded 7
+    ] .
+
+changelog:v2-0-0-alpha-4 a changelog:Release ;
+    changelog:version "2.0.0-alpha.4" ;
+    changelog:date "2025-01-15"^^xsd:date ;
+    changelog:tag "v2.0.0-alpha.4" ;
+    changelog:summary "ADR-014: Single Source of Truth Principle" ;
+
+    changelog:change [
+        a changelog:Change ;
+        changelog:changeType changelog:added ;
+        changelog:description "ADR-014: .repoq/ as SSoT for all RDF artifacts" ;
+        changelog:breakingChange false ;
+        changelog:commit "b9c1e14" ;
+        changelog:implements adr:adr-014
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:added ;
+        changelog:description "Generator: RDF → Markdown (scripts/generate_vdad_markdown.py, 180+ lines)" ;
+        changelog:breakingChange false ;
+        changelog:commit "b9c1e14" ;
+        changelog:linesAdded 180
+    ] .
+
+changelog:v2-0-0-alpha-3 a changelog:Release ;
+    changelog:version "2.0.0-alpha.3" ;
+    changelog:date "2025-01-15"^^xsd:date ;
+    changelog:tag "v2.0.0-alpha.3" ;
+    changelog:summary "Phase 5.6: VDAD as RDF (POC)" ;
+
+    changelog:change [
+        a changelog:Change ;
+        changelog:changeType changelog:added ;
+        changelog:description "VDAD meta-ontology (.repoq/ontologies/vdad.ttl, 400+ lines)" ;
+        changelog:breakingChange false ;
+        changelog:commit "49d6909" ;
+        changelog:linesAdded 400 ;
+        changelog:implements vdad:v07 , vdad:fr-10
+    ] ,
+    [
+        a changelog:Change ;
+        changelog:changeType changelog:added ;
+        changelog:description "Extractor: Markdown → RDF (scripts/extract_vdad_rdf.py, 250+ lines)" ;
+        changelog:breakingChange false ;
+        changelog:commit "49d6909" ;
+        changelog:linesAdded 250
+    ] .

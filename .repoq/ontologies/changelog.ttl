@@ -1,0 +1,162 @@
+@prefix changelog: <https://repoq.io/changelog#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# Changelog Ontology
+# ============================================================================
+# Single Source of Truth for Project Changelog
+#
+# Structure:
+#   .repoq/changelog/releases.ttl (SSoT) → CHANGELOG.md (generated)
+#
+# Traceability:
+#   - ADR-014: Single Source of Truth
+#   - FR-10: Reproducibility
+#   - V07: Observability
+# ============================================================================
+
+<https://repoq.io/changelog#> a owl:Ontology ;
+    dc:title "Changelog Ontology" ;
+    dc:description "Meta-ontology for project changelog and releases" ;
+    dcterms:created "2025-01-15"^^xsd:date ;
+    owl:versionInfo "1.0.0" .
+
+# ============================================================================
+# Classes
+# ============================================================================
+
+changelog:Release a owl:Class ;
+    rdfs:label "Release" ;
+    rdfs:comment "A versioned release of the project." .
+
+changelog:Change a owl:Class ;
+    rdfs:label "Change" ;
+    rdfs:comment "A change in a release (added, changed, deprecated, removed, fixed, security)." .
+
+changelog:ChangeType a owl:Class ;
+    rdfs:label "Change Type" ;
+    rdfs:comment "Type of change (added, changed, deprecated, removed, fixed, security)." .
+
+# ============================================================================
+# Properties
+# ============================================================================
+
+# Release properties
+changelog:version a owl:DatatypeProperty ;
+    rdfs:label "version" ;
+    rdfs:comment "Version string (e.g., '2.0.0-alpha.5')" ;
+    rdfs:domain changelog:Release ;
+    rdfs:range xsd:string .
+
+changelog:date a owl:DatatypeProperty ;
+    rdfs:label "date" ;
+    rdfs:comment "Release date" ;
+    rdfs:domain changelog:Release ;
+    rdfs:range xsd:date .
+
+changelog:tag a owl:DatatypeProperty ;
+    rdfs:label "tag" ;
+    rdfs:comment "Git tag for this release" ;
+    rdfs:domain changelog:Release ;
+    rdfs:range xsd:string .
+
+changelog:summary a owl:DatatypeProperty ;
+    rdfs:label "summary" ;
+    rdfs:comment "Short summary of the release" ;
+    rdfs:domain changelog:Release ;
+    rdfs:range xsd:string .
+
+# Change properties
+changelog:change a owl:ObjectProperty ;
+    rdfs:label "change" ;
+    rdfs:comment "A change in this release" ;
+    rdfs:domain changelog:Release ;
+    rdfs:range changelog:Change .
+
+changelog:changeType a owl:ObjectProperty ;
+    rdfs:label "change type" ;
+    rdfs:comment "Type of change" ;
+    rdfs:domain changelog:Change ;
+    rdfs:range changelog:ChangeType .
+
+changelog:description a owl:DatatypeProperty ;
+    rdfs:label "description" ;
+    rdfs:comment "Description of the change" ;
+    rdfs:domain changelog:Change ;
+    rdfs:range xsd:string .
+
+changelog:breakingChange a owl:DatatypeProperty ;
+    rdfs:label "breaking change" ;
+    rdfs:comment "Whether this is a breaking change" ;
+    rdfs:domain changelog:Change ;
+    rdfs:range xsd:boolean .
+
+# Traceability
+changelog:commit a owl:DatatypeProperty ;
+    rdfs:label "commit" ;
+    rdfs:comment "Git commit SHA" ;
+    rdfs:domain changelog:Change ;
+    rdfs:range xsd:string .
+
+changelog:implements a owl:ObjectProperty ;
+    rdfs:label "implements" ;
+    rdfs:comment "Link to requirement, ADR, or value" ;
+    rdfs:domain changelog:Change .
+
+changelog:traces a owl:ObjectProperty ;
+    rdfs:label "traces" ;
+    rdfs:comment "Generic traceability link" ;
+    rdfs:domain changelog:Change .
+
+# Statistics
+changelog:testsAdded a owl:DatatypeProperty ;
+    rdfs:label "tests added" ;
+    rdfs:comment "Number of tests added" ;
+    rdfs:domain changelog:Change ;
+    rdfs:range xsd:integer .
+
+changelog:linesAdded a owl:DatatypeProperty ;
+    rdfs:label "lines added" ;
+    rdfs:comment "Lines of code added" ;
+    rdfs:domain changelog:Change ;
+    rdfs:range xsd:integer .
+
+changelog:linesRemoved a owl:DatatypeProperty ;
+    rdfs:label "lines removed" ;
+    rdfs:comment "Lines of code removed" ;
+    rdfs:domain changelog:Change ;
+    rdfs:range xsd:integer .
+
+# ============================================================================
+# Change Type Individuals
+# ============================================================================
+
+changelog:added a changelog:ChangeType ;
+    rdfs:label "Added" ;
+    rdfs:comment "New features or functionality" .
+
+changelog:changed a changelog:ChangeType ;
+    rdfs:label "Changed" ;
+    rdfs:comment "Changes to existing functionality" .
+
+changelog:deprecated a changelog:ChangeType ;
+    rdfs:label "Deprecated" ;
+    rdfs:comment "Features marked for removal" .
+
+changelog:removed a changelog:ChangeType ;
+    rdfs:label "Removed" ;
+    rdfs:comment "Removed features or functionality" .
+
+changelog:fixed a changelog:ChangeType ;
+    rdfs:label "Fixed" ;
+    rdfs:comment "Bug fixes" .
+
+changelog:security a changelog:ChangeType ;
+    rdfs:label "Security" ;
+    rdfs:comment "Security fixes or improvements" .

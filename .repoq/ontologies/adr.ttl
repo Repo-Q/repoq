@@ -1,0 +1,203 @@
+@prefix adr: <https://repoq.io/adr#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ============================================================================
+# ADR (Architecture Decision Record) Ontology
+# ============================================================================
+# Single Source of Truth for Architecture Decisions
+#
+# Structure:
+#   .repoq/adr/*.ttl (SSoT) → docs/adr/*.md (generated)
+#
+# Traceability:
+#   - ADR-014: Single Source of Truth
+#   - FR-10: Reproducibility
+#   - V07: Observability
+# ============================================================================
+
+<https://repoq.io/adr#> a owl:Ontology ;
+    dc:title "Architecture Decision Record Ontology" ;
+    dc:description "Meta-ontology for ADRs (Architecture Decision Records)" ;
+    dcterms:created "2025-01-15"^^xsd:date ;
+    owl:versionInfo "1.0.0" .
+
+# ============================================================================
+# Classes
+# ============================================================================
+
+adr:ArchitectureDecisionRecord a owl:Class ;
+    rdfs:label "Architecture Decision Record" ;
+    rdfs:comment "A decision made about architecture, design, or implementation." .
+
+adr:Status a owl:Class ;
+    rdfs:label "ADR Status" ;
+    rdfs:comment "Status of an ADR (proposed, accepted, deprecated, superseded)." .
+
+adr:Context a owl:Class ;
+    rdfs:label "Context" ;
+    rdfs:comment "Background context for the decision (problem, constraints, drivers)." .
+
+adr:Decision a owl:Class ;
+    rdfs:label "Decision" ;
+    rdfs:comment "The decision made (what we decided to do)." .
+
+adr:Consequence a owl:Class ;
+    rdfs:label "Consequence" ;
+    rdfs:comment "Consequences of the decision (pros, cons, trade-offs)." .
+
+adr:Alternative a owl:Class ;
+    rdfs:label "Alternative" ;
+    rdfs:comment "Alternative option considered but not chosen." .
+
+# ============================================================================
+# Properties
+# ============================================================================
+
+# Core properties
+adr:id a owl:DatatypeProperty ;
+    rdfs:label "id" ;
+    rdfs:comment "ADR identifier (e.g., 'adr-014')" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range xsd:string .
+
+adr:title a owl:DatatypeProperty ;
+    rdfs:label "title" ;
+    rdfs:comment "Short title of the decision" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range xsd:string .
+
+adr:status a owl:ObjectProperty ;
+    rdfs:label "status" ;
+    rdfs:comment "Current status of the ADR" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range adr:Status .
+
+adr:date a owl:DatatypeProperty ;
+    rdfs:label "date" ;
+    rdfs:comment "Date when decision was made" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range xsd:date .
+
+# Context
+adr:context a owl:ObjectProperty ;
+    rdfs:label "context" ;
+    rdfs:comment "Context for the decision" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range adr:Context .
+
+adr:problem a owl:DatatypeProperty ;
+    rdfs:label "problem" ;
+    rdfs:comment "Problem statement" ;
+    rdfs:domain adr:Context ;
+    rdfs:range xsd:string .
+
+adr:constraint a owl:DatatypeProperty ;
+    rdfs:label "constraint" ;
+    rdfs:comment "Constraint affecting the decision" ;
+    rdfs:domain adr:Context ;
+    rdfs:range xsd:string .
+
+# Decision
+adr:decision a owl:ObjectProperty ;
+    rdfs:label "decision" ;
+    rdfs:comment "The decision made" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range adr:Decision .
+
+adr:description a owl:DatatypeProperty ;
+    rdfs:label "description" ;
+    rdfs:comment "Description of the decision" ;
+    rdfs:domain adr:Decision ;
+    rdfs:range xsd:string .
+
+# Consequences
+adr:consequence a owl:ObjectProperty ;
+    rdfs:label "consequence" ;
+    rdfs:comment "Consequence of the decision" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range adr:Consequence .
+
+adr:pros a owl:DatatypeProperty ;
+    rdfs:label "pros" ;
+    rdfs:comment "Positive consequences" ;
+    rdfs:domain adr:Consequence ;
+    rdfs:range xsd:string .
+
+adr:cons a owl:DatatypeProperty ;
+    rdfs:label "cons" ;
+    rdfs:comment "Negative consequences" ;
+    rdfs:domain adr:Consequence ;
+    rdfs:range xsd:string .
+
+# Alternatives
+adr:alternative a owl:ObjectProperty ;
+    rdfs:label "alternative" ;
+    rdfs:comment "Alternative option considered" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range adr:Alternative .
+
+adr:alternativeName a owl:DatatypeProperty ;
+    rdfs:label "alternative name" ;
+    rdfs:comment "Name of the alternative" ;
+    rdfs:domain adr:Alternative ;
+    rdfs:range xsd:string .
+
+adr:alternativeRationale a owl:DatatypeProperty ;
+    rdfs:label "alternative rationale" ;
+    rdfs:comment "Why this alternative was not chosen" ;
+    rdfs:domain adr:Alternative ;
+    rdfs:range xsd:string .
+
+# Relationships
+adr:supersedes a owl:ObjectProperty ;
+    rdfs:label "supersedes" ;
+    rdfs:comment "This ADR supersedes another ADR" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range adr:ArchitectureDecisionRecord .
+
+adr:relatedTo a owl:ObjectProperty ;
+    rdfs:label "related to" ;
+    rdfs:comment "This ADR is related to another ADR" ;
+    rdfs:domain adr:ArchitectureDecisionRecord ;
+    rdfs:range adr:ArchitectureDecisionRecord .
+
+# Traceability
+adr:implements a owl:ObjectProperty ;
+    rdfs:label "implements" ;
+    rdfs:comment "This ADR implements a value or requirement" ;
+    rdfs:domain adr:ArchitectureDecisionRecord .
+
+adr:traces a owl:ObjectProperty ;
+    rdfs:label "traces" ;
+    rdfs:comment "Generic traceability link" ;
+    rdfs:domain adr:ArchitectureDecisionRecord .
+
+# ============================================================================
+# Status Individuals
+# ============================================================================
+
+adr:proposed a adr:Status ;
+    rdfs:label "Proposed" ;
+    rdfs:comment "ADR has been proposed but not yet accepted" .
+
+adr:accepted a adr:Status ;
+    rdfs:label "Accepted" ;
+    rdfs:comment "ADR has been accepted and is active" .
+
+adr:deprecated a adr:Status ;
+    rdfs:label "Deprecated" ;
+    rdfs:comment "ADR is deprecated but still in use" .
+
+adr:superseded a adr:Status ;
+    rdfs:label "Superseded" ;
+    rdfs:comment "ADR has been superseded by another ADR" .
+
+adr:rejected a adr:Status ;
+    rdfs:label "Rejected" ;
+    rdfs:comment "ADR was proposed but rejected" .
