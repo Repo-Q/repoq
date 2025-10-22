@@ -1287,6 +1287,59 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#adr-013-incremental-v2-migration-via-feature-flags">
+<span class="md-ellipsis">
+      ADR-013: Incremental v2 Migration via Feature Flags
+    </span>
+</a>
+<nav aria-label="ADR-013: Incremental v2 Migration via Feature Flags" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_12">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_12">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_12">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternatives-considered">
+<span class="md-ellipsis">
+      Alternatives Considered
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_12">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_12">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#success-criteria">
 <span class="md-ellipsis">
       Success Criteria
@@ -1948,6 +2001,59 @@
 </nav>
 </li>
 <li class="md-nav__item">
+<a class="md-nav__link" href="#adr-013-incremental-v2-migration-via-feature-flags">
+<span class="md-ellipsis">
+      ADR-013: Incremental v2 Migration via Feature Flags
+    </span>
+</a>
+<nav aria-label="ADR-013: Incremental v2 Migration via Feature Flags" class="md-nav">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a class="md-nav__link" href="#context_12">
+<span class="md-ellipsis">
+      Context
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#decision_12">
+<span class="md-ellipsis">
+      Decision
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#rationale_12">
+<span class="md-ellipsis">
+      Rationale
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#alternatives-considered">
+<span class="md-ellipsis">
+      Alternatives Considered
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#consequences_12">
+<span class="md-ellipsis">
+      Consequences
+    </span>
+</a>
+</li>
+<li class="md-nav__item">
+<a class="md-nav__link" href="#implementation_12">
+<span class="md-ellipsis">
+      Implementation
+    </span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
 <a class="md-nav__link" href="#success-criteria">
 <span class="md-ellipsis">
       Success Criteria
@@ -2076,6 +2182,13 @@
 <td>2025-10-21</td>
 <td>DevOps, Team Leads</td>
 </tr>
+<tr>
+<td>ADR-013</td>
+<td>Incremental v2 Migration via Feature Flags</td>
+<td>✅ Accepted</td>
+<td>2025-10-22</td>
+<td>All Stakeholders</td>
+</tr>
 </tbody>
 </table>
 <hr/>
@@ -2085,21 +2198,27 @@
 <strong>Stakeholders</strong>: Developers, Team Leads<br/>
 <strong>Deciders</strong>: Kirill (Maintainer), Dr. Taylor (Researcher)</p>
 <h3 id="context">Context<a class="headerlink" href="#context" title="Permanent link">¶</a></h3>
-<p>Phase 5 will introduce an optional AI agent for semantic analysis, explanations, and improvement suggestions. We need a framework to:
-1. Call LLMs (GPT-4, Claude, etc.) with structured prompts
-2. Parse LLM outputs into typed Python objects
-3. Handle retries, timeouts, and errors gracefully
-4. Avoid hallucination risks (unvalidated string outputs)</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>LangChain</strong>: Feature-rich but overengineered for our use case (500+ classes, steep learning curve)
-- <strong>Raw OpenAI API</strong>: No type safety, manual prompt engineering, no retry logic
-- <strong>BAML</strong> (BoundaryML): Type-safe DSL, compiles to Python/TypeScript, built-in validation</p>
+<p>Phase 5 will introduce an optional AI agent for semantic analysis, explanations, and improvement suggestions. We need a framework to:</p>
+<ol>
+<li>Call LLMs (GPT-4, Claude, etc.) with structured prompts</li>
+<li>Parse LLM outputs into typed Python objects</li>
+<li>Handle retries, timeouts, and errors gracefully</li>
+<li>Avoid hallucination risks (unvalidated string outputs)</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>LangChain</strong>: Feature-rich but overengineered for our use case (500+ classes, steep learning curve)</li>
+<li><strong>Raw OpenAI API</strong>: No type safety, manual prompt engineering, no retry logic</li>
+<li><strong>BAML</strong> (BoundaryML): Type-safe DSL, compiles to Python/TypeScript, built-in validation</li>
+</ul>
 <h3 id="decision">Decision<a class="headerlink" href="#decision" title="Permanent link">¶</a></h3>
-<p><strong>Use BAML (BoundaryML) for the AI agent</strong> with the following functions:
-1. <code>AnalyzePRContext(diff: string, metrics: Metrics) -&gt; PRContext</code>
-2. <code>GenerateExplanation(failure: GateFailure) -&gt; Explanation</code>
-3. <code>SuggestImprovements(code: string, complexity: int) -&gt; Suggestions</code>
-4. <code>DetectAnomalies(history: List[Commit]) -&gt; Anomalies</code></p>
+<p><strong>Use BAML (BoundaryML) for the AI agent</strong> with the following functions:</p>
+<ol>
+<li><code>AnalyzePRContext(diff: string, metrics: Metrics) -&gt; PRContext</code></li>
+<li><code>GenerateExplanation(failure: GateFailure) -&gt; Explanation</code></li>
+<li><code>SuggestImprovements(code: string, complexity: int) -&gt; Suggestions</code></li>
+<li><code>DetectAnomalies(history: List[Commit]) -&gt; Anomalies</code></li>
+</ol>
 <h3 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Type Safety</strong>: BAML compiles prompts to Python dataclasses, eliminating runtime errors</li>
@@ -2109,19 +2228,25 @@
 <li><strong>Lightweight</strong>: ~50 classes (vs LangChain's 500+)</li>
 </ol>
 <h3 id="consequences">Consequences<a class="headerlink" href="#consequences" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Structured AI outputs (no free-form strings)
-- ✅ Easy to test (mock BAML client)
-- ✅ Version-controlled prompts (no hidden prompt injection)
-- ✅ Multi-provider support (OpenAI, Anthropic, local LLMs)</p>
-<p><strong>Negative</strong>:
-- ❌ New dependency (BAML ~10MB, acceptable)
-- ❌ Learning curve for BAML DSL (~1 day)
-- ❌ Not as mature as LangChain (v0.x, but stable)</p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: BAML project abandoned → <strong>Mitigation</strong>: Can fall back to raw OpenAI API (BAML is thin wrapper)
-- <strong>R2</strong>: LLM API costs → <strong>Mitigation</strong>: Max 10 calls per analysis, explicit budget controls
-- <strong>R3</strong>: Hallucinations → <strong>Mitigation</strong>: Human-in-loop, experimental mode first</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Structured AI outputs (no free-form strings)</li>
+<li>✅ Easy to test (mock BAML client)</li>
+<li>✅ Version-controlled prompts (no hidden prompt injection)</li>
+<li>✅ Multi-provider support (OpenAI, Anthropic, local LLMs)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ New dependency (BAML ~10MB, acceptable)</li>
+<li>❌ Learning curve for BAML DSL (~1 day)</li>
+<li>❌ Not as mature as LangChain (v0.x, but stable)</li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: BAML project abandoned → <strong>Mitigation</strong>: Can fall back to raw OpenAI API (BAML is thin wrapper)</li>
+<li><strong>R2</strong>: LLM API costs → <strong>Mitigation</strong>: Max 10 calls per analysis, explicit budget controls</li>
+<li><strong>R3</strong>: Hallucinations → <strong>Mitigation</strong>: Human-in-loop, experimental mode first</li>
+</ul>
 <h3 id="implementation">Implementation<a class="headerlink" href="#implementation" title="Permanent link">¶</a></h3>
 <div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a href="#__codelineno-0-1" id="__codelineno-0-1" name="__codelineno-0-1"></a>// File: repoq/ai/agent.baml
 </span><span id="__span-0-2"><a href="#__codelineno-0-2" id="__codelineno-0-2" name="__codelineno-0-2"></a>
@@ -2153,21 +2278,27 @@
 <strong>Stakeholders</strong>: Developers, Researchers<br/>
 <strong>Deciders</strong>: Kirill, Dr. Taylor</p>
 <h3 id="context_1">Context<a class="headerlink" href="#context_1" title="Permanent link">¶</a></h3>
-<p>Ontology Intelligence requires an RDF triple store with SPARQL query support. Requirements:
-1. Store Code/C4/DDD ontologies (triples)
-2. SPARQL 1.1 queries (pattern detection)
-3. SHACL validation (shape checking)
-4. Python-native (avoid external servers)
-5. Reasonable performance (&lt;1 sec per query for repos &lt;10K files)</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>RDFLib</strong>: Python-native, standards-compliant, mature (10+ years), but slower for large graphs
-- <strong>Oxigraph</strong>: Rust-based, 10-100x faster than RDFLib, Python bindings, but C++ build dependency
-- <strong>Virtuoso</strong>: High-performance, but external server (violates local-first principle)
-- <strong>Custom</strong>: Reinvent wheel (not feasible)</p>
+<p>Ontology Intelligence requires an RDF triple store with SPARQL query support. Requirements:</p>
+<ol>
+<li>Store Code/C4/DDD ontologies (triples)</li>
+<li>SPARQL 1.1 queries (pattern detection)</li>
+<li>SHACL validation (shape checking)</li>
+<li>Python-native (avoid external servers)</li>
+<li>Reasonable performance (&lt;1 sec per query for repos &lt;10K files)</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>RDFLib</strong>: Python-native, standards-compliant, mature (10+ years), but slower for large graphs</li>
+<li><strong>Oxigraph</strong>: Rust-based, 10-100x faster than RDFLib, Python bindings, but C++ build dependency</li>
+<li><strong>Virtuoso</strong>: High-performance, but external server (violates local-first principle)</li>
+<li><strong>Custom</strong>: Reinvent wheel (not feasible)</li>
+</ul>
 <h3 id="decision_1">Decision<a class="headerlink" href="#decision_1" title="Permanent link">¶</a></h3>
-<p><strong>Use RDFLib by default, with Oxigraph as optional optimization</strong>:
-1. <strong>RDFLib</strong> (default): No build dependencies, pure Python, sufficient for &lt;10K files
-2. <strong>Oxigraph</strong> (opt-in): Install via <code>pip install repoq[oxigraph]</code> for large repos (&gt;10K files)</p>
+<p><strong>Use RDFLib by default, with Oxigraph as optional optimization</strong>:</p>
+<ol>
+<li><strong>RDFLib</strong> (default): No build dependencies, pure Python, sufficient for &lt;10K files</li>
+<li><strong>Oxigraph</strong> (opt-in): Install via <code>pip install repoq[oxigraph]</code> for large repos (&gt;10K files)</li>
+</ol>
 <h3 id="rationale_1">Rationale<a class="headerlink" href="#rationale_1" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Developer Experience</strong>: RDFLib is pure Python (no C++ toolchain needed)</li>
@@ -2177,16 +2308,22 @@
 <li><strong>SHACL Support</strong>: pySHACL works with both (uses RDFLib API)</li>
 </ol>
 <h3 id="consequences_1">Consequences<a class="headerlink" href="#consequences_1" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Easy installation (pure Python by default)
-- ✅ Escape hatch for large repos (Oxigraph)
-- ✅ Standards-compliant (W3C RDF/SPARQL)</p>
-<p><strong>Negative</strong>:
-- ❌ RDFLib slow for large repos (&gt;10K files) → <strong>Mitigation</strong>: Recommend Oxigraph
-- ❌ Two code paths (RDFLib vs Oxigraph) → <strong>Mitigation</strong>: Abstract behind OntologyManager interface</p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: RDFLib performance degrades → <strong>Mitigation</strong>: Profile, optimize, or switch to Oxigraph
-- <strong>R2</strong>: Oxigraph Python bindings break → <strong>Mitigation</strong>: Fall back to RDFLib</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Easy installation (pure Python by default)</li>
+<li>✅ Escape hatch for large repos (Oxigraph)</li>
+<li>✅ Standards-compliant (W3C RDF/SPARQL)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ RDFLib slow for large repos (&gt;10K files) → <strong>Mitigation</strong>: Recommend Oxigraph</li>
+<li>❌ Two code paths (RDFLib vs Oxigraph) → <strong>Mitigation</strong>: Abstract behind OntologyManager interface</li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: RDFLib performance degrades → <strong>Mitigation</strong>: Profile, optimize, or switch to Oxigraph</li>
+<li><strong>R2</strong>: Oxigraph Python bindings break → <strong>Mitigation</strong>: Fall back to RDFLib</li>
+</ul>
 <h3 id="implementation_1">Implementation<a class="headerlink" href="#implementation_1" title="Permanent link">¶</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a href="#__codelineno-1-1" id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># repoq/ontologies/manager.py</span>
 </span><span id="__span-1-2"><a href="#__codelineno-1-2" id="__codelineno-1-2" name="__codelineno-1-2"></a>
@@ -2241,22 +2378,28 @@
 <strong>Stakeholders</strong>: Developers, DevOps<br/>
 <strong>Deciders</strong>: Kirill, Morgan (Eng Manager)</p>
 <h3 id="context_2">Context<a class="headerlink" href="#context_2" title="Permanent link">¶</a></h3>
-<p>Any2Math (TRS-based AST normalization) uses Lean 4 for formal verification. Challenges:
-1. <strong>Lean Runtime</strong>: Large binary (~500MB), slow startup (~2 sec)
-2. <strong>Memory</strong>: Lean can consume 1-2 GB for large proofs
-3. <strong>Isolation</strong>: Don't want Lean crashes to kill RepoQ process
-4. <strong>Optional</strong>: Not all users need formal verification (overkill for small projects)</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>In-process</strong>: Lean Python bindings (if they existed) → <strong>Not available</strong>
-- <strong>Subprocess</strong>: Call <code>lean verify_trs.lean</code> via <code>subprocess.run()</code> → <strong>Clean isolation</strong>
-- <strong>HTTP Server</strong>: Run Lean as separate service → <strong>Overkill, adds network dependency</strong>
-- <strong>Skip Lean</strong>: Trust TRS implementation without proofs → <strong>Acceptable fallback</strong></p>
+<p>Any2Math (TRS-based AST normalization) uses Lean 4 for formal verification. Challenges:</p>
+<ol>
+<li><strong>Lean Runtime</strong>: Large binary (~500MB), slow startup (~2 sec)</li>
+<li><strong>Memory</strong>: Lean can consume 1-2 GB for large proofs</li>
+<li><strong>Isolation</strong>: Don't want Lean crashes to kill RepoQ process</li>
+<li><strong>Optional</strong>: Not all users need formal verification (overkill for small projects)</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>In-process</strong>: Lean Python bindings (if they existed) → <strong>Not available</strong></li>
+<li><strong>Subprocess</strong>: Call <code>lean verify_trs.lean</code> via <code>subprocess.run()</code> → <strong>Clean isolation</strong></li>
+<li><strong>HTTP Server</strong>: Run Lean as separate service → <strong>Overkill, adds network dependency</strong></li>
+<li><strong>Skip Lean</strong>: Trust TRS implementation without proofs → <strong>Acceptable fallback</strong></li>
+</ul>
 <h3 id="decision_2">Decision<a class="headerlink" href="#decision_2" title="Permanent link">¶</a></h3>
-<p><strong>Isolate Any2Math in subprocess with graceful fallback</strong>:
-1. If Lean installed: Run <code>lean verify_trs.lean</code> as subprocess (optional validation)
-2. If Lean missing: Skip formal verification, trust TRS rules (warn user)
-3. Timeout: 30 seconds per normalization (kill subprocess if hangs)
-4. Caching: Cache normalization results by file SHA (avoid re-running Lean)</p>
+<p><strong>Isolate Any2Math in subprocess with graceful fallback</strong>:</p>
+<ol>
+<li>If Lean installed: Run <code>lean verify_trs.lean</code> as subprocess (optional validation)</li>
+<li>If Lean missing: Skip formal verification, trust TRS rules (warn user)</li>
+<li>Timeout: 30 seconds per normalization (kill subprocess if hangs)</li>
+<li>Caching: Cache normalization results by file SHA (avoid re-running Lean)</li>
+</ol>
 <h3 id="rationale_2">Rationale<a class="headerlink" href="#rationale_2" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Isolation</strong>: Lean crashes don't affect RepoQ (subprocess isolation)</li>
@@ -2265,16 +2408,22 @@
 <li><strong>Security</strong>: Subprocess timeout prevents DoS (malicious TRS rules)</li>
 </ol>
 <h3 id="consequences_2">Consequences<a class="headerlink" href="#consequences_2" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ RepoQ remains lightweight (no mandatory Lean dependency)
-- ✅ Formal verification available for experts (opt-in)
-- ✅ Crash isolation (Lean bugs don't kill RepoQ)</p>
-<p><strong>Negative</strong>:
-- ❌ Subprocess overhead (~2 sec Lean startup) → <strong>Mitigation</strong>: Cache results
-- ❌ Requires Lean installed for full verification → <strong>Mitigation</strong>: Document in README</p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: Subprocess hangs → <strong>Mitigation</strong>: 30 sec timeout + kill
-- <strong>R2</strong>: Lean not found → <strong>Mitigation</strong>: Graceful degradation (warn user)</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ RepoQ remains lightweight (no mandatory Lean dependency)</li>
+<li>✅ Formal verification available for experts (opt-in)</li>
+<li>✅ Crash isolation (Lean bugs don't kill RepoQ)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ Subprocess overhead (~2 sec Lean startup) → <strong>Mitigation</strong>: Cache results</li>
+<li>❌ Requires Lean installed for full verification → <strong>Mitigation</strong>: Document in README</li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: Subprocess hangs → <strong>Mitigation</strong>: 30 sec timeout + kill</li>
+<li><strong>R2</strong>: Lean not found → <strong>Mitigation</strong>: Graceful degradation (warn user)</li>
+</ul>
 <h3 id="implementation_2">Implementation<a class="headerlink" href="#implementation_2" title="Permanent link">¶</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a href="#__codelineno-2-1" id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="c1"># repoq/core/any2math.py</span>
 </span><span id="__span-2-2"><a href="#__codelineno-2-2" id="__codelineno-2-2" name="__codelineno-2-2"></a>
@@ -2334,20 +2483,26 @@
 <strong>Stakeholders</strong>: Team Leads, Maintainers<br/>
 <strong>Deciders</strong>: Kirill, Morgan</p>
 <h3 id="context_3">Context<a class="headerlink" href="#context_3" title="Permanent link">¶</a></h3>
-<p>Need a structured format for architecture documentation. Requirements:
-1. Comprehensive (covers context, design, quality, risks)
-2. Stakeholder-friendly (not just diagrams)
-3. Maintainable (template-based, not ad-hoc)
-4. Compatible with C4 diagrams</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>arc42</strong>: Industry-standard template (12 sections), mature, widely adopted
-- <strong>SAD (Software Architecture Document)</strong>: IEEE 1471 standard, too formal/heavyweight
-- <strong>Custom</strong>: Ad-hoc docs, no structure, hard to maintain</p>
+<p>Need a structured format for architecture documentation. Requirements:</p>
+<ol>
+<li>Comprehensive (covers context, design, quality, risks)</li>
+<li>Stakeholder-friendly (not just diagrams)</li>
+<li>Maintainable (template-based, not ad-hoc)</li>
+<li>Compatible with C4 diagrams</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>arc42</strong>: Industry-standard template (12 sections), mature, widely adopted</li>
+<li><strong>SAD (Software Architecture Document)</strong>: IEEE 1471 standard, too formal/heavyweight</li>
+<li><strong>Custom</strong>: Ad-hoc docs, no structure, hard to maintain</li>
+</ul>
 <h3 id="decision_3">Decision<a class="headerlink" href="#decision_3" title="Permanent link">¶</a></h3>
-<p><strong>Use arc42 template for architecture documentation</strong>:
-- Follow 12-section structure (Context, Solution Strategy, Building Blocks, etc.)
-- Integrate C4 diagrams into arc42 sections
-- Store in <code>docs/vdad/phase4-*.md</code> files (modular)</p>
+<p><strong>Use arc42 template for architecture documentation</strong>:</p>
+<ul>
+<li>Follow 12-section structure (Context, Solution Strategy, Building Blocks, etc.)</li>
+<li>Integrate C4 diagrams into arc42 sections</li>
+<li>Store in <code>docs/vdad/phase4-*.md</code> files (modular)</li>
+</ul>
 <h3 id="rationale_3">Rationale<a class="headerlink" href="#rationale_3" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Industry Standard</strong>: arc42 used by Fortune 500 companies (Siemens, BMW, SAP)</li>
@@ -2356,13 +2511,17 @@
 <li><strong>Tool Support</strong>: Mermaid, PlantUML, AsciiDoc integrations</li>
 </ol>
 <h3 id="consequences_3">Consequences<a class="headerlink" href="#consequences_3" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Structured documentation (easy to navigate)
-- ✅ Onboarding-friendly (new devs know where to look)
-- ✅ Review-friendly (stakeholders know what to expect)</p>
-<p><strong>Negative</strong>:
-- ❌ 12 sections can be overwhelming → <strong>Mitigation</strong>: Split into modular files
-- ❌ Requires discipline to maintain → <strong>Mitigation</strong>: CI check for outdated docs</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Structured documentation (easy to navigate)</li>
+<li>✅ Onboarding-friendly (new devs know where to look)</li>
+<li>✅ Review-friendly (stakeholders know what to expect)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ 12 sections can be overwhelming → <strong>Mitigation</strong>: Split into modular files</li>
+<li>❌ Requires discipline to maintain → <strong>Mitigation</strong>: CI check for outdated docs</li>
+</ul>
 <p><strong>Risks</strong>: None (well-established standard)</p>
 <h3 id="implementation_3">Implementation<a class="headerlink" href="#implementation_3" title="Permanent link">¶</a></h3>
 <p><strong>arc42 Sections Mapped to RepoQ Docs</strong>:</p>
@@ -2432,16 +2591,20 @@
 <strong>Stakeholders</strong>: Developers, DevOps<br/>
 <strong>Deciders</strong>: Kirill, Casey (DevOps)</p>
 <h3 id="context_4">Context<a class="headerlink" href="#context_4" title="Permanent link">¶</a></h3>
-<p>Architecture diagrams needed for C4 model, data flows, deployment. Requirements:
-1. <strong>Git-friendly</strong>: Text-based (no binary .png/.svg files)
-2. <strong>Reviewable</strong>: Diffs visible in PRs
-3. <strong>Maintainable</strong>: Edit without specialized tools (no Visio/draw.io)
-4. <strong>Rendering</strong>: Works in GitHub, MkDocs, VS Code</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>PlantUML</strong>: Mature, powerful, but requires Java (heavy dependency)
-- <strong>Graphviz</strong>: Low-level, hard to maintain (dot syntax)
-- <strong>Mermaid</strong>: JavaScript-based, GitHub-native, MkDocs plugin available
-- <strong>draw.io</strong>: WYSIWYG, but binary XML (hard to review)</p>
+<p>Architecture diagrams needed for C4 model, data flows, deployment. Requirements:</p>
+<ol>
+<li><strong>Git-friendly</strong>: Text-based (no binary .png/.svg files)</li>
+<li><strong>Reviewable</strong>: Diffs visible in PRs</li>
+<li><strong>Maintainable</strong>: Edit without specialized tools (no Visio/draw.io)</li>
+<li><strong>Rendering</strong>: Works in GitHub, MkDocs, VS Code</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>PlantUML</strong>: Mature, powerful, but requires Java (heavy dependency)</li>
+<li><strong>Graphviz</strong>: Low-level, hard to maintain (dot syntax)</li>
+<li><strong>Mermaid</strong>: JavaScript-based, GitHub-native, MkDocs plugin available</li>
+<li><strong>draw.io</strong>: WYSIWYG, but binary XML (hard to review)</li>
+</ul>
 <h3 id="decision_4">Decision<a class="headerlink" href="#decision_4" title="Permanent link">¶</a></h3>
 <p><strong>Use Mermaid for all diagrams</strong> (C4, sequence, flowchart, ERD).</p>
 <h3 id="rationale_4">Rationale<a class="headerlink" href="#rationale_4" title="Permanent link">¶</a></h3>
@@ -2453,17 +2616,21 @@
 <li><strong>C4 Support</strong>: <code>C4Context</code>, <code>C4Container</code>, <code>C4Component</code> diagrams</li>
 </ol>
 <h3 id="consequences_4">Consequences<a class="headerlink" href="#consequences_4" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Zero build-time dependencies (Mermaid runs in browser)
-- ✅ Git-friendly (text diffs)
-- ✅ Easy to edit (any text editor)
-- ✅ GitHub/MkDocs rendering</p>
-<p><strong>Negative</strong>:
-- ❌ Less flexible than PlantUML (fewer customization options) → <strong>Acceptable tradeoff</strong>
-- ❌ Layout sometimes suboptimal (auto-layout) → <strong>Mitigation</strong>: Manual hints (<code>UpdateLayoutConfig</code>)</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Zero build-time dependencies (Mermaid runs in browser)</li>
+<li>✅ Git-friendly (text diffs)</li>
+<li>✅ Easy to edit (any text editor)</li>
+<li>✅ GitHub/MkDocs rendering</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ Less flexible than PlantUML (fewer customization options) → <strong>Acceptable tradeoff</strong></li>
+<li>❌ Layout sometimes suboptimal (auto-layout) → <strong>Mitigation</strong>: Manual hints (<code>UpdateLayoutConfig</code>)</li>
+</ul>
 <p><strong>Risks</strong>: None (widely adopted, GitHub-native)</p>
 <h3 id="implementation_4">Implementation<a class="headerlink" href="#implementation_4" title="Permanent link">¶</a></h3>
-<p><strong>MkDocs Configuration</strong>:
+<p><strong>MkDocs Configuration</strong>:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-3-1"><a href="#__codelineno-3-1" id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="c1"># mkdocs.yml</span>
 </span><span id="__span-3-2"><a href="#__codelineno-3-2" id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nt">plugins</span><span class="p">:</span>
 </span><span id="__span-3-3"><a href="#__codelineno-3-3" id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid2</span>
@@ -2474,8 +2641,8 @@
 </span><span id="__span-3-8"><a href="#__codelineno-3-8" id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid</span>
 </span><span id="__span-3-9"><a href="#__codelineno-3-9" id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">          </span><span class="nt">class</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mermaid</span>
 </span><span id="__span-3-10"><a href="#__codelineno-3-10" id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">          </span><span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="kt">!!python/name:pymdownx.superfences.fence_code_format</span>
-</span></code></pre></div></p>
-<p><strong>Example Diagram</strong>:
+</span></code></pre></div>
+<p><strong>Example Diagram</strong>:</p>
 <div class="language-markdown highlight"><pre><span></span><code><span id="__span-4-1"><a href="#__codelineno-4-1" id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="sb">```mermaid</span>
 </span><span id="__span-4-2"><a href="#__codelineno-4-2" id="__codelineno-4-2" name="__codelineno-4-2"></a><span class="s">graph LR</span>
 </span><span id="__span-4-3"><a href="#__codelineno-4-3" id="__codelineno-4-3" name="__codelineno-4-3"></a><span class="s">    A[Developer] --&gt; B[RepoQ CLI]</span>
@@ -2483,7 +2650,7 @@
 </span><span id="__span-4-5"><a href="#__codelineno-4-5" id="__codelineno-4-5" name="__codelineno-4-5"></a><span class="s">    C --&gt;|Yes| D[Merge PR]</span>
 </span><span id="__span-4-6"><a href="#__codelineno-4-6" id="__codelineno-4-6" name="__codelineno-4-6"></a><span class="s">    C --&gt;|No| E[Fix Code]</span>
 </span><span id="__span-4-7"><a href="#__codelineno-4-7" id="__codelineno-4-7" name="__codelineno-4-7"></a><span class="sb">```</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Status</strong>: ✅ Complete (all Phase 4 diagrams use Mermaid)</p>
 <hr/>
 <h2 id="adr-006-stratification-levels-0-2">ADR-006: Stratification Levels 0-2<a class="headerlink" href="#adr-006-stratification-levels-0-2" title="Permanent link">¶</a></h2>
@@ -2492,19 +2659,25 @@
 <strong>Stakeholders</strong>: Researchers, Maintainers<br/>
 <strong>Deciders</strong>: Kirill, Dr. Taylor</p>
 <h3 id="context_5">Context<a class="headerlink" href="#context_5" title="Permanent link">¶</a></h3>
-<p>Self-application (RepoQ analyzing itself) risks paradoxes (Russell's Paradox, Liar's Paradox). Need a safety mechanism. <strong>Theorem F</strong> (from formal docs) requires:
-- <strong>Strict ordering</strong>: L_i can only analyze L_j if i &gt; j
-- <strong>Stratification</strong>: Separate language levels to avoid self-reference</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>No stratification</strong>: Allow RepoQ_0 to analyze itself → <strong>Unsafe (paradoxes)</strong>
-- <strong>Two levels</strong> (L_0, L_1): RepoQ_1 analyzes RepoQ_0 → <strong>Insufficient for meta-meta checks</strong>
-- <strong>Three levels</strong> (L_0, L_1, L_2): RepoQ_2 validates RepoQ_1 validates RepoQ_0 → <strong>Goldilocks zone</strong>
-- <strong>Infinite levels</strong>: Unnecessarily complex, no practical benefit</p>
+<p>Self-application (RepoQ analyzing itself) risks paradoxes (Russell's Paradox, Liar's Paradox). Need a safety mechanism. <strong>Theorem F</strong> (from formal docs) requires:</p>
+<ul>
+<li><strong>Strict ordering</strong>: L_i can only analyze L_j if i &gt; j</li>
+<li><strong>Stratification</strong>: Separate language levels to avoid self-reference</li>
+</ul>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>No stratification</strong>: Allow RepoQ_0 to analyze itself → <strong>Unsafe (paradoxes)</strong></li>
+<li><strong>Two levels</strong> (L_0, L_1): RepoQ_1 analyzes RepoQ_0 → <strong>Insufficient for meta-meta checks</strong></li>
+<li><strong>Three levels</strong> (L_0, L_1, L_2): RepoQ_2 validates RepoQ_1 validates RepoQ_0 → <strong>Goldilocks zone</strong></li>
+<li><strong>Infinite levels</strong>: Unnecessarily complex, no practical benefit</li>
+</ul>
 <h3 id="decision_5">Decision<a class="headerlink" href="#decision_5" title="Permanent link">¶</a></h3>
-<p><strong>Use 3 stratification levels (L_0, L_1, L_2)</strong>:
-- <strong>L_0 (Object Level)</strong>: User codebases (analyzed by RepoQ)
-- <strong>L_1 (Meta Level)</strong>: RepoQ's own codebase (self-analysis, dogfooding)
-- <strong>L_2 (Meta-Meta Level)</strong>: RepoQ's quality model validation (meta-check)</p>
+<p><strong>Use 3 stratification levels (L_0, L_1, L_2)</strong>:</p>
+<ul>
+<li><strong>L_0 (Object Level)</strong>: User codebases (analyzed by RepoQ)</li>
+<li><strong>L_1 (Meta Level)</strong>: RepoQ's own codebase (self-analysis, dogfooding)</li>
+<li><strong>L_2 (Meta-Meta Level)</strong>: RepoQ's quality model validation (meta-check)</li>
+</ul>
 <p><strong>Enforcement</strong>: <code>StratificationGuard</code> class enforces i &gt; j and no level skipping.</p>
 <h3 id="rationale_5">Rationale<a class="headerlink" href="#rationale_5" title="Permanent link">¶</a></h3>
 <ol>
@@ -2514,16 +2687,22 @@
 <li><strong>Future-Proof</strong>: Can add L_3 later if needed (unlikely)</li>
 </ol>
 <h3 id="consequences_5">Consequences<a class="headerlink" href="#consequences_5" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Paradox-free self-application (Theorem F guarantee)
-- ✅ Dogfooding enabled (RepoQ analyzes itself at L_1)
-- ✅ Meta-validation (L_2 checks RepoQ's own quality model)</p>
-<p><strong>Negative</strong>:
-- ❌ User confusion ("Why can't RepoQ analyze itself directly?") → <strong>Mitigation</strong>: Clear error messages
-- ❌ Extra command (<code>repoq meta-self --level 1</code>) → <strong>Acceptable tradeoff</strong></p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: User tries to skip levels → <strong>Mitigation</strong>: Guard enforces strict ordering
-- <strong>R2</strong>: Infinite regress ("Who validates L_2?") → <strong>Mitigation</strong>: L_2 is axiomatic (trusted base)</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Paradox-free self-application (Theorem F guarantee)</li>
+<li>✅ Dogfooding enabled (RepoQ analyzes itself at L_1)</li>
+<li>✅ Meta-validation (L_2 checks RepoQ's own quality model)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ User confusion ("Why can't RepoQ analyze itself directly?") → <strong>Mitigation</strong>: Clear error messages</li>
+<li>❌ Extra command (<code>repoq meta-self --level 1</code>) → <strong>Acceptable tradeoff</strong></li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: User tries to skip levels → <strong>Mitigation</strong>: Guard enforces strict ordering</li>
+<li><strong>R2</strong>: Infinite regress ("Who validates L_2?") → <strong>Mitigation</strong>: L_2 is axiomatic (trusted base)</li>
+</ul>
 <h3 id="implementation_5">Implementation<a class="headerlink" href="#implementation_5" title="Permanent link">¶</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a href="#__codelineno-5-1" id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="c1"># repoq/core/stratification.py</span>
 </span><span id="__span-5-2"><a href="#__codelineno-5-2" id="__codelineno-5-2" name="__codelineno-5-2"></a>
@@ -2566,20 +2745,26 @@
 <strong>Stakeholders</strong>: Team Leads, Researchers<br/>
 <strong>Deciders</strong>: Kirill, Dr. Taylor</p>
 <h3 id="context_6">Context<a class="headerlink" href="#context_6" title="Permanent link">¶</a></h3>
-<p>Standard Q-score aggregation (mean/weighted average) allows <strong>compensation</strong>: One excellent module compensates for a bad module. This enables gaming:
-- Developer improves documentation quality (easy) to offset poor code quality (hard)
-- One refactored module "hides" ten legacy modules</p>
+<p>Standard Q-score aggregation (mean/weighted average) allows <strong>compensation</strong>: One excellent module compensates for a bad module. This enables gaming:</p>
+<ul>
+<li>Developer improves documentation quality (easy) to offset poor code quality (hard)</li>
+<li>One refactored module "hides" ten legacy modules</li>
+</ul>
 <p><strong>Theorem C</strong> (from formal docs) requires <strong>no compensation</strong>: All modules must meet threshold τ.</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>Mean aggregation</strong>: <code>Q_total = Σ Q_i / n</code> → <strong>Allows compensation</strong>
-- <strong>Weighted average</strong>: <code>Q_total = Σ w_i * Q_i</code> → <strong>Still allows compensation</strong>
-- <strong>Min aggregator (PCQ)</strong>: <code>PCQ = min{Q_i}</code> → <strong>No compensation, all modules ≥τ</strong>
-- <strong>Median aggregator</strong>: <code>Q_total = median{Q_i}</code> → <strong>Still hides bad modules</strong></p>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>Mean aggregation</strong>: <code>Q_total = Σ Q_i / n</code> → <strong>Allows compensation</strong></li>
+<li><strong>Weighted average</strong>: <code>Q_total = Σ w_i * Q_i</code> → <strong>Still allows compensation</strong></li>
+<li><strong>Min aggregator (PCQ)</strong>: <code>PCQ = min{Q_i}</code> → <strong>No compensation, all modules ≥τ</strong></li>
+<li><strong>Median aggregator</strong>: <code>Q_total = median{Q_i}</code> → <strong>Still hides bad modules</strong></li>
+</ul>
 <h3 id="decision_6">Decision<a class="headerlink" href="#decision_6" title="Permanent link">¶</a></h3>
-<p><strong>Use PCQ min-aggregator (Zero-Allowance Gate)</strong>:
-- <strong>Formula</strong>: <code>PCQ(S) = min{Q(M_i) for all modules i}</code>
-- <strong>Admission</strong>: <code>PCQ ≥ τ</code> (all modules must meet threshold)
-- <strong>Witness</strong>: If PCQ fails, generate PCE k-repair witness (k lowest modules)</p>
+<p><strong>Use PCQ min-aggregator (Zero-Allowance Gate)</strong>:</p>
+<ul>
+<li><strong>Formula</strong>: <code>PCQ(S) = min{Q(M_i) for all modules i}</code></li>
+<li><strong>Admission</strong>: <code>PCQ ≥ τ</code> (all modules must meet threshold)</li>
+<li><strong>Witness</strong>: If PCQ fails, generate PCE k-repair witness (k lowest modules)</li>
+</ul>
 <h3 id="rationale_6">Rationale<a class="headerlink" href="#rationale_6" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Gaming Resistance</strong>: No compensation (Theorem C)</li>
@@ -2588,16 +2773,22 @@
 <li><strong>Simplicity</strong>: Easy to understand ("weakest link" analogy)</li>
 </ol>
 <h3 id="consequences_6">Consequences<a class="headerlink" href="#consequences_6" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Gaming-proof (no compensation possible)
-- ✅ Actionable feedback (PCE witness: "fix these 3 modules")
-- ✅ Encourages uniform quality (no "technical debt islands")</p>
-<p><strong>Negative</strong>:
-- ❌ Strict (one bad module → gate fails) → <strong>Mitigation</strong>: Exemptions for legacy code
-- ❌ May discourage experimentation → <strong>Mitigation</strong>: Separate experimental branches</p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: Developers game exemptions → <strong>Mitigation</strong>: Exemptions require expiry dates + rationale
-- <strong>R2</strong>: PCQ too harsh for large codebases → <strong>Mitigation</strong>: Configurable τ (e.g., 0.7 for legacy, 0.9 for greenfield)</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Gaming-proof (no compensation possible)</li>
+<li>✅ Actionable feedback (PCE witness: "fix these 3 modules")</li>
+<li>✅ Encourages uniform quality (no "technical debt islands")</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ Strict (one bad module → gate fails) → <strong>Mitigation</strong>: Exemptions for legacy code</li>
+<li>❌ May discourage experimentation → <strong>Mitigation</strong>: Separate experimental branches</li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: Developers game exemptions → <strong>Mitigation</strong>: Exemptions require expiry dates + rationale</li>
+<li><strong>R2</strong>: PCQ too harsh for large codebases → <strong>Mitigation</strong>: Configurable τ (e.g., 0.7 for legacy, 0.9 for greenfield)</li>
+</ul>
 <h3 id="implementation_6">Implementation<a class="headerlink" href="#implementation_6" title="Permanent link">¶</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a href="#__codelineno-6-1" id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># repoq/quality/pcq.py</span>
 </span><span id="__span-6-2"><a href="#__codelineno-6-2" id="__codelineno-6-2" name="__codelineno-6-2"></a>
@@ -2628,22 +2819,28 @@
 <strong>Stakeholders</strong>: Developers, DevOps<br/>
 <strong>Deciders</strong>: Kirill, Casey</p>
 <h3 id="context_7">Context<a class="headerlink" href="#context_7" title="Permanent link">¶</a></h3>
-<p>Analyzing large codebases is slow (complexity calculation, AST parsing, coverage). Need caching. Requirements:
-1. <strong>Invalidation</strong>: Re-analyze only if file content changes
-2. <strong>Policy-Aware</strong>: Re-analyze if quality policy changes (weights, thresholds)
-3. <strong>Version-Aware</strong>: Re-analyze if RepoQ version changes (new metrics)
-4. <strong>Performance</strong>: Cache lookup &lt;10ms, no network calls</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>Timestamp-based</strong>: <code>mtime</code> as cache key → <strong>Unreliable (git checkout changes mtime)</strong>
-- <strong>Path-based</strong>: File path as key → <strong>Breaks on renames, no content tracking</strong>
-- <strong>SHA-based</strong>: Git blob SHA as key → <strong>Reliable, content-addressed</strong>
-- <strong>No caching</strong>: Always re-analyze → <strong>Too slow (2-3 min per run)</strong></p>
+<p>Analyzing large codebases is slow (complexity calculation, AST parsing, coverage). Need caching. Requirements:</p>
+<ol>
+<li><strong>Invalidation</strong>: Re-analyze only if file content changes</li>
+<li><strong>Policy-Aware</strong>: Re-analyze if quality policy changes (weights, thresholds)</li>
+<li><strong>Version-Aware</strong>: Re-analyze if RepoQ version changes (new metrics)</li>
+<li><strong>Performance</strong>: Cache lookup &lt;10ms, no network calls</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>Timestamp-based</strong>: <code>mtime</code> as cache key → <strong>Unreliable (git checkout changes mtime)</strong></li>
+<li><strong>Path-based</strong>: File path as key → <strong>Breaks on renames, no content tracking</strong></li>
+<li><strong>SHA-based</strong>: Git blob SHA as key → <strong>Reliable, content-addressed</strong></li>
+<li><strong>No caching</strong>: Always re-analyze → <strong>Too slow (2-3 min per run)</strong></li>
+</ul>
 <h3 id="decision_7">Decision<a class="headerlink" href="#decision_7" title="Permanent link">¶</a></h3>
-<p><strong>Use SHA-based incremental caching</strong>:
-- <strong>Cache Key</strong>: <code>{file_sha}_{policy_version}_{repoq_version}</code>
-- <strong>Storage</strong>: Disk-backed LRU cache (<code>.repoq/cache/</code>)
-- <strong>Eviction</strong>: LRU, max 10K entries or 1GB disk space
-- <strong>Invalidation</strong>: Policy version change → clear all cache</p>
+<p><strong>Use SHA-based incremental caching</strong>:</p>
+<ul>
+<li><strong>Cache Key</strong>: <code>{file_sha}_{policy_version}_{repoq_version}</code></li>
+<li><strong>Storage</strong>: Disk-backed LRU cache (<code>.repoq/cache/</code>)</li>
+<li><strong>Eviction</strong>: LRU, max 10K entries or 1GB disk space</li>
+<li><strong>Invalidation</strong>: Policy version change → clear all cache</li>
+</ul>
 <h3 id="rationale_7">Rationale<a class="headerlink" href="#rationale_7" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Content-Addressed</strong>: SHA changes only if file content changes (not mtime/rename)</li>
@@ -2653,17 +2850,23 @@
 <li><strong>Git-Native</strong>: Use Git's blob SHA (already computed)</li>
 </ol>
 <h3 id="consequences_7">Consequences<a class="headerlink" href="#consequences_7" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Accurate invalidation (no false cache hits)
-- ✅ Fast incremental analysis (only changed files)
-- ✅ Handles renames correctly (content-addressed)
-- ✅ Works offline (no network)</p>
-<p><strong>Negative</strong>:
-- ❌ Disk space usage (~100 KB per cached file) → <strong>Mitigation</strong>: LRU eviction, max 1GB
-- ❌ Policy change clears cache (re-analyze all) → <strong>Mitigation</strong>: Warn user, rare event</p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: Cache corruption → <strong>Mitigation</strong>: Checksum validation, fallback to re-analysis
-- <strong>R2</strong>: Cache grows unbounded → <strong>Mitigation</strong>: LRU eviction, max 10K entries</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Accurate invalidation (no false cache hits)</li>
+<li>✅ Fast incremental analysis (only changed files)</li>
+<li>✅ Handles renames correctly (content-addressed)</li>
+<li>✅ Works offline (no network)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ Disk space usage (~100 KB per cached file) → <strong>Mitigation</strong>: LRU eviction, max 1GB</li>
+<li>❌ Policy change clears cache (re-analyze all) → <strong>Mitigation</strong>: Warn user, rare event</li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: Cache corruption → <strong>Mitigation</strong>: Checksum validation, fallback to re-analysis</li>
+<li><strong>R2</strong>: Cache grows unbounded → <strong>Mitigation</strong>: LRU eviction, max 10K entries</li>
+</ul>
 <h3 id="implementation_7">Implementation<a class="headerlink" href="#implementation_7" title="Permanent link">¶</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a href="#__codelineno-7-1" id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1"># repoq/core/cache.py</span>
 </span><span id="__span-7-2"><a href="#__codelineno-7-2" id="__codelineno-7-2" name="__codelineno-7-2"></a>
@@ -2714,17 +2917,21 @@
 <strong>Stakeholders</strong>: All Stakeholders<br/>
 <strong>Deciders</strong>: Kirill, Morgan, Casey</p>
 <h3 id="context_8">Context<a class="headerlink" href="#context_8" title="Permanent link">¶</a></h3>
-<p>Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platforms (CodeClimate, SonarCloud). Risks:
-1. <strong>Data leakage</strong>: Proprietary code sent to third parties
-2. <strong>Compliance</strong>: GDPR, HIPAA violations
-3. <strong>Offline</strong>: Cannot work without internet (airport, VPN issues)
-4. <strong>Trust</strong>: Users must trust external service (no verification)</p>
+<p>Privacy is a top value (EVR-04). Many code quality tools send code to SaaS platforms (CodeClimate, SonarCloud). Risks:</p>
+<ol>
+<li><strong>Data leakage</strong>: Proprietary code sent to third parties</li>
+<li><strong>Compliance</strong>: GDPR, HIPAA violations</li>
+<li><strong>Offline</strong>: Cannot work without internet (airport, VPN issues)</li>
+<li><strong>Trust</strong>: Users must trust external service (no verification)</li>
+</ol>
 <h3 id="decision_8">Decision<a class="headerlink" href="#decision_8" title="Permanent link">¶</a></h3>
-<p><strong>Zero network calls in core analysis</strong> (local-first):
-1. All metrics calculated locally (no SaaS APIs)
-2. RDF storage local (no external graph DB)
-3. Certificates stored locally (no external registry)
-4. <strong>Exception</strong>: Optional AI agent (opt-in only, explicit consent)</p>
+<p><strong>Zero network calls in core analysis</strong> (local-first):</p>
+<ol>
+<li>All metrics calculated locally (no SaaS APIs)</li>
+<li>RDF storage local (no external graph DB)</li>
+<li>Certificates stored locally (no external registry)</li>
+<li><strong>Exception</strong>: Optional AI agent (opt-in only, explicit consent)</li>
+</ol>
 <h3 id="rationale_8">Rationale<a class="headerlink" href="#rationale_8" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Privacy</strong>: No code leaves developer's machine (EVR-04)</li>
@@ -2734,24 +2941,28 @@
 <li><strong>Speed</strong>: No network latency (faster than SaaS)</li>
 </ol>
 <h3 id="consequences_8">Consequences<a class="headerlink" href="#consequences_8" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Privacy-preserving (no data leakage)
-- ✅ Works offline (no internet required)
-- ✅ Fast (no network latency)
-- ✅ Trust (no black-box APIs)</p>
-<p><strong>Negative</strong>:
-- ❌ No collaborative features (team dashboards) → <strong>Mitigation</strong>: Optional self-hosted registry
-- ❌ No cloud storage (certificates local) → <strong>Mitigation</strong>: Push to Git as artifacts</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Privacy-preserving (no data leakage)</li>
+<li>✅ Works offline (no internet required)</li>
+<li>✅ Fast (no network latency)</li>
+<li>✅ Trust (no black-box APIs)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ No collaborative features (team dashboards) → <strong>Mitigation</strong>: Optional self-hosted registry</li>
+<li>❌ No cloud storage (certificates local) → <strong>Mitigation</strong>: Push to Git as artifacts</li>
+</ul>
 <p><strong>Risks</strong>: None (core design principle)</p>
 <h3 id="implementation_8">Implementation<a class="headerlink" href="#implementation_8" title="Permanent link">¶</a></h3>
-<p><strong>CI Check (enforce zero network)</strong>:
+<p><strong>CI Check (enforce zero network)</strong>:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a href="#__codelineno-8-1" id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="c1"># .github/workflows/ci.yml</span>
 </span><span id="__span-8-2"><a href="#__codelineno-8-2" id="__codelineno-8-2" name="__codelineno-8-2"></a>-<span class="w"> </span>name:<span class="w"> </span>Verify<span class="w"> </span>zero<span class="w"> </span>network<span class="w"> </span>calls
 </span><span id="__span-8-3"><a href="#__codelineno-8-3" id="__codelineno-8-3" name="__codelineno-8-3"></a><span class="w">  </span>run:<span class="w"> </span><span class="p">|</span>
 </span><span id="__span-8-4"><a href="#__codelineno-8-4" id="__codelineno-8-4" name="__codelineno-8-4"></a><span class="w">    </span><span class="c1"># Run RepoQ in network-isolated container</span>
 </span><span id="__span-8-5"><a href="#__codelineno-8-5" id="__codelineno-8-5" name="__codelineno-8-5"></a><span class="w">    </span>docker<span class="w"> </span>run<span class="w"> </span>--network<span class="o">=</span>none<span class="w"> </span>repoq:latest<span class="w"> </span>repoq<span class="w"> </span>gate<span class="w"> </span>--base<span class="w"> </span>main<span class="w"> </span>--head<span class="w"> </span>HEAD
 </span><span id="__span-8-6"><a href="#__codelineno-8-6" id="__codelineno-8-6" name="__codelineno-8-6"></a><span class="w">    </span><span class="c1"># If exit code 0, test passed (no network errors)</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Status</strong>: ✅ Complete (core analysis is local-only, AI agent optional)</p>
 <hr/>
 <h2 id="adr-010-w3c-verifiable-credentials">ADR-010: W3C Verifiable Credentials<a class="headerlink" href="#adr-010-w3c-verifiable-credentials" title="Permanent link">¶</a></h2>
@@ -2760,22 +2971,28 @@
 <strong>Stakeholders</strong>: Team Leads, DevOps<br/>
 <strong>Deciders</strong>: Kirill, Morgan</p>
 <h3 id="context_9">Context<a class="headerlink" href="#context_9" title="Permanent link">¶</a></h3>
-<p>Quality certificates need to be:
-1. <strong>Tamper-proof</strong>: Cannot modify Q-score after issuance
-2. <strong>Verifiable</strong>: Third parties can verify authenticity
-3. <strong>Standards-compliant</strong>: Not a proprietary format
-4. <strong>Portable</strong>: Works with standard tools (JSON-LD, JWS)</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>Plain JSON</strong>: No signature, easy to tamper
-- <strong>JWT</strong>: Non-standard for VCs, harder to extend
-- <strong>W3C Verifiable Credentials</strong>: Standard format (JSON-LD + ECDSA/Ed25519)
-- <strong>Custom format</strong>: Reinvent wheel, no tooling</p>
+<p>Quality certificates need to be:</p>
+<ol>
+<li><strong>Tamper-proof</strong>: Cannot modify Q-score after issuance</li>
+<li><strong>Verifiable</strong>: Third parties can verify authenticity</li>
+<li><strong>Standards-compliant</strong>: Not a proprietary format</li>
+<li><strong>Portable</strong>: Works with standard tools (JSON-LD, JWS)</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>Plain JSON</strong>: No signature, easy to tamper</li>
+<li><strong>JWT</strong>: Non-standard for VCs, harder to extend</li>
+<li><strong>W3C Verifiable Credentials</strong>: Standard format (JSON-LD + ECDSA/Ed25519)</li>
+<li><strong>Custom format</strong>: Reinvent wheel, no tooling</li>
+</ul>
 <h3 id="decision_9">Decision<a class="headerlink" href="#decision_9" title="Permanent link">¶</a></h3>
-<p><strong>Use W3C Verifiable Credentials with ECDSA signatures</strong>:
-- <strong>Format</strong>: JSON-LD (Linked Data context)
-- <strong>Signature</strong>: ECDSA secp256k1 (same as Bitcoin/Ethereum)
-- <strong>Storage</strong>: Local <code>.repoq/certificates/&lt;commit_sha&gt;.json</code>
-- <strong>Verification</strong>: Public key from issuer DID (Decentralized Identifier)</p>
+<p><strong>Use W3C Verifiable Credentials with ECDSA signatures</strong>:</p>
+<ul>
+<li><strong>Format</strong>: JSON-LD (Linked Data context)</li>
+<li><strong>Signature</strong>: ECDSA secp256k1 (same as Bitcoin/Ethereum)</li>
+<li><strong>Storage</strong>: Local <code>.repoq/certificates/&lt;commit_sha&gt;.json</code></li>
+<li><strong>Verification</strong>: Public key from issuer DID (Decentralized Identifier)</li>
+</ul>
 <h3 id="rationale_9">Rationale<a class="headerlink" href="#rationale_9" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Standards-Compliant</strong>: W3C Recommendation (2019), widely adopted</li>
@@ -2785,19 +3002,25 @@
 <li><strong>Tooling</strong>: Libraries available (Python <code>cryptography</code>, <code>pyld</code>)</li>
 </ol>
 <h3 id="consequences_9">Consequences<a class="headerlink" href="#consequences_9" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Tamper-proof (cryptographic signatures)
-- ✅ Standards-compliant (W3C)
-- ✅ Portable (JSON-LD works with many tools)
-- ✅ Future-proof (can add more claims)</p>
-<p><strong>Negative</strong>:
-- ❌ Key management complexity (securely store private key) → <strong>Mitigation</strong>: Use env var or Git Secrets
-- ❌ Larger file size (JSON-LD verbose) → <strong>Acceptable (&lt;10 KB per cert)</strong></p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: Private key leaked → <strong>Mitigation</strong>: Rotate keys, revoke certificates
-- <strong>R2</strong>: JSON-LD context unavailable → <strong>Mitigation</strong>: Embed context in certificate</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Tamper-proof (cryptographic signatures)</li>
+<li>✅ Standards-compliant (W3C)</li>
+<li>✅ Portable (JSON-LD works with many tools)</li>
+<li>✅ Future-proof (can add more claims)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ Key management complexity (securely store private key) → <strong>Mitigation</strong>: Use env var or Git Secrets</li>
+<li>❌ Larger file size (JSON-LD verbose) → <strong>Acceptable (&lt;10 KB per cert)</strong></li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: Private key leaked → <strong>Mitigation</strong>: Rotate keys, revoke certificates</li>
+<li><strong>R2</strong>: JSON-LD context unavailable → <strong>Mitigation</strong>: Embed context in certificate</li>
+</ul>
 <h3 id="implementation_9">Implementation<a class="headerlink" href="#implementation_9" title="Permanent link">¶</a></h3>
-<p><strong>Example Certificate</strong>:
+<p><strong>Example Certificate</strong>:</p>
 <div class="language-json highlight"><pre><span></span><code><span id="__span-9-1"><a href="#__codelineno-9-1" id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="p">{</span>
 </span><span id="__span-9-2"><a href="#__codelineno-9-2" id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="w">  </span><span class="nt">"@context"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"https://www.w3.org/2018/credentials/v1"</span><span class="p">],</span>
 </span><span id="__span-9-3"><a href="#__codelineno-9-3" id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"VerifiableCredential"</span><span class="p">,</span><span class="w"> </span><span class="s2">"QualityAssessmentCredential"</span><span class="p">],</span>
@@ -2819,7 +3042,7 @@
 </span><span id="__span-9-19"><a href="#__codelineno-9-19" id="__codelineno-9-19" name="__codelineno-9-19"></a><span class="w">    </span><span class="nt">"jws"</span><span class="p">:</span><span class="w"> </span><span class="s2">"eyJhbGc...signature..."</span>
 </span><span id="__span-9-20"><a href="#__codelineno-9-20" id="__codelineno-9-20" name="__codelineno-9-20"></a><span class="w">  </span><span class="p">}</span>
 </span><span id="__span-9-21"><a href="#__codelineno-9-21" id="__codelineno-9-21" name="__codelineno-9-21"></a><span class="p">}</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Status</strong>: ✅ Complete (VC generation implemented)</p>
 <hr/>
 <h2 id="adr-011-python-311-only-no-3839">ADR-011: Python 3.11+ Only (No 3.8/3.9)<a class="headerlink" href="#adr-011-python-311-only-no-3839" title="Permanent link">¶</a></h2>
@@ -2828,16 +3051,20 @@
 <strong>Stakeholders</strong>: Developers, DevOps<br/>
 <strong>Deciders</strong>: Kirill, Casey</p>
 <h3 id="context_10">Context<a class="headerlink" href="#context_10" title="Permanent link">¶</a></h3>
-<p>Need to choose minimum Python version. Considerations:
-1. <strong>Features</strong>: 3.11+ has performance improvements (10-25% faster), ExceptionGroups, TypedDict improvements
-2. <strong>Compatibility</strong>: 3.8/3.9 still used in enterprise (RHEL 8, Ubuntu 20.04)
-3. <strong>Maintenance</strong>: Supporting old versions increases complexity
-4. <strong>EOL</strong>: Python 3.8 EOL October 2024, 3.9 EOL October 2025</p>
+<p>Need to choose minimum Python version. Considerations:</p>
+<ol>
+<li><strong>Features</strong>: 3.11+ has performance improvements (10-25% faster), ExceptionGroups, TypedDict improvements</li>
+<li><strong>Compatibility</strong>: 3.8/3.9 still used in enterprise (RHEL 8, Ubuntu 20.04)</li>
+<li><strong>Maintenance</strong>: Supporting old versions increases complexity</li>
+<li><strong>EOL</strong>: Python 3.8 EOL October 2024, 3.9 EOL October 2025</li>
+</ol>
 <h3 id="decision_10">Decision<a class="headerlink" href="#decision_10" title="Permanent link">¶</a></h3>
-<p><strong>Require Python 3.11+ (drop 3.8/3.9/3.10)</strong>:
-- <strong>Minimum version</strong>: 3.11.0
-- <strong>Recommended</strong>: 3.12+ (for latest performance improvements)
-- <strong>CI Matrix</strong>: Test on 3.11, 3.12, 3.13</p>
+<p><strong>Require Python 3.11+ (drop 3.8/3.9/3.10)</strong>:</p>
+<ul>
+<li><strong>Minimum version</strong>: 3.11.0</li>
+<li><strong>Recommended</strong>: 3.12+ (for latest performance improvements)</li>
+<li><strong>CI Matrix</strong>: Test on 3.11, 3.12, 3.13</li>
+</ul>
 <h3 id="rationale_10">Rationale<a class="headerlink" href="#rationale_10" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Performance</strong>: 3.11 is 10-25% faster (faster startup, better inlining)</li>
@@ -2847,16 +3074,22 @@
 <li><strong>Adoption</strong>: 3.11+ available in GitHub Actions, Docker, major distros</li>
 </ol>
 <h3 id="consequences_10">Consequences<a class="headerlink" href="#consequences_10" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Faster performance (10-25% speedup for free)
-- ✅ Better type hints (TypedDict, Self type)
-- ✅ Simpler code (no compatibility shims)
-- ✅ Smaller maintenance burden</p>
-<p><strong>Negative</strong>:
-- ❌ Excludes users on RHEL 8 (Python 3.6), Ubuntu 20.04 (Python 3.8) → <strong>Mitigation</strong>: Document upgrade path
-- ❌ May break CI for older projects → <strong>Mitigation</strong>: Clear error message in <code>setup.py</code></p>
-<p><strong>Risks</strong>:
-- <strong>R1</strong>: User complaints about old Python → <strong>Mitigation</strong>: Provide Docker image (includes Python 3.12)</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Faster performance (10-25% speedup for free)</li>
+<li>✅ Better type hints (TypedDict, Self type)</li>
+<li>✅ Simpler code (no compatibility shims)</li>
+<li>✅ Smaller maintenance burden</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ Excludes users on RHEL 8 (Python 3.6), Ubuntu 20.04 (Python 3.8) → <strong>Mitigation</strong>: Document upgrade path</li>
+<li>❌ May break CI for older projects → <strong>Mitigation</strong>: Clear error message in <code>setup.py</code></li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: User complaints about old Python → <strong>Mitigation</strong>: Provide Docker image (includes Python 3.12)</li>
+</ul>
 <h3 id="implementation_10">Implementation<a class="headerlink" href="#implementation_10" title="Permanent link">¶</a></h3>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a href="#__codelineno-10-1" id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="c1"># setup.py / pyproject.toml</span>
 </span><span id="__span-10-2"><a href="#__codelineno-10-2" id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="p">[</span><span class="n">project</span><span class="p">]</span>
@@ -2877,22 +3110,28 @@
 <strong>Stakeholders</strong>: DevOps, Team Leads<br/>
 <strong>Deciders</strong>: Kirill, Casey</p>
 <h3 id="context_11">Context<a class="headerlink" href="#context_11" title="Permanent link">¶</a></h3>
-<p>Need CI/CD pipeline for automated testing, quality gates, PyPI deployment. Requirements:
-1. <strong>Free</strong>: Open-source project (no budget for Jenkins/CircleCI)
-2. <strong>Integrated</strong>: Works with GitHub (where code is hosted)
-3. <strong>Fast</strong>: Parallel jobs, caching
-4. <strong>Flexible</strong>: Custom workflows (not just build/test)</p>
-<p><strong>Alternatives Considered</strong>:
-- <strong>GitHub Actions</strong>: Free for OSS, native integration, 20K+ actions marketplace
-- <strong>GitLab CI</strong>: Good but requires GitLab (we use GitHub)
-- <strong>CircleCI</strong>: Free tier limited (1K min/month), less integration
-- <strong>Jenkins</strong>: Self-hosted (requires maintenance), overkill</p>
+<p>Need CI/CD pipeline for automated testing, quality gates, PyPI deployment. Requirements:</p>
+<ol>
+<li><strong>Free</strong>: Open-source project (no budget for Jenkins/CircleCI)</li>
+<li><strong>Integrated</strong>: Works with GitHub (where code is hosted)</li>
+<li><strong>Fast</strong>: Parallel jobs, caching</li>
+<li><strong>Flexible</strong>: Custom workflows (not just build/test)</li>
+</ol>
+<p><strong>Alternatives Considered</strong>:</p>
+<ul>
+<li><strong>GitHub Actions</strong>: Free for OSS, native integration, 20K+ actions marketplace</li>
+<li><strong>GitLab CI</strong>: Good but requires GitLab (we use GitHub)</li>
+<li><strong>CircleCI</strong>: Free tier limited (1K min/month), less integration</li>
+<li><strong>Jenkins</strong>: Self-hosted (requires maintenance), overkill</li>
+</ul>
 <h3 id="decision_11">Decision<a class="headerlink" href="#decision_11" title="Permanent link">¶</a></h3>
-<p><strong>Use GitHub Actions</strong> with the following workflows:
-1. <strong>CI</strong>: Run tests, linters, coverage on every PR
-2. <strong>Quality Gate</strong>: Run <code>repoq gate</code> on PRs (block merge if fails)
-3. <strong>Deployment</strong>: Publish to PyPI on release tags
-4. <strong>Docs</strong>: Build and deploy MkDocs to GitHub Pages</p>
+<p><strong>Use GitHub Actions</strong> with the following workflows:</p>
+<ol>
+<li><strong>CI</strong>: Run tests, linters, coverage on every PR</li>
+<li><strong>Quality Gate</strong>: Run <code>repoq gate</code> on PRs (block merge if fails)</li>
+<li><strong>Deployment</strong>: Publish to PyPI on release tags</li>
+<li><strong>Docs</strong>: Build and deploy MkDocs to GitHub Pages</li>
+</ol>
 <h3 id="rationale_11">Rationale<a class="headerlink" href="#rationale_11" title="Permanent link">¶</a></h3>
 <ol>
 <li><strong>Free</strong>: Unlimited minutes for public repos</li>
@@ -2902,17 +3141,21 @@
 <li><strong>Workflows</strong>: YAML-based, easy to version control</li>
 </ol>
 <h3 id="consequences_11">Consequences<a class="headerlink" href="#consequences_11" title="Permanent link">¶</a></h3>
-<p><strong>Positive</strong>:
-- ✅ Free for OSS (no cost)
-- ✅ Native integration (PR checks, protected branches)
-- ✅ Fast (parallel jobs, caching)
-- ✅ Large ecosystem (actions marketplace)</p>
-<p><strong>Negative</strong>:
-- ❌ Vendor lock-in (GitHub-specific) → <strong>Acceptable (we use GitHub)</strong>
-- ❌ YAML complexity for complex workflows → <strong>Mitigation</strong>: Modular workflows</p>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Free for OSS (no cost)</li>
+<li>✅ Native integration (PR checks, protected branches)</li>
+<li>✅ Fast (parallel jobs, caching)</li>
+<li>✅ Large ecosystem (actions marketplace)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>❌ Vendor lock-in (GitHub-specific) → <strong>Acceptable (we use GitHub)</strong></li>
+<li>❌ YAML complexity for complex workflows → <strong>Mitigation</strong>: Modular workflows</li>
+</ul>
 <p><strong>Risks</strong>: None (industry standard)</p>
 <h3 id="implementation_11">Implementation<a class="headerlink" href="#implementation_11" title="Permanent link">¶</a></h3>
-<p><strong>Quality Gate Workflow</strong>:
+<p><strong>Quality Gate Workflow</strong>:</p>
 <div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a href="#__codelineno-11-1" id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="c1"># .github/workflows/quality-gate.yml</span>
 </span><span id="__span-11-2"><a href="#__codelineno-11-2" id="__codelineno-11-2" name="__codelineno-11-2"></a><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Quality Gate</span>
 </span><span id="__span-11-3"><a href="#__codelineno-11-3" id="__codelineno-11-3" name="__codelineno-11-3"></a>
@@ -2948,12 +3191,107 @@
 </span><span id="__span-11-33"><a href="#__codelineno-11-33" id="__codelineno-11-33" name="__codelineno-11-33"></a><span class="w">        </span><span class="nt">with</span><span class="p">:</span>
 </span><span id="__span-11-34"><a href="#__codelineno-11-34" id="__codelineno-11-34" name="__codelineno-11-34"></a><span class="w">          </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">quality-certificate</span>
 </span><span id="__span-11-35"><a href="#__codelineno-11-35" id="__codelineno-11-35" name="__codelineno-11-35"></a><span class="w">          </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.repoq/certificates/*.json</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
 <p><strong>Status</strong>: ⏸️ Planned (workflow file to be created)</p>
+<hr/>
+<h2 id="adr-013-incremental-v2-migration-via-feature-flags">ADR-013: Incremental v2 Migration via Feature Flags<a class="headerlink" href="#adr-013-incremental-v2-migration-via-feature-flags" title="Permanent link">¶</a></h2>
+<p><strong>Status</strong>: ✅ Accepted<br/>
+<strong>Date</strong>: 2025-10-22<br/>
+<strong>Stakeholders</strong>: All (Developers, Team Leads, DevOps, Researchers, Maintainers)<br/>
+<strong>Related</strong>: ADR-002 (RDFLib), ADR-003 (Subprocess), ADR-006 (Stratification), ADR-007 (PCQ)</p>
+<h3 id="context_12">Context<a class="headerlink" href="#context_12" title="Permanent link">¶</a></h3>
+<p>RepoQ v2 architecture (C4 diagrams) specifies semantic-first pipeline (Extract→TTL→Reason→SHACL→Quality) but current implementation has 48/100 alignment. Need migration strategy that:</p>
+<ol>
+<li>Preserves all 6 formal theorems (A-F)</li>
+<li>Maintains 100% backward compatibility (NFR-12)</li>
+<li>Allows gradual adoption (developer choice)</li>
+<li>Delivers incremental value (each phase usable)</li>
+</ol>
+<p><strong>Gap Analysis</strong>:</p>
+<ul>
+<li>❌ No <code>.repoq/raw/</code> (ABox-raw not saved)</li>
+<li>❌ No Reasoner (architecture invariants not checked)</li>
+<li>❌ SHACL not integrated (issues from Python code)</li>
+<li>❌ No manifest.json (no versioning/reproducibility)</li>
+</ul>
+<h3 id="decision_12">Decision<a class="headerlink" href="#decision_12" title="Permanent link">¶</a></h3>
+<p><strong>Adopt 4-Phase Incremental Migration</strong> (10 weeks, 240 hours):</p>
+<ol>
+<li><strong>Phase 1</strong> (Weeks 1-2): <code>.repoq/</code> workspace + manifest.json → <strong>V07 Reliability</strong></li>
+<li><strong>Phase 2</strong> (Weeks 3-5): SHACL validation + PCQ/PCE → <strong>V01 Transparency</strong>, <strong>V06 Fairness</strong></li>
+<li><strong>Phase 3</strong> (Weeks 6-7): Reasoner + Any2Math → <strong>V03 Correctness</strong>, <strong>V07 Reliability</strong></li>
+<li><strong>Phase 4</strong> (Weeks 8-10): Unified pipeline + self-application → All 8 Tier 1 values</li>
+</ol>
+<p><strong>Feature Flags</strong>:</p>
+<ul>
+<li><code>--shacl</code> (Phase 2, opt-in SHACL validation)</li>
+<li><code>--reasoning</code> (Phase 3, opt-in OWL2-RL reasoning)</li>
+<li><code>--normalize</code> (Phase 3, opt-in Any2Math normalization)</li>
+<li><code>--semantic</code> (Phase 4, all features enabled)</li>
+</ul>
+<p><strong>Default behavior</strong>: Legacy pipeline (v1.x, backward compatible)</p>
+<h3 id="rationale_12">Rationale<a class="headerlink" href="#rationale_12" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Zero Breaking Changes</strong>: Legacy pipeline preserved as <code>_run_legacy_pipeline()</code> (NFR-12)</li>
+<li><strong>Gradual Adoption</strong>: Developers opt-in incrementally (<code>--shacl</code> → <code>--reasoning</code> → <code>--semantic</code>)</li>
+<li><strong>Incremental Value</strong>: Each phase delivers usable features (SHACL violations, architecture checks)</li>
+<li><strong>Risk Mitigation</strong>: Easy rollback (disable flag), continuous validation (200+ tests)</li>
+<li><strong>Formal Guarantees Preserved</strong>: All theorems A-F remain valid (quality formula unchanged)</li>
+</ol>
+<h3 id="alternatives-considered">Alternatives Considered<a class="headerlink" href="#alternatives-considered" title="Permanent link">¶</a></h3>
+<ol>
+<li><strong>Big-Bang Rewrite</strong> (Score: 2/10):</li>
+<li>
+<p>❌ High risk, long cycle (3+ months), no incremental value</p>
+</li>
+<li>
+<p><strong>Parallel System</strong> (Score: 4/10):</p>
+</li>
+<li>
+<p>❌ Code duplication, 2x maintenance burden, eventual forced migration</p>
+</li>
+<li>
+<p><strong>Feature-Flag Incremental</strong> (Score: 9/10):</p>
+</li>
+<li>✅ Selected for zero risk + incremental value</li>
+</ol>
+<h3 id="consequences_12">Consequences<a class="headerlink" href="#consequences_12" title="Permanent link">¶</a></h3>
+<p><strong>Positive</strong>:</p>
+<ul>
+<li>✅ Zero breaking changes (Γ_back invariant)</li>
+<li>✅ Gradual adoption (user choice)</li>
+<li>✅ Early value delivery (each phase)</li>
+<li>✅ Easy rollback (disable flag)</li>
+<li>✅ All 8 Tier 1 values addressed (V01-V08)</li>
+<li>✅ Formal guarantees preserved (Theorems A-F)</li>
+</ul>
+<p><strong>Negative</strong>:</p>
+<ul>
+<li>⚠️ Temporary code complexity (dual paths until v3.0) → <strong>Mitigation</strong>: Clean abstraction, remove legacy in v3.0</li>
+<li>⚠️ Feature flag hygiene required → <strong>Mitigation</strong>: Limit to 4 flags, documented dependencies</li>
+</ul>
+<p><strong>Risks</strong>:</p>
+<ul>
+<li><strong>R1</strong>: Adoption resistance (&lt;30%) → <strong>Mitigation</strong>: ROI demos, training webinars</li>
+<li><strong>R2</strong>: Performance degradation (&gt;30%) → <strong>Mitigation</strong>: Benchmarks at each phase, caching</li>
+<li><strong>R3</strong>: Complexity increase → <strong>Mitigation</strong>: Modularity, integration tests, ADRs</li>
+</ul>
+<h3 id="implementation_12">Implementation<a class="headerlink" href="#implementation_12" title="Permanent link">¶</a></h3>
+<p>See <strong>detailed 4-phase roadmap</strong>: <code>docs/vdad/phase5-migration-roadmap.md</code><br/>
+See <strong>full ADR document</strong>: <code>docs/vdad/phase4-adr-013-incremental-migration.md</code></p>
+<p><strong>Success Criteria</strong>:</p>
+<ul>
+<li>✅ Alignment Score ≥90/100 (from 48/100 baseline)</li>
+<li>✅ Performance overhead &lt;30% vs legacy</li>
+<li>✅ Adoption ≥30% (teams using ≥1 v2 feature)</li>
+<li>✅ Zero breaking changes (all v1.x tests passing)</li>
+<li>✅ 200+ tests passing across 4 phases</li>
+</ul>
+<p><strong>Status</strong>: ⏸️ Planned (Phase 1 starts Week 1)</p>
 <hr/>
 <h2 id="success-criteria">Success Criteria<a class="headerlink" href="#success-criteria" title="Permanent link">¶</a></h2>
 <ul>
-<li>✅ <strong>12 ADRs documented</strong>: All key architectural decisions recorded</li>
+<li>✅ <strong>13 ADRs documented</strong>: All key architectural decisions recorded (including ADR-013 migration)</li>
 <li>✅ <strong>Lightweight format</strong>: Context, Decision, Rationale, Consequences (not heavyweight IEEE SAD)</li>
 <li>✅ <strong>Stakeholder alignment</strong>: Each ADR lists impacted stakeholders</li>
 <li>✅ <strong>Alternatives considered</strong>: Each ADR evaluates 2-4 alternatives</li>
@@ -2968,11 +3306,13 @@
 <li>arc42 (2024). <em>Architecture Documentation Template</em>. <a href="https://arc42.org/">arc42.org</a></li>
 <li>RepoQ Project (2025). <em>Phase 3: Requirements</em>. <code>docs/vdad/phase3-requirements.md</code></li>
 <li>RepoQ Project (2025). <em>Phase 4: Architecture Overview</em>. <code>docs/vdad/phase4-architecture-overview.md</code></li>
+<li>RepoQ Project (2025). <em>Phase 5: Migration Roadmap</em>. <code>docs/vdad/phase5-migration-roadmap.md</code></li>
 </ol>
 <hr/>
-<p><strong>Document Status</strong>: ✅ COMPLETE<br/>
+<p><strong>Document Status</strong>: ✅ COMPLETE (13 ADRs)<br/>
+<strong>Last Updated</strong>: 2025-10-22 (Added ADR-013 Incremental Migration)<br/>
 <strong>Review</strong>: Pending (validate decisions with team)<br/>
-<strong>Next Steps</strong>: NFR realization strategies, BAML agent spec in separate documents.</p>
+<strong>Next Steps</strong>: Execute Phase 1 (Weeks 1-2), validate with Architecture Review Board.</p>
 </article>
 </div>
 <script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>

@@ -13,6 +13,14 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
+         <loc>https://repo-q.github.io/repoq/latest/adr/adr-014-single-source-of-truth-generated/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/adr/adr-014-single-source-of-truth/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
          <loc>https://repo-q.github.io/repoq/latest/api/reference/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
@@ -46,6 +54,10 @@
     </url>
     <url>
          <loc>https://repo-q.github.io/repoq/latest/architecture/rdf-export/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/architecture/repoq-c4-v2/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
@@ -89,7 +101,35 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/dogfooding-meta-level/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/dogfooding-retrospective/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/improvement-roadmap/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
          <loc>https://repo-q.github.io/repoq/latest/archive/phase-5.7-ci-cd-report/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/phase4-compliance-report/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/phase4-final-execution-report/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/phase4-implementation-report/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/refactor-plan-implementation/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
@@ -105,7 +145,19 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/refactoring-progress/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
          <loc>https://repo-q.github.io/repoq/latest/archive/repoq_analysis/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/task2-cli-refactoring/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/archive/task2-failure-analysis/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
@@ -158,6 +210,14 @@
     </url>
     <url>
          <loc>https://repo-q.github.io/repoq/latest/getting-started/quickstart/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/migration/phase1-workspace/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/migration/phase5-roadmap-updated/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
@@ -229,6 +289,10 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-adr-013-incremental-migration/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
          <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-adrs/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
@@ -245,19 +309,15 @@
          <lastmod>2025-10-22</lastmod>
     </url>
     <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-compliance-report/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-final-execution-report/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
-         <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-implementation-report/</loc>
-         <lastmod>2025-10-22</lastmod>
-    </url>
-    <url>
          <loc>https://repo-q.github.io/repoq/latest/vdad/phase4-nfr-realization/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/phase5-migration-roadmap/</loc>
+         <lastmod>2025-10-22</lastmod>
+    </url>
+    <url>
+         <loc>https://repo-q.github.io/repoq/latest/vdad/phase5-quick-reference/</loc>
          <lastmod>2025-10-22</lastmod>
     </url>
 </urlset>
