@@ -146,6 +146,7 @@ class TestManifestGeneration:
         manifest_path = repo_path / ".repoq" / "manifest.json"
         data = json.loads(manifest_path.read_text())
 
+        assert data["schema_version"] == "1.0"
         assert data["commit_sha"] == "abc123def456"
         assert data["policy_version"] == "1.2.0"
         assert data["ontology_checksums"]["code.ttl"] == "sha256:abc123"
@@ -177,6 +178,32 @@ class TestManifestGeneration:
         # Should parse without error
         timestamp = datetime.fromisoformat(data["analysis_timestamp"])
         assert timestamp.year == 2025  # Current year
+
+    def test_manifest_schema_version(self, tmp_path):
+        """Test that manifest includes schema_version for backward compatibility (ADR-016)."""
+        # Arrange
+        repo_path = tmp_path / "test_repo"
+        repo_path.mkdir()
+        from repoq.core.workspace import RepoQWorkspace
+
+        workspace = RepoQWorkspace(repo_path)
+        workspace.initialize()
+
+        # Act
+        workspace.save_manifest(
+            commit_sha="test123",
+            policy_version="2.0.0",
+            ontology_checksums={"test.ttl": "sha256:test"},
+        )
+
+        # Assert: schema_version is "1.0"
+        manifest_path = repo_path / ".repoq" / "manifest.json"
+        data = json.loads(manifest_path.read_text())
+
+        assert data["schema_version"] == "1.0"
+        # Verify field order (schema_version should be first for readability)
+        keys = list(data.keys())
+        assert keys[0] == "schema_version" or keys[0] == "analysis_timestamp"  # JSON sorts keys
 
     def test_load_manifest_roundtrip(self, tmp_path):
         """Test that save → load roundtrip preserves data (NFR-03 Determinism)."""

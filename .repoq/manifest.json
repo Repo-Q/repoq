@@ -1,0 +1,18 @@
+{
+  "analysis_timestamp": "2025-10-22T19:28:22.926920+00:00",
+  "commit_sha": "3e9de126c77cf2af949d41fb4c674ed065b0b721",
+  "ontology_checksums": {
+    "api.ttl": "sha256:5765ffbf20129cb3c17fc6fdaf14ab75feaa0a88ee4890ebb1cfba16c9736efc",
+    "arch.ttl": "sha256:d6e835dd445b650726befe5f406f25f20e102579437d6fcd3e241774319e64d6",
+    "docs.ttl": "sha256:b7976876fea75d3577756658c45d952a67613d783a5f35f0f5391da8229c52b5",
+    "license.ttl": "sha256:729effe137b588021f5bfb22b3312d31ff86e583e5a16a74de0a45c622f30947",
+    "meta.ttl": "sha256:835948124f9a91fc50d188ffdde57752e5402a9e5a3426f08cdccaa4e10eb762",
+    "quality.ttl": "sha256:2587449e50b1070034aecc990103dfc588471633f93383c57e4d9a2acae62002",
+    "security.ttl": "sha256:9888fa673efd6a7b594146b9bd9d9d545a4d35028f47cf0464135eacabaf1fc6",
+    "test.ttl": "sha256:b70d20646a6faf39a2fc01854fbc09352010e91625081f38b1d10e9588f4cb03",
+    "trs.ttl": "sha256:93252c5caf44c7c35a52bce2f38111cfa2899774106f94f23278b11c40005f48"
+  },
+  "policy_version": "2.0.0-alpha",
+  "schema_version": "1.0",
+  "trs_version": null
+}

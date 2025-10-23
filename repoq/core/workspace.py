@@ -28,6 +28,7 @@ class ManifestEntry:
     """Manifest entry for reproducible analysis (V07 Reliability).
 
     Attributes:
+        schema_version: Manifest schema version (semver, e.g., "1.0")
         commit_sha: Git commit SHA analyzed
         policy_version: Quality policy version (e.g., "1.2.0")
         ontology_checksums: SHA256 checksums of ontology files (Theorem A)
@@ -35,6 +36,7 @@ class ManifestEntry:
         analysis_timestamp: ISO 8601 timestamp
     """
 
+    schema_version: str
     commit_sha: str
     policy_version: str
     ontology_checksums: Dict[str, str]
@@ -135,6 +137,7 @@ class RepoQWorkspace:
 
         # Create manifest entry
         manifest = ManifestEntry(
+            schema_version="1.0",  # Manifest schema version (backward compatibility)
             commit_sha=commit_sha,
             policy_version=policy_version,
             ontology_checksums=ontology_checksums,
