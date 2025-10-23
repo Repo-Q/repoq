@@ -508,6 +508,7 @@ def export_architecture_rdf(graph, arch_model: ArchitectureModel, project_id: st
     - arch:LayeringViolation (with violatingFile, violationRule, severity)
     - arch:CircularDependency (with cycle, severity)
     - c4:System, c4:Container, c4:Component (C4 model hierarchy)
+    - swarch:Adaptability, swarch:Reliability, swarch:PerformanceEfficiency (Field33 metrics)
 
     Args:
         graph: RDFLib Graph to add triples to
@@ -597,6 +598,128 @@ def export_architecture_rdf(graph, arch_model: ArchitectureModel, project_id: st
         for component in container.components:
             comp_uri = URIRef(f"{project_id}/arch/component/{component.name}")
             graph.add((comp_uri, C4.belongsToContainer, container_uri))
+
+    # 7. Export Field33 architecture metrics
+    export_field33_metrics(graph, arch_model.metrics, project_id)
+
+
+def export_field33_metrics(graph, metrics: ArchitectureMetrics, project_id: str) -> None:
+    """Export Field33 software_architecture_metric ontology triples.
+
+    Maps ArchitectureMetrics to Field33 ontology classes:
+    - Adaptability (cohesion): ability to adapt to changes
+    - Reliability (1 - instability_avg): ability to perform intended function
+    - PerformanceEfficiency (1 - coupling): efficient use of resources
+
+    Follows AWS Well-Architected Framework pillars:
+    - https://wa.aws.amazon.com/wellarchitected/2020-07-02T19-33-23/
+
+    Args:
+        graph: RDFLib Graph to add triples to
+        metrics: ArchitectureMetrics from analyzer
+        project_id: Project URI (e.g., "repo:repoq")
+
+    Side Effects:
+        Adds Field33 metric triples to graph
+    """
+    from datetime import datetime
+
+    from rdflib import RDF, Literal, Namespace, URIRef
+    from rdflib.namespace import XSD
+
+    # Field33 namespaces
+    SWARCH = Namespace("http://field33.com/ontologies/@fld33_domain/software_architecture_metric/")
+    METHODOLOGY = Namespace("http://field33.com/ontologies/@fld33/methodology/")
+
+    graph.bind("swarch", SWARCH)
+    graph.bind("methodology", METHODOLOGY)
+
+    # 1. Adaptability (based on cohesion)
+    # High cohesion = high adaptability (changes are localized)
+    adaptability_uri = URIRef(f"{project_id}/arch/metric/adaptability")
+    graph.add((adaptability_uri, RDF.type, SWARCH.Adaptability))
+    graph.add((adaptability_uri, METHODOLOGY.value, Literal(metrics.cohesion, datatype=XSD.decimal)))
+    graph.add((adaptability_uri, METHODOLOGY.unit, Literal("score")))
+    graph.add(
+        (
+            adaptability_uri,
+            METHODOLOGY.timestamp,
+            Literal(datetime.utcnow().isoformat() + "Z", datatype=XSD.dateTime),
+        )
+    )
+    graph.add(
+        (
+            adaptability_uri,
+            METHODOLOGY.description,
+            Literal(
+                "Architecture adaptability (cohesion): "
+                "ability to adapt functionality to behavioral and structural changes"
+            ),
+        )
+    )
+
+    # 2. Reliability (based on inverse instability)
+    # Low instability = high reliability (stable interfaces)
+    if metrics.instability:
+        instability_avg = sum(metrics.instability.values()) / len(metrics.instability)
+        reliability_score = 1.0 - instability_avg
+    else:
+        reliability_score = 1.0
+
+    reliability_uri = URIRef(f"{project_id}/arch/metric/reliability")
+    graph.add((reliability_uri, RDF.type, SWARCH.Reliability))
+    graph.add((reliability_uri, METHODOLOGY.value, Literal(reliability_score, datatype=XSD.decimal)))
+    graph.add((reliability_uri, METHODOLOGY.unit, Literal("score")))
+    graph.add(
+        (
+            reliability_uri,
+            METHODOLOGY.timestamp,
+            Literal(datetime.utcnow().isoformat() + "Z", datatype=XSD.dateTime),
+        )
+    )
+    graph.add(
+        (
+            reliability_uri,
+            METHODOLOGY.description,
+            Literal(
+                "Architecture reliability (inverse instability): "
+                "ability to perform intended function correctly and consistently"
+            ),
+        )
+    )
+
+    # 3. PerformanceEfficiency (based on inverse coupling)
+    # Low coupling = high performance efficiency (less overhead)
+    performance_score = 1.0 - metrics.coupling
+
+    performance_uri = URIRef(f"{project_id}/arch/metric/performance_efficiency")
+    graph.add((performance_uri, RDF.type, SWARCH.PerformanceEfficiency))
+    graph.add((performance_uri, METHODOLOGY.value, Literal(performance_score, datatype=XSD.decimal)))
+    graph.add((performance_uri, METHODOLOGY.unit, Literal("score")))
+    graph.add(
+        (
+            performance_uri,
+            METHODOLOGY.timestamp,
+            Literal(datetime.utcnow().isoformat() + "Z", datatype=XSD.dateTime),
+        )
+    )
+    graph.add(
+        (
+            performance_uri,
+            METHODOLOGY.description,
+            Literal(
+                "Architecture performance efficiency (inverse coupling): "
+                "efficient use of computing resources"
+            ),
+        )
+    )
+
+    # 4. Link metrics to architecture model
+    arch_uri = URIRef(f"{project_id}/arch/model")
+    graph.add((arch_uri, RDF.type, SWARCH["Architecture"]))  # Custom class
+    graph.add((arch_uri, SWARCH.hasMetric, adaptability_uri))
+    graph.add((arch_uri, SWARCH.hasMetric, reliability_uri))
+    graph.add((arch_uri, SWARCH.hasMetric, performance_uri))
 
 
 def generate_architecture_recommendations(
