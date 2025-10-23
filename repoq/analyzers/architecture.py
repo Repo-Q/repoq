@@ -28,7 +28,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict, List, Set
+from typing import Any, Dict, List, Set
 
 from ..config import AnalyzeConfig
 from ..core.model import Project
@@ -622,7 +622,7 @@ def export_field33_metrics(graph, metrics: ArchitectureMetrics, project_id: str)
     Side Effects:
         Adds Field33 metric triples to graph
     """
-    from datetime import datetime
+    from datetime import datetime, timezone
 
     from rdflib import RDF, Literal, Namespace, URIRef
     from rdflib.namespace import XSD
@@ -638,13 +638,18 @@ def export_field33_metrics(graph, metrics: ArchitectureMetrics, project_id: str)
     # High cohesion = high adaptability (changes are localized)
     adaptability_uri = URIRef(f"{project_id}/arch/metric/adaptability")
     graph.add((adaptability_uri, RDF.type, SWARCH.Adaptability))
-    graph.add((adaptability_uri, METHODOLOGY.value, Literal(metrics.cohesion, datatype=XSD.decimal)))
+    graph.add(
+        (adaptability_uri, METHODOLOGY.value, Literal(metrics.cohesion, datatype=XSD.decimal))
+    )
     graph.add((adaptability_uri, METHODOLOGY.unit, Literal("score")))
     graph.add(
         (
             adaptability_uri,
             METHODOLOGY.timestamp,
-            Literal(datetime.utcnow().isoformat() + "Z", datatype=XSD.dateTime),
+            Literal(
+                datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                datatype=XSD.dateTime,
+            ),
         )
     )
     graph.add(
@@ -668,13 +673,18 @@ def export_field33_metrics(graph, metrics: ArchitectureMetrics, project_id: str)
 
     reliability_uri = URIRef(f"{project_id}/arch/metric/reliability")
     graph.add((reliability_uri, RDF.type, SWARCH.Reliability))
-    graph.add((reliability_uri, METHODOLOGY.value, Literal(reliability_score, datatype=XSD.decimal)))
+    graph.add(
+        (reliability_uri, METHODOLOGY.value, Literal(reliability_score, datatype=XSD.decimal))
+    )
     graph.add((reliability_uri, METHODOLOGY.unit, Literal("score")))
     graph.add(
         (
             reliability_uri,
             METHODOLOGY.timestamp,
-            Literal(datetime.utcnow().isoformat() + "Z", datatype=XSD.dateTime),
+            Literal(
+                datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                datatype=XSD.dateTime,
+            ),
         )
     )
     graph.add(
@@ -694,13 +704,18 @@ def export_field33_metrics(graph, metrics: ArchitectureMetrics, project_id: str)
 
     performance_uri = URIRef(f"{project_id}/arch/metric/performance_efficiency")
     graph.add((performance_uri, RDF.type, SWARCH.PerformanceEfficiency))
-    graph.add((performance_uri, METHODOLOGY.value, Literal(performance_score, datatype=XSD.decimal)))
+    graph.add(
+        (performance_uri, METHODOLOGY.value, Literal(performance_score, datatype=XSD.decimal))
+    )
     graph.add((performance_uri, METHODOLOGY.unit, Literal("score")))
     graph.add(
         (
             performance_uri,
             METHODOLOGY.timestamp,
-            Literal(datetime.utcnow().isoformat() + "Z", datatype=XSD.dateTime),
+            Literal(
+                datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                datatype=XSD.dateTime,
+            ),
         )
     )
     graph.add(
@@ -724,7 +739,7 @@ def export_field33_metrics(graph, metrics: ArchitectureMetrics, project_id: str)
 
 def generate_architecture_recommendations(
     arch_model: ArchitectureModel, project_id: str
-) -> List[Dict[str, any]]:
+) -> List[Dict[str, Any]]:
     """Generate refactoring recommendations based on architecture violations.
 
     Creates recommendations for:
