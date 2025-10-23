@@ -259,7 +259,62 @@ repo:Module_PCQAggregator a repo:Module ;
     swdev:TaskTicketPartOfFeature :Feature_SPARQLInterface ;
     repo:dependsOn :Task_SPARQLEndpoint .
 
-# Feature 3.3: Automated Reasoning
+# Feature 3.3: Field33 Architecture Metrics Integration
+:Feature_Field33ArchMetrics a swdev:FeatureTicket ;
+    rdfs:label "Field33 Architecture Metrics Integration" ;
+    rdfs:comment "Integrate Field33 software_architecture_metric ontology with ArchitectureAnalyzer: Adaptability, Reliability, PerformanceEfficiency" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 8.0 ;
+    repo:priority "high" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase3Epic ;
+    swdev:FeatureTicketAssignedTo :URPKSAgent ;
+    repo:implementsRequirement repo:FR-16 ;
+    repo:hasGate :Gate_ArchitectureQuality .
+
+:Gate_ArchitectureQuality a repo:Gate ;
+    rdfs:label "Architecture Quality Gate" ;
+    repo:gateCriterion "Adaptability > 0.7 AND Coupling < 0.3 AND Layering Violations = 0" ;
+    repo:gateStatus "pending" .
+
+# Tasks for Field33 Architecture Metrics
+:Task_Field33MetricsMapping a swdev:TaskTicket ;
+    rdfs:label "Map ArchitectureMetrics to Field33 Ontology" ;
+    rdfs:comment "Create mapping: cohesion→Adaptability, coupling→PerformanceEfficiency, instability→Reliability" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 3.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_Field33ArchMetrics .
+
+:Task_Field33RDFExport a swdev:TaskTicket ;
+    rdfs:label "Export Architecture Model to Field33 RDF" ;
+    rdfs:comment "Enhance RDF export with swarch:Adaptability, swarch:Reliability, swarch:PerformanceEfficiency" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 3.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_Field33ArchMetrics ;
+    repo:dependsOn :Task_Field33MetricsMapping .
+
+:Task_Field33Tests a swdev:TaskTicket ;
+    rdfs:label "Field33 Integration Tests" ;
+    rdfs:comment "Write 10 tests for Field33 metrics export and SPARQL queries" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 2.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_Field33ArchMetrics ;
+    repo:dependsOn :Task_Field33RDFExport .
+
+# Feature 3.4: Enhanced Introspection
+:Feature_EnhancedIntrospection a swdev:FeatureTicket ;
+    rdfs:label "Enhanced Introspection Command" ;
+    rdfs:comment "Add 'repoq introspect' command with full traceability matrix and architecture evolution tracking" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 10.0 ;
+    repo:priority "high" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase3Epic ;
+    swdev:FeatureTicketAssignedTo :URPKSAgent ;
+    repo:implementsRequirement repo:FR-17 ;
+    repo:dependsOn :Feature_Field33ArchMetrics .
+
+# Feature 3.5: Automated Reasoning
 :Feature_AutomatedReasoning a swdev:FeatureTicket ;
     rdfs:label "Automated Reasoning with OWL-RL" ;
     rdfs:comment "Implement OWL-RL reasoning for inferring implicit relationships in repository graph" ;
@@ -419,16 +474,24 @@ repo:FR-15 a repo:FunctionalRequirement ;
     rdfs:label "FR-15: Interactive Visualization" ;
     rdfs:comment "System must generate interactive graph visualizations" .
 
+repo:FR-16 a repo:FunctionalRequirement ;
+    rdfs:label "FR-16: Field33 Architecture Metrics" ;
+    rdfs:comment "System must integrate Field33 software_architecture_metric ontology (Adaptability, Reliability, PerformanceEfficiency)" .
+
+repo:FR-17 a repo:FunctionalRequirement ;
+    rdfs:label "FR-17: Enhanced Introspection" ;
+    rdfs:comment "System must provide full introspection with traceability matrix and architecture evolution tracking" .
+
 
 # ============================================================================
 # METADATA & STATISTICS
 # ============================================================================
 
 :RepoQRoadmap repo:totalEpics 3 ;
-    repo:totalFeatures 11 ;
-    repo:totalTasks 8 ;
+    repo:totalFeatures 13 ;
+    repo:totalTasks 11 ;
     repo:completedEpics 1 ;
     repo:completedFeatures 5 ;
-    repo:totalEstimatedEffort 122.0 ;
+    repo:totalEstimatedEffort 152.0 ;
     repo:totalActualEffort 54.0 ;
-    repo:overallCompletionPercentage 44.26 .
+    repo:overallCompletionPercentage 35.53 .
