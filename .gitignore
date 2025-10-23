@@ -48,6 +48,9 @@ htmlcov/
 .DS_Store
 Thumbs.db
 .coverage
+
+# Field33 ontologies (external, do not commit)
+.field33-ontologies/
 .coverage.*
 htmlcov/
 .hypothesis/
@@ -64,13 +67,15 @@ htmlcov/
 artifacts/
 quality.md
 .repoq/
-# But keep ontologies, shapes, and story files (provenance + meta)
+# But keep ontologies, shapes, story files, and roadmap (provenance + meta)
 !.repoq/ontologies/
 !.repoq/ontologies/*.ttl
+!.repoq/ontologies/*.md
 !.repoq/shapes/
 !.repoq/shapes/*.ttl
 !.repoq/story/
 !.repoq/story/*.ttl
+!.repoq/roadmap.ttl
 
 # Temporary development artifacts (documented in tmp-artifacts-inventory.md)
 tmp/

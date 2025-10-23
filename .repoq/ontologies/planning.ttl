@@ -1,0 +1,222 @@
+@prefix : <http://repoq.org/ontology/planning/> .
+@prefix repo: <http://repoq.org/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+# Field33 ontologies (imported via local files)
+@prefix swdev: <http://field33.com/ontologies/@fld33_domain/software_development/> .
+@prefix sdlc: <http://field33.com/ontologies/@fld33_domain/software_development_lifecycle/> .
+@prefix process: <http://field33.com/ontologies/@fld33/process/> .
+@prefix methodology: <http://field33.com/ontologies/@fld33/methodology/> .
+@prefix people: <http://field33.com/ontologies/@fld33/people/> .
+@prefix relations: <http://field33.com/ontologies/@fld33/relations/> .
+
+@base <http://repoq.org/ontology/planning/> .
+
+<http://repoq.org/ontology/planning/> rdf:type owl:Ontology ;
+    rdfs:label "RepoQ Planning Ontology"@en ;
+    rdfs:comment """
+Planning ontology for RepoQ extending Field33 software development ontologies.
+Provides formal structure for roadmap management, features, tasks, and AI agent instructions.
+Integrates with Field33 Backlog, EpicTicket, FeatureTicket, TaskTicket.
+"""@en ;
+    owl:versionInfo "0.2.0" ;
+    owl:versionIRI <http://repoq.org/ontology/planning/0.2.0> .
+
+# NOTE: Field33 ontologies are referenced but not formally imported via owl:imports
+# due to local file system constraints. RDF files are available in .field33-ontologies/
+
+# ============================================================================
+# METADATA PROPERTIES
+# ============================================================================
+
+repo:status rdf:type owl:DatatypeProperty ;
+    rdfs:label "Status"@en ;
+    rdfs:comment "Current status of a work item" ;
+    rdfs:range xsd:string .
+
+repo:startDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "Start Date"@en ;
+    rdfs:range xsd:date .
+
+repo:endDate rdf:type owl:DatatypeProperty ;
+    rdfs:label "End Date"@en ;
+    rdfs:range xsd:date .
+
+repo:targetVersion rdf:type owl:DatatypeProperty ;
+    rdfs:label "Target Version"@en ;
+    rdfs:comment "Target software version for delivery" ;
+    rdfs:range xsd:string .
+
+repo:estimatedEffort rdf:type owl:DatatypeProperty ;
+    rdfs:label "Estimated Effort"@en ;
+    rdfs:comment "Estimated effort in person-days" ;
+    rdfs:range xsd:float .
+
+repo:actualEffort rdf:type owl:DatatypeProperty ;
+    rdfs:label "Actual Effort"@en ;
+    rdfs:comment "Actual effort in person-days" ;
+    rdfs:range xsd:float .
+
+repo:completionPercentage rdf:type owl:DatatypeProperty ;
+    rdfs:label "Completion Percentage"@en ;
+    rdfs:range xsd:integer .
+
+repo:priority rdf:type owl:DatatypeProperty ;
+    rdfs:label "Priority"@en ;
+    rdfs:comment "Priority level: high, medium, low" ;
+    rdfs:range xsd:string .
+
+# ============================================================================
+# TRACEABILITY PROPERTIES
+# ============================================================================
+
+repo:implementsRequirement rdf:type owl:ObjectProperty ;
+    rdfs:label "Implements Requirement"@en ;
+    rdfs:comment "Links feature to functional requirement (FR)" ;
+    rdfs:domain swdev:FeatureTicket ;
+    rdfs:range repo:FunctionalRequirement .
+
+repo:validatedBy rdf:type owl:ObjectProperty ;
+    rdfs:label "Validated By"@en ;
+    rdfs:comment "Links feature to test suite" ;
+    rdfs:domain swdev:FeatureTicket ;
+    rdfs:range repo:TestSuite .
+
+repo:implementedIn rdf:type owl:ObjectProperty ;
+    rdfs:label "Implemented In"@en ;
+    rdfs:comment "Links feature to code module" ;
+    rdfs:domain swdev:FeatureTicket ;
+    rdfs:range repo:Module .
+
+repo:dependsOn rdf:type owl:ObjectProperty ;
+    rdfs:label "Depends On"@en ;
+    rdfs:comment "Blocking dependency relationship" ;
+    rdfs:domain owl:Thing ;
+    rdfs:range owl:Thing .
+
+# ============================================================================
+# AI AGENT PROPERTIES
+# ============================================================================
+
+repo:AIAgentRole rdf:type owl:Class ;
+    rdfs:label "AI Agent Role"@en ;
+    rdfs:comment "Role definition for AI assistant (extends Field33 Person)" ;
+    rdfs:subClassOf people:Person .
+
+repo:followsRoadmap rdf:type owl:ObjectProperty ;
+    rdfs:label "Follows Roadmap"@en ;
+    rdfs:comment "AI agent is bound to this roadmap" ;
+    rdfs:domain repo:AIAgentRole ;
+    rdfs:range swdev:Backlog .
+
+repo:hasInstruction rdf:type owl:ObjectProperty ;
+    rdfs:label "Has Instruction"@en ;
+    rdfs:comment "Directive for AI agent behavior" ;
+    rdfs:domain repo:AIAgentRole ;
+    rdfs:range repo:Instruction .
+
+repo:Instruction rdf:type owl:Class ;
+    rdfs:label "Instruction"@en ;
+    rdfs:comment "Formal directive for AI agent (e.g., 'Follow Σ→Γ→𝒫→Λ→R pipeline')" .
+
+# ============================================================================
+# QUALITY GATES
+# ============================================================================
+
+repo:Gate rdf:type owl:Class ;
+    rdfs:label "Quality Gate"@en ;
+    rdfs:comment "Quality gate that must be passed before feature completion" .
+
+repo:hasGate rdf:type owl:ObjectProperty ;
+    rdfs:label "Has Gate"@en ;
+    rdfs:comment "Feature must pass this quality gate" ;
+    rdfs:domain swdev:FeatureTicket ;
+    rdfs:range repo:Gate .
+
+repo:gateCriterion rdf:type owl:DatatypeProperty ;
+    rdfs:label "Gate Criterion"@en ;
+    rdfs:comment "Acceptance criterion for gate" ;
+    rdfs:domain repo:Gate ;
+    rdfs:range xsd:string .
+
+repo:gateStatus rdf:type owl:DatatypeProperty ;
+    rdfs:label "Gate Status"@en ;
+    rdfs:comment "Status: pending, passed, failed" ;
+    rdfs:domain repo:Gate ;
+    rdfs:range xsd:string .
+
+# ============================================================================
+# TEST & MODULE CLASSES
+# ============================================================================
+
+repo:TestSuite rdf:type owl:Class ;
+    rdfs:label "Test Suite"@en ;
+    rdfs:comment "Collection of tests for a feature" .
+
+repo:testCount rdf:type owl:DatatypeProperty ;
+    rdfs:label "Test Count"@en ;
+    rdfs:domain repo:TestSuite ;
+    rdfs:range xsd:integer .
+
+repo:testsPassed rdf:type owl:DatatypeProperty ;
+    rdfs:label "Tests Passed"@en ;
+    rdfs:domain repo:TestSuite ;
+    rdfs:range xsd:integer .
+
+repo:location rdf:type owl:DatatypeProperty ;
+    rdfs:label "Location"@en ;
+    rdfs:comment "File system path" ;
+    rdfs:range xsd:string .
+
+repo:Module rdf:type owl:Class ;
+    rdfs:label "Module"@en ;
+    rdfs:comment "Code module implementing a feature" .
+
+repo:FunctionalRequirement rdf:type owl:Class ;
+    rdfs:label "Functional Requirement"@en ;
+    rdfs:comment "Formal requirement specification" .
+
+# ============================================================================
+# FIELD33 INTEGRATION NOTES
+# ============================================================================
+
+# Mapping between RepoQ and Field33 ontologies:
+#
+# RepoQ Concept          → Field33 Class
+# ---------------------    ---------------------------------
+# :Roadmap               → swdev:Backlog
+# :Epic                  → swdev:EpicTicket
+# :Feature               → swdev:FeatureTicket
+# :Task                  → swdev:TaskTicket
+# :AIAgentRole           → people:Person (subclass)
+#
+# Field33 Properties used directly:
+# - swdev:TicketPartOf
+# - swdev:FeatureTicketPartOf
+# - swdev:TaskTicketPartOfFeature
+# - swdev:TaskTicketPartOfEpic
+# - swdev:FeatureTicketAssignedTo
+# - process:Process
+# - methodology:Practice
+# - methodology:Quality
+#
+# Available Field33 ontologies (in .field33-ontologies/):
+# - @fld33/process          : Process, Activity, Task, ProcessStep
+# - @fld33/methodology      : Practice, Quality, Maturity, Period
+# - @fld33/people           : Person, Team, Role
+# - @fld33/organization     : Organization, Team structure
+# - @fld33/relations        : Has, PartOf, BelongTo, BuildingOf
+# - @fld33_domain/software_development : Backlog, EpicTicket, FeatureTicket, TaskTicket,
+#                                        SoftwareFeature, Increment, QualityStandard, TDD, BDD, MBSE
+# - @fld33_domain/software_development_lifecycle : Planning, Requirement, Development, Integration,
+#                                                   Operation, ScopeAndRoadmap, AllocateResource
+#
+# Usage example in roadmap.ttl:
+#   :Phase3Epic a swdev:EpicTicket ;
+#       swdev:TicketPartOf :RepoQRoadmap .
+#   :Feature_Lean4Integration a swdev:FeatureTicket ;
+#       swdev:FeatureTicketPartOf :Phase3Epic ;
+#       swdev:FeatureTicketAssignedTo :URPKSAgent .

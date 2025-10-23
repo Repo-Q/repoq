@@ -1,0 +1,434 @@
+@prefix : <http://repoq.org/roadmap/> .
+@prefix repo: <http://repoq.org/ontology/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+# Field33 ontologies
+@prefix swdev: <http://field33.com/ontologies/@fld33_domain/software_development/> .
+@prefix sdlc: <http://field33.com/ontologies/@fld33_domain/software_development_lifecycle/> .
+@prefix process: <http://field33.com/ontologies/@fld33/process/> .
+@prefix methodology: <http://field33.com/ontologies/@fld33/methodology/> .
+@prefix people: <http://field33.com/ontologies/@fld33/people/> .
+@prefix relations: <http://field33.com/ontologies/@fld33/relations/> .
+
+# ============================================================================
+# ROADMAP: RepoQ v2.0.0 - Formal Methods & Graph Analytics
+# ============================================================================
+
+:RepoQRoadmap a swdev:Backlog ;
+    rdfs:label "RepoQ v2.0.0 Roadmap" ;
+    rdfs:comment "Roadmap for RepoQ v2.0.0 focusing on formal methods, graph analytics, and automated refactoring" ;
+    repo:targetVersion "2.0.0" ;
+    repo:startDate "2025-01-01"^^xsd:date .
+
+
+# ============================================================================
+# EPIC 1: Phase 2 - SHACL Validation & PCE/PCQ (COMPLETED)
+# ============================================================================
+
+:Phase2Epic a swdev:EpicTicket ;
+    rdfs:label "Phase 2: SHACL Validation Framework" ;
+    rdfs:comment "Implement SHACL-based validation, PCE witness generation, and PCQ aggregation" ;
+    repo:status "completed" ;
+    repo:startDate "2025-09-01"^^xsd:date ;
+    repo:endDate "2025-10-23"^^xsd:date ;
+    repo:targetVersion "2.0.0-beta.4" ;
+    repo:completionPercentage 100 ;
+    swdev:TicketPartOf :RepoQRoadmap .
+
+# Feature 2.1: SHACL Shapes
+:Feature_SHACLShapes a swdev:FeatureTicket ;
+    rdfs:label "SHACL Shapes for Repository Validation" ;
+    rdfs:comment "Define SHACL shapes for Project, Module, FR, Test, Dependencies" ;
+    repo:status "completed" ;
+    repo:estimatedEffort 8.0 ;
+    repo:actualEffort 8.0 ;
+    repo:completionPercentage 100 ;
+    swdev:FeatureTicketPartOf :Phase2Epic ;
+    repo:implementsRequirement repo:FR-01 ;
+    repo:validatedBy :TestSuite_SHACLShapes ;
+    repo:implementedIn repo:Module_SHACLShapes .
+
+:TestSuite_SHACLShapes a repo:TestSuite ;
+    rdfs:label "SHACL Shapes Tests" ;
+    repo:testCount 14 ;
+    repo:testsPassed 14 ;
+    repo:location "tests/shapes/" .
+
+repo:Module_SHACLShapes a repo:Module ;
+    rdfs:label "SHACL Shapes Module" ;
+    repo:location "repoq/shapes/" .
+
+# Feature 2.2: SHACL Validator
+:Feature_SHACLValidator a swdev:FeatureTicket ;
+    rdfs:label "SHACL Validator" ;
+    rdfs:comment "Implement SHACLValidator class for validating RDF graphs against SHACL shapes" ;
+    repo:status "completed" ;
+    repo:estimatedEffort 12.0 ;
+    repo:actualEffort 12.0 ;
+    repo:completionPercentage 100 ;
+    swdev:FeatureTicketPartOf :Phase2Epic ;
+    repo:implementsRequirement repo:FR-01 ;
+    repo:validatedBy :TestSuite_SHACLValidator ;
+    repo:implementedIn repo:Module_SHACLValidator ;
+    repo:dependsOn :Feature_SHACLShapes .
+
+:TestSuite_SHACLValidator a repo:TestSuite ;
+    rdfs:label "SHACL Validator Tests" ;
+    repo:testCount 20 ;
+    repo:testsPassed 20 ;
+    repo:location "tests/core/test_shacl_validator.py" .
+
+repo:Module_SHACLValidator a repo:Module ;
+    rdfs:label "SHACL Validator Module" ;
+    repo:location "repoq/core/shacl_validator.py" .
+
+# Feature 2.3: PCE Generator
+:Feature_PCEGenerator a swdev:FeatureTicket ;
+    rdfs:label "PCE Generator (Project Canonical Evidence)" ;
+    rdfs:comment "Implement PCE witness generation with k-factor sampling and evidence collection" ;
+    repo:status "completed" ;
+    repo:estimatedEffort 16.0 ;
+    repo:actualEffort 18.0 ;
+    repo:completionPercentage 100 ;
+    swdev:FeatureTicketPartOf :Phase2Epic ;
+    repo:implementsRequirement repo:FR-02 ;
+    repo:validatedBy :TestSuite_PCEGenerator ;
+    repo:implementedIn repo:Module_PCEGenerator ;
+    repo:dependsOn :Feature_SHACLValidator .
+
+:TestSuite_PCEGenerator a repo:TestSuite ;
+    rdfs:label "PCE Generator Tests" ;
+    repo:testCount 27 ;
+    repo:testsPassed 27 ;
+    repo:location "tests/quality/test_pce_generator.py" .
+
+repo:Module_PCEGenerator a repo:Module ;
+    rdfs:label "PCE Generator Module" ;
+    repo:location "repoq/quality/pce_generator.py" .
+
+# Feature 2.4: PCQ Aggregator
+:Feature_PCQAggregator a swdev:FeatureTicket ;
+    rdfs:label "PCQ Aggregator (Project Canonical Quality)" ;
+    rdfs:comment "Implement min-aggregator for quality scores with anti-gaming properties" ;
+    repo:status "completed" ;
+    repo:estimatedEffort 10.0 ;
+    repo:actualEffort 10.0 ;
+    repo:completionPercentage 100 ;
+    swdev:FeatureTicketPartOf :Phase2Epic ;
+    repo:implementsRequirement repo:FR-04 ;
+    repo:validatedBy :TestSuite_PCQAggregator ;
+    repo:implementedIn repo:Module_PCQAggregator ;
+    repo:dependsOn :Feature_PCEGenerator .
+
+:TestSuite_PCQAggregator a repo:TestSuite ;
+    rdfs:label "PCQ Aggregator Tests" ;
+    repo:testCount 11 ;
+    repo:testsPassed 11 ;
+    repo:location "tests/quality/test_pcq_simple.py" .
+
+repo:Module_PCQAggregator a repo:Module ;
+    rdfs:label "PCQ Aggregator Module" ;
+    repo:location "repoq/quality/pcq.py" .
+
+# Feature 2.5: Documentation & Release
+:Feature_Phase2Documentation a swdev:FeatureTicket ;
+    rdfs:label "Phase 2 Documentation & Release" ;
+    rdfs:comment "Migration guide, ontoMBVE methodology, CHANGELOG, git tag v2.0.0-beta.4" ;
+    repo:status "completed" ;
+    repo:estimatedEffort 6.0 ;
+    repo:actualEffort 6.0 ;
+    repo:completionPercentage 100 ;
+    swdev:FeatureTicketPartOf :Phase2Epic ;
+    repo:validatedBy :TestSuite_Phase2Integration ;
+    repo:dependsOn :Feature_PCQAggregator .
+
+:TestSuite_Phase2Integration a repo:TestSuite ;
+    rdfs:label "Phase 2 Integration Tests" ;
+    repo:testCount 72 ;
+    repo:testsPassed 72 ;
+    repo:location "tests/" .
+
+
+# ============================================================================
+# EPIC 2: Phase 3 - Formal Proofs & SPARQL Queries
+# ============================================================================
+
+:Phase3Epic a swdev:EpicTicket ;
+    rdfs:label "Phase 3: Formal Proofs & SPARQL" ;
+    rdfs:comment "Implement Lean4 proof verification, SPARQL query interface, and automated reasoning" ;
+    repo:status "not-started" ;
+    repo:startDate "2025-10-24"^^xsd:date ;
+    repo:targetVersion "2.0.0-beta.5" ;
+    repo:estimatedEffort 40.0 ;
+    repo:completionPercentage 0 ;
+    swdev:TicketPartOf :RepoQRoadmap ;
+    repo:dependsOn :Phase2Epic .
+
+# Feature 3.1: Lean4 Integration
+:Feature_Lean4Integration a swdev:FeatureTicket ;
+    rdfs:label "Lean4 Proof Integration" ;
+    rdfs:comment "Integrate Lean4 for formal proofs: Soundness (S1), Completeness (C1), Confluence (CF1)" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 16.0 ;
+    repo:priority "high" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase3Epic ;
+    swdev:FeatureTicketAssignedTo :URPKSAgent ;
+    repo:implementsRequirement repo:FR-10 ;
+    repo:hasGate :Gate_Lean4Soundness .
+
+:Gate_Lean4Soundness a repo:Gate ;
+    rdfs:label "Lean4 Soundness Gate" ;
+    repo:gateCriterion "All Lean4 proofs for theorems S1, C1, CF1 must typecheck successfully" ;
+    repo:gateStatus "pending" .
+
+# Tasks for Lean4 Integration
+:Task_Lean4Setup a swdev:TaskTicket ;
+    rdfs:label "Setup Lean4 Environment" ;
+    rdfs:comment "Install Lean4, configure toolchain, create repoq/proofs/ directory" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 2.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_Lean4Integration .
+
+:Task_TheoremS1Proof a swdev:TaskTicket ;
+    rdfs:label "Prove Theorem S1 (Soundness)" ;
+    rdfs:comment "Formalize and prove: ∀ρ∈Repo. valid(ρ,Σ) ⇒ sound(ρ)" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 6.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_Lean4Integration ;
+    repo:dependsOn :Task_Lean4Setup .
+
+:Task_TheoremC1Proof a swdev:TaskTicket ;
+    rdfs:label "Prove Theorem C1 (Completeness)" ;
+    rdfs:comment "Formalize and prove: ∀ρ∈Repo. ∀v∈Violation. ∃w∈Witness. PCE(ρ,v)=w" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 6.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_Lean4Integration ;
+    repo:dependsOn :Task_Lean4Setup .
+
+:Task_TheoremCF1Proof a swdev:TaskTicket ;
+    rdfs:label "Prove Theorem CF1 (Confluence)" ;
+    rdfs:comment "Formalize and prove: ∀r1,r2∈Repair. r1≠r2 ⇒ confluent(r1,r2)" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 4.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_Lean4Integration ;
+    repo:dependsOn :Task_Lean4Setup .
+
+# Feature 3.2: SPARQL Query Interface
+:Feature_SPARQLInterface a swdev:FeatureTicket ;
+    rdfs:label "SPARQL Query Interface" ;
+    rdfs:comment "Implement SPARQL endpoint for querying repository graph data" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 12.0 ;
+    repo:priority "high" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase3Epic ;
+    swdev:FeatureTicketAssignedTo :URPKSAgent ;
+    repo:implementsRequirement repo:FR-11 ;
+    repo:hasGate :Gate_SPARQLCompliance .
+
+:Gate_SPARQLCompliance a repo:Gate ;
+    rdfs:label "SPARQL 1.1 Compliance Gate" ;
+    repo:gateCriterion "SPARQL endpoint must support SPARQL 1.1 protocol with SELECT, CONSTRUCT, ASK queries" ;
+    repo:gateStatus "pending" .
+
+# Tasks for SPARQL Interface
+:Task_RDFlibIntegration a swdev:TaskTicket ;
+    rdfs:label "Integrate rdflib for SPARQL" ;
+    rdfs:comment "Add rdflib dependency, create SPARQL executor class" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 3.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_SPARQLInterface .
+
+:Task_SPARQLEndpoint a swdev:TaskTicket ;
+    rdfs:label "Implement SPARQL Endpoint" ;
+    rdfs:comment "Create CLI command 'repoq sparql <query>' with support for SELECT/CONSTRUCT/ASK" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 5.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_SPARQLInterface ;
+    repo:dependsOn :Task_RDFlibIntegration .
+
+:Task_SPARQLTests a swdev:TaskTicket ;
+    rdfs:label "SPARQL Query Tests" ;
+    rdfs:comment "Write tests for common queries: FR→Tests, Module→Dependencies, Hotspots" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 4.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_SPARQLInterface ;
+    repo:dependsOn :Task_SPARQLEndpoint .
+
+# Feature 3.3: Automated Reasoning
+:Feature_AutomatedReasoning a swdev:FeatureTicket ;
+    rdfs:label "Automated Reasoning with OWL-RL" ;
+    rdfs:comment "Implement OWL-RL reasoning for inferring implicit relationships in repository graph" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 12.0 ;
+    repo:priority "medium" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase3Epic ;
+    swdev:FeatureTicketAssignedTo :URPKSAgent ;
+    repo:implementsRequirement repo:FR-12 ;
+    repo:hasGate :Gate_ReasoningSoundness ;
+    repo:dependsOn :Feature_SPARQLInterface .
+
+:Gate_ReasoningSoundness a repo:Gate ;
+    rdfs:label "Reasoning Soundness Gate" ;
+    repo:gateCriterion "All inferred triples must be logically sound with respect to OWL-RL semantics" ;
+    repo:gateStatus "pending" .
+
+
+# ============================================================================
+# EPIC 3: Phase 4 - Graph Analytics & Neo4j Export
+# ============================================================================
+
+:Phase4Epic a swdev:EpicTicket ;
+    rdfs:label "Phase 4: Graph Analytics & Neo4j" ;
+    rdfs:comment "Implement graph analytics algorithms, Neo4j export, and visualization" ;
+    repo:status "not-started" ;
+    repo:startDate "2025-11-15"^^xsd:date ;
+    repo:targetVersion "2.0.0-rc.1" ;
+    repo:estimatedEffort 36.0 ;
+    repo:completionPercentage 0 ;
+    swdev:TicketPartOf :RepoQRoadmap ;
+    repo:dependsOn :Phase3Epic .
+
+# Feature 4.1: Neo4j Export
+:Feature_Neo4jExport a swdev:FeatureTicket ;
+    rdfs:label "Neo4j Export" ;
+    rdfs:comment "Export repository graph to Neo4j with Cypher queries" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 14.0 ;
+    repo:priority "high" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase4Epic ;
+    swdev:FeatureTicketAssignedTo :URPKSAgent ;
+    repo:implementsRequirement repo:FR-13 ;
+    repo:hasGate :Gate_Neo4jSchema .
+
+:Gate_Neo4jSchema a repo:Gate ;
+    rdfs:label "Neo4j Schema Compliance Gate" ;
+    repo:gateCriterion "Neo4j schema must preserve all RDF semantics with labeled property graph model" ;
+    repo:gateStatus "pending" .
+
+# Feature 4.2: PageRank & Centrality
+:Feature_GraphAnalytics a swdev:FeatureTicket ;
+    rdfs:label "Graph Analytics (PageRank, Centrality)" ;
+    rdfs:comment "Implement PageRank, Betweenness Centrality, Community Detection for code influence analysis" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 16.0 ;
+    repo:priority "medium" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase4Epic ;
+    swdev:FeatureTicketAssignedTo :URPKSAgent ;
+    repo:implementsRequirement repo:FR-14 ;
+    repo:dependsOn :Feature_Neo4jExport .
+
+# Feature 4.3: Interactive Visualization
+:Feature_Visualization a swdev:FeatureTicket ;
+    rdfs:label "Interactive Graph Visualization" ;
+    rdfs:comment "Generate interactive HTML visualizations with D3.js/Cytoscape.js" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 10.0 ;
+    repo:priority "low" ;
+    repo:completionPercentage 0 ;
+    swdev:FeatureTicketPartOf :Phase4Epic ;
+    repo:implementsRequirement repo:FR-15 ;
+    repo:dependsOn :Feature_GraphAnalytics .
+
+
+# ============================================================================
+# AI AGENT ROLE: URPKS Senior Engineer
+# ============================================================================
+
+:URPKSAgent a people:Person , repo:AIAgentRole ;
+    rdfs:label "URPKS Agent (AI Assistant)" ;
+    rdfs:comment "AI agent following URPKS methodology (Σ→Γ→𝒫→Λ→R pipeline)" ;
+    repo:followsRoadmap :RepoQRoadmap ;
+    repo:hasInstruction :Instruction_SigmaGatePipeline ,
+                        :Instruction_TDDRequired ,
+                        :Instruction_GateValidation ,
+                        :Instruction_DocumentationSync .
+
+:Instruction_SigmaGatePipeline a repo:Instruction ;
+    rdfs:label "Follow Σ→Γ→𝒫→Λ→R Pipeline" ;
+    rdfs:comment """
+For every feature implementation:
+1. Σ (Signature): Define language L, meta-language M, invariants
+2. Γ (Gates): Verify soundness, confluence, termination, stratification
+3. 𝒫 (Options): Propose ≤3 variants with risk analysis
+4. Λ (Aggregation): Evaluate by {soundness: 0.30, confluence: 0.25, completeness: 0.20, termination: 0.10, performance: 0.10, maintainability: 0.05}
+5. R (Result): Deliver complete artifacts with proofs, tests, documentation
+""" ;
+    repo:priority 1 .
+
+:Instruction_TDDRequired a repo:Instruction ;
+    rdfs:label "TDD/BDD Required" ;
+    rdfs:comment "Write tests BEFORE implementation. All features must have unit, integration, and property tests. Minimum coverage: 80%." ;
+    repo:priority 2 .
+
+:Instruction_GateValidation a repo:Instruction ;
+    rdfs:label "Gate Validation Required" ;
+    rdfs:comment "Before marking feature as completed, validate all gates: soundness, confluence, termination, test coverage, performance budget." ;
+    repo:priority 3 .
+
+:Instruction_DocumentationSync a repo:Instruction ;
+    rdfs:label "Documentation Synchronization" ;
+    rdfs:comment "Update documentation synchronously with code changes. Generate proofs/diagrams. Update CHANGELOG for every feature." ;
+    repo:priority 4 .
+
+
+# ============================================================================
+# FUNCTIONAL REQUIREMENTS (Referenced)
+# ============================================================================
+
+repo:FR-01 a repo:FunctionalRequirement ;
+    rdfs:label "FR-01: SHACL Validation" ;
+    rdfs:comment "System must validate repository RDF graphs against SHACL shapes" .
+
+repo:FR-02 a repo:FunctionalRequirement ;
+    rdfs:label "FR-02: PCE Witness Generation" ;
+    rdfs:comment "System must generate canonical evidence witnesses for SHACL violations" .
+
+repo:FR-04 a repo:FunctionalRequirement ;
+    rdfs:label "FR-04: PCQ Aggregation" ;
+    rdfs:comment "System must compute project canonical quality with min-aggregator (anti-gaming)" .
+
+repo:FR-10 a repo:FunctionalRequirement ;
+    rdfs:label "FR-10: Lean4 Proofs" ;
+    rdfs:comment "System must provide formal proofs for Soundness, Completeness, Confluence theorems" .
+
+repo:FR-11 a repo:FunctionalRequirement ;
+    rdfs:label "FR-11: SPARQL Interface" ;
+    rdfs:comment "System must provide SPARQL 1.1 query interface for repository graph" .
+
+repo:FR-12 a repo:FunctionalRequirement ;
+    rdfs:label "FR-12: Automated Reasoning" ;
+    rdfs:comment "System must support OWL-RL reasoning for inferring implicit relationships" .
+
+repo:FR-13 a repo:FunctionalRequirement ;
+    rdfs:label "FR-13: Neo4j Export" ;
+    rdfs:comment "System must export repository graph to Neo4j with Cypher queries" .
+
+repo:FR-14 a repo:FunctionalRequirement ;
+    rdfs:label "FR-14: Graph Analytics" ;
+    rdfs:comment "System must compute PageRank, Centrality, Community Detection for code influence" .
+
+repo:FR-15 a repo:FunctionalRequirement ;
+    rdfs:label "FR-15: Interactive Visualization" ;
+    rdfs:comment "System must generate interactive graph visualizations" .
+
+
+# ============================================================================
+# METADATA & STATISTICS
+# ============================================================================
+
+:RepoQRoadmap repo:totalEpics 3 ;
+    repo:totalFeatures 11 ;
+    repo:totalTasks 8 ;
+    repo:completedEpics 1 ;
+    repo:completedFeatures 5 ;
+    repo:totalEstimatedEffort 122.0 ;
+    repo:totalActualEffort 54.0 ;
+    repo:overallCompletionPercentage 44.26 .
