@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "repoq"
-version = "2.0.0"
+version = "2.0.0-beta.4"
 description = "CLI for repository quality with PROV-O/OSLC/SPDX/FOAF/SDO ontology output + reports/graphs/TTL/validation."
 readme = "README.md"
 requires-python = ">=3.9"

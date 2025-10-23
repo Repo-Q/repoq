@@ -1,0 +1,153 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix code: <http://field33.com/ontologies/CODE/> .
+@prefix repo: <https://repoq.dev/ontology/repo#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# ==============================================================================
+# Complexity Constraint Shape
+# ==============================================================================
+# Purpose: Detect files with excessive cyclomatic complexity (CC > 15)
+# Fairness: Allows exceptions for state machines, parsers, complex algorithms
+# References: V06 (Fairness), FR-01 (Detailed Gate Output)
+
+code:ComplexityConstraintShape
+    a sh:NodeShape ;
+    sh:targetClass repo:File ;
+    rdfs:label "Complexity Constraint (CC ≤ 15)" ;
+    rdfs:comment "Files with cyclomatic complexity > 15 should be refactored, unless marked as state machine or complex algorithm." ;
+    sh:sparql [
+        sh:message "Cyclomatic complexity {?cc} exceeds threshold (15). Consider refactoring into smaller functions." ;
+        sh:severity sh:Warning ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            SELECT $this ?cc
+            WHERE {
+                $this repo:cyclomaticComplexity ?cc .
+                # Fail if CC > 15 AND not a state machine
+                FILTER (?cc > 15)
+                FILTER NOT EXISTS {
+                    $this repo:isStateMachine true .
+                }
+            }
+        """ ;
+    ] ;
+    sh:sparql [
+        sh:message "State machine file with CC={?cc} exceeds limit (30)" ;
+        sh:severity sh:Violation ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            SELECT $this ?cc
+            WHERE {
+                $this repo:cyclomaticComplexity ?cc .
+                $this repo:isStateMachine true .
+                FILTER (?cc > 30)
+            }
+        """ ;
+    ] .
+
+# ==============================================================================
+# Hotspot Constraint Shape
+# ==============================================================================
+# Purpose: Detect files with high churn (>20 commits) AND high complexity (CC > 10)
+# References: FR-02 (Actionable Feedback), V08 (Actionability)
+
+code:HotspotConstraintShape
+    a sh:NodeShape ;
+    sh:targetClass repo:File ;
+    rdfs:label "Hotspot Constraint (Churn + Complexity)" ;
+    rdfs:comment "Files with >20 commits AND CC > 10 are hotspots requiring attention." ;
+    sh:sparql [
+        sh:message "Hotspot detected: {$this} has {?churn} commits and CC={?cc}. Priority refactoring target." ;
+        sh:severity sh:Violation ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            SELECT $this ?churn ?cc
+            WHERE {
+                $this repo:commitCount ?churn .
+                $this repo:cyclomaticComplexity ?cc .
+                FILTER (?churn > 20 && ?cc > 10)
+            }
+        """ ;
+    ] .
+
+# ==============================================================================
+# TODO Comment Limit Shape
+# ==============================================================================
+# Purpose: Hard constraint for TODO comments (≤100 total in repository)
+# References: V04 (Monotonicity), NFR-04 (Maintainability)
+
+code:TodoLimitShape
+    a sh:NodeShape ;
+    sh:targetClass repo:Repository ;
+    rdfs:label "TODO Comment Limit (≤100)" ;
+    rdfs:comment "Repository must have ≤100 TODO comments to maintain quality." ;
+    sh:property [
+        sh:path repo:todoCount ;
+        sh:maxInclusive 100 ;
+        sh:message "Repository has {$value} TODO comments (limit: 100). Clean up technical debt." ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ==============================================================================
+# Test Coverage Constraint Shape
+# ==============================================================================
+# Purpose: Enforce minimum test coverage (≥80% for production code)
+# References: NFR-11 (Test Coverage ≥80%), V03 (Correctness)
+
+code:TestCoverageConstraintShape
+    a sh:NodeShape ;
+    sh:targetClass repo:Module ;
+    rdfs:label "Test Coverage Constraint (≥80%)" ;
+    rdfs:comment "Production modules must have ≥80% test coverage." ;
+    sh:sparql [
+        sh:message "Module {$this} has {?coverage}% coverage (minimum: 80%). Add tests." ;
+        sh:severity sh:Violation ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            SELECT $this ?coverage
+            WHERE {
+                $this repo:testCoverage ?coverage .
+                # Fail if coverage < 0.80 AND not legacy
+                FILTER (?coverage < 0.80)
+                FILTER NOT EXISTS {
+                    $this repo:isLegacyModule true .
+                }
+            }
+        """ ;
+    ] .
+
+# ==============================================================================
+# C4 Layer Violation Shape
+# ==============================================================================
+# Purpose: Enforce architectural layering (Presentation → Business → Data)
+# References: V03 (Correctness), ADR-004 (C4 Model)
+
+code:LayeringViolationShape
+    a sh:NodeShape ;
+    sh:targetClass repo:Module ;
+    rdfs:label "C4 Layer Constraint (No upward dependencies)" ;
+    rdfs:comment "Modules must not depend on higher layers (e.g., Data → Presentation forbidden)." ;
+    sh:sparql [
+        sh:message "Layer violation: {$this} (layer {?sourceLayer}) depends on {?target} (layer {?targetLayer})" ;
+        sh:severity sh:Violation ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            PREFIX c4: <http://field33.com/ontologies/C4/>
+            SELECT $this ?target ?sourceLayer ?targetLayer
+            WHERE {
+                $this repo:dependsOn ?target .
+                $this c4:layer ?sourceLayer .
+                ?target c4:layer ?targetLayer .
+                # Layer hierarchy: Presentation=3, Business=2, Data=1
+                BIND(IF(?sourceLayer = c4:PresentationLayer, 3,
+                     IF(?sourceLayer = c4:BusinessLayer, 2,
+                     IF(?sourceLayer = c4:DataLayer, 1, 0))) AS ?sourceLevel)
+                BIND(IF(?targetLayer = c4:PresentationLayer, 3,
+                     IF(?targetLayer = c4:BusinessLayer, 2,
+                     IF(?targetLayer = c4:DataLayer, 1, 0))) AS ?targetLevel)
+                # Violation: Source layer depends on higher layer
+                FILTER (?sourceLevel < ?targetLevel)
+            }
+        """ ;
+    ] .

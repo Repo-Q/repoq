@@ -1,4 +1,5 @@
 @prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix schema: <https://schema.org/> .
 @prefix repo: <http://example.org/vocab/repo#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .

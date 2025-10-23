@@ -1,5 +1,8 @@
 # RepoQ - Repository Quality Analysis
 
+> **ontoMBVE**: Ontology-based Model-Based Validation Engineering  
+> First system combining formal ontologies, SHACL validation, and proof-carrying evidence for software quality.
+
 > ⚠️ **ACTIVE DEVELOPMENT**: This project is under active development and may contain breaking changes or unstable features. Use at your own risk in production environments.
 
 [![Python](https://img.shields.io/badge/python-3.9%2B-blue)](https://www.python.org/)
@@ -10,8 +13,16 @@
 [![Coverage](https://img.shields.io/badge/coverage-62%25-yellowgreen)](tests/)
 [![Docker](https://img.shields.io/badge/docker-161MB-blue)](https://hub.docker.com/r/kirill0440/repoq)
 [![Status](https://img.shields.io/badge/status-beta-orange)](https://github.com/kirill-0440/repoq)
+[![Methodology](https://img.shields.io/badge/methodology-ontoMBVE-purple)](docs/methodology/ontoMBVE.md)
 
-Modern CLI tool for comprehensive Git repository quality analysis with semantic web export and CI/CD integration.
+**RepoQ** implements **ontoMBVE** (Ontology-based Model-Based Validation Engineering) — a novel methodology for software quality assurance combining:
+
+- 🧬 **Formal Ontologies** (RDF/OWL: CODE, DDD, SPDX)
+- 🔍 **SHACL Validation** (declarative quality constraints)
+- 📜 **Proof-Carrying Evidence** (PCE witnesses + anti-gaming PCQ)
+- 🔬 **Formal Verification** (Lean4 proofs, planned)
+
+See [Methodology Documentation](docs/methodology/ontoMBVE.md) for details.
 
 ## Features
 

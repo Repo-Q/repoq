@@ -1,0 +1,156 @@
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix code: <http://field33.com/ontologies/CODE/> .
+@prefix ddd: <http://field33.com/ontologies/DDD/> .
+@prefix repo: <https://repoq.dev/ontology/repo#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# ==============================================================================
+# DDD Bounded Context Violation Shape
+# ==============================================================================
+# Purpose: Enforce bounded context boundaries (no cross-context dependencies without ACL)
+# References: V03 (Correctness), Phase 1 Domain Context (4 BCs: Analysis, Quality, Ontology, Certificate)
+
+code:BoundedContextViolationShape
+    a sh:NodeShape ;
+    sh:targetClass ddd:BoundedContext ;
+    rdfs:label "Bounded Context Isolation" ;
+    rdfs:comment "Modules in one bounded context must not depend on modules in another context without explicit ACL." ;
+    sh:sparql [
+        sh:message "Bounded context violation: {$this} depends on {?target} from context {?targetContext} without ACL" ;
+        sh:severity sh:Violation ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            PREFIX ddd: <http://field33.com/ontologies/DDD/>
+            SELECT $this ?target ?targetContext
+            WHERE {
+                # Find modules in this bounded context
+                ?module ddd:inContext $this .
+                ?module repo:dependsOn ?target .
+
+                # Check if target is in different context
+                ?target ddd:inContext ?targetContext .
+                FILTER ($this != ?targetContext)
+
+                # No ACL defined for this cross-context dependency
+                FILTER NOT EXISTS {
+                    $this ddd:allowsDependencyOn ?targetContext .
+                }
+            }
+        """ ;
+    ] .
+
+# ==============================================================================
+# Valid Bounded Contexts Shape
+# ==============================================================================
+# Purpose: Enforce that all modules belong to one of 4 valid bounded contexts
+# References: Phase 1 Domain Context (Analysis BC, Quality BC, Ontology BC, Certificate BC)
+
+code:ValidBoundedContextShape
+    a sh:NodeShape ;
+    sh:targetClass repo:Module ;
+    rdfs:label "Valid Bounded Context Assignment" ;
+    rdfs:comment "All modules must belong to one of: Analysis, Quality, Ontology, Certificate bounded contexts." ;
+    sh:property [
+        sh:path ddd:inContext ;
+        sh:minCount 1 ;
+        sh:maxCount 1 ;
+        sh:in (
+            <https://repoq.dev/ddd/AnalysisBC>
+            <https://repoq.dev/ddd/QualityBC>
+            <https://repoq.dev/ddd/OntologyBC>
+            <https://repoq.dev/ddd/CertificateBC>
+        ) ;
+        sh:message "Module {$this} must belong to exactly one bounded context (Analysis, Quality, Ontology, Certificate)" ;
+        sh:severity sh:Violation ;
+    ] .
+
+# ==============================================================================
+# Aggregate Root Constraint Shape
+# ==============================================================================
+# Purpose: Enforce that aggregates are accessed only through their root
+# References: V02 (Gaming Protection), DDD patterns
+
+code:AggregateRootConstraintShape
+    a sh:NodeShape ;
+    sh:targetClass ddd:Entity ;
+    rdfs:label "Aggregate Root Access Constraint" ;
+    rdfs:comment "Entities within an aggregate must be accessed only through the aggregate root." ;
+    sh:sparql [
+        sh:message "Aggregate violation: {$this} is accessed directly, bypassing aggregate root {?root}" ;
+        sh:severity sh:Warning ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            PREFIX ddd: <http://field33.com/ontologies/DDD/>
+            SELECT $this ?root ?accessor
+            WHERE {
+                # This entity is part of an aggregate
+                $this ddd:partOfAggregate ?aggregate .
+                ?aggregate ddd:hasRoot ?root .
+                FILTER ($this != ?root)
+
+                # Someone depends on this entity directly
+                ?accessor repo:dependsOn $this .
+
+                # Accessor is not the aggregate root
+                FILTER (?accessor != ?root)
+
+                # Accessor is not part of the same aggregate
+                FILTER NOT EXISTS {
+                    ?accessor ddd:partOfAggregate ?aggregate .
+                }
+            }
+        """ ;
+    ] .
+
+# ==============================================================================
+# Ubiquitous Language Consistency Shape
+# ==============================================================================
+# Purpose: Ensure class names match ubiquitous language terms
+# References: V01 (Transparency), Phase 1 Domain Context (Ubiquitous Language)
+
+code:UbiquitousLanguageShape
+    a sh:NodeShape ;
+    sh:targetClass repo:Class ;
+    rdfs:label "Ubiquitous Language Consistency" ;
+    rdfs:comment "Class names should match terms defined in bounded context ubiquitous language." ;
+    sh:sparql [
+        sh:message "Class {$this} uses name '{?className}' not found in ubiquitous language for context {?context}" ;
+        sh:severity sh:Info ;
+        sh:select """
+            PREFIX repo: <https://repoq.dev/ontology/repo#>
+            PREFIX ddd: <http://field33.com/ontologies/DDD/>
+            SELECT $this ?className ?context
+            WHERE {
+                $this repo:className ?className .
+                $this ddd:inContext ?context .
+
+                # Check if term is NOT in ubiquitous language
+                FILTER NOT EXISTS {
+                    ?context ddd:definesTerm ?term .
+                    ?term ddd:termName ?className .
+                }
+
+                # Exclude standard library terms (e.g., List, Dict, Optional)
+                FILTER (!REGEX(?className, "^(List|Dict|Optional|Tuple|Set|str|int|float|bool)$"))
+            }
+        """ ;
+    ] .
+
+# ==============================================================================
+# Repository Pattern Constraint Shape
+# ==============================================================================
+# Purpose: Ensure repositories only return aggregate roots
+# References: V03 (Correctness), DDD Repository pattern
+
+code:RepositoryPatternShape
+    a sh:NodeShape ;
+    sh:targetClass ddd:Repository ;
+    rdfs:label "Repository Pattern Constraint" ;
+    rdfs:comment "Repositories must return only aggregate roots, not individual entities." ;
+    sh:property [
+        sh:path ddd:returns ;
+        sh:class ddd:AggregateRoot ;
+        sh:message "Repository {$this} returns {$value} which is not an aggregate root" ;
+        sh:severity sh:Violation ;
+    ] .
