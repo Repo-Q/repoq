@@ -334,8 +334,32 @@ repo:Module_PCQAggregator a repo:Module ;
 
 :Gate_ReasoningSoundness a repo:Gate ;
     rdfs:label "Reasoning Soundness Gate" ;
-    repo:gateCriterion "All inferred triples must be logically sound with respect to OWL-RL semantics" ;
+    repo:gateCriterion "All inferred triples must be logically sound with respect to OWL-RL semantics AND termination guaranteed (MAX_ITERATIONS guard)" ;
     repo:gateStatus "pending" .
+
+# Tasks for Automated Reasoning
+:Task_OWLRLMaterializerImpl a swdev:TaskTicket ;
+    rdfs:label "Implement OWL-RL Materializer" ;
+    rdfs:comment "Create repoq/reasoner.py with OWLRLMaterializer class, MAX_ITERATIONS=1000 termination guard, support for rdfs:subClassOf, owl:TransitiveProperty, owl:SymmetricProperty" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 5.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_AutomatedReasoning .
+
+:Task_ReasonerIntegration a swdev:TaskTicket ;
+    rdfs:label "Integrate Reasoner into Pipeline" ;
+    rdfs:comment "Add reasoner step between RDF export and SHACL validation: raw/*.ttl → reasoner → validated/facts.ttl" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 3.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_AutomatedReasoning ;
+    repo:dependsOn :Task_OWLRLMaterializerImpl .
+
+:Task_ReasonerTests a swdev:TaskTicket ;
+    rdfs:label "Reasoner Unit Tests" ;
+    rdfs:comment "Write 10 tests: termination guard, transitive closure, symmetric properties, cyclic ontology detection, performance benchmarks" ;
+    repo:status "not-started" ;
+    repo:estimatedEffort 4.0 ;
+    swdev:TaskTicketPartOfFeature :Feature_AutomatedReasoning ;
+    repo:dependsOn :Task_OWLRLMaterializerImpl .
 
 
 # ============================================================================
@@ -493,7 +517,7 @@ repo:FR-17 a repo:FunctionalRequirement ;
 
 :RepoQRoadmap repo:totalEpics 3 ;
     repo:totalFeatures 13 ;
-    repo:totalTasks 11 ;
+    repo:totalTasks 14 ;
     repo:completedEpics 1 ;
     repo:completedFeatures 6 ;
     repo:totalEstimatedEffort 152.0 ;
